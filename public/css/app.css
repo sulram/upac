@@ -1,3 +1,5 @@
+a {cursor: pointer}
+
 body {
 	font-family: "Roboto";
 }
@@ -6,18 +8,25 @@ body {
 	position: fixed;
 }
 
-.main_menu ul {
+
+#main_menu {
+	position: fixed;
+	top: 10px;
+	left: 10px;
+}
+
+#main_menu ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
 
-.main_menu li {
+#main_menu li {
 	margin: 0 0 4px;
 	padding: 0;
 }
 
-.main_menu li ul {
+#main_menu li ul {
 	margin: 4px 0 0;
 	display: none;
 }
@@ -32,4 +41,9 @@ body {
 
 .menuit.back {
 	display: none;
+}
+
+
+#content {
+	margin-left: 100px;
 }

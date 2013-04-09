@@ -19,38 +19,59 @@
 
 </head>
 <body>
-	<head id="top">
-		<nav id="main_menu" class="main_menu">
+
+	<script type="text/x-handlebars" data-template-name="menu">
+		<nav id="main_menu" {{bindAttr class="route_class"}}>
 			<ul>
 				<li class="menuit back"><a href="#back">back</a></li>
-				<li class="menuit home"><a href="#home">home</a></li>
-				<li class="menuit upac"><a href="#upac">upac</a>
+				<li class="menuit home">{{#linkTo 'home'}}home{{/linkTo}}</li>
+				<li class="menuit upac">{{#linkTo 'upac'}}upac{{/linkTo}}
 					<ul>
-						<li class="menuit menusubit"><a href="#upac/index">o que é</a></li>
-						<li class="menuit menusubit"><a href="#upac/video">vídeo</a></li>
-						<li class="menuit menusubit"><a href="#upac/voce">participe</a></li>
-						<li class="menuit menusubit"><a href="#upac/contato">contato</a></li>
+						<li class="menuit menusubit">{{#linkTo 'upac'}}o que é{{/linkTo}}</li>
+						<li class="menuit menusubit">{{#linkTo 'upac.video'}}vídeo{{/linkTo}}</li>
+						<li class="menuit menusubit">{{#linkTo 'upac.voce'}}participe{{/linkTo}}</li>
+						<li class="menuit menusubit">{{#linkTo 'upac.contato'}}contato{{/linkTo}}</li>
 					</ul>
 				</li>
-				<li class="menuit rede"><a href="#rede">rede</a></li>
-				<li class="menuit blog"><a href="#blog">blog</a></li>
-				<li class="menuit agenda"><a href="#agenda">agenda</a></li>
+				<li class="menuit rede">{{#linkTo 'rede'}}rede{{/linkTo}}</li>
+				<li class="menuit blog">{{#linkTo 'blog'}}blog{{/linkTo}}</li>
+				<li class="menuit agenda">{{#linkTo 'agenda'}}agenda{{/linkTo}}</li>
 			</ul>
 		</nav>
-	</head>
-	<section id="content">
-		
-	</section>
+	</script>
 
-	<script type="text/x-handlebars" data-template-name="blog">
-      <h1>BLOG</h1>
-      {{appName}}
-    </script>
+	<script type="text/x-handlebars" data-template-name="application">
 
-    <script type="text/x-handlebars" data-template-name="agenda">
-      <h1>AGENDA</h1>
-    </script>
+		{{view App.MenuView}}
 
+		<section id="content" {{bindAttr class="route_class"}}>
+			
+			{{outlet}}
+
+		</section>
+
+	</script>
+	
+	<script type="text/x-handlebars" id="home">
+		<h1>
+			<span>Universidade</span>
+			<span>Popular</span>
+			<span>de Arte</span>
+			<span>e Ciência</span>
+		</h1>
+	</script>
+
+	<script type="text/x-handlebars" id="blog">
+		<h1>BLOG</h1>
+	</script>
+
+	<script type="text/x-handlebars" id="agenda">
+		<h1>AGENDA</h1>
+	</script>
+
+	<script type="text/x-handlebars" data-template-name="upac">
+	  path: {{path}} // {{App.currentPath}} // {{controller.currentPath}}
+	</script>
 
 </body>
 </html>
