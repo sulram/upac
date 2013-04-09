@@ -1,0 +1,35 @@
+body {
+	font-family: "Roboto";
+}
+
+#top {
+	position: fixed;
+}
+
+.main_menu ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.main_menu li {
+	margin: 0 0 4px;
+	padding: 0;
+}
+
+.main_menu li ul {
+	margin: 4px 0 0;
+	display: none;
+}
+
+.menuit a {
+	display: block;
+	width: 64px;
+	height: 64px;
+	background: rgba(0,0,0,.5);
+	text-align: center;
+}
+
+.menuit.back {
+	display: none;
+}
