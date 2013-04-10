@@ -1,49 +1,189 @@
+
+/* ---------------- BASICS ---------------- */
+
 a {cursor: pointer}
+
+html, body, #wrapper, body > .ember-view {
+	height: 100%;
+}
 
 body {
 	font-family: "Roboto";
 }
 
-#top {
-	position: fixed;
-}
-
+/* ---------------- MENUS ---------------- */
 
 #main_menu {
 	position: fixed;
 	top: 10px;
 	left: 10px;
+	z-index: 9000;
 }
+
+#sec_menu {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	z-index: 9000;
+}
+
+/* ---------------- MAIN MENU ITEMS ---------------- */
 
 #main_menu ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
+	width: 64px;
 }
 
-#main_menu li {
+#main_menu .menu_it {
 	margin: 0 0 4px;
+	padding: 0;
+	position: absolute;
+}
+
+.menu_it a {
+	display: block;
+	min-width: 64px;
+	height: 64px;
+	overflow: hidden;
+	text-decoration: none;
+	color: #fff;
+	background-color: #333;
+	position: relative;
+	opacity: .6;
+	line-height: 64px;
+	transition: all 0.5s;
+	font-size: 18px;
+}
+
+.menu_it a > span {
+	display: block;
+	padding: 0 0 0 64px;
+	width: 0;
+	white-space: nowrap;
+}
+
+.menu_it a span .ico {
+	background: url(../img/upac_menu_sprites.png) no-repeat 0 0;
+	position: absolute;
+	display: block;
+	top:0;
+	left: 0;
+	width: 64px;
+	height: 64px;
+}
+
+.menu_it a:hover,
+.menu_it a.active {
+	opacity: 1;
+}
+
+.menu_it a:hover > span {
+	width: auto;
+	padding: 0 40px 0 84px;
+}
+
+.menu_it.home { top: 0;  }
+.menu_it.upac { top: 64px; }
+.menu_it.rede { top: 128px; }
+.menu_it.blog { top: 192px; }
+.menu_it.agenda { top: 256px; }
+
+.menu_it.home a:hover, .menu_it.home a.active { background-color: #333;  }
+.menu_it.upac a:hover, .menu_it.upac a.active { background-color: #4280a7; }
+.menu_it.rede a:hover, .menu_it.rede a.active { background-color: #6fb7ac; }
+.menu_it.blog a:hover, .menu_it.blog a.active { background-color: #bf3205; }
+.menu_it.agenda a:hover, .menu_it.agenda a.active { background-color: #ec932b; }
+
+.menu_it.upac a span .ico { background-position: -64px 0; }
+.menu_it.rede a span .ico { background-position: -128px 0; }
+.menu_it.blog a span .ico { background-position: -256px 0; }
+.menu_it.agenda a span .ico { background-position: -192px 0; }
+
+
+/* ---------------- SEC MENU ITEMS ---------------- */
+
+#sec_menu .menu_it {
+	margin: 0;
 	padding: 0;
 }
 
-#main_menu li ul {
-	margin: 4px 0 0;
-	display: none;
+#sec_menu .menu_it a:hover > span {
+	width: auto;
+	padding: 0 40px 0 64px;
 }
 
-.menuit a {
-	display: block;
-	width: 64px;
-	height: 64px;
-	background: rgba(0,0,0,.5);
-	text-align: center;
-}
+.menu_it.login a span .ico { background-position: 0 -64px; }
 
-.menuit.back {
-	display: none;
-}
+
+/* ---------------- CONTENT AND WRAPPER ---------------- */
 
 
 #content {
-	margin-left: 100px;
+	margin-left: 120px;
+	padding: 20px;
 }
+
+
+/* ---------------- HOME ---------------- */
+
+#wrapper.home {
+	background: #111;
+}
+
+#wrapper.home #content{
+	margin: 0;
+	padding: 0;
+}
+
+#wrapper.home h1 {
+	position: absolute;
+	width: 850px;
+	height: 480px;
+	top: 50%;
+	left: 50%;
+	margin: -240px 0 0 -425px;
+	font-size: 120px;
+	line-height: 1em;
+	font-weight: 700;
+	color: #fff;
+	text-transform: uppercase;
+	z-index: 3;
+}
+
+#wrapper.home h1 span {
+	display: block;
+}
+
+#wrapper.home .slideshow {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow: hidden;
+}
+
+#wrapper.home .slideshow li {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	z-index: 1;
+}
+
+#wrapper.home .slideshow li.show {
+	display: block;
+	z-index: 2;
+}
+
+#wrapper.home .slideshow li img {
+	display: none;
+}
+
+/* ---------------- UPAC ---------------- */
+
+

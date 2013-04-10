@@ -11,3 +11,5 @@ Descrição e informações úteis desse módulo do projeto
 * normalize
 
 ### TODOS
+
+* melhorar slideshow da home (tornar dinamico, aleatorio e otimizado)

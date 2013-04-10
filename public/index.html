@@ -9,8 +9,8 @@
 
   <title>UPAC</title>
 
-  <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,100,100italic,300italic,300,400italic,500italic,700italic,900,900italic' rel='stylesheet' type='text/css'>
-  <link href="css/normalize.css" rel="stylesheet" />
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic,900,900italic' rel='stylesheet' type='text/css'>
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/app.css" rel="stylesheet" />
   <script src="js/handlebars.js"></script>
   <script src="js/jquery.js"></script>
@@ -19,36 +19,36 @@
 
 </head>
 <body>
-
+	
 	<script type="text/x-handlebars" data-template-name="menu">
+
 		<nav id="main_menu" {{bindAttr class="route_class"}}>
 			<ul>
-				<li class="menuit back"><a href="#back">back</a></li>
-				<li class="menuit home">{{#linkTo 'home'}}home{{/linkTo}}</li>
-				<li class="menuit upac">{{#linkTo 'upac'}}upac{{/linkTo}}
-					<ul>
-						<li class="menuit menusubit">{{#linkTo 'upac'}}o que é{{/linkTo}}</li>
-						<li class="menuit menusubit">{{#linkTo 'upac.video'}}vídeo{{/linkTo}}</li>
-						<li class="menuit menusubit">{{#linkTo 'upac.voce'}}participe{{/linkTo}}</li>
-						<li class="menuit menusubit">{{#linkTo 'upac.contato'}}contato{{/linkTo}}</li>
-					</ul>
-				</li>
-				<li class="menuit rede">{{#linkTo 'rede'}}rede{{/linkTo}}</li>
-				<li class="menuit blog">{{#linkTo 'blog'}}blog{{/linkTo}}</li>
-				<li class="menuit agenda">{{#linkTo 'agenda'}}agenda{{/linkTo}}</li>
+				<li class="menu_it home">{{#linkTo 'home'}}<span><span class="ico"></span>Entrada</span>{{/linkTo}}</li>
+				<li class="menu_it upac">{{#linkTo 'upac'}}<span><span class="ico"></span>Sobre a UPAC</span>{{/linkTo}}</li>
+				<li class="menu_it rede">{{#linkTo 'rede'}}<span><span class="ico"></span>Rede</span>{{/linkTo}}</li>
+				<li class="menu_it blog">{{#linkTo 'blog'}}<span><span class="ico"></span>Blog</span>{{/linkTo}}</li>
+				<li class="menu_it agenda">{{#linkTo 'agenda'}}<span><span class="ico"></span>Agenda</span>{{/linkTo}}</li>
 			</ul>
 		</nav>
+
+		<div id="sec_menu">
+			<li class="menu_it login">{{#linkTo 'user.entrar'}}<span><span class="ico"></span>Fazer login</span>{{/linkTo}}</li>
+		</div>
+
 	</script>
 
 	<script type="text/x-handlebars" data-template-name="application">
 
 		{{view App.MenuView}}
 
-		<section id="content" {{bindAttr class="route_class"}}>
-			
-			{{outlet}}
+		<div id="wrapper" {{bindAttr class="route_class"}}>
+			<section id="content">
+				
+				{{outlet}}
 
-		</section>
+			</section>
+		</body>
 
 	</script>
 	
@@ -59,6 +59,21 @@
 			<span>de Arte</span>
 			<span>e Ciência</span>
 		</h1>
+		
+		{{view App.HomeSlidesView}}
+
+	</script>
+
+	<script type="text/x-handlebars" id="home_view">
+		<ul class="slideshow">
+			<li><img src="./img/home01.jpg"></li>
+			<li><img src="./img/home02.jpg"></li>
+			<li><img src="./img/home03.jpg"></li>
+		</ul>
+	</script>
+	
+	<script type="text/x-handlebars" id="upac">
+		<h1>UPAC</h1>
 	</script>
 
 	<script type="text/x-handlebars" id="blog">
@@ -69,9 +84,22 @@
 		<h1>AGENDA</h1>
 	</script>
 
-	<script type="text/x-handlebars" data-template-name="upac">
-	  path: {{path}} // {{App.currentPath}} // {{controller.currentPath}}
+	<script type="text/x-handlebars" id="user">
+		<h1>USER</h1>
+		{{outlet}}
+	</script>
+	
+	<script type="text/x-handlebars" id="user/index">
+		lorem
 	</script>
 
+	<script type="text/x-handlebars" id="user_entrar">
+		<h1>ENTRAR</h1>
+	</script>
+
+	<script type="text/x-handlebars" id="user_cadastrar">
+		<h1>CADASTRAR</h1>
+	</script>
+	
 </body>
 </html>

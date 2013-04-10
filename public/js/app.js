@@ -20,14 +20,16 @@ window.App = Ember.Application.create({
 // ROUTER PRINCIPAL
 
 App.Router.map(function() {
-    this.route("home");
-    this.route("agenda");
-    this.route("rede");
-    this.route("blog");
-    this.resource('upac', function() {
-        this.route('video');
-        this.route('voce');
-        this.route('contato');
+    this.resource("home");
+    this.resource("agenda");
+    this.resource("rede");
+    this.resource("blog");
+    this.resource("upac");
+    this.resource("user",function(){
+        this.route("entrar");
+        this.route("sair");
+        this.route("cadastrar");
+        this.route("perfil");
     });
 });
 
@@ -36,7 +38,11 @@ App.IndexRoute = Em.Route.extend({
         this.transitionTo('home');   
     }
 });
+/*
+App.UserRoute = Em.Route.extend({
 
+});
+*/
 //// CONTROLLERS
 
 // CONTROLLER PRINCIPAL
@@ -60,4 +66,37 @@ App.MenuView = Em.View.extend({
     templateName: 'menu'
 });
 
+// SLIDESHOW HOME
 
+App.HomeSlidesView = Ember.View.extend({
+    templateName: 'home_view',
+    t:-1,
+    timer: null,
+    tik: function(){
+        this.t = (this.t+1)%3;
+        this.$('.slideshow li').removeClass('show');
+        this.$('.slideshow li').eq(this.t).addClass('show').hide().fadeIn(500);
+        //console.log('tick',this.t);
+        this.timer = Ember.run.later(this, 'tik', 4000);
+    },
+    resize: function(e){
+        //this.$()
+    },
+    didInsertElement: function(){
+        //this.$().hide().show('slow');
+        this.$('.slideshow li').each(function(i,el){
+            var img = $(el).find('img');
+            var src = img.attr('src');
+            $(el).css({backgroundImage:'url('+src+')'});
+            //img.remove();
+        });
+        this.tik();
+        this.resize();
+        this.$(window).bind('resize',this.resize);
+    },
+    willDestroyElement: function(){
+        Ember.run.cancel(this.timer);
+        this.$(window).unbind('resize');
+    }
+    
+});
