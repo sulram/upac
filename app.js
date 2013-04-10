@@ -4,12 +4,17 @@
  */
 
 var express = require('express')
+  , env = process.env.NODE_ENV || 'development'
   , routes = require('./routes')
   , user = require('./routes/user')
+  , config = require('./config/config')[env]
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , mongoose = require('mongoose');
 
 var app = express();
+
+mongoose.connect(config.db);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
