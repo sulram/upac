@@ -59,8 +59,15 @@ App.ApplicationController = Ember.Controller.extend({
 });
 
 App.RedeView = Ember.View.extend({
+    templateName: 'mapa',
     handleClick: function(e){
        console.log( e.latLng );
+    },
+    handleZoom: function() {
+        if (App.map.getZoom() < 3){
+            App.map.setZoom(3);
+        }
+        console.log('zoom factor',App.map.getZoom());
     },
     didInsertElement: function(){
 
@@ -84,16 +91,15 @@ App.RedeView = Ember.View.extend({
         };
         
         // cria mapa
-        var map = new google.maps.Map($("#map_canvas").get(0),myOptions);
+        App.map = new google.maps.Map($("#map_canvas").get(0),myOptions);
         // cria estilo
         var styledMapOptions = { name: 'UPAC Map' };
         var customMapType = new google.maps.StyledMapType(mapstyles.lightblue, styledMapOptions);
         // aplica estilo
-        map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
-        // evento click
-        google.maps.event.addListener(map, 'click', this.handleClick);
-        // salvar mapa
-        this.set('map',map);
+        App.map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+        // eventos
+        google.maps.event.addListener(App.map, 'click', this.handleClick);
+        google.maps.event.addListener(App.map, 'zoom_changed', this.handleZoom);
 
         console.log('maps!');
     }

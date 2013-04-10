@@ -44,7 +44,6 @@
 		{{view App.MenuView}}
 
 		<div id="wrapper" {{bindAttr class="route_class"}}>
-			<div id="map_canvas"></div>
 			<section id="content">
 				
 				{{outlet}}
@@ -80,6 +79,10 @@
 	
 	<script type="text/x-handlebars" id="rede">
 		{{view App.RedeView}}
+	</script>
+
+	<script type="text/x-handlebars" id="mapa">
+		<div id="map_canvas"></div>
 	</script>
 
 	<script type="text/x-handlebars" id="blog">
