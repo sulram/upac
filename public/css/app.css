@@ -123,6 +123,7 @@ body {
 #content {
 	margin-left: 120px;
 	padding: 20px;
+	z-index: 2;
 }
 
 
@@ -185,5 +186,28 @@ body {
 }
 
 /* ---------------- UPAC ---------------- */
+
+/* ---------------- REDE ---------------- */
+
+#wrapper.rede #content{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#map_canvas {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	display: none;
+}
+
+#wrapper.rede #map_canvas {
+	display: block;
+}
+
+
+
 
 

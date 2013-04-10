@@ -12,11 +12,12 @@
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic,900,900italic' rel='stylesheet' type='text/css'>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/app.css" rel="stylesheet" />
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
   <script src="js/handlebars.js"></script>
   <script src="js/jquery.js"></script>
   <script src="js/ember.js"></script>
+  <script src="js/mapstyles.js"></script>
   <script src="js/app.js"></script>
-
 </head>
 <body>
 	
@@ -43,12 +44,13 @@
 		{{view App.MenuView}}
 
 		<div id="wrapper" {{bindAttr class="route_class"}}>
+			<div id="map_canvas"></div>
 			<section id="content">
 				
 				{{outlet}}
 
 			</section>
-		</body>
+		</div>
 
 	</script>
 	
@@ -74,6 +76,10 @@
 	
 	<script type="text/x-handlebars" id="upac">
 		<h1>UPAC</h1>
+	</script>
+	
+	<script type="text/x-handlebars" id="rede">
+		{{view App.RedeView}}
 	</script>
 
 	<script type="text/x-handlebars" id="blog">

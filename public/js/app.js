@@ -58,6 +58,47 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('currentPath')
 });
 
+App.RedeView = Ember.View.extend({
+    handleClick: function(e){
+       console.log( e.latLng );
+    },
+    didInsertElement: function(){
+
+        var MY_MAPTYPE_ID = "UPAC";
+
+        var myOptions = {
+            center: new google.maps.LatLng(-16, -45),
+            zoom: 3,
+            mapTypeId: MY_MAPTYPE_ID,
+            mapTypeControlOptions: {
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+            },
+            mapTypeControl: false,
+            streetViewControl: false,
+            panControl: false,
+            zoomControl: true,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.MEDIUM,
+                position: google.maps.ControlPosition.LEFT_BOTTOM
+            }
+        };
+        
+        // cria mapa
+        var map = new google.maps.Map($("#map_canvas").get(0),myOptions);
+        // cria estilo
+        var styledMapOptions = { name: 'UPAC Map' };
+        var customMapType = new google.maps.StyledMapType(mapstyles.lightblue, styledMapOptions);
+        // aplica estilo
+        map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+        // evento click
+        google.maps.event.addListener(map, 'click', this.handleClick);
+        // salvar mapa
+        this.set('map',map);
+
+        console.log('maps!');
+    }
+});
+
 //// VIEWS
 
 // MENU PRINCIPAL
