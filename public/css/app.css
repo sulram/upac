@@ -121,7 +121,7 @@ body {
 
 
 #content {
-	margin-left: 120px;
+	margin-left: 0 120px;
 	padding: 20px;
 	z-index: 2;
 }
@@ -140,12 +140,12 @@ body {
 
 #wrapper.home h1 {
 	position: absolute;
-	width: 850px;
-	height: 480px;
+	width: 980px;
+	height: 560px;
 	top: 50%;
 	left: 50%;
-	margin: -240px 0 0 -425px;
-	font-size: 120px;
+	margin: -280px 0 0 -490px;
+	font-size: 140px;
 	line-height: 1em;
 	font-weight: 700;
 	color: #fff;
@@ -187,6 +187,41 @@ body {
 
 /* ---------------- UPAC ---------------- */
 
+#wrapper.upac {
+	background: url(../img/upac_sobre_fundo_01.jpg) no-repeat fixed 50% 50%;
+	background-size: cover;
+	color: #fff;
+	font-size: 2em;
+	line-height: 1.2em;
+	min-height: 100%;
+	height: auto;
+	width: 100%;
+}
+
+#wrapper.upac #content {
+	margin: 0 20% 0;
+	padding: 200px 0;
+	max-width: 720px;
+	min-width: 480px;
+}
+
+#wrapper.upac #content .logo {
+	width: 420px;
+	height: 120px;
+	background: url(../img/upac_logo.png) no-repeat 0 0;
+	text-indent: -9999px;
+	margin-bottom: 40px;
+}
+
+#wrapper.upac #content h2 {
+	text-transform: uppercase;
+	margin: 2em 0 1em;
+}
+
+#wrapper.upac #content p {
+	margin: 1.2em 0;
+}
+
 /* ---------------- REDE ---------------- */
 
 #wrapper.rede #content{
@@ -208,6 +243,28 @@ body {
 }
 
 
+/* ---------------- MEDIAQUERIES ---------------- */
 
+/* SMALL */
 
+@media screen and (max-width: 1200px) {
 
+	#wrapper.home h1 {
+		width: 630px;
+		height: 360px;
+		margin: -180px 0 0 -315px;
+		font-size: 90px;
+	}
+}
+
+/* GIANT */
+
+@media screen and (min-width: 1600px) and (min-height: 740px) {
+
+	#wrapper.home h1 {
+		width: 1300px;
+		height: 720px;
+		margin: -360px 0 0 -650px;
+		font-size: 180px;
+	}
+}
