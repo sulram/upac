@@ -121,7 +121,7 @@ body {
 
 
 #content {
-	margin-left: 0 120px;
+	margin: 0 120px;
 	padding: 20px;
 	z-index: 2;
 }
@@ -188,7 +188,7 @@ body {
 /* ---------------- UPAC ---------------- */
 
 #wrapper.upac {
-	background: url(../img/upac_sobre_fundo_01.jpg) no-repeat fixed 50% 50%;
+	background: url(../img/upac_sobre_fundo_01b.jpg) no-repeat fixed 50% 50%;
 	background-size: cover;
 	color: #fff;
 	font-size: 2em;
@@ -196,6 +196,8 @@ body {
 	min-height: 100%;
 	height: auto;
 	width: 100%;
+	/*text-shadow: 2px 2px 4px rgba(0,0,0,.25);
+	filter: dropshadow(color=rgba(0,0,0,.25), offx=2, offy=2);*/
 }
 
 #wrapper.upac #content {

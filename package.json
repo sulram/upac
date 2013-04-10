@@ -1,0 +1,11 @@
+{
+  "name": "upac_frontend",
+  "version": "0.0.1",
+  "dependencies": {
+    "grunt": "~0.4.0",
+    "grunt-ember-templates": "0.4.4"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "~0.3.1"
+  }
+}
