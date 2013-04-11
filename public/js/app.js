@@ -119,7 +119,7 @@ App.RedeMapaView = Ember.View.extend({
         var MY_MAPTYPE_ID = "UPAC";
 
         var myOptions = {
-            center: new google.maps.LatLng(-16, -45),
+            center: new google.maps.LatLng(0, 0),
             zoom: 3,
             mapTypeId: MY_MAPTYPE_ID,
             mapTypeControlOptions: {
