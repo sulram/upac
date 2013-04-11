@@ -14,7 +14,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   
 
 
-  data.buffer.push("<h1>BLOG</h1>");
+  data.buffer.push("<h1>Blog</h1>");
   
 });
 
