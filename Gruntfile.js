@@ -15,7 +15,7 @@ grunt.initConfig({
 			},
 			files: {
 				//"path/to/result.js": "path/to/source.handlebars",
-				"public/js/templates.js": ["public/handlebars/**/*.hbs", "public/handlebars/**/*.handlebars"]
+				"public/js/app-templates.js": ["public/handlebars/**/*.hbs", "public/handlebars/**/*.handlebars"]
 			}
 		}
 	},

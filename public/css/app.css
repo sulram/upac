@@ -1,6 +1,14 @@
 
 /* ---------------- BASICS ---------------- */
 
+
+::-moz-selection{ background: #fff; color:#000; text-shadow: none; }
+::selection { background:#fff; color:#000; text-shadow: none; } 
+
+a { outline: none; }
+:-moz-any-link:focus { outline: none; }
+
+
 a {cursor: pointer}
 
 html, body, #wrapper, body > .ember-view {

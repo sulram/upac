@@ -38,11 +38,7 @@ App.IndexRoute = Em.Route.extend({
         this.transitionTo('home');   
     }
 });
-/*
-App.UserRoute = Em.Route.extend({
 
-});
-*/
 //// CONTROLLERS
 
 // CONTROLLER PRINCIPAL
@@ -150,5 +146,7 @@ App.RedeMapaView = Ember.View.extend({
     }
 });
 
+
+//// MODELS
 
 
