@@ -25,8 +25,7 @@ fs.readdirSync(models_path).forEach(function(file) {
 	require(models_path+'/'+file);
 });
 
-var User = mongoose.Model('User');
-
+var User = mongoose.model('User');
 passport.serializeUser(function(user, done) {
 	done(null, user.email);
 });

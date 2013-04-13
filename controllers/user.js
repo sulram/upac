@@ -7,7 +7,9 @@ module.exports = {
 		req.logout();
 		res.json({msg:'ok'});
 	},
-	login: function(req, res) {},
+	login: function(req, res) {
+		res.json({msg:'ok'});
+	},
 
 	create: function(req, res) {
 		var user = new User(req.body);
