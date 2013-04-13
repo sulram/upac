@@ -1,11 +1,16 @@
 {
-  "name": "upac_frontend",
+  "name": "upac",
   "version": "0.0.1",
   "dependencies": {
+    "express": "3.1.1",
+    "jade": "*",
     "grunt": "~0.4.0"
   },
   "devDependencies": {
     "grunt-contrib-watch": "~0.3.1",
     "grunt-ember-templates": "~0.4.4"
+  },
+  "scripts": {
+    "start": "node app.js"
   }
 }
