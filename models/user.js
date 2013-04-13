@@ -5,8 +5,18 @@ var mongoose = require('mongoose')
 
 var UserSchema = new Schema({
 	name: String,
-	username: String,
-	email: String,
+	username: {
+		type: String, 
+		index: {
+			unique: true
+		}
+	},
+	email: {
+		type: String,
+		index:  {
+			unique: true
+		}
+	},
 	hashed_password: String,
 	salt: String,
 	verifyToken: String,
@@ -28,7 +38,13 @@ var validatePresenceOf = function(value) {
 }
 
 UserSchema.pre('save', function(next) {
-	if(!this.isNew) return next();
+	if(!this.isNew) {
+		return next();
+	} else {
+		this.createdAt = new Date();
+		// enviar email para o usuário com token de validação
+	}
+	// TODO: checar se username/email já existem
 	if(!validatePresenceOf(this.password)) {
 		next(new Error('Invalid Password'));
 	} else {

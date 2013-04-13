@@ -6,7 +6,12 @@ var mongoose = require('mongoose')
 var ArticleSchema = new Schema({
 	owners: [ObjectId], // Users
 	title: String,
-	slug: String,
+	slug: {
+		type: String,
+		index: {
+			unique: true
+		}
+	},
 	content: String,
 	parent: ObjectId, // Article
 	publicationDate: Date,
