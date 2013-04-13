@@ -26,11 +26,9 @@ App.Router.map(function() {
     this.resource("blog");
     this.resource("upac");
     this.resource("user",function(){
-        this.route("entrar");
-        this.route("sair");
         this.route("cadastrar");
-        this.route("perfil");
     });
+    this.route('logout');
 });
 
 App.IndexRoute = Em.Route.extend({
@@ -53,6 +51,73 @@ App.ApplicationController = Ember.Controller.extend({
         App.set('currentPath', route_class);
     }.observes('currentPath')
 });
+
+
+App.LogoutController = Ember.Controller.extend({
+    redirect: function() {
+        $.ajax({
+            type: 'GET',
+            url: '/logout',
+            success: function(data, status, jqXHR){
+                App.TheUser.set('isLogged', false);
+                this.transitionTo('home');
+            }
+        });
+    }
+});
+
+App.UserIndexController = Ember.Controller.extend({
+    isPosting: false,
+    submit: function(){
+        var data = $('form').serialize();
+        this.set('sending',true);
+        var _controller = this;
+        $.ajax({
+            type: 'POST',
+            url: '/user/session',
+            data: data,
+            success: function(data, status, jqXHR){
+                console.log(data);
+                _controller.set('isPosting',false);
+                App.TheUser.set('isLogged', true);
+            },
+            error: function(jqXHR,status,error){
+                console.log(arguments);
+            }
+        });
+    }
+});
+
+App.UserCadastrarController = Ember.Controller.extend({
+    isPosting: false,
+    submit: function(){
+        var data = $('form').serialize();
+        this.set('sending',true);
+        var _controller = this;
+        $.ajax({
+            type: 'POST',
+            url: '/user',
+            data: data,
+            success: function(data, status, jqXHR){
+                console.log(data);
+                _controller.set('isPosting',false);
+                App.TheUser.set('isLogged', true);
+            },
+            error: function(jqXHR,status,error){
+                console.log(arguments);
+            }
+        });
+    }
+});
+
+//// OBJECTS
+
+App.User = Ember.Object.extend({
+  isLogged: false,
+  session: null
+});
+
+App.TheUser = App.User.create();
 
 //// VIEWS
 

@@ -1,3 +1,25 @@
-<h1>Acessar UPAC</h1>
+<h1>Participe da UPAC</h1>
 
-{{outlet}}
+{{#if App.TheUser.isLogged}}
+
+	<p><strong>Fulano</strong>, você já está conectado para participar.</p>
+
+	<p><small>Deseja {{#linkTo "logout"}}desconectar-se{{/linkTo}}?</small></p>
+
+{{else}}
+
+	<ul class="nav nav-pills">
+
+		{{#linkTo "user.index" tagName="li" href=false}}
+			<a {{bindAttr href="view.href"}}>Já tenho uma conta</a>
+		{{/linkTo}}
+
+		{{#linkTo "user.cadastrar" tagName="li" href=false}}
+			<a {{bindAttr href="view.href"}}>Quero me registrar</a>
+		{{/linkTo}}
+
+	</ul>
+	
+	{{outlet}}
+
+{{/if}}

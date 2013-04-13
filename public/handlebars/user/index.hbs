@@ -1,0 +1,19 @@
+<form id="login" class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label" for="username">Usuário ou e-mail</label>
+		<div class="controls">
+			<input type="text" id="username" name="username" placeholder="">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="password">Senha</label>
+		<div class="controls">
+			<input type="password" id="password" name="password" placeholder="">
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Entrar</button>
+		</div>
+	</div>
+</form>
