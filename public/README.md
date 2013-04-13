@@ -24,6 +24,7 @@ Descrição e informações úteis desse módulo do projeto
 
 #### Pendências
 
-* melhorar slideshow da home (tornar dinamico, aleatorio e otimizado)
+* homepage
+* validação cadastro e login
 * melhorar css dos icones (testar no IE e ver problema no IOS)... copiar do [blogger](http://universidadepopulararteciencia.blogspot.com.br/)
 * 

@@ -1,41 +1,25 @@
-<h1>Acessar UPAC</h1>
+<h1>Participe da UPAC</h1>
 
 {{#if App.TheUser.isLogged}}
 
-	usuario logado
+	<p><strong>Fulano</strong>, você já está conectado para participar.</p>
+
+	<p><small>Deseja {{#linkTo "logout"}}desconectar-se{{/linkTo}}?</small></p>
 
 {{else}}
+
+	<ul class="nav nav-pills">
+
+		{{#linkTo "user.index" tagName="li" href=false}}
+			<a {{bindAttr href="view.href"}}>Já tenho uma conta</a>
+		{{/linkTo}}
+
+		{{#linkTo "user.cadastrar" tagName="li" href=false}}
+			<a {{bindAttr href="view.href"}}>Quero me registrar</a>
+		{{/linkTo}}
+
+	</ul>
 	
-	<form id="register" class="form-horizontal">
-		<div class="control-group">
-			<label class="control-label" for="username">Nome de usuário</label>
-			<div class="controls">
-				<input type="text" id="username" name="username" placeholder="">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="email">E-mail</label>
-			<div class="controls">
-				<input type="text" id="email" name="email" placeholder="">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="password">Senha</label>
-			<div class="controls">
-				<input type="password" id="password" name="password" placeholder="">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="valpassword">Repita a senha</label>
-			<div class="controls">
-				<input type="password" id="valpassword" placeholder="">
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="controls">
-				<button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Cadastrar</button>
-			</div>
-		</div>
-	</form>
+	{{outlet}}
 
 {{/if}}

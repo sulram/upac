@@ -21,7 +21,7 @@ grunt.initConfig({
 	},
 	watch: {
 		ember_templates: {
-			files: ['public/handlebars/*.hbs','public/handlebars/*.handlebars'],
+			files: ['public/handlebars/**/*.hbs','public/handlebars/**/*.handlebars'],
 			tasks: ['ember_templates']
 		},
 	}
