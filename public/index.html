@@ -1,113 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 
-  <meta charset="utf-8" />
+	<meta charset="utf-8" />
 
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
 
-  <title>UPAC</title>
+	<title>UPAC</title>
 
-  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic,900,900italic' rel='stylesheet' type='text/css'>
-  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="css/app.css" rel="stylesheet" />
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-  <script src="js/handlebars.js"></script>
-  <script src="js/jquery.js"></script>
-  <script src="js/ember.js"></script>
-  <script src="js/mapstyles.js"></script>
-  <script src="js/app.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic,900,900italic' rel='stylesheet' type='text/css'>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/app.css" rel="stylesheet" />
+
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script src="js/libs/handlebars.js"></script>
+	<script src="js/libs/jquery.js"></script>
+	<script src="js/libs/ember.js"></script>
+	<script src="js/libs/ember-data-latest.js"></script>
+	<script src="js/mapstyles.js"></script>
+	<script src="js/app-templates.js"></script>
+	<script src="js/app.js"></script>
+
 </head>
 <body>
-	
-	<script type="text/x-handlebars" data-template-name="menu">
-
-		<nav id="main_menu" {{bindAttr class="route_class"}}>
-			<ul>
-				<li class="menu_it home">{{#linkTo 'home'}}<span><span class="ico"></span>Entrada</span>{{/linkTo}}</li>
-				<li class="menu_it upac">{{#linkTo 'upac'}}<span><span class="ico"></span>Sobre a UPAC</span>{{/linkTo}}</li>
-				<li class="menu_it rede">{{#linkTo 'rede'}}<span><span class="ico"></span>Rede</span>{{/linkTo}}</li>
-				<li class="menu_it blog">{{#linkTo 'blog'}}<span><span class="ico"></span>Blog</span>{{/linkTo}}</li>
-				<li class="menu_it agenda">{{#linkTo 'agenda'}}<span><span class="ico"></span>Agenda</span>{{/linkTo}}</li>
-			</ul>
-		</nav>
-
-		<div id="sec_menu">
-			<li class="menu_it login">{{#linkTo 'user.entrar'}}<span><span class="ico"></span>Fazer login</span>{{/linkTo}}</li>
-		</div>
-
-	</script>
 
 	<script type="text/x-handlebars" data-template-name="application">
 
 		{{view App.MenuView}}
 
 		<div id="wrapper" {{bindAttr class="route_class"}}>
+
 			<section id="content">
 				
 				{{outlet}}
 
 			</section>
+			
 		</div>
 
-	</script>
-	
-	<script type="text/x-handlebars" id="home">
-		<h1>
-			<span>Universidade</span>
-			<span>Popular</span>
-			<span>de Arte</span>
-			<span>e Ciência</span>
-		</h1>
-		
-		{{view App.HomeSlidesView}}
-
-	</script>
-
-	<script type="text/x-handlebars" id="home_view">
-		<ul class="slideshow">
-			<li><img src="./img/home01.jpg"></li>
-			<li><img src="./img/home02.jpg"></li>
-			<li><img src="./img/home03.jpg"></li>
-		</ul>
-	</script>
-	
-	<script type="text/x-handlebars" id="upac">
-		<h1>UPAC</h1>
-	</script>
-	
-	<script type="text/x-handlebars" id="rede">
-		{{view App.RedeView}}
-	</script>
-
-	<script type="text/x-handlebars" id="mapa">
-		<div id="map_canvas"></div>
-	</script>
-
-	<script type="text/x-handlebars" id="blog">
-		<h1>BLOG</h1>
-	</script>
-
-	<script type="text/x-handlebars" id="agenda">
-		<h1>AGENDA</h1>
-	</script>
-
-	<script type="text/x-handlebars" id="user">
-		<h1>USER</h1>
-		{{outlet}}
-	</script>
-	
-	<script type="text/x-handlebars" id="user/index">
-		lorem
-	</script>
-
-	<script type="text/x-handlebars" id="user_entrar">
-		<h1>ENTRAR</h1>
-	</script>
-
-	<script type="text/x-handlebars" id="user_cadastrar">
-		<h1>CADASTRAR</h1>
 	</script>
 	
 </body>

@@ -38,11 +38,7 @@ App.IndexRoute = Em.Route.extend({
         this.transitionTo('home');   
     }
 });
-/*
-App.UserRoute = Em.Route.extend({
 
-});
-*/
 //// CONTROLLERS
 
 // CONTROLLER PRINCIPAL
@@ -58,52 +54,37 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('currentPath')
 });
 
-App.RedeView = Ember.View.extend({
-    templateName: 'mapa',
-    handleClick: function(e){
-       console.log( e.latLng );
-    },
-    handleZoom: function() {
-        if (App.map.getZoom() < 3){
-            App.map.setZoom(3);
-        }
-        console.log('zoom factor',App.map.getZoom());
-    },
-    didInsertElement: function(){
 
-        var MY_MAPTYPE_ID = "UPAC";
-
-        var myOptions = {
-            center: new google.maps.LatLng(-16, -45),
-            zoom: 3,
-            mapTypeId: MY_MAPTYPE_ID,
-            mapTypeControlOptions: {
-                mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+App.UserController = Ember.Controller.extend({
+    isPosting: false,
+    submit: function(){
+        var data = $('form').serialize();
+        this.set('sending',true);
+        var _controller = this;
+        $.ajax({
+            type: 'POST',
+            url: '/user',
+            data: data,
+            success: function(data, status, jqXHR){
+                console.log(data);
+                _controller.set('isPosting',false);
+                App.TheUser.set('isLogged', true);
             },
-            mapTypeControl: false,
-            streetViewControl: false,
-            panControl: false,
-            zoomControl: true,
-            zoomControlOptions: {
-                style: google.maps.ZoomControlStyle.MEDIUM,
-                position: google.maps.ControlPosition.LEFT_BOTTOM
+            error: function(jqXHR,status,error){
+                console.log(arguments);
             }
-        };
-        
-        // cria mapa
-        App.map = new google.maps.Map($("#map_canvas").get(0),myOptions);
-        // cria estilo
-        var styledMapOptions = { name: 'UPAC Map' };
-        var customMapType = new google.maps.StyledMapType(mapstyles.lightblue, styledMapOptions);
-        // aplica estilo
-        App.map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
-        // eventos
-        google.maps.event.addListener(App.map, 'click', this.handleClick);
-        google.maps.event.addListener(App.map, 'zoom_changed', this.handleZoom);
-
-        console.log('maps!');
+        });
     }
 });
+
+//// OBJECTS
+
+App.User = Ember.Object.extend({
+  isLogged: false,
+  session: null
+});
+
+App.TheUser = App.User.create();
 
 //// VIEWS
 
@@ -116,7 +97,7 @@ App.MenuView = Em.View.extend({
 // SLIDESHOW HOME
 
 App.HomeSlidesView = Ember.View.extend({
-    templateName: 'home_view',
+    templateName: 'home_slides',
     t:-1,
     timer: null,
     tik: function(){
@@ -147,3 +128,57 @@ App.HomeSlidesView = Ember.View.extend({
     }
     
 });
+
+// MAPA
+
+App.RedeMapaView = Ember.View.extend({
+    templateName: 'rede_mapa',
+    handleClick: function(e){
+       console.log( e.latLng );
+    },
+    handleZoom: function() {
+        if (App.map.getZoom() < 3){
+            App.map.setZoom(3);
+        }
+        console.log('zoom factor',App.map.getZoom());
+    },
+    didInsertElement: function(){
+
+        var MY_MAPTYPE_ID = "UPAC";
+
+        var myOptions = {
+            center: new google.maps.LatLng(0, 0),
+            zoom: 3,
+            mapTypeId: MY_MAPTYPE_ID,
+            mapTypeControlOptions: {
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+            },
+            mapTypeControl: false,
+            streetViewControl: false,
+            panControl: false,
+            zoomControl: true,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.MEDIUM,
+                position: google.maps.ControlPosition.LEFT_BOTTOM
+            }
+        };
+        
+        // cria mapa
+        App.map = new google.maps.Map($("#map_canvas").get(0),myOptions);
+        // cria estilo
+        var styledMapOptions = { name: 'UPAC Map' };
+        var customMapType = new google.maps.StyledMapType(mapstyles.lightblue, styledMapOptions);
+        // aplica estilo
+        App.map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+        // eventos
+        google.maps.event.addListener(App.map, 'click', this.handleClick);
+        google.maps.event.addListener(App.map, 'zoom_changed', this.handleZoom);
+
+        console.log('maps!');
+    }
+});
+
+
+//// MODELS
+
+
