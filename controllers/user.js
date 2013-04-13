@@ -28,9 +28,9 @@ module.exports = {
 			res.json({msg:'ok'});
 		})
 	},
-	verify: function(req, res, next, token) {
+	verify: function(req, res, next) {
 		var user = User
-					.findOne({verificationToken:token})
+					.findOne({verificationToken:req.params.token})
 					.exec(function(err, user) {
 						if(err) return next(err);
 						if(!user) return res.json(401, {msg: 'token not found'});
@@ -39,8 +39,8 @@ module.exports = {
 						// TODO: avisar usuário no primeiro login
 					});
 	},
-	index: function(req, res, next, from) {
-		var _from = from || 0;
+	index: function(req, res, next) {
+		var _from = req.params.from || 0;
 		var limit = req.param('per_page') || 10;
 		var sortby = req.param('sort_by') || '';
 		var sortorder = (req.param('desc') || false) != false; 
@@ -76,17 +76,18 @@ module.exports = {
 		});
 		res.json({msg:'ok'});
 	},
-	show: function(req, res, next, name) {
+	show: function(req, res, next) {
+		console.info('oe');
 		var user = User
-					.findOne({username: name})
+					.findOne({username: req.params.name})
 					.exec(function(err, user) {
 						if(err) return next(err);
 						if(!user) return res.json(401, {msg: 'user not found'});
 						res.json({user:user});
 					});
 	},
-	remove: function(req, res, next, id) {
-		User.remove({_id: id}, function(err) {
+	remove: function(req, res, next) {
+		User.remove({_id: req.params.id}, function(err) {
 			if(err) return next(err);
 			res.json({msg:'ok'});
 		});

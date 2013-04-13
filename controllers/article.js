@@ -4,6 +4,7 @@ var mongoose = require('mongoose')
 
 module.exports = {
 	index: function(req, res) {
+		console.info('oe');
 		res.json({msg:'ok'});
 	},
 	create: function(req, res) {
@@ -11,8 +12,8 @@ module.exports = {
 		article.owner.push(req.user.id);
 		res.json({msg:'ok'});
 	},
-	show: function(req, res, next, id) {
-		Article.findById(id, function(err, article){
+	show: function(req, res, next) {
+		Article.findById(req.params.id, function(err, article){
 			if(err) return next(err);
 			if(!article) return res.json(404, {error: 'article not found'});
 			res.json({article:{
@@ -30,7 +31,7 @@ module.exports = {
 		Article.remove({_id: id})
 	},
 	bySlug: function(req, res, next, slug) {
-		
+
 	},
 	byUser: function(req, res, next, username) {
 
