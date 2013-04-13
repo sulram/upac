@@ -19,10 +19,13 @@ var app = express();
 
 // connect to mongodb instance, then initialize models
 mongoose.connect(config.db);
+
 var models_path = __dirname + '/models';
 fs.readdirSync(models_path).forEach(function(file) {
 	require(models_path+'/'+file);
 });
+
+var User = mongoose.Model('User');
 
 passport.serializeUser(function(user, done) {
 	done(null, user.email);
@@ -43,7 +46,7 @@ passport.use(new LocalStrategy(
 			if (!user) {
 				return done(null, false, {message: 'Usuário ou senha incorretos'});
 			}
-			if (!user.validPassword(password)) {
+			if (!user.authenticate(password)) {
 				return done(null, false, {message: 'Usuário ou senha incorretos'});
 			}
 			return done(null, user);

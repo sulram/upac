@@ -9,7 +9,7 @@ module.exports = function(app, passport, auth) {
 
 	app.all('/users', user.index);
 	app.post('/user', user.create);
-	app.post('/user/session', passport.authenticate('local'));
+	app.post('/user/session', passport.authenticate('local'), user.login);
 
 	app.put('/user/:id', auth.requiresLogin, auth.user.hasAuthorization, user.update);
 	app.get('/user/:id', user.show);

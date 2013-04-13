@@ -65,11 +65,12 @@ module.exports = {
 		query.exec(function(err, users) {
 			var _users = [];
 			if(err) return next(err);
-			for (var user in users) {
+			for (var i in users) {
+				var user = users[i];
 				_users.push({
 					username: user.username,
-					//name: user.name,
-					//createdAt: user.createdAt,
+					name: user.name,
+					createdAt: user.createdAt,
 					//lastLogin: user.lastLogin
 				})
 			}
@@ -89,7 +90,6 @@ module.exports = {
 		});
 	},
 	show: function(req, res, next) {
-		console.info('oe');
 		var user = User
 					.findOne({username: req.params.name})
 					.exec(function(err, user) {
