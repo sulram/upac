@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 
 
 var ArticleSchema = new Schema({
-	owner: ObjectId, // User
+	owners: [ObjectId], // Users
 	title: String,
 	slug: String,
 	content: String,

@@ -10,6 +10,7 @@ var UserSchema = new Schema({
 	hashed_password: String,
 	salt: String,
 	verifyToken: String,
+	provider: String,
 	createdAt: Date,
 	lastLogin: Date,
 });
