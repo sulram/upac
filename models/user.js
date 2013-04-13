@@ -17,6 +17,7 @@ var UserSchema = new Schema({
 			unique: true
 		}
 	},
+	geo: {type: [Number], index: "2d"},
 	hashed_password: String,
 	salt: String,
 	verifyToken: String,
