@@ -54,6 +54,7 @@ module.exports = {
 
 		query.exec(function(err, users) {
 			var _users = [];
+			if(err) return next(err);
 			for (var user in users) {
 				users.push({
 					username: user.username,
@@ -70,11 +71,10 @@ module.exports = {
 			res.json({
 				msg: 'ok',
 				users: _users,
-				from: from,
+				from: _from,
 				total: total
 			});
 		});
-		res.json({msg:'ok'});
 	},
 	show: function(req, res, next) {
 		console.info('oe');
