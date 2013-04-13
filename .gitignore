@@ -1,7 +1,4 @@
-
 node_modules
-config/
-
-
 .DS_Store
 sftp-config.json
+config/config.js
