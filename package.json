@@ -10,6 +10,7 @@
     "jade": "*",
     "mongoose": "3.6.4",
     "passport": "0.1.16",
-    "passport-local": "0.1.6"
+    "passport-local": "0.1.6",
+    "pow-mongoose-fixtures": "0.2.0"
   }
 }

@@ -14,8 +14,11 @@ module.exports = {
 		user.provider = 'local';
 		user.save(function(err){
 			if(err) {
-				return res.json(500, {msg:'database error'});
+				return res.json(500, {msg:'database error',
+									  error:err});
 			}
+			req.user = user;
+			req.session.unverified = true;
 			res.json({msg:'ok'});
 		});
 	},
@@ -35,15 +38,22 @@ module.exports = {
 						if(err) return next(err);
 						if(!user) return res.json(401, {msg: 'token not found'});
 						req.user = user;
-						res.redirect('/'); 
+						user.verificationToken = '';
+						user.save(function(err){
+							if (err) {
+								return res.json(500, {msg:'database error'});
+							}
+							delete req.session.unverified;
+							res.redirect('/'); 
+						});
 						// TODO: avisar usuário no primeiro login
 					});
 	},
 	index: function(req, res, next) {
-		var _from = req.params.from || 0;
+		var _from = req.param('from') || 0;
 		var limit = req.param('per_page') || 10;
 		var sortby = req.param('sort_by') || '';
-		var sortorder = (req.param('desc') || false) != false; 
+		var sortorder = req.param('order') || 1; 
 
 		var query = User.find({});
 		if (sortby !== '') {
@@ -56,11 +66,11 @@ module.exports = {
 			var _users = [];
 			if(err) return next(err);
 			for (var user in users) {
-				users.push({
+				_users.push({
 					username: user.username,
-					name: user.name,
-					createdAt: user.createdAt,
-					lastLogin: user.lastLogin
+					//name: user.name,
+					//createdAt: user.createdAt,
+					//lastLogin: user.lastLogin
 				})
 			}
 			var total = 0;
@@ -72,6 +82,8 @@ module.exports = {
 				msg: 'ok',
 				users: _users,
 				from: _from,
+				sort_by: sortby,
+				order: sortorder,
 				total: total
 			});
 		});
