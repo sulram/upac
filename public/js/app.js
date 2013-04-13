@@ -70,7 +70,7 @@ App.UserIndexController = Ember.Controller.extend({
     isPosting: false,
     submit: function(){
         var data = $('form').serialize();
-        this.set('sending',true);
+        this.set('isPosting',true);
         var _controller = this;
         $.ajax({
             type: 'POST',
@@ -92,7 +92,7 @@ App.UserCadastrarController = Ember.Controller.extend({
     isPosting: false,
     submit: function(){
         var data = $('form').serialize();
-        this.set('sending',true);
+        this.set('isPosting',true);
         var _controller = this;
         $.ajax({
             type: 'POST',
