@@ -37,6 +37,21 @@ App.IndexRoute = Em.Route.extend({
     }
 });
 
+App.LogoutRoute = Ember.Route.extend({
+    redirect: function() {
+        var _route = this;
+        $.ajax({
+            type: 'GET',
+            url: '/logout',
+            success: function(data, status, jqXHR){
+                console.log('logout',data);
+                App.TheUser.set('isLogged', false);
+                _route.transitionTo('home');
+            }
+        });
+    }
+});
+
 //// CONTROLLERS
 
 // CONTROLLER PRINCIPAL
@@ -50,20 +65,6 @@ App.ApplicationController = Ember.Controller.extend({
         this.set('route_class',route_class);
         App.set('currentPath', route_class);
     }.observes('currentPath')
-});
-
-
-App.LogoutController = Ember.Controller.extend({
-    redirect: function() {
-        $.ajax({
-            type: 'GET',
-            url: '/logout',
-            success: function(data, status, jqXHR){
-                App.TheUser.set('isLogged', false);
-                this.transitionTo('home');
-            }
-        });
-    }
 });
 
 App.UserIndexController = Ember.Controller.extend({
