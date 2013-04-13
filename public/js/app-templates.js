@@ -115,35 +115,9 @@ function program11(depth0,data) {
   data.buffer.push("</li>\n	</ul>\n</nav>\n\n<div id=\"sec_menu\">\n	<li class=\"menu_it login\">");
   hashTypes = {};
   options = {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "user.entrar", options) : helperMissing.call(depth0, "linkTo", "user.entrar", options));
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "user", options) : helperMissing.call(depth0, "linkTo", "user", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("</li>\n</div>");
-  return buffer;
-  
-});
-
-Ember.TEMPLATES["perfis"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
-
-
-  data.buffer.push("<h1>");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "login", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(": ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "profile.id", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" /// ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "profile.fullname", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" /// ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "profiles.fullname", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</h1>\n\n<button ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "teste", "profile.id", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">Contract</button>\n");
   return buffer;
   
 });
@@ -182,12 +156,33 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
 Ember.TEMPLATES["user"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, hashTypes, escapeExpression=this.escapeExpression, self=this;
 
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("\n\n	usuario logado\n\n");
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n	\n	<form id=\"register\" class=\"form-horizontal\">\n		<div class=\"control-group\">\n			<label class=\"control-label\" for=\"username\">Nome de usuário</label>\n			<div class=\"controls\">\n				<input type=\"text\" id=\"username\" name=\"username\" placeholder=\"\">\n			</div>\n		</div>\n		<div class=\"control-group\">\n			<label class=\"control-label\" for=\"email\">E-mail</label>\n			<div class=\"controls\">\n				<input type=\"text\" id=\"email\" name=\"email\" placeholder=\"\">\n			</div>\n		</div>\n		<div class=\"control-group\">\n			<label class=\"control-label\" for=\"password\">Senha</label>\n			<div class=\"controls\">\n				<input type=\"password\" id=\"password\" name=\"password\" placeholder=\"\">\n			</div>\n		</div>\n		<div class=\"control-group\">\n			<label class=\"control-label\" for=\"valpassword\">Repita a senha</label>\n			<div class=\"controls\">\n				<input type=\"password\" id=\"valpassword\" placeholder=\"\">\n			</div>\n		</div>\n		<div class=\"control-group\">\n			<div class=\"controls\">\n				<button type=\"submit\" class=\"btn\" ");
+  hashTypes = {'disabled': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'disabled': ("isPosting")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">Cadastrar</button>\n			</div>\n		</div>\n	</form>\n\n");
+  return buffer;
+  }
 
   data.buffer.push("<h1>Acessar UPAC</h1>\n\n");
   hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "outlet", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  stack1 = helpers['if'].call(depth0, "App.TheUser.isLogged", {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   return buffer;
   
 });

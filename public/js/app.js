@@ -54,6 +54,38 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('currentPath')
 });
 
+
+App.UserController = Ember.Controller.extend({
+    isPosting: false,
+    submit: function(){
+        var data = $('form').serialize();
+        this.set('sending',true);
+        var _controller = this;
+        $.ajax({
+            type: 'POST',
+            url: '/user',
+            data: data,
+            success: function(data, status, jqXHR){
+                console.log(data);
+                _controller.set('isPosting',false);
+                App.TheUser.set('isLogged', true);
+            },
+            error: function(jqXHR,status,error){
+                console.log(arguments);
+            }
+        });
+    }
+});
+
+//// OBJECTS
+
+App.User = Ember.Object.extend({
+  isLogged: false,
+  session: null
+});
+
+App.TheUser = App.User.create();
+
 //// VIEWS
 
 // MENU PRINCIPAL
