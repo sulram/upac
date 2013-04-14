@@ -85,6 +85,7 @@ App.UserIndexController = Ember.Controller.extend({
             success: function(data, status, jqXHR){
                 console.log(data);
                 _controller.set('isPosting',false);
+                App.TheUser.set('obj',data.user);
                 App.TheUser.login();
             },
             error: function(jqXHR,status,error){
@@ -114,6 +115,7 @@ App.UserCadastrarController = Ember.Controller.extend({
             success: function(data, status, jqXHR){
                 console.log(data);
                 _controller.set('isPosting',false);
+                App.TheUser.set('obj',data.user);
                 App.TheUser.login();
             },
             error: function(jqXHR,status,error){
@@ -130,6 +132,7 @@ App.UserCadastrarController = Ember.Controller.extend({
 App.User = Ember.Object.extend({
   isAuthenticated: false,
   session: null,
+  obj: {},
   login: function(){
     this.set('isAuthenticated',true);
   },

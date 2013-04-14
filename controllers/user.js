@@ -12,8 +12,7 @@ module.exports = {
 			msg:'ok',
 			user: {
 				id: req.user.id,
-				username: req.user.username,
-				name: req.user.name
+				username: req.user.username
 			}
 		});
 	},
@@ -28,7 +27,13 @@ module.exports = {
 			}
 			req.user = user;
 			req.session.unverified = true;
-			res.json({msg:'ok'});
+			res.json({
+				msg:'ok',
+				user: {
+					id: req.user.id,
+					username: req.user.username
+				}
+			});
 		});
 	},
 	update: function(req, res) {
