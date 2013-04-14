@@ -12,7 +12,7 @@ module.exports = function(app, passport, auth) {
 	app.post('/user/session', passport.authenticate('local'), user.login);
 
 	app.put('/user/:id', auth.requiresLogin, auth.user.hasAuthorization, user.update);
-	app.get('/user/:id', user.show);
+	app.get('/user/:username', user.show);
 
 	var article = require('../controllers/article.js');
 

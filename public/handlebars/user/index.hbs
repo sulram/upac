@@ -2,18 +2,24 @@
 	<div class="control-group">
 		<label class="control-label" for="username">Usuário ou e-mail</label>
 		<div class="controls">
-			<input type="text" id="username" name="username" placeholder="">
+			<input type="text" id="username" name="username" placeholder="" {{action "onFocus"}}>
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="password">Senha</label>
 		<div class="controls">
-			<input type="password" id="password" name="password" placeholder="">
+			<input type="password" id="password" name="password" placeholder="" {{action "onFocus"}}>
 		</div>
 	</div>
 	<div class="control-group">
 		<div class="controls">
-			<button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Entrar</button>
+			<p><button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Entrar</button></p>
+			{{#if flashMsg}}
+			<div class="alert alert-error">
+			  {{flashMsg}}
+			</div>
+			{{/if}}
 		</div>
 	</div>
 </form>
+
