@@ -24,11 +24,4 @@ Descrição e informações úteis desse módulo do projeto
 
 #### Pendências
 
-* homepage
-* validação cadastro e login
-* metodo para checar sessao no reload (front e backend)
-* testar inclusao e listagem de conteudo
-* testar inclusao no mapa!
-
-* melhorar css dos icones (testar no IE e ver problema no IOS)... copiar do [blogger](http://universidadepopulararteciencia.blogspot.com.br/)
-* 
+* [Listadas em Issues](https://github.com/ultraleve/upac/issues)
