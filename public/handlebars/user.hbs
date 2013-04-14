@@ -5,7 +5,6 @@
 {{#if App.TheUser.isAuthenticated}}
 
 	<p><strong>{{App.TheUser.obj.username}}</strong>, você está conectado e pronto para participar.</p>
-
 	<p><small>Deseja {{#linkTo "logout"}}desconectar-se{{/linkTo}}?</small></p>
 
 {{else}}
