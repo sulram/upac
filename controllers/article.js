@@ -45,7 +45,18 @@ module.exports = {
 		});
 	},
 	update: function(req, res) {
-		var article = Article.findById()
+		var article = Article.findById(req.param('id'), function(err, article) {
+			if(err) return next(err);
+			if(!article) return res.json(404, {error: 'article not found'});
+			article.updateAt = new Date();
+			article.save(function(err) {
+				if (err) return res.json(500, {error: 'internal server error'});
+				res.json({
+					msg: 'ok',
+					article: article,
+				});
+			});
+		});
 	},
 	remove: function(req, res, next) {
 		Article.remove({_id: id})

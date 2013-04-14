@@ -7,7 +7,16 @@ module.exports = {
 		req.logout();
 		res.json({msg:'ok'});
 	},
-	login: function(req, res) {},
+	login: function(req, res) {
+		res.json({
+			msg:'ok',
+			user: {
+				id: req.user.id,
+				username: req.user.username,
+				name: req.user.name
+			}
+		});
+	},
 
 	create: function(req, res) {
 		var user = new User(req.body);

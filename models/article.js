@@ -13,6 +13,7 @@ var ArticleSchema = new Schema({
 		}
 	},
 	content: String,
+	geo: {type: [Number], index: "2d"},
 	parent: ObjectId, // Article
 	publicationDate: Date,
 	createdAt: Date,
