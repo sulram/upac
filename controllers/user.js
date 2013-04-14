@@ -12,8 +12,7 @@ module.exports = {
 			msg:'ok',
 			user: {
 				id: req.user.id,
-				username: req.user.username,
-				name: req.user.name
+				username: req.user.username
 			}
 		});
 	},
@@ -28,7 +27,13 @@ module.exports = {
 			}
 			req.user = user;
 			req.session.unverified = true;
-			res.json({msg:'ok'});
+			res.json({
+				msg:'ok',
+				user: {
+					id: req.user.id,
+					username: req.user.username
+				}
+			});
 		});
 	},
 	update: function(req, res) {
@@ -99,13 +104,17 @@ module.exports = {
 		});
 	},
 	show: function(req, res, next) {
-		var user = User
-					.findOne({username: req.params.name})
-					.exec(function(err, user) {
-						if(err) return next(err);
-						if(!user) return res.json(401, {msg: 'user not found'});
-						res.json({user:user});
-					});
+		var query = User.findOne({username: req.params.username});
+		query.exec(function(err, user) {
+			if(err) return res.json(401, {msg: 'error',error:err});//return next(err);
+			if(!user) return res.json(401, {msg: 'user not found'});
+			console.log(user);
+			res.json({user:{
+				id: user._id,
+				username: user.username,
+				email: user.email
+			}});
+		});
 	},
 	remove: function(req, res, next) {
 		User.remove({_id: req.params.id}, function(err) {

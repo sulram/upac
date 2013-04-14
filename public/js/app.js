@@ -45,7 +45,7 @@ App.LogoutRoute = Ember.Route.extend({
             url: '/logout',
             success: function(data, status, jqXHR){
                 console.log('logout',data);
-                App.TheUser.set('isLogged', false);
+                App.TheUser.logout();
                 _route.transitionTo('home');
             }
         });
@@ -69,9 +69,14 @@ App.ApplicationController = Ember.Controller.extend({
 
 App.UserIndexController = Ember.Controller.extend({
     isPosting: false,
+    flashMsg: null,
+    onFocus: function(){
+        this.set('flashMsg',null);
+    },
     submit: function(){
         var data = $('form').serialize();
         this.set('isPosting',true);
+        this.set('flashMsg',null);
         var _controller = this;
         $.ajax({
             type: 'POST',
@@ -80,10 +85,13 @@ App.UserIndexController = Ember.Controller.extend({
             success: function(data, status, jqXHR){
                 console.log(data);
                 _controller.set('isPosting',false);
-                App.TheUser.set('isLogged', true);
+                App.TheUser.set('obj',data.user);
+                App.TheUser.login();
             },
             error: function(jqXHR,status,error){
                 console.log(arguments);
+                _controller.set('isPosting',false);
+                _controller.set('flashMsg','verifique nome de usuário e senha');
             }
         });
     }
@@ -91,9 +99,14 @@ App.UserIndexController = Ember.Controller.extend({
 
 App.UserCadastrarController = Ember.Controller.extend({
     isPosting: false,
+    flashMsg: null,
+    onFocus: function(){
+        this.set('flashMsg',null);
+    },
     submit: function(){
         var data = $('form').serialize();
         this.set('isPosting',true);
+        this.set('flashMsg',null);
         var _controller = this;
         $.ajax({
             type: 'POST',
@@ -102,10 +115,13 @@ App.UserCadastrarController = Ember.Controller.extend({
             success: function(data, status, jqXHR){
                 console.log(data);
                 _controller.set('isPosting',false);
-                App.TheUser.set('isLogged', true);
+                App.TheUser.set('obj',data.user);
+                App.TheUser.login();
             },
             error: function(jqXHR,status,error){
                 console.log(arguments);
+                _controller.set('isPosting',false);
+                _controller.set('flashMsg','verifique nome de usuário e senha');
             }
         });
     }
@@ -114,8 +130,15 @@ App.UserCadastrarController = Ember.Controller.extend({
 //// OBJECTS
 
 App.User = Ember.Object.extend({
-  isLogged: false,
-  session: null
+  isAuthenticated: false,
+  session: null,
+  obj: {},
+  login: function(){
+    this.set('isAuthenticated',true);
+  },
+  logout: function(){
+    this.set('isAuthenticated',false);
+  }
 });
 
 App.TheUser = App.User.create();

@@ -1,8 +1,10 @@
 <h1>Participe da UPAC</h1>
 
-{{#if App.TheUser.isLogged}}
+<hr/>
 
-	<p><strong>Fulano</strong>, você já está conectado para participar.</p>
+{{#if App.TheUser.isAuthenticated}}
+
+	<p><strong>{{App.TheUser.obj.username}}</strong>, você está conectado e pronto para participar.</p>
 
 	<p><small>Deseja {{#linkTo "logout"}}desconectar-se{{/linkTo}}?</small></p>
 
