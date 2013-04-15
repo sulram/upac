@@ -2,13 +2,13 @@ var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Article = mongoose.model('Article')
 
-module.exports = {
+module.exports = function (cdn) { return {
 	logout: function(req, res) {
 		req.logout();
-		res.json({msg:'ok'});
+		res.jsonx({msg:'ok'});
 	},
 	login: function(req, res) {
-		res.json({
+		res.jsonx({
 			msg:'ok',
 			user: {
 				id: req.user.id,
@@ -22,12 +22,12 @@ module.exports = {
 		user.provider = 'local';
 		user.save(function(err){
 			if(err) {
-				return res.json(500, {msg:'database error',
+				return res.jsonx(500, {msg:'database error',
 									  error:err});
 			}
 			req.user = user;
 			req.session.unverified = true;
-			res.json({
+			res.jsonx({
 				msg:'ok',
 				user: {
 					id: req.user.id,
@@ -40,9 +40,9 @@ module.exports = {
 		var user = req.user;
 		user.save(function(err) {
 			if (err) {
-				return res.json(500, {msg:'database error'});
+				return res.jsonx(500, {msg:'database error'});
 			}
-			res.json({msg:'ok'});
+			res.jsonx({msg:'ok'});
 		})
 	},
 	verify: function(req, res, next) {
@@ -50,12 +50,12 @@ module.exports = {
 					.findOne({verificationToken:req.params.token})
 					.exec(function(err, user) {
 						if(err) return next(err);
-						if(!user) return res.json(401, {msg: 'token not found'});
+						if(!user) return res.jsonx(401, {msg: 'token not found'});
 						req.user = user;
 						user.verificationToken = '';
 						user.save(function(err){
 							if (err) {
-								return res.json(500, {msg:'database error'});
+								return res.jsonx(500, {msg:'database error'});
 							}
 							delete req.session.unverified;
 							res.redirect('/'); 
@@ -83,7 +83,7 @@ module.exports = {
 				if (err) return next(err);
 				total = count;
 			})
-			res.json({
+			res.jsonx({
 				msg: 'ok',
 				users: users,
 				from: _from,
@@ -96,16 +96,15 @@ module.exports = {
 	show: function(req, res, next) {
 		var query = User.findOne({username: req.params.username});
 		query.exec(function(err, user) {
-			if(err) return res.json(401, {msg: 'error',error:err});//return next(err);
-			if(!user) return res.json(401, {msg: 'user not found'});
-			console.log(user);
-			res.json({user:user});
+			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
+			if(!user) return res.jsonx(401, {msg: 'user not found'});
+			res.jsonx({user:user});
 		});
 	},
 	remove: function(req, res, next) {
 		User.remove({_id: req.params.id}, function(err) {
 			if(err) return next(err);
-			res.json({msg:'ok'});
+			res.jsonx({msg:'ok'});
 		});
 	}
-}
+}}

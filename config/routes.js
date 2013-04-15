@@ -1,8 +1,8 @@
-module.exports = function(app, passport, auth) {
+module.exports = function(app, passport, auth, cdn) {
 
 	
-	var user = require('../controllers/user.js');
-	var article = require('../controllers/article.js');
+	var user = require('../controllers/user.js')(cdn);
+	var article = require('../controllers/article.js')(cdn);
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);

@@ -3,9 +3,12 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema;
 
 var AttachmentSchema = new Schema({
+	owner: {type:ObjectId, ref:'Article'},
 	cdn_id: String,
 	url: String,
 	filename: String,
+	size: Number,
+	createdAt: Date,
 });
 
 var ArticleSchema = new Schema({
@@ -30,11 +33,11 @@ var ArticleSchema = new Schema({
 	}],
 	references: [String],
 	images: [{type:ObjectId, ref:'Img'}],
-	attachments: [AttachmentSchema],
+	attachments: [{type:ObjectId, ref:'Attachment'}],
 	publicationStatus: String,
 	publicationDate: Date,
 	createdAt: Date,
 	updatedAt: Date,
 });
-
+mongoose.model('Attachment', AttachmentSchema);
 mongoose.model('Article', ArticleSchema);

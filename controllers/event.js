@@ -8,7 +8,7 @@ module.exports = {
 		_Event.findById(req.param.id, function(err, _event) {
 			if (err) return next(err);
 			if (!_event) return res.json(404, {error: "Event not found"});
-			res.json({
+			res.jsonx({
 				msg: "ok",
 				event: _event
 			});
@@ -18,7 +18,8 @@ module.exports = {
 		var _event = new _Event(req.body);
 		_event.save(function(err) {
 			if(err) return next(err);
-			res.json({msg: "ok"});
+			res.jsonx({msg: "ok"});
 		});
-	}
+	},
+
 }
