@@ -4,7 +4,12 @@ var mongoose = require('mongoose'),
 
 var TagSchema = new Schema({
 	name: String,
-	slug: String,
+	slug: {
+		type: String,
+		index: {
+			unique: true
+		}
+	},
 	relatives: [{type:ObjectId, ref:'Tag'}]
 });
 

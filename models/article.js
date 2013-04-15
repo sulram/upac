@@ -2,6 +2,11 @@ var mongoose = require('mongoose')
   , ObjectId = mongoose.Schema.ObjectId
   , Schema = mongoose.Schema;
 
+var AttachmentSchema = new Schema({
+	cdn_id: String,
+	url: String,
+	filename: String,
+});
 
 var ArticleSchema = new Schema({
 	owners: [{
@@ -25,6 +30,8 @@ var ArticleSchema = new Schema({
 	}],
 	references: [String],
 	images: [{type:ObjectId, ref:'Img'}],
+	attachments: [AttachmentSchema],
+	publicationStatus: String,
 	publicationDate: Date,
 	createdAt: Date,
 	updatedAt: Date,

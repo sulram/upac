@@ -8,6 +8,9 @@
     "passport": "0.1.16",
     "passport-local": "0.1.6",
     "pow-mongoose-fixtures": "0.2.0",
+    "jpegtrans": "0.0.4",
+    "optipng": "0.0.4",
+    "pkgcloud": "0.6.12",
     "grunt": "~0.4.0"
   },
   "devDependencies": {

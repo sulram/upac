@@ -38,6 +38,12 @@ UserSchema.virtual('password').set(function(password){
 	return this._password;
 });
 
+var emailregex = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
+
+UserSchema.path('email').validate(function(email){
+	return emailregex.test(email);
+}, 'Invalid E-mail');
+
 var validatePresenceOf = function(value) {
 	return value && value.length;
 }
@@ -49,7 +55,6 @@ UserSchema.pre('save', function(next) {
 		this.createdAt = new Date();
 		// enviar email para o usuário com token de validação
 	}
-	// TODO: checar se username/email já existem
 	if(!validatePresenceOf(this.password)) {
 		next(new Error('Invalid Password'));
 	} else {

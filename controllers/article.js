@@ -27,10 +27,16 @@ module.exports = {
 		});
 
 	},
-	create: function(req, res) {
+	create: function(req, res, next) {
 		var article = new Article(req.data);
 		article.owner.push(req.user.id);
-		res.json({msg:'ok'});
+		article.save(function(err) {
+			if (err) return next(err);
+			res.json({
+				msg:'ok',
+				article: article
+			});
+		});
 	},
 	show: function(req, res, next) {
 		Article.findById(req.params.id, function(err, article){
@@ -85,5 +91,11 @@ module.exports = {
 			});
 
 		});
+	},
+	uploadImage: function(req, res, next) {
+		
+	},
+	uploadAttachment: function(req, res, next) {
+
 	}
 }
