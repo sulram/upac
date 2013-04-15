@@ -77,17 +77,7 @@ module.exports = {
 		query.skip(_from).limit(limit);
 
 		query.exec(function(err, users) {
-			var _users = [];
 			if(err) return next(err);
-			for (var i in users) {
-				var user = users[i];
-				_users.push({
-					username: user.username,
-					name: user.name,
-					createdAt: user.createdAt,
-					//lastLogin: user.lastLogin
-				})
-			}
 			var total = 0;
 			User.count({}, function(err, count) {
 				if (err) return next(err);
@@ -95,7 +85,7 @@ module.exports = {
 			})
 			res.json({
 				msg: 'ok',
-				users: _users,
+				users: users,
 				from: _from,
 				sort_by: sortby,
 				order: sortorder,
@@ -109,11 +99,7 @@ module.exports = {
 			if(err) return res.json(401, {msg: 'error',error:err});//return next(err);
 			if(!user) return res.json(401, {msg: 'user not found'});
 			console.log(user);
-			res.json({user:{
-				id: user._id,
-				username: user.username,
-				email: user.email
-			}});
+			res.json({user:user});
 		});
 	},
 	remove: function(req, res, next) {

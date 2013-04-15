@@ -5,6 +5,10 @@ var mongoose = require('mongoose')
 
 var UserSchema = new Schema({
 	name: String,
+	avatar: {
+		type:ObjectId,
+		ref: 'Img'
+	},
 	username: {
 		type: String, 
 		index: {
@@ -63,6 +67,14 @@ UserSchema.methods = {
 	encryptPassword: function(password) {
 		if(!password) return ''
 		return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
+	},
+	toJSON: function() {
+		var obj = this.toObject();
+		delete obj.hashed_password;
+		delete obj.salt;
+		delete obj.verifyToken;
+		delete obj.provider;
+		return obj;
 	}
 }
 
