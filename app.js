@@ -43,12 +43,25 @@ passport.use(new LocalStrategy(
 				return done(err);
 			}
 			if (!user) {
-				return done(null, false, {message: 'Usuário ou senha incorretos'});
+				User.findOne({email:username}, function(err, user) {
+					if(err) return done(err);
+					if(!user) return done(null, false, {message: 'Usuário ou senha incorretos'});
+					user.lastLogin = new Date();
+					user.save(function(err) {
+						if (err) return done(err);
+						return done(null, user);
+					});
+				});
+				return;
 			}
 			if (!user.authenticate(password)) {
 				return done(null, false, {message: 'Usuário ou senha incorretos'});
 			}
-			return done(null, user);
+			user.lastLogin = new Date();
+			user.save(function(err) {
+				if (err) return done(err);
+				return done(null, user);
+			})
 		});
 	}
 ));

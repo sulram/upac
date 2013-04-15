@@ -4,7 +4,10 @@ var mongoose = require('mongoose')
 
 
 var ArticleSchema = new Schema({
-	owners: [ObjectId], // Users
+	owners: [{
+		type:ObjectId,
+		ref: 'User'
+	}],
 	title: String,
 	slug: {
 		type: String,
@@ -12,9 +15,16 @@ var ArticleSchema = new Schema({
 			unique: true
 		}
 	},
+	excerpt: String,
 	content: String,
 	geo: {type: [Number], index: "2d"},
-	parent: ObjectId, // Article
+	parent: {type:ObjectId, ref:'Article'}, // Article
+	tags: [{
+		type: ObjectId,
+		ref: 'Tag'
+	}],
+	references: [String],
+	images: [{type:ObjectId, ref:'Img'}],
 	publicationDate: Date,
 	createdAt: Date,
 	updatedAt: Date,
