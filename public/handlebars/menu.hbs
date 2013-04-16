@@ -9,5 +9,15 @@
 </nav>
 
 <div id="sec_menu">
-	<li class="menu_it login">{{#linkTo 'user'}}<span><span class="ico"></span>Participar</span>{{/linkTo}}</li>
+
+	{{#if User.auth.loggedIn}}
+		
+		<li class="menu_it logout">{{#linkTo 'logout'}}<span><span class="ico"></span>Sair</span>{{/linkTo}}</li>
+
+	{{else}}
+
+		<li class="menu_it login">{{#linkTo 'user'}}<span><span class="ico"></span>Participar</span>{{/linkTo}}</li>
+
+	{{/if}}
+
 </div>

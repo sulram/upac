@@ -65,7 +65,7 @@ module.exports = function (cdn) { return {
 	},
 	index: function(req, res, next) {
 		var _from = req.param('from') || 0;
-		var limit = req.param('per_page') || 10;
+		var limit = req.param('limit') || 10;
 		var sortby = req.param('sort_by') || '';
 		var sortorder = req.param('order') || 1; 
 
