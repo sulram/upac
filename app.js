@@ -94,7 +94,7 @@ app.use(function(req, res, next){ // json extension middleware
 				obj = arguments[1];
 			}
 		}
-		res.json(code, _.extend({loggedIn: req.isAuthenticated()}, flash, obj));
+		res.json(code, _.extend({loggedIn: req.isAuthenticated(), username: req.isAuthenticated() ? req.user.username : null}, flash, obj));
 	};
 	next();
 });

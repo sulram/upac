@@ -31,7 +31,7 @@ module.exports = function(cdn){ return {
 	},
 	create: function(req, res, next) {
 		var article = new Article(req.data);
-		article.owner.push(req.user.id);
+		article.owners.push(req.user.id);
 		article.save(function(err) {
 			if (err) return next(err);
 			res.jsonx({
