@@ -32,6 +32,7 @@ module.exports = function(cdn){ return {
 	create: function(req, res, next) {
 		var article = new Article(req.data);
 		article.owners.push(req.user.id);
+		article.slug = article._id;
 		article.save(function(err) {
 			if (err) return next(err);
 			res.jsonx({
