@@ -87,6 +87,7 @@ module.exports = function (cdn) { return {
 				msg: 'ok',
 				users: users,
 				from: _from,
+				limit: limit,
 				sort_by: sortby,
 				order: sortorder,
 				total: total

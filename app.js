@@ -4,17 +4,17 @@
  */
 
 var express = require('express')
-  , _ = require('underscore')
-  , fs = require('fs')
-  , env = process.env.NODE_ENV || 'development'
-  , config = require('./config/config')[env]
-  , http = require('http')
-  , path = require('path')
-  , mongoose = require('mongoose')
-  , passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy
-  , auth = require('./helpers/auth')
-  , crypto = require('crypto');
+	, _ = require('underscore')
+	, fs = require('fs')
+	, env = process.env.NODE_ENV || 'development'
+	, config = require('./config/config')[env]
+	, http = require('http')
+	, path = require('path')
+	, mongoose = require('mongoose')
+	, passport = require('passport')
+	, LocalStrategy = require('passport-local').Strategy
+	, auth = require('./helpers/auth')
+	, crypto = require('crypto');
 
 var app = express();
 
@@ -94,7 +94,11 @@ app.use(function(req, res, next){ // json extension middleware
 				obj = arguments[1];
 			}
 		}
-		res.json(code, _.extend({loggedIn: req.isAuthenticated(), username: req.isAuthenticated() ? req.user.username : null}, flash, obj));
+		var auth = {
+			loggedIn: req.isAuthenticated(),
+			username: req.isAuthenticated() ? req.user.username : null
+		};
+		res.json(code, _.extend({auth: auth}, flash, obj));
 	};
 	next();
 });
@@ -103,7 +107,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+	app.use(express.errorHandler());
 }
 var cdn = function() {
 	return require('pkgcloud').storage.createClient(config.cdn);
@@ -111,5 +115,5 @@ var cdn = function() {
 require('./config/routes')(app, passport, auth, cdn);
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+	console.log('Express server listening on port ' + app.get('port'));
 });
