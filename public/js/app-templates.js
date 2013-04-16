@@ -11,10 +11,100 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
 Ember.TEMPLATES["blog"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  var buffer = '', stack1, stack2, hashTypes, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
   
+  var buffer = '', hashTypes;
+  data.buffer.push("\n		<a ");
+  hashTypes = {'href': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'href': ("view.href")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">Destaques</a>\n	");
+  return buffer;
+  }
 
+function program3(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n		<a ");
+  hashTypes = {'href': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'href': ("view.href")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">Mais recentes</a>\n	");
+  return buffer;
+  }
 
-  data.buffer.push("<h1>Blog</h1>");
+function program5(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n		<a ");
+  hashTypes = {'href': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'href': ("view.href")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">Mais comentadas</a>\n	");
+  return buffer;
+  }
+
+function program7(depth0,data) {
+  
+  var buffer = '', stack1, stack2, hashTypes, options;
+  data.buffer.push("\n	\n		");
+  hashTypes = {'tagName': "STRING",'href': "BOOLEAN"};
+  options = {hash:{
+    'tagName': ("li"),
+    'href': (false)
+  },inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "blog.user", options) : helperMissing.call(depth0, "linkTo", "blog.user", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n\n	");
+  return buffer;
+  }
+function program8(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n			<a ");
+  hashTypes = {'href': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'href': ("view.href")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">Minhas colaborações</a>\n		");
+  return buffer;
+  }
+
+  data.buffer.push("<h1>Blog</h1>\n\n<hr/>\n\n<ul class=\"nav nav-pills\">\n\n	");
+  hashTypes = {'tagName': "STRING",'href': "BOOLEAN"};
+  options = {hash:{
+    'tagName': ("li"),
+    'href': (false)
+  },inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "blog.index", options) : helperMissing.call(depth0, "linkTo", "blog.index", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n\n	");
+  hashTypes = {'tagName': "STRING",'href': "BOOLEAN"};
+  options = {hash:{
+    'tagName': ("li"),
+    'href': (false)
+  },inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "blog.recentes", options) : helperMissing.call(depth0, "linkTo", "blog.recentes", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n\n	");
+  hashTypes = {'tagName': "STRING",'href': "BOOLEAN"};
+  options = {hash:{
+    'tagName': ("li"),
+    'href': (false)
+  },inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "blog.populares", options) : helperMissing.call(depth0, "linkTo", "blog.populares", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n\n	");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "App.TheUser.isAuthenticated", {hash:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n\n</ul>");
+  return buffer;
   
 });
 
@@ -44,7 +134,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
 Ember.TEMPLATES["menu"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', stack1, stack2, hashTypes, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, stack2, hashTypes, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 function program1(depth0,data) {
   
@@ -77,6 +167,34 @@ function program9(depth0,data) {
   }
 
 function program11(depth0,data) {
+  
+  var buffer = '', stack1, stack2, hashTypes, options;
+  data.buffer.push("\n		\n		<li class=\"menu_it logout\">");
+  hashTypes = {};
+  options = {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "logout", options) : helperMissing.call(depth0, "linkTo", "logout", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("</li>\n\n	");
+  return buffer;
+  }
+function program12(depth0,data) {
+  
+  
+  data.buffer.push("<span><span class=\"ico\"></span>Sair</span>");
+  }
+
+function program14(depth0,data) {
+  
+  var buffer = '', stack1, stack2, hashTypes, options;
+  data.buffer.push("\n\n		<li class=\"menu_it login\">");
+  hashTypes = {};
+  options = {hash:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "user", options) : helperMissing.call(depth0, "linkTo", "user", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("</li>\n\n	");
+  return buffer;
+  }
+function program15(depth0,data) {
   
   
   data.buffer.push("<span><span class=\"ico\"></span>Participar</span>");
@@ -112,12 +230,11 @@ function program11(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "agenda", options) : helperMissing.call(depth0, "linkTo", "agenda", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("</li>\n	</ul>\n</nav>\n\n<div id=\"sec_menu\">\n	<li class=\"menu_it login\">");
+  data.buffer.push("</li>\n	</ul>\n</nav>\n\n<div id=\"sec_menu\">\n\n	");
   hashTypes = {};
-  options = {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "user", options) : helperMissing.call(depth0, "linkTo", "user", options));
+  stack2 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(14, program14, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("</li>\n</div>");
+  data.buffer.push("\n\n</div>");
   return buffer;
   
 });
@@ -161,9 +278,9 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
-  data.buffer.push("\n\n	<p><strong>");
+  data.buffer.push("\n\n	<p><strong style=\"text-transform:uppercase;\">");
   hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "App.TheUser.obj.username", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "User.auth.username", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push("</strong>, você está conectado e pronto para participar.</p>\n\n	<p><small>Deseja ");
   hashTypes = {};
   options = {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
@@ -229,7 +346,7 @@ function program7(depth0,data) {
 
   data.buffer.push("<h1>Participe da UPAC</h1>\n\n<hr/>\n\n");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "App.TheUser.isAuthenticated", {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   return buffer;
   

@@ -24,4 +24,39 @@ Descrição e informações úteis desse módulo do projeto
 
 #### Pendências
 
+* bootstrap basico pra telas internas (reponsive)
+* criar posts (usuario fixo)
+* se colocar no mapa (marcadores e popups)
 * [Listadas em Issues](https://github.com/ultraleve/upac/issues)
+
+
+#### Features do backend
+
+* artigo
+* usuario
+* middleware usuario
+
+#### Proximos features do backend
+
+* middleware flash: null / {status, msg}
+* cdn
+* upload
+
+
+---
+
+#### release 0 alpha / apresentar pra UPAC
+
+estamos desenvolvendo uma plataforma simples e complexa: simples pois esta sintetizando o uso da interface em pequenos modulos, mas cada modulo com um universo de possibilidades e questões de UX. é um produto em eternamente em desenvolvimento.
+
+precisamos de mais tempo para amarrar tudo: layouts, segurança, moderadores, admins... mas podemos lançar o alpha e depois o beta
+
+#### release 1 alpha / abrir para rede
+
+dominio, hospedagem e CDN
+
+#### release 2 beta / mais features
+
+* interface storify
+* esqueci minha senha / recuperar senha / redefinir senha
+* topicos / topicos geolocalizados / tipo de topico / relacionamento com users

@@ -2,9 +2,9 @@
 
 <hr/>
 
-{{#if App.TheUser.isAuthenticated}}
+{{#if User.auth.loggedIn}}
 
-	<p><strong>{{App.TheUser.obj.username}}</strong>, você está conectado e pronto para participar.</p>
+	<p><strong style="text-transform:uppercase;">{{User.auth.username}}</strong>, você está conectado e pronto para participar.</p>
 
 	<p><small>Deseja {{#linkTo "logout"}}desconectar-se{{/linkTo}}?</small></p>
 

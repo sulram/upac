@@ -15,6 +15,37 @@ window.App = Ember.Application.create({
     currentPath: ''
 });
 
+//// USER
+
+App.User = Ember.Object.extend({
+  auth: {
+    loggedIn: false,
+    username: null,
+  },
+  init: function() {
+    this._super();
+    var _self = this;
+    $.ajax({
+        type: 'GET',
+        url: '/users',
+        data: { limit: 1 },
+        success: function(data, status, jqXHR){
+            _self.authenticate(data.auth);
+        },
+        error: function(jqXHR,status,error){
+            console.log(jqXHR);
+            _self.authenticate(JSON.parse(jqXHR.responseText));
+        }
+    });
+  },
+  authenticate: function(auth){
+    this.set('auth',auth);
+    console.log('auth!',auth);
+  }
+});
+
+var User = App.User.create();
+
 //// ROUTES
 
 // ROUTER PRINCIPAL
@@ -23,7 +54,11 @@ App.Router.map(function() {
     this.resource("home");
     this.resource("agenda");
     this.resource("rede");
-    this.resource("blog");
+    this.resource("blog",function(){
+        this.route("recentes");
+        this.route("populares");
+        this.route("user");
+    });
     this.resource("upac");
     this.resource("user",function(){
         this.route("cadastrar");
@@ -44,8 +79,7 @@ App.LogoutRoute = Ember.Route.extend({
             type: 'GET',
             url: '/logout',
             success: function(data, status, jqXHR){
-                console.log('logout',data);
-                App.TheUser.logout();
+                User.authenticate(data.auth);
                 _route.transitionTo('home');
             }
         });
@@ -85,8 +119,7 @@ App.UserIndexController = Ember.Controller.extend({
             success: function(data, status, jqXHR){
                 console.log(data);
                 _controller.set('isPosting',false);
-                App.TheUser.set('obj',data.user);
-                App.TheUser.login();
+                User.authenticate(data.auth);
             },
             error: function(jqXHR,status,error){
                 console.log(arguments);
@@ -113,10 +146,8 @@ App.UserCadastrarController = Ember.Controller.extend({
             url: '/user',
             data: data,
             success: function(data, status, jqXHR){
-                console.log(data);
                 _controller.set('isPosting',false);
-                App.TheUser.set('obj',data.user);
-                App.TheUser.login();
+                User.authenticate(data.auth);
             },
             error: function(jqXHR,status,error){
                 console.log(arguments);
@@ -126,22 +157,6 @@ App.UserCadastrarController = Ember.Controller.extend({
         });
     }
 });
-
-//// OBJECTS
-
-App.User = Ember.Object.extend({
-  isAuthenticated: false,
-  session: null,
-  obj: {},
-  login: function(){
-    this.set('isAuthenticated',true);
-  },
-  logout: function(){
-    this.set('isAuthenticated',false);
-  }
-});
-
-App.TheUser = App.User.create();
 
 //// VIEWS
 

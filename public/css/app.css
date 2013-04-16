@@ -123,6 +123,7 @@ body {
 }
 
 .menu_it.login a span .ico { background-position: 0 -64px; }
+.menu_it.logout a span .ico { background-position: -64px -64px; }
 
 
 /* ---------------- CONTENT AND WRAPPER ---------------- */
