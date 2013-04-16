@@ -1,7 +1,9 @@
-module.exports = function(app, passport, auth) {
+module.exports = function(app, passport, auth, cdn) {
 
 	
-	var user = require('../controllers/user.js');
+	var user = require('../controllers/user.js')(cdn);
+	var article = require('../controllers/article.js')(cdn);
+
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);
 
@@ -13,14 +15,12 @@ module.exports = function(app, passport, auth) {
 
 	app.put('/user/:id', auth.requiresLogin, auth.user.hasAuthorization, user.update);
 	app.get('/user/:username', user.show);
-
-	var article = require('../controllers/article.js');
+	app.get('/user/:username/articles', article.byUser);
 
 	app.all('/article', article.index);
 	app.get('/article/new', auth.requiresLogin, article.create);
 	app.post('/article', auth.requiresLogin, article.create);
 	app.get('/article/find/:slug', article.bySlug);
-	app.get('/article/by_user/:username', article.byUser);
 	app.get('/article/:id', article.show);
 	app.put('/article/:id', auth.requiresLogin, auth.article.hasAuthorization, article.update);
 	app.del('/article/:id', auth.requiresLogin, auth.article.hasAuthorization, article.remove);

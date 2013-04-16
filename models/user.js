@@ -5,6 +5,10 @@ var mongoose = require('mongoose')
 
 var UserSchema = new Schema({
 	name: String,
+	avatar: {
+		type:ObjectId,
+		ref: 'Img'
+	},
 	username: {
 		type: String, 
 		index: {
@@ -34,6 +38,12 @@ UserSchema.virtual('password').set(function(password){
 	return this._password;
 });
 
+var emailregex = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
+
+UserSchema.path('email').validate(function(email){
+	return emailregex.test(email);
+}, 'Invalid E-mail');
+
 var validatePresenceOf = function(value) {
 	return value && value.length;
 }
@@ -45,7 +55,6 @@ UserSchema.pre('save', function(next) {
 		this.createdAt = new Date();
 		// enviar email para o usuário com token de validação
 	}
-	// TODO: checar se username/email já existem
 	if(!validatePresenceOf(this.password)) {
 		next(new Error('Invalid Password'));
 	} else {
@@ -63,6 +72,14 @@ UserSchema.methods = {
 	encryptPassword: function(password) {
 		if(!password) return ''
 		return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
+	},
+	toJSON: function() {
+		var obj = this.toObject();
+		delete obj.hashed_password;
+		delete obj.salt;
+		delete obj.verifyToken;
+		delete obj.provider;
+		return obj;
 	}
 }
 

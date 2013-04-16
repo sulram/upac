@@ -4,6 +4,7 @@
  */
 
 var express = require('express')
+  , _ = require('underscore')
   , fs = require('fs')
   , env = process.env.NODE_ENV || 'development'
   , config = require('./config/config')[env]
@@ -43,12 +44,25 @@ passport.use(new LocalStrategy(
 				return done(err);
 			}
 			if (!user) {
-				return done(null, false, {message: 'Usuário ou senha incorretos'});
+				User.findOne({email:username}, function(err, user) {
+					if(err) return done(err);
+					if(!user) return done(null, false, {message: 'Usuário ou senha incorretos'});
+					user.lastLogin = new Date();
+					user.save(function(err) {
+						if (err) return done(err);
+						return done(null, user);
+					});
+				});
+				return;
 			}
 			if (!user.authenticate(password)) {
 				return done(null, false, {message: 'Usuário ou senha incorretos'});
 			}
-			return done(null, user);
+			user.lastLogin = new Date();
+			user.save(function(err) {
+				if (err) return done(err);
+				return done(null, user);
+			})
 		});
 	}
 ));
@@ -65,6 +79,25 @@ app.use(express.cookieParser());
 app.use(express.session({secret:config.secret}))
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next){ // json extension middleware
+	var flash = {};
+	res.addJFlash = function(type, msg) {
+		flash[type] = msg;
+	};
+	res.jsonx = function(obj) {
+		var code = 200;
+		if(2 == arguments.length) {
+			if('number' == typeof arguments[1]) {
+				code = arguments[1];
+			} else {
+				code = obj;
+				obj = arguments[1];
+			}
+		}
+		res.json(code, _.extend({loggedIn: req.isAuthenticated()}, flash, obj));
+	};
+	next();
+});
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -72,8 +105,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-
-require('./config/routes')(app, passport, auth);
+var cdn = function() {
+	return require('pkgcloud').storage.createClient(config.cdn);
+}
+require('./config/routes')(app, passport, auth, cdn);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

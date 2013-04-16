@@ -164,7 +164,7 @@ function program1(depth0,data) {
   data.buffer.push("\n\n	<p><strong>");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "App.TheUser.obj.username", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</strong>, você está conectado e pronto para participar.</p>\n	<p><small>Deseja ");
+  data.buffer.push("</strong>, você está conectado e pronto para participar.</p>\n\n	<p><small>Deseja ");
   hashTypes = {};
   options = {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "logout", options) : helperMissing.call(depth0, "linkTo", "logout", options));
