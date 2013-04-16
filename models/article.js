@@ -39,5 +39,29 @@ var ArticleSchema = new Schema({
 	createdAt: Date,
 	updatedAt: Date,
 });
+
+var slugify = function(str) {
+	str = str.toLowerCase();
+	str = str.replace(/[àáâãä]/ig, 'a');
+	str = str.replace(/[éêë]/ig, 'e');
+	str = str.replace(/[íï]/ig, 'i');
+	str = str.replace(/[óôõö]/ig, 'o');
+	str = str.replace(/[úü]/ig, 'u');
+	str = str.replace(/ç/ig, 'c');
+	str = str.replace(/ñ/ig, 'n');
+	str = str.replace(/[^-a-zA-Z0-9,&\s]+/ig, '');
+	str = str.replace(/-/ig, '_');
+	str = str.replace(/\s/ig, '-');
+	return str;
+}
+ArticleSchema.pre('save', function(next) {
+	if(this.isNew) {
+		this.createdAt = new Date();
+	}
+	if(!this.slug || '' == this.slug) {
+		this.slug = slugify(this.title);
+	}
+	next();
+});
 mongoose.model('Attachment', AttachmentSchema);
 mongoose.model('Article', ArticleSchema);

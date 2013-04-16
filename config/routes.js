@@ -3,6 +3,7 @@ module.exports = function(app, passport, auth, cdn) {
 	
 	var user = require('../controllers/user.js')(cdn);
 	var article = require('../controllers/article.js')(cdn);
+	var _event = require('../controllers/event.js')(cdn);
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);

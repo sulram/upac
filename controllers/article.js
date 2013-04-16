@@ -31,7 +31,7 @@ module.exports = function(cdn){ return {
 	},
 	create: function(req, res, next) {
 		var article = new Article(req.data);
-		article.owner.push(req.user.id);
+		article.owners.push(req.user.id);
 		article.save(function(err) {
 			if (err) return next(err);
 			res.jsonx({
@@ -99,14 +99,20 @@ module.exports = function(cdn){ return {
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {msg: "article not found"});
 			var img = new Img();
-			cdn.upload()
-
-			img.save();
-			article.images.push(img.id);
-			article.save(function(err){
-				if (err) return res.jsonx(500, {msg: "error saving image"});
-				res.jsonx({msg:"ok", image:img});
+			img.filename = req.files[0];
+			var remote_name = 'article-'+article.id+'/'+img.filename;
+			cdn().upload({
+				container: 'upac',
+				remote: remote_name,
+			},function(err) {
+				img.save();
+				article.images.push(img.id);
+				article.save(function(err){
+					if (err) return res.jsonx(500, {msg: "error saving image"});
+					res.jsonx({msg:"ok", image:img});
+				});
 			});
+
 		});
 	},
 	uploadAttachment: function(req, res, next) {
@@ -115,7 +121,6 @@ module.exports = function(cdn){ return {
 			if(!article) return res.jsonx(404, {msg: "article not found"});
 			var attachment = new Attachment();
 			cdn.upload()
-
 			attachment.save();
 			article.attachments.push(attachment.id);
 			article.save(function(err){

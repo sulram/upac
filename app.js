@@ -4,6 +4,7 @@
  */
 
 var express = require('express')
+  //, connect_form = require('connect-form')
   , _ = require('underscore')
   , fs = require('fs')
   , env = process.env.NODE_ENV || 'development'
@@ -13,7 +14,7 @@ var express = require('express')
   , mongoose = require('mongoose')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
-  , auth = require('./helpers/auth')
+  , auth = require('./helpers/auth')(_)
   , crypto = require('crypto');
 
 var app = express();
@@ -79,10 +80,16 @@ app.use(express.cookieParser());
 app.use(express.session({secret:config.secret}))
 app.use(passport.initialize());
 app.use(passport.session());
+//app.use(connect_form({keepExtensions: true}));
 app.use(function(req, res, next){ // json extension middleware
-	var flash = {};
+	var flash = null;
 	res.addJFlash = function(type, msg) {
-		flash[type] = msg;
+		if (!flash) {
+			flash = {flash:[]};
+		}
+		var obj = {};
+		obj[type] = msg;
+		flash.flash.push(obj);
 	};
 	res.jsonx = function(obj) {
 		var code = 200;

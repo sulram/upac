@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 	Article = mongoose.model('Article'),
 	_Event = mongoose.model('Event');
 
-module.exports = {
+module.exports = function(cdn) { return {
 	show: function(req, res, next) {
 		_Event.findById(req.param.id, function(err, _event) {
 			if (err) return next(err);
@@ -21,5 +21,9 @@ module.exports = {
 			res.jsonx({msg: "ok"});
 		});
 	},
+	remove: function(req, res, next) {
+		_Event.remove({_id: req.param('id')});
+		res.jsonx({msg: "ok"});
+	}
 
-}
+}}
