@@ -494,7 +494,7 @@ function program13(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div class=\"row-fluid\">\n	\n	<div class=\"span4\">\n		<h1 class=\"side_title\">entre na rede UPAC</h1>\n	</div>\n\n	<div class=\"span8\">\n\n		<p>&nbsp;</p>\n\n");
+  data.buffer.push("<div class=\"row-fluid\">\n	\n	<div class=\"span4\">\n		<h1 class=\"side_title\">entre na rede UPAC</h1>\n	</div>\n\n	<div class=\"span1\">\n		&nbsp;\n	</div>\n\n	<div class=\"span7\">\n\n		<p>&nbsp;</p>\n\n");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(10, program10, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
