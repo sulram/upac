@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
   , Img = mongoose.model('Img')
   , Attachment = mongoose.model('Attachment')
+  , fs = require('fs')
 
 module.exports = function(cdn){ return {
 	index: function(req, res) {
@@ -52,22 +53,34 @@ module.exports = function(cdn){ return {
 			}});
 		});
 	},
-	update: function(req, res) {
+	preload: function(req, res, next) {
 		var article = Article.findById(req.param('id'), function(err, article) {
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
-			article.updateAt = new Date();
-			article.save(function(err) {
-				if (err) return res.jsonx(500, {error: 'internal server error'});
-				res.jsonx({
-					msg: 'ok',
-					article: article,
-				});
+			req.article = article;
+			next();
+		});
+	},
+	update: function(req, res) {
+		req.article.updateAt = new Date();
+		req.article.save(function(err) {
+			if (err) return res.jsonx(500, {error: 'internal server error'});
+			res.jsonx({
+				msg: 'ok',
+				article: article,
 			});
 		});
 	},
 	remove: function(req, res, next) {
-		Article.remove({_id: id})
+		Article.remove({_id: id},function(err){
+			if (err) {
+				res.jflash('error', 'internal server error');
+				return res.jsonx(500, {msg:'internal server error'});
+			}
+			res.jsonx({
+				msg: 'ok',
+			})
+		});
 	},
 	bySlug: function(req, res, next) {
 		Article.findOne({slug:req.param('slug')}, function(err, article) {
@@ -99,19 +112,22 @@ module.exports = function(cdn){ return {
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {msg: "article not found"});
 			var img = new Img();
-			img.filename = req.files[0];
-			var remote_name = 'article-'+article.id+'/'+img.filename;
-			cdn().upload({
-				container: 'upac',
-				remote: remote_name,
-			},function(err) {
-				img.save();
-				article.images.push(img.id);
-				article.save(function(err){
-					if (err) return res.jsonx(500, {msg: "error saving image"});
-					res.jsonx({msg:"ok", image:img});
-				});
-			});
+			var path = req.files.image.name;
+			img.filename = path.split('/').slice(-2).join('/');
+			img.remote_name = 'article-'+article.id+'/images/'+img.filename;
+			fs.createReadStream(req.files.image.path).pipe( 
+				cdn().upload({
+					container: 'upac',
+					remote: img.remote_name,
+				},function(err) {
+					if (err) return next(err);
+					img.save();
+					article.images.push(img.id);
+					article.save(function(err){
+						if (err) return res.jsonx(500, {msg: "error saving image"});
+						res.jsonx({msg:"ok", image:img});
+					});
+				}));
 
 		});
 	},
@@ -120,13 +136,23 @@ module.exports = function(cdn){ return {
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {msg: "article not found"});
 			var attachment = new Attachment();
-			cdn.upload()
-			attachment.save();
-			article.attachments.push(attachment.id);
-			article.save(function(err){
-				if (err) return res.jsonx(500, {msg: "error saving image"});
-				res.jsonx({msg:"ok", image:img});
-			});
+			var path = req.files.upload.name;
+			attachment.filename = path.split('/').slice(-2).join('/');
+			attachment.remote_name = 'article-'+article.id+'/attachments/'+attachment.filename;
+			fs.createReadStream(req.files.upload.path).pipe(
+			cdn.upload({
+				container:'upac',
+				remote: attachment.remote_name,
+			}, function(err) {
+				if (err) return next(err);
+				attachment.save();
+				article.attachments.push(attachment.id);
+				article.save(function(err){
+					if (err) return res.jsonx(500, {msg: "error saving image"});
+					res.jsonx({msg:"ok", image:img});
+				});
+
+			}));
 		});
 	}
 }};

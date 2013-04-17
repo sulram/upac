@@ -23,8 +23,8 @@ module.exports = function(app, passport, auth, cdn) {
 	app.post('/article', auth.requiresLogin, article.create);
 	app.get('/article/find/:slug', article.bySlug);
 	app.get('/article/:id', article.show);
-	app.put('/article/:id', auth.requiresLogin, auth.article.hasAuthorization, article.update);
-	app.del('/article/:id', auth.requiresLogin, auth.article.hasAuthorization, article.remove);
+	app.put('/article/:id', auth.requiresLogin, article.preload, auth.article.hasAuthorization, article.update);
+	app.del('/article/:id', auth.requiresLogin, article.preload, auth.article.hasAuthorization, article.remove);
 
 	app.get('/', function(req, res) { res.render('index'); });
 
