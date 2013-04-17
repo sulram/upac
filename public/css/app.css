@@ -126,6 +126,7 @@ body {
 	padding: 0;
 }
 
+.home .menu_it.login a > span,
 #sec_menu .menu_it a:hover > span {
 	width: auto;
 	padding: 0 40px 0 64px;
@@ -164,25 +165,6 @@ body {
 	padding: 0;
 }
 
-#wrapper.home h1 {
-	position: absolute;
-	width: 980px;
-	height: 560px;
-	top: 50%;
-	left: 50%;
-	margin: -280px 0 0 -490px;
-	font-size: 140px;
-	line-height: 1em;
-	font-weight: 700;
-	color: #fff;
-	text-transform: uppercase;
-	z-index: 3;
-}
-
-#wrapper.home h1 span {
-	display: block;
-}
-
 #wrapper.home .slideshow {
 	margin: 0;
 	padding: 0;
@@ -202,9 +184,14 @@ body {
 	z-index: 1;
 }
 
-#wrapper.home .slideshow li.show {
+#wrapper.home .slideshow li.lastshow {
 	display: block;
 	z-index: 2;
+}
+
+#wrapper.home .slideshow li.show {
+	display: block;
+	z-index: 3;
 }
 
 #wrapper.home .slideshow li img {
@@ -214,8 +201,12 @@ body {
 /* ---------------- UPAC ---------------- */
 
 #wrapper.upac {
-	background: #efefef;
+	background: #dedede;
 	height: auto;
+}
+
+#wrapper.upac a {
+	color: #4280a7;
 }
 
 #wrapper.upac #content {
@@ -268,6 +259,22 @@ body {
 	padding: 60px 0;
 }
 
+#wrapper.upac .icon {
+	display: block;
+	width: 64px;
+	height: 64px;
+	margin: 0 auto;
+	background: url(../img/upac_menu_sprites.png) no-repeat 0 0;
+}
+
+#wrapper.upac .icon.marker {
+	background-position: -384px -64px;
+}
+#wrapper.upac .icon.email {
+	background-position: -448px -64px;
+}
+
+
 /* ---------------- REDE ---------------- */
 
 #wrapper.rede #content{
@@ -298,6 +305,19 @@ body {
 	margin-left: -240px;
 	z-index: 2;
 	text-align: center;
+}
+
+/* ---------------- TEMP ---------------- */
+
+#wrapper.agenda {
+	background: url(../img/temp/agenda_01.jpg) repeat-x 0 10px;
+}
+
+.static_home {
+	position: absolute;
+	top: 10px;
+	left: 84px;
+	z-index: 5;
 }
 
 /* ---------------- BOOTSTRAP REPLACE ---------------- */
