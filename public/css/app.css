@@ -142,8 +142,8 @@ body {
 	margin: 0 120px;
 	padding: 20px;
 	z-index: 2;
-	min-width: 480px;
-	max-width: 1200px;
+	min-width: 740px;
+	max-width: 1280px;
 }
 
 .side_title {
@@ -214,40 +214,58 @@ body {
 /* ---------------- UPAC ---------------- */
 
 #wrapper.upac {
-	background: url(../img/upac_sobre_fundo_01b.jpg) no-repeat fixed 50% 50%;
-	background-size: cover;
-	color: #fff;
-	font-size: 2em;
-	line-height: 1.2em;
-	min-height: 100%;
+	background: #efefef;
 	height: auto;
-	width: 100%;
-	/*text-shadow: 2px 2px 4px rgba(0,0,0,.25);
-	filter: dropshadow(color=rgba(0,0,0,.25), offx=2, offy=2);*/
 }
 
 #wrapper.upac #content {
-	margin: 0 20% 0;
-	padding: 200px 0;
-	max-width: 720px;
-	min-width: 480px;
+	margin: 0 0;
+	padding: 100px 0 0;
+	width: 100%;
+	max-width: 1280px;
+	font-size: 1.1em;
+	line-height: 1.3em;
 }
 
 #wrapper.upac #content .logo {
 	width: 420px;
 	height: 120px;
-	background: url(../img/upac_logo.png) no-repeat 0 0;
+	background: url(../img/upac_logo_cinza.png) no-repeat 0 0;
 	text-indent: -9999px;
-	margin-bottom: 40px;
+	margin: 0 auto 40px;
 }
 
 #wrapper.upac #content h2 {
 	text-transform: uppercase;
-	margin: 2em 0 1em;
 }
 
-#wrapper.upac #content p {
-	margin: 1.2em 0;
+#wrapper.upac #content > p {
+	margin: 3em auto;
+	width: 70%;
+}
+
+#wrapper.upac #content iframe {
+	margin: 60px auto;
+	display: block;
+}
+
+#wrapper.upac #content .contato {
+	text-align: center;
+	padding: 60px 0;
+}
+
+#wrapper.upac #content .upac-row p {
+	margin: 1em;
+}
+
+#wrapper.upac #content .upac-row.white {
+	background: #fff;
+}
+
+#wrapper.upac #content .upac-row .row-fluid {
+	width: 70%;
+	margin: 0 auto;
+	padding: 60px 0;
 }
 
 /* ---------------- REDE ---------------- */
