@@ -3,14 +3,26 @@ var mongoose = require('mongoose'),
 	ObjectId = Schema.ObjectId;
 
 var TagSchema = new Schema({
-	name: String,
+	name: {
+		type: String,
+		index: {
+			unique: true,
+		}
+	},
 	slug: {
 		type: String,
 		index: {
 			unique: true
 		}
 	},
+	refcount: Number,
+	type: String,
 	relatives: [{type:ObjectId, ref:'Tag'}]
 });
+
+TagSchema.methods = {
+	addRef: function() { this.refcount += 1; this.save(); },
+	rmRef: function() { this.refcount -= 1; this.save(); }
+}
 
 mongoose.model('Tag', TagSchema);

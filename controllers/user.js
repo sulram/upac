@@ -36,6 +36,20 @@ module.exports = function (cdn) { return {
 			});
 		});
 	},
+	preloadById: function(req, res, next) {
+		User.findById({_id: req.param('id')}, function(err, user) {
+			if (err) {
+				req.addJFlash('error', 'database error');
+				return req.jsonx(500, {msg: 'database error', error: err});
+			}
+			if (!user) {
+				req.addJFlash('error', 'user not found');
+				return req.jsonx(404, {msg: 'user not found'});
+			}
+			req.profile = user;
+			next();
+		});
+	}
 	update: function(req, res) {
 		var user = req.user;
 		user.save(function(err) {
