@@ -14,7 +14,7 @@ module.exports = function(app, passport, auth, cdn) {
 	app.post('/user', user.create);
 	app.post('/user/session', passport.authenticate('local'), user.login);
 
-	app.put('/user/:id', auth.requiresLogin, user.update);
+	app.put('/user/:id', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.update);
 	app.get('/user/:username', user.show);
 	app.get('/user/:username/articles', article.byUser);
 
@@ -23,8 +23,8 @@ module.exports = function(app, passport, auth, cdn) {
 	app.post('/article', auth.requiresLogin, article.create);
 	app.get('/article/find/:slug', article.bySlug);
 	app.get('/article/:id', article.show);
-	app.put('/article/:id', auth.requiresLogin, article.preload, auth.article.hasAuthorization, article.update);
-	app.del('/article/:id', auth.requiresLogin, article.preload, auth.article.hasAuthorization, article.remove);
+	app.put('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.update);
+	app.del('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.remove);
 
 	app.get('/', function(req, res) { res.render('index'); });
 

@@ -28,6 +28,7 @@ var UserSchema = new Schema({
 	provider: String,
 	createdAt: Date,
 	lastLogin: Date,
+
 });
 
 UserSchema.virtual('password').set(function(password){
@@ -58,6 +59,7 @@ UserSchema.pre('save', function(next) {
 	if(!validatePresenceOf(this.password)) {
 		next(new Error('Invalid Password'));
 	} else {
+		this.lastUpdate = new Date();
 		next();
 	}
 });

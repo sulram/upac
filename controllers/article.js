@@ -53,7 +53,7 @@ module.exports = function(cdn){ return {
 			}});
 		});
 	},
-	preload: function(req, res, next) {
+	preloadById: function(req, res, next) {
 		var article = Article.findById(req.param('id'), function(err, article) {
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
@@ -140,19 +140,20 @@ module.exports = function(cdn){ return {
 			attachment.filename = path.split('/').slice(-2).join('/');
 			attachment.remote_name = 'article-'+article.id+'/attachments/'+attachment.filename;
 			fs.createReadStream(req.files.upload.path).pipe(
-			cdn.upload({
-				container:'upac',
-				remote: attachment.remote_name,
-			}, function(err) {
-				if (err) return next(err);
-				attachment.save();
-				article.attachments.push(attachment.id);
-				article.save(function(err){
-					if (err) return res.jsonx(500, {msg: "error saving image"});
-					res.jsonx({msg:"ok", image:img});
-				});
+				cdn.upload({
+					container:'upac',
+					remote: attachment.remote_name,
+				}, function(err) {
+					if (err) return next(err);
+					attachment.save();
+					article.attachments.push(attachment.id);
+					article.save(function(err){
+						if (err) return res.jsonx(500, {msg: "error saving image"});
+						res.jsonx({msg:"ok", image:img});
+					});
 
-			}));
+				})
+			);
 		});
 	}
 }};
