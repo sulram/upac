@@ -16,8 +16,10 @@ var RSVPSchema = new Schema({
 var EventSchema = new Schema({
 	parent: {type: ObjectId, ref:'Event'},
 	article: {type: ObjectId, ref:'Article'},
+	owners: [{type: ObjectId, ref:'User'}],
 	startDate: Date,
 	endDate: Date,
+	geo: {type:[Number], index:"2d"},
 	questions: [QuestionSchema],
 	resposnes: [RSVPSchema]
 });

@@ -11,6 +11,7 @@ var ImgSizeSchema = new Schema({
 var ImgSchema = new Schema({
 	owner: {type: ObjectId, ref: 'User'},
 	articles: [{type: ObjectId, ref: 'Article'}],
+	filename: String,
 	cdn_id: String,
 	sizes: [ImgSizeSchema]
 });

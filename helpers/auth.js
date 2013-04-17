@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = function(_) { return {
 	requiresLogin: function(req, res, next) {
 		if (!req.isAuthenticated()) {
 			return res.json(401, {error: 'not logged in'});
@@ -15,10 +15,20 @@ module.exports = {
 	},
 	article: {
 		hasAuthorization: function(req, res, next) {
-			if(req.article.owner.id != req.user.id) {
-				return res.json(401, {error: 'not authorized'});
+			if(_.contains(req.article.owners, req.user.id)) {
+				next();
+			} else {
+				return res.json(401, {error: 'not authorized'});				
 			}
-			next();
+		}
+	},
+	event: {
+		hasAuthorization: function(req, res, next) {
+			if(_.contains(req.event.owners, req.user.id)) {
+				next();
+			} else {
+				return res.json(401, {error: 'not authorized'});				
+			}			
 		}
 	}
-}
+}}
