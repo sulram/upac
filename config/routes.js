@@ -13,7 +13,7 @@ module.exports = function(app, passport, auth, cdn) {
 	app.post('/user', user.create);
 	app.post('/user/session', passport.authenticate('local'), user.login);
 
-	app.put('/user/:id', auth.requiresLogin, auth.user.hasAuthorization, user.update);
+	app.put('/user/:id', auth.requiresLogin, user.update);
 	app.get('/user/:username', user.show);
 	app.get('/user/:username/articles', article.byUser);
 
