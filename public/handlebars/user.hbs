@@ -13,16 +13,29 @@
 		<p>&nbsp;</p>
 
 {{#if User.auth.loggedIn}}
+	
+	<h2 class="upper">Olá, {{User.auth.username}}!</h2>
 
-	<p><strong class="upper">{{User.auth.username}}</strong>, você está conectado e pronto para participar.</p>
+	<p>você está conectado e pronto para participar:</p>
 	
-	<p><div class="btn-group">
-		{{#linkTo "perfil" classNames="btn btn-large"}}Veja o seu perfil{{/linkTo}}
-		{{#linkTo "rede" classNames="btn btn-large"}}Veja a rede{{/linkTo}}
-		{{#linkTo "blog" classNames="btn btn-large"}}Escreva uma publicação{{/linkTo}}
-	</div></p>
+	<p>
+		<div class="btn-group">
+			{{#linkTo "perfil" classNames="btn btn-large"}}ver o meu perfil{{/linkTo}}
+			{{#linkTo "rede" classNames="btn btn-large"}}ver o mapa da rede{{/linkTo}}
+			<!--{{#linkTo "blog" classNames="btn btn-large"}}Escreva uma publicação{{/linkTo}}-->
+		</div>
+	</p>
 	
-	<p><small>Deseja {{#linkTo "logout"}}desconectar-se{{/linkTo}}?</small></p>
+	<hr/>
+
+	<p>Quer saber tudo o que você pode fazer como participante?
+	<br/>Assista ao vídeo abaixo para ver como navegar e colaborar na nossa rede:</p>
+
+	<iframe width="560" height="315" src="http://www.youtube.com/embed/rZNMXflQRcE" frameborder="0" allowfullscreen></iframe>
+	
+	<hr/>
+
+	<p><small>Esta não é a sua conta? {{#linkTo "logout"}}Desconectar-se.{{/linkTo}}</small></p>
 
 {{else}}
 

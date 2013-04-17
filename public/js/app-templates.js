@@ -314,48 +314,48 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
-  data.buffer.push("\n\n	<p><strong class=\"upper\">");
+  data.buffer.push("\n	\n	<h2 class=\"upper\">Olá, ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "User.auth.username", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</strong>, você está conectado e pronto para participar.</p>\n	\n	<p><div class=\"btn-group\">\n		");
+  data.buffer.push("!</h2>\n\n	<p>você está conectado e pronto para participar:</p>\n	\n	<p>\n		<div class=\"btn-group\">\n			");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn btn-large")
   },inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "perfil", options) : helperMissing.call(depth0, "linkTo", "perfil", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n		");
+  data.buffer.push("\n			");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn btn-large")
   },inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede", options) : helperMissing.call(depth0, "linkTo", "rede", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n		");
+  data.buffer.push("\n			<!--");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn btn-large")
   },inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "blog", options) : helperMissing.call(depth0, "linkTo", "blog", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n	</div></p>\n	\n	<p><small>Deseja ");
+  data.buffer.push("-->\n		</div>\n	</p>\n	\n	<hr/>\n\n	<p>Quer saber tudo o que você pode fazer como participante?\n	<br/>Assista ao vídeo abaixo para ver como navegar e colaborar na nossa rede:</p>\n\n	<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/rZNMXflQRcE\" frameborder=\"0\" allowfullscreen></iframe>\n	\n	<hr/>\n\n	<p><small>Esta não é a sua conta? ");
   hashTypes = {};
   options = {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "logout", options) : helperMissing.call(depth0, "linkTo", "logout", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("?</small></p>\n\n");
+  data.buffer.push("</small></p>\n\n");
   return buffer;
   }
 function program2(depth0,data) {
   
   
-  data.buffer.push("Veja o seu perfil");
+  data.buffer.push("ver o meu perfil");
   }
 
 function program4(depth0,data) {
   
   
-  data.buffer.push("Veja a rede");
+  data.buffer.push("ver o mapa da rede");
   }
 
 function program6(depth0,data) {
@@ -367,7 +367,7 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   
-  data.buffer.push("desconectar-se");
+  data.buffer.push("Desconectar-se.");
   }
 
 function program10(depth0,data) {
