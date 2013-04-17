@@ -49,7 +49,7 @@ module.exports = function (cdn) { return {
 			req.profile = user;
 			next();
 		});
-	}
+	},
 	update: function(req, res) {
 		var user = req.user;
 		user.geo = req.body.geo;
