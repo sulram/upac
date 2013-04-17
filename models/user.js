@@ -28,7 +28,19 @@ var UserSchema = new Schema({
 	provider: String,
 	createdAt: Date,
 	lastLogin: Date,
-
+	dateOfBirth: Date,
+	city: String,
+	state: String,
+	country: String,
+	about: String,
+	gender: String,
+	image: {type: ObjectId, ref:'Img', set:function(newimg){
+		if(this.image) {
+			var Img = mongoose.model('Img');
+			Img.remove({_id: this.image});
+		}
+		this.image = newimg;
+	}}
 });
 
 UserSchema.virtual('password').set(function(password){
