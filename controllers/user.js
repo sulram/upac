@@ -25,14 +25,22 @@ module.exports = function (cdn) { return {
 				return res.jsonx(500, {msg:'database error',
 									  error:err});
 			}
-			req.user = user;
-			req.session.unverified = true;
-			res.jsonx({
-				msg:'ok',
-				user: {
-					id: req.user.id,
-					username: req.user.username
+			req.login(user, function(err) {
+				if (err) {
+					return res.jsonx(500, {
+						msg: 'session error',
+						error: err
+					});
 				}
+				req.session.unverified = true;
+				res.jsonx({
+					msg:'ok',
+					user: {
+						id: req.user.id,
+						username: req.user.username
+					}
+				});
+
 			});
 		});
 	},
@@ -66,15 +74,19 @@ module.exports = function (cdn) { return {
 					.exec(function(err, user) {
 						if(err) return next(err);
 						if(!user) return res.jsonx(401, {msg: 'token not found'});
-						req.user = user;
-						user.verificationToken = '';
-						user.save(function(err){
+						req.login(user, function(err) {
 							if (err) {
-								return res.jsonx(500, {msg:'database error'});
+								return res.jsonx(500, {msg:'session error'});
 							}
-							delete req.session.unverified;
-							res.redirect('/'); 
-						});
+							user.verificationToken = '';
+							user.save(function(err){
+								if (err) {
+									return res.jsonx(500, {msg:'database error'});
+								}
+								delete req.session.unverified;
+								res.redirect('/'); 
+							});
+						});						
 						// TODO: avisar usuário no primeiro login
 					});
 	},
