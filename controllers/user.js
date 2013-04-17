@@ -52,6 +52,7 @@ module.exports = function (cdn) { return {
 	}
 	update: function(req, res) {
 		var user = req.user;
+		user.geo = req.body.geo;
 		user.save(function(err) {
 			if (err) {
 				return res.jsonx(500, {msg:'database error'});

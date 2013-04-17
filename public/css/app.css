@@ -17,6 +17,11 @@ html, body, #wrapper, body > .ember-view {
 
 body {
 	font-family: "Roboto";
+	min-width: 960px;
+}
+
+.upper {
+	text-transform: uppercase;
 }
 
 /* ---------------- MENUS ---------------- */
@@ -113,6 +118,10 @@ body {
 /* ---------------- SEC MENU ITEMS ---------------- */
 
 #sec_menu .menu_it {
+	position: relative;
+	float: left;
+	top:0;
+	left: 0;
 	margin: 0;
 	padding: 0;
 }
@@ -124,7 +133,7 @@ body {
 
 .menu_it.login a span .ico { background-position: 0 -64px; }
 .menu_it.logout a span .ico { background-position: -64px -64px; }
-
+.menu_it.profile a span .ico { background-position: -128px -64px; }
 
 /* ---------------- CONTENT AND WRAPPER ---------------- */
 
@@ -133,6 +142,14 @@ body {
 	margin: 0 120px;
 	padding: 20px;
 	z-index: 2;
+	min-width: 740px;
+	max-width: 1280px;
+}
+
+.side_title {
+	text-transform: uppercase;
+	font-size: 5em;
+	line-height: 1em;
 }
 
 
@@ -197,40 +214,58 @@ body {
 /* ---------------- UPAC ---------------- */
 
 #wrapper.upac {
-	background: url(../img/upac_sobre_fundo_01b.jpg) no-repeat fixed 50% 50%;
-	background-size: cover;
-	color: #fff;
-	font-size: 2em;
-	line-height: 1.2em;
-	min-height: 100%;
+	background: #efefef;
 	height: auto;
-	width: 100%;
-	/*text-shadow: 2px 2px 4px rgba(0,0,0,.25);
-	filter: dropshadow(color=rgba(0,0,0,.25), offx=2, offy=2);*/
 }
 
 #wrapper.upac #content {
-	margin: 0 20% 0;
-	padding: 200px 0;
-	max-width: 720px;
-	min-width: 480px;
+	margin: 0 0;
+	padding: 100px 0 0;
+	width: 100%;
+	max-width: 1280px;
+	font-size: 1.1em;
+	line-height: 1.3em;
 }
 
 #wrapper.upac #content .logo {
 	width: 420px;
 	height: 120px;
-	background: url(../img/upac_logo.png) no-repeat 0 0;
+	background: url(../img/upac_logo_cinza.png) no-repeat 0 0;
 	text-indent: -9999px;
-	margin-bottom: 40px;
+	margin: 0 auto 40px;
 }
 
 #wrapper.upac #content h2 {
 	text-transform: uppercase;
-	margin: 2em 0 1em;
 }
 
-#wrapper.upac #content p {
-	margin: 1.2em 0;
+#wrapper.upac #content > p {
+	margin: 3em auto;
+	width: 70%;
+}
+
+#wrapper.upac #content iframe {
+	margin: 60px auto;
+	display: block;
+}
+
+#wrapper.upac #content .contato {
+	text-align: center;
+	padding: 60px 0;
+}
+
+#wrapper.upac #content .upac-row p {
+	margin: 1em;
+}
+
+#wrapper.upac #content .upac-row.white {
+	background: #fff;
+}
+
+#wrapper.upac #content .upac-row .row-fluid {
+	width: 70%;
+	margin: 0 auto;
+	padding: 60px 0;
 }
 
 /* ---------------- REDE ---------------- */
@@ -253,29 +288,29 @@ body {
 	display: block;
 }
 
-
-/* ---------------- MEDIAQUERIES ---------------- */
-
-/* SMALL */
-
-@media screen and (max-width: 1200px) {
-
-	#wrapper.home h1 {
-		width: 630px;
-		height: 360px;
-		margin: -180px 0 0 -315px;
-		font-size: 90px;
-	}
+.rede_bar {
+	position: absolute;
+	left: 50%;
+	bottom: 10px;
+	background: rgba(255,255,255,.9);
+	padding: 20px;
+	width: 400px;
+	margin-left: -240px;
+	z-index: 2;
+	text-align: center;
 }
 
-/* GIANT */
+/* ---------------- BOOTSTRAP REPLACE ---------------- */
 
-@media screen and (min-width: 1600px) and (min-height: 740px) {
-
-	#wrapper.home h1 {
-		width: 1300px;
-		height: 720px;
-		margin: -360px 0 0 -650px;
-		font-size: 180px;
+.btn,
+.nav-pills>li>a,
+.btn-group>.btn:first-child,
+.btn-group>.btn:last-child,
+.btn-group>.dropdown-toggle,
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+	 -webkit-border-radius: 0;
+	    -moz-border-radius: 0;
+	     -ms-border-radius: 0;
+	      -o-border-radius: 0;
+	         border-radius: 0;
 	}
-}

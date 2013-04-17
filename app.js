@@ -102,6 +102,7 @@ app.use(function(req, res, next){ // json extension middleware
 			}
 		}
 		var auth = {
+			id: req.isAuthenticated() ? req.user.id : null,
 			loggedIn: req.isAuthenticated(),
 			username: req.isAuthenticated() ? req.user.username : null
 		};

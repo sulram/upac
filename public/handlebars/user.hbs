@@ -1,11 +1,27 @@
-<h1>Participe da UPAC</h1>
+<div class="row-fluid">
+	
+	<div class="span4">
+		<h1 class="side_title">entre na rede UPAC</h1>
+	</div>
 
-<hr/>
+	<div class="span1">
+		&nbsp;
+	</div>
+
+	<div class="span7">
+
+		<p>&nbsp;</p>
 
 {{#if User.auth.loggedIn}}
 
-	<p><strong style="text-transform:uppercase;">{{User.auth.username}}</strong>, você está conectado e pronto para participar.</p>
-
+	<p><strong class="upper">{{User.auth.username}}</strong>, você está conectado e pronto para participar.</p>
+	
+	<p><div class="btn-group">
+		{{#linkTo "perfil" classNames="btn btn-large"}}Veja o seu perfil{{/linkTo}}
+		{{#linkTo "rede" classNames="btn btn-large"}}Veja a rede{{/linkTo}}
+		{{#linkTo "blog" classNames="btn btn-large"}}Escreva uma publicação{{/linkTo}}
+	</div></p>
+	
 	<p><small>Deseja {{#linkTo "logout"}}desconectar-se{{/linkTo}}?</small></p>
 
 {{else}}
@@ -25,3 +41,5 @@
 	{{outlet}}
 
 {{/if}}
+	</div>
+</div>
