@@ -200,6 +200,8 @@ App.HomeSlidesView = Ember.View.extend({
     timer: null,
     tik: function(){
         this.t = (this.t+1)%3;
+        this.$('.slideshow li').removeClass('lastshow');
+        this.$('.slideshow li.show').addClass('lastshow');
         this.$('.slideshow li').removeClass('show');
         this.$('.slideshow li').eq(this.t).addClass('show').hide().fadeIn(500);
         //console.log('tick',this.t);

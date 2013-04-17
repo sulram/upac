@@ -1,27 +1,3 @@
 <h1>Blog</h1>
 
-<hr/>
-
-<ul class="nav nav-pills">
-
-	{{#linkTo "blog.index" tagName="li" href=false}}
-		<a {{bindAttr href="view.href"}}>Destaques</a>
-	{{/linkTo}}
-
-	{{#linkTo "blog.recentes" tagName="li" href=false}}
-		<a {{bindAttr href="view.href"}}>Mais recentes</a>
-	{{/linkTo}}
-
-	{{#linkTo "blog.populares" tagName="li" href=false}}
-		<a {{bindAttr href="view.href"}}>Mais comentadas</a>
-	{{/linkTo}}
-
-	{{#if App.TheUser.isAuthenticated}}
-	
-		{{#linkTo "blog.user" tagName="li" href=false}}
-			<a {{bindAttr href="view.href"}}>Minhas colaborações</a>
-		{{/linkTo}}
-
-	{{/if}}
-
-</ul>
+<img src="./img/temp/blog_01.jpg"/>
