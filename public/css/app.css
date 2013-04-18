@@ -24,6 +24,16 @@ body {
 	text-transform: uppercase;
 }
 
+iframe {
+	background: #444;
+}
+
+/* ---------------- GENERIC BLOCKS ---------------- */
+
+.pad {
+	padding: 20px;
+}
+
 /* ---------------- MENUS ---------------- */
 
 #main_menu {
@@ -307,10 +317,25 @@ body {
 	text-align: center;
 }
 
+#rede_sidebar {
+	position: absolute;
+	top: 10px;
+	left: 84px;
+	background: rgba(111,183,172,.85);
+	width: 320px;
+	min-height: 320px;
+	z-index: 5;
+	color: #fff;
+}
+
+#rede_sidebar h1 {
+	margin-bottom: 1em;
+}
+
 /* ---------------- TEMP ---------------- */
 
 #wrapper.agenda {
-	background: url(../img/temp/agenda_01.jpg) repeat-x 0 10px;
+	background: url(../img/temp/agenda_01.png) repeat-x 0 10px;
 }
 
 .static_home {
