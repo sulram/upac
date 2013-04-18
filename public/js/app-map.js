@@ -148,6 +148,8 @@ App.MapController = Em.Object.create({
             console.log(username);
             window.location.hash = '/rede/perfil/'+username;
         });
+
+        return marker;
     },
     onMapClick: function(e){
 
@@ -157,9 +159,9 @@ App.MapController = Em.Object.create({
 
         } else {
 
-            console.log( 'mark!', e.latLng.kb );
-
             var user = App.MapController.findUser();
+            
+            console.log( 'mark!', e.latLng.kb, user );
 
             if(user.mark === null){
                 user.mark = App.MapController.createMarker(e.latLng);
