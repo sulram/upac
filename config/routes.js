@@ -4,6 +4,7 @@ module.exports = function(app, passport, auth, cdn) {
 	var user = require('../controllers/user.js')(cdn);
 	var article = require('../controllers/article.js')(cdn);
 	var _event = require('../controllers/event.js')(cdn);
+	var tag = require('../controllers/tag.js')(cdn);
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);
@@ -20,11 +21,18 @@ module.exports = function(app, passport, auth, cdn) {
 
 	app.all('/article', article.index);
 	app.get('/article/new', auth.requiresLogin, article.create);
-	app.post('/article', auth.requiresLogin, article.create);
 	app.get('/article/find/:slug', article.bySlug);
 	app.get('/article/:id', article.show);
 	app.put('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.update);
 	app.del('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.remove);
+
+
+	app.post('/tag/new', auth.requiresLogin, tag.create);
+	app.get('/tag/:id', tag.show);
+	app.get('/tag/find/:slug', tag.bySlug);
+	app.put('/tag/:id', auth.requiresLogin, tag.preloadById, /* auth.tag.hasAuthorization, */ tag.update);
+
+
 
 	app.get('/', function(req, res) { res.render('index'); });
 

@@ -22,6 +22,7 @@ module.exports = function (cdn) { return {
 		user.provider = 'local';
 		user.save(function(err){
 			if(err) {
+				res.addJFlash('error', 'database error');
 				return res.jsonx(500, {msg:'database error',
 									  error:err});
 			}
@@ -47,25 +48,31 @@ module.exports = function (cdn) { return {
 	preloadById: function(req, res, next) {
 		User.findById(req.param('id'), function(err, user) {
 			if (err) {
-				res.addJFlash('error', 'database error');
-				return res.jsonx(500, {msg: 'database error', error: err});
+				return res.jsonxf(500,
+					[{error:'database error'}], 
+					{msg: 'database error', error: err}
+				);
 			}
 			if (!user) {
-				res.addJFlash('error', 'user not found');
-				return res.jsonx(404, {msg: 'user not found'});
+				return res.jsonxf(404,
+					[{error:'user not found'}],
+					{msg: 'user not found'}
+				);
 			}
 			req.profile = user;
 			next();
 		});
 	},
 	update: function(req, res) {
-		var user = req.user;
+		var user = req.profile;
 		user.geo = req.body.geo;
 		user.save(function(err) {
 			if (err) {
-				return res.jsonx(500, {msg:'database error'});
+				return res.jsonxf(500, 
+					[{error:'database error'}],
+					{msg:'database error', error: err});
 			}
-			res.jsonx({msg:'ok'});
+			res.jsonx({msg:'ok', user:user});
 		})
 	},
 	verify: function(req, res, next) {

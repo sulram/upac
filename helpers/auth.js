@@ -1,14 +1,20 @@
 module.exports = function(_) { return {
 	requiresLogin: function(req, res, next) {
 		if (!req.isAuthenticated()) {
-			return res.json(401, {error: 'not logged in'});
+			return res.jsonxf(401, [{error: 'not logged in'}], {error:'not logged in'});
 		}
 		next();
 	},
 	user: {
+		isVerified: function(req, res, next) {
+			if (req.user.verificationToken != '') {
+				return res.jsonxf(401,[{error: 'user not verified'}], {error: 'user not verified'});
+			}
+			next();
+		},
 		hasAuthorization: function(req, res, next) {
 			if(req.profile.id != req.user.id) {
-				return res.json(401, {error: 'not authorized'});
+				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});
 			}
 			next();
 		}
@@ -18,7 +24,16 @@ module.exports = function(_) { return {
 			if(_.contains(req.article.owners, req.user.id)) {
 				next();
 			} else {
-				return res.json(401, {error: 'not authorized'});				
+				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});
+			}
+		}
+	},
+	tag: {
+		hasAuthorization: function(req, res, next) {
+			if(_.contains(req.tag.owners, req.user.id)) {
+				next();
+			} else {
+				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});
 			}
 		}
 	},
@@ -27,7 +42,7 @@ module.exports = function(_) { return {
 			if(_.contains(req.event.owners, req.user.id)) {
 				next();
 			} else {
-				return res.json(401, {error: 'not authorized'});				
+				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});				
 			}			
 		}
 	}
