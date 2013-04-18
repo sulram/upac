@@ -4,9 +4,7 @@ App.Router.map(function() {
     this.resource("rede", function(){
         this.route('profile', { path: '/perfil/:user_username' });
     });
-    this.resource("perfil", function(){
-        this.route('profile', { path: '/:user_username' });
-    });
+    this.resource("perfil", { path: '/perfil/:user_username' });
     this.resource("blog",function(){
         this.route("recentes");
         this.route("populares");
@@ -25,17 +23,7 @@ App.IndexRoute = Em.Route.extend({
     }
 });
 
-App.PerfilIndexRoute = Em.Route.extend({
-    redirect: function() {
-        if(User.model !== null){
-            this.transitionTo('rede.profile', User.model); 
-        } else {
-            this.transitionTo('user'); 
-        }
-    }
-});
-
-App.PerfilProfileRoute = Em.Route.extend({
+App.PerfilRoute = Em.Route.extend({
     model: function (param){
         console.log('App.UserModel.find', param.user_username);
         return App.UserModel.find(param.user_username);

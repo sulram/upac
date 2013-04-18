@@ -112,8 +112,8 @@ function program11(depth0,data) {
   var buffer = '', stack1, stack2, hashTypes, options;
   data.buffer.push("\n		\n		<li class=\"menu_it profile\">");
   hashTypes = {};
-  options = {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "perfil", options) : helperMissing.call(depth0, "linkTo", "perfil", options));
+  options = {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.profile", "User.model", options) : helperMissing.call(depth0, "linkTo", "rede.profile", "User.model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("</li>\n\n		<li class=\"menu_it logout\">");
   hashTypes = {};
@@ -197,17 +197,6 @@ function program17(depth0,data) {
 });
 
 Ember.TEMPLATES["perfil"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var hashTypes, escapeExpression=this.escapeExpression;
-
-
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "outlet", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  
-});
-
-Ember.TEMPLATES["perfil/profile"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   var buffer = '', stack1, hashTypes, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
@@ -440,7 +429,7 @@ function program8(depth0,data) {
   options = {hash:{
     'classNames': ("btn")
   },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "perfil.profile", "model", options) : helperMissing.call(depth0, "linkTo", "perfil.profile", "model", options));
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "perfil", "model", options) : helperMissing.call(depth0, "linkTo", "perfil", "model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("</p>\n			<p><a ");
   hashTypes = {};
@@ -504,8 +493,8 @@ function program1(depth0,data) {
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn btn-large")
-  },inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "perfil.index", options) : helperMissing.call(depth0, "linkTo", "perfil.index", options));
+  },inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.profile", "User.model", options) : helperMissing.call(depth0, "linkTo", "rede.profile", "User.model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n			");
   hashTypes = {'classNames': "STRING"};
