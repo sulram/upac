@@ -47,7 +47,7 @@ App.RedeMapaView = Ember.View.extend({
 
 //// OBJECTS
 
-App.MapMarker = Ember.Object.extend({
+/*App.MapMarker = Ember.Object.extend({
     latLng: null,
     latitude: function () {return this.latLng.lat()}.property('latLng'),
     longitude: function () {return this.latLng.lng()}.property('latLng'),
@@ -58,7 +58,7 @@ App.MapMarker = Ember.Object.extend({
     markerClick: function () {
         App.MapMarkers.set('selection', this);
     }
-});
+});*/
 
 App.MapController = Em.Object.create({
     isMarking: false,
@@ -82,10 +82,9 @@ App.MapController = Em.Object.create({
                     that.markers.push({
                         username: user.username,
                         geo: user.geo.length ? user.geo : [],
-                        mark: user.geo.length ? new google.maps.Marker({
-                            position: new google.maps.LatLng(user.geo[0],user.geo[1]),
-                            map: App.map
-                        }) : null
+                        mark: user.geo.length
+                                ? App.MapController.createMarker(user.username, new google.maps.LatLng(user.geo[0],user.geo[1]))
+                                : null
                     });
                 });
                 that.set('isFetching',false);
@@ -139,6 +138,17 @@ App.MapController = Em.Object.create({
         }
         
     },
+    createMarker: function(username, latLng){
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: App.map
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            App.map.panTo(marker.getPosition());
+            console.log(username);
+            window.location.hash = '/rede/perfil/'+username;
+        });
+    },
     onMapClick: function(e){
 
         if(!App.MapController.isMarking){
@@ -152,10 +162,7 @@ App.MapController = Em.Object.create({
             var user = App.MapController.findUser();
 
             if(user.mark === null){
-                user.mark = new google.maps.Marker({
-                    position: e.latLng,
-                    map: App.map
-                });
+                user.mark = App.MapController.createMarker(e.latLng);
             } else {
                 user.mark.setPosition(e.latLng);
                 console.log(user.username,e.latLng);
