@@ -64,6 +64,9 @@ App.MapController = Em.Object.create({
     isMarking: false,
     isFetching: true,
     markers: [],
+    icons: {
+        hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
+    },
     findUser: function(username){
         return _.findWhere(App.MapController.markers,{username: User.auth.username});
     },
@@ -98,6 +101,7 @@ App.MapController = Em.Object.create({
     },
     startMarking: function(){
         this.set('isMarking',true);
+        App.map.setOptions({draggableCursor:'pointer'});
     },
     finishMarking: function(save){
         var that = this;
@@ -116,6 +120,7 @@ App.MapController = Em.Object.create({
                     user.geo[1] = pos[1];
                     User.authenticate(data.auth);
                     that.set('isMarking',false);
+                    App.map.setOptions({draggableCursor: App.MapController.icons.hand});
                     console.log('saved',pos);
                 },
                 error: function(jqXHR,status,error){
@@ -135,6 +140,7 @@ App.MapController = Em.Object.create({
                 )
             }
             that.set('isMarking',false);
+            App.map.setOptions({draggableCursor: App.MapController.icons.hand});
         }
         
     },
@@ -144,8 +150,8 @@ App.MapController = Em.Object.create({
             map: App.map
         });
         google.maps.event.addListener(marker, 'click', function() {
+            if(App.MapController.isMarking) return false;
             App.map.panTo(marker.getPosition());
-            console.log(username);
             window.location.hash = '/rede/perfil/'+username;
         });
 
