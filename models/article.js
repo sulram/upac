@@ -58,8 +58,12 @@ ArticleSchema.pre('save', function(next) {
 	if(this.isNew) {
 		this.createdAt = new Date();
 	}
-	if(!this.slug || '' == this.slug) {
-		this.slug = slugify(this.title);
+	if(!this.slug || '' == this.slug || this.id == this.slug) {
+		if(this.title && this.title.length > 0) {
+			this.slug = slugify(this.title);
+		} else {
+			this.slug = this.id;
+		}
 	}
 	next();
 });

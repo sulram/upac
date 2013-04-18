@@ -108,6 +108,10 @@ app.use(function(req, res, next){ // json extension middleware
 		};
 		res.json(code, _.extend({auth: auth}, flash, obj));
 	};
+	res.jsonxf = function(code, flashlist, data) {
+		flash = {flash:flashlist};
+		res.jsonx(code, data);
+	};
 	next();
 });
 app.use(app.router);

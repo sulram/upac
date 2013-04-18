@@ -13,10 +13,16 @@ var UserSchema = new Schema({
 		type: String, 
 		index: {
 			unique: true
+		},
+		set: function(v) {
+			return v.toLowerCase();
 		}
 	},
 	email: {
 		type: String,
+		set: function(v) {
+			return v.toLowerCase();
+		},
 		index:  {
 			unique: true
 		}
@@ -39,7 +45,7 @@ var UserSchema = new Schema({
 			var Img = mongoose.model('Img');
 			Img.remove({_id: this.image});
 		}
-		this.image = newimg;
+		return newimg;
 	}}
 });
 
@@ -50,6 +56,11 @@ UserSchema.virtual('password').set(function(password){
 }).get(function(){
 	return this._password;
 });
+
+
+UserSchema.path('username').validate(function(username) {
+	return /[a-z0-9]{3,}/.test(username);
+}, 'Invalid Username');
 
 var emailregex = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
 
