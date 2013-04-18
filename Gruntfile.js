@@ -33,7 +33,7 @@ grunt.initConfig({
 					'public/js/mapstyles.js',
 					'public/js/app-templates.js',
 					'public/js/app-init.js',
-					'public/js/app-user.js',
+					'public/js/app-models.js',
 					'public/js/app-routes.js',
 					'public/js/app-controllers.js',
 					'public/js/app-views.js',

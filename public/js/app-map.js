@@ -69,12 +69,14 @@ App.MapController = Em.Object.create({
     },
     getMarkers: function(){  
         var that = this;
+        this.markers = [];
         that.set('isFetching',true);
         $.ajax({
             type: 'GET',
             url: '/users',
             data: { limit: 0 },
             success: function(data, status, jqXHR){
+                console.log('map: loaded users');
                 User.authenticate(data.auth);
                 $.each(data.users, function(i,user){
                     that.markers.push({
@@ -111,6 +113,8 @@ App.MapController = Em.Object.create({
                 url: '/user/'+User.get('auth.id'),
                 data: { geo: pos },
                 success: function(data, status, jqXHR){
+                    user.geo[0] = pos[0];
+                    user.geo[1] = pos[1];
                     User.authenticate(data.auth);
                     that.set('isMarking',false);
                     console.log('saved',pos);

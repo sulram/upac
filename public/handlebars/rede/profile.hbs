@@ -1,0 +1,26 @@
+<div class="pad">
+	{{#if isLoaded}}
+		<h2>{{model.name}}</h2>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, dolores, ullam dignissimos ea soluta asperiores nam impedit repudiandae iste facere unde eos consequatur architecto explicabo quam eligendi totam corporis magni?</p>
+
+		{{#if App.MapController.isMarking}}
+		
+		<div class="pad over">
+			<p>Navegue pelo mapa e clique no lugar que você deseja criar seu marcador.</p>
+			<p>
+				<a {{action finishMarking App.MapController}} class="btn">Salvar posição</a>
+				<a {{action cancelMarking App.MapController}} class="btn">Cancelar</a>
+			</p>
+		</div>
+		{{else}}
+			
+			<p>{{#linkTo 'perfil.profile' model classNames="btn"}}Ver perfil completo{{/linkTo}}</p>
+			<p><a {{action startMarking App.MapController}} class="btn">Mudar minha posição no mapa</a></p>
+
+		{{/if}}
+
+	{{else}}
+		<p>carregando perfil</p>
+	{{/if}}
+</div>
