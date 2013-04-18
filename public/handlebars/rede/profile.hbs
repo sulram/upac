@@ -9,21 +9,29 @@
 		</h2>
 
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, dolores, ullam dignissimos ea soluta asperiores nam impedit repudiandae iste facere unde eos consequatur architecto explicabo quam eligendi totam corporis magni?</p>
-
-		{{#if App.MapController.isMarking}}
 		
-		<div class="pad over">
-			<p>Navegue pelo mapa e clique no lugar que você deseja criar seu marcador.</p>
-			<p>
-				<a {{action finishMarking App.MapController}} class="btn">Salvar posição</a>
-				<a {{action cancelMarking App.MapController}} class="btn">Cancelar</a>
-			</p>
-		</div>
-		{{else}}
+		{{#if isTheLoggedUser}}
+			{{#if App.MapController.isMarking}}
 			
-			<p>{{#linkTo 'perfil' model classNames="btn"}}Ver perfil completo{{/linkTo}}</p>
-			<p><a {{action startMarking App.MapController}} class="btn">Mudar minha posição no mapa</a></p>
+			<div class="pad over">
+				<p>Navegue pelo mapa e clique no lugar que você deseja criar seu marcador.</p>
+				<p>
+					<a {{action finishMarking App.MapController}} class="btn">Salvar posição</a>
+					<a {{action cancelMarking App.MapController}} class="btn">Cancelar</a>
+				</p>
+			</div>
 
+			{{else}}
+				
+				<p>{{#linkTo 'perfil' model classNames="btn"}}Ver perfil completo{{/linkTo}}</p>
+				<p><a {{action startMarking App.MapController}} class="btn">Mudar minha posição no mapa</a></p>
+
+			{{/if}}
+
+		{{else}}
+
+			<p>{{#linkTo 'perfil' model classNames="btn"}}Ver perfil completo{{/linkTo}}</p>
+			
 		{{/if}}
 
 	{{else}}

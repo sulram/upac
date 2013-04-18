@@ -381,9 +381,9 @@ function program1(depth0,data) {
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "name", {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		</h2>\n\n		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, dolores, ullam dignissimos ea soluta asperiores nam impedit repudiandae iste facere unde eos consequatur architecto explicabo quam eligendi totam corporis magni?</p>\n\n		");
+  data.buffer.push("\n		</h2>\n\n		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, dolores, ullam dignissimos ea soluta asperiores nam impedit repudiandae iste facere unde eos consequatur architecto explicabo quam eligendi totam corporis magni?</p>\n		\n		");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "App.MapController.isMarking", {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isTheLoggedUser", {hash:{},inverse:self.program(12, program12, data),fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n	");
   return buffer;
@@ -410,40 +410,64 @@ function program4(depth0,data) {
 
 function program6(depth0,data) {
   
+  var buffer = '', stack1, hashTypes;
+  data.buffer.push("\n			");
+  hashTypes = {};
+  stack1 = helpers['if'].call(depth0, "App.MapController.isMarking", {hash:{},inverse:self.program(9, program9, data),fn:self.program(7, program7, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n		");
+  return buffer;
+  }
+function program7(depth0,data) {
+  
   var buffer = '', hashTypes;
-  data.buffer.push("\n		\n		<div class=\"pad over\">\n			<p>Navegue pelo mapa e clique no lugar que você deseja criar seu marcador.</p>\n			<p>\n				<a ");
+  data.buffer.push("\n			\n			<div class=\"pad over\">\n				<p>Navegue pelo mapa e clique no lugar que você deseja criar seu marcador.</p>\n				<p>\n					<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "finishMarking", "App.MapController", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"btn\">Salvar posição</a>\n				<a ");
+  data.buffer.push(" class=\"btn\">Salvar posição</a>\n					<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelMarking", "App.MapController", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"btn\">Cancelar</a>\n			</p>\n		</div>\n		");
+  data.buffer.push(" class=\"btn\">Cancelar</a>\n				</p>\n			</div>\n\n			");
   return buffer;
   }
 
-function program8(depth0,data) {
+function program9(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
-  data.buffer.push("\n			\n			<p>");
+  data.buffer.push("\n				\n				<p>");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn")
-  },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "perfil", "model", options) : helperMissing.call(depth0, "linkTo", "perfil", "model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("</p>\n			<p><a ");
+  data.buffer.push("</p>\n				<p><a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "startMarking", "App.MapController", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"btn\">Mudar minha posição no mapa</a></p>\n\n		");
+  data.buffer.push(" class=\"btn\">Mudar minha posição no mapa</a></p>\n\n			");
   return buffer;
   }
-function program9(depth0,data) {
+function program10(depth0,data) {
   
   
   data.buffer.push("Ver perfil completo");
   }
 
-function program11(depth0,data) {
+function program12(depth0,data) {
+  
+  var buffer = '', stack1, stack2, hashTypes, options;
+  data.buffer.push("\n\n			<p>");
+  hashTypes = {'classNames': "STRING"};
+  options = {hash:{
+    'classNames': ("btn")
+  },inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "perfil", "model", options) : helperMissing.call(depth0, "linkTo", "perfil", "model", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("</p>\n			\n		");
+  return buffer;
+  }
+
+function program14(depth0,data) {
   
   
   data.buffer.push("\n		<p>carregando perfil</p>\n	");
@@ -451,7 +475,7 @@ function program11(depth0,data) {
 
   data.buffer.push("<div class=\"pad\">\n	");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(11, program11, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(14, program14, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>");
   return buffer;
