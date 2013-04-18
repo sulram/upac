@@ -3,7 +3,13 @@
 	
 	<div class="span8">
 
-		<h1 class="upper">{{name}}</h1>
+		<h1 class="upper">
+			{{#if name}}
+				{{name}}
+			{{else}}
+				{{username}}
+			{{/if}}
+		</h1>
 	
 		<hr/>
 
