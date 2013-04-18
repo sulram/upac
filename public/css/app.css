@@ -28,6 +28,12 @@ iframe {
 	background: #444;
 }
 
+/* ---------------- GENERIC BLOCKS ---------------- */
+
+.pad {
+	padding: 20px;
+}
+
 /* ---------------- MENUS ---------------- */
 
 #main_menu {
@@ -309,6 +315,21 @@ iframe {
 	margin-left: -240px;
 	z-index: 2;
 	text-align: center;
+}
+
+#rede_sidebar {
+	position: absolute;
+	top: 10px;
+	left: 84px;
+	background: rgba(111,183,172,.85);
+	width: 320px;
+	min-height: 320px;
+	z-index: 5;
+	color: #fff;
+}
+
+#rede_sidebar h1 {
+	margin-bottom: 1em;
 }
 
 /* ---------------- TEMP ---------------- */

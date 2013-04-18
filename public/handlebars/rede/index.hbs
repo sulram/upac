@@ -1,0 +1,37 @@
+<div class="pad">
+	
+	<h1>Bem-vindo a rede UPAC{{#if User.auth.loggedIn}}, <span class="upper">{{User.auth.username}}</span>{{/if}}</h1>
+
+
+{{#if App.MapController.isFetching}}
+	
+	<p>Buscando dados...</p>
+
+{{else}}
+
+	{{#if User.auth.loggedIn}}
+		
+		{{#if App.MapController.isMarking}}
+
+			<p>Navegue pelo mapa e clique no lugar que você deseja criar seu marcador.</p>
+			<p>
+				<a {{action finishMarking App.MapController}} class="btn">Salvar posição</a>
+				<a {{action cancelMarking App.MapController}} class="btn">Cancelar</a>
+			</p>
+
+		{{else}}
+		
+			<p><a {{action startMarking App.MapController}} class="btn">Mudar minha posição no mapa</a></p>
+
+		{{/if}}
+
+	{{else}}
+		
+			<p>Conecte-se e participe da nossa rede!</p>
+			<p>{{#linkTo 'user' classNames="btn"}}Participar{{/linkTo}}</p>
+
+	{{/if}}
+
+{{/if}}
+
+</div>

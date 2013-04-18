@@ -1,41 +1,5 @@
 {{view App.RedeMapaView}}
 
-{{#if App.MapController.isFetching}}
-	
-	<div class="rede_bar rede_bar_fetching">
-		<p>Buscando dados...</p>
-	</div>	
-
-{{else}}
-
-	{{#if User.auth.loggedIn}}
-		
-		{{#if App.MapController.isMarking}}
-
-		<div class="rede_bar rede_bar_logged">
-			<p><strong class="upper">{{User.auth.username}}</strong>, navegue pelo mapa e clique no lugar que você deseja criar seu marcador.</p>
-			<p>
-				<a {{action finishMarking App.MapController}} class="btn">Salvar posição</a>
-				<a {{action cancelMarking App.MapController}} class="btn">Cancelar</a>
-			</p>
-		</div>	
-
-		{{else}}
-		
-		<div class="rede_bar rede_bar_logged">
-			<p>Bem-vindo(a) a nossa rede, <strong class="upper">{{User.auth.username}}</strong></p>
-			<p><a {{action startMarking App.MapController}} class="btn">Mudar minha posição no mapa</a></p>
-		</div>
-
-		{{/if}}
-
-	{{else}}
-		
-		<div class="rede_bar rede_bar_unlogged">
-			<p>Conecte-se e participe da nossa rede!</p>
-			<p>{{#linkTo 'user' classNames="btn"}}Participar{{/linkTo}}</p>
-		</div>
-
-	{{/if}}
-
-{{/if}}
+<div id="rede_sidebar">
+	{{outlet}}
+</div>

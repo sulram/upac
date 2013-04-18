@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "grunt-contrib-watch": "~0.3.1",
-    "grunt-ember-templates": "~0.4.4"
+    "grunt-ember-templates": "~0.4.4",
+    "grunt-contrib-uglify": "~0.1.2"
   },
   "scripts": {
     "start": "node app.js"
