@@ -108,14 +108,14 @@ module.exports = function(cdn){ return {
 		});
 	},
 	uploadImage: function(req, res, next) {
-		Article.findById(req.param('article_id'), function(err, article){
+		Article.findById(req.param('id'), function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {msg: "article not found"});
 			var img = new Img();
 			var path = req.files.image.name;
 			img.filename = path.split('/').slice(-2).join('/');
 			img.remote_name = 'article-'+article.id+'/images/'+img.filename;
-			cdn().upload({
+			cdn.create().upload({
 				container: 'upac',
 				remote: img.remote_name,
 				local: req.files.image.path // <-- image = name do item no form de upload
@@ -132,14 +132,14 @@ module.exports = function(cdn){ return {
 		});
 	},
 	uploadAttachment: function(req, res, next) {
-		Article.findById(req.param('article_id'), function(err, article){
+		Article.findById(req.param('id'), function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {msg: "article not found"});
 			var attachment = new Attachment();
 			var path = req.files.upload.name;
 			attachment.filename = path.split('/').slice(-2).join('/');
 			attachment.remote_name = 'article-'+article.id+'/attachments/'+attachment.filename;
-			cdn().upload({
+			cdn.create().upload({
 				container:'upac',
 				remote: attachment.remote_name,
 				local: req.files.attachment.path// <-- attachment = name do item no form de upload
@@ -155,7 +155,34 @@ module.exports = function(cdn){ return {
 			});
 		});
 	},
-
+	getImages: function(req, res, next) {
+		Article.findById(req.param('id')), function(err, article) {
+			if (err) return next(err);
+			if (!article) return res.jsonx(404, {msg: "article not found"});
+			Img.find({_id:article.images}, function(err, images) {
+				if (err) return next(err);
+				if (!images) return res.jsonx({images:[]});
+				res.jsonx({attachments: _.map(article.attachments, function(attachment){
+					attachment.remote_name = cdn.server_url+attachment.remote_name;
+					return attachment;
+				})});
+			});
+		}
+	},
+	getAttachments: function(req, res, next) {
+		Article.findById(req.param('id')), function(err, article) {
+			if (err) return next(err);
+			if (!article) return res.jsonx(404, {msg: "article not found"});
+			Attachment.find({_id:article.attachments}, function(err, attachments){
+				if (err) return next(err);
+				if (!attachments) return res.jsonx({attachments:[]});
+				res.jsonx({attachments: _.map(attachments, function(attachment){
+					attachment.remote_name = cdn.server_url+attachment.remote_name;
+					return attachment;
+				})});
+			});
+		}
+	}
 
 	/*
 	// route for testing uploads to the CDN server
@@ -165,7 +192,7 @@ module.exports = function(cdn){ return {
 		//console.log('path -> '+path);
 		var filename = path.split('/').slice(-2).join('/');
 		//console.log('filename -> '+filename);
-		cdn().upload({
+		cdn.create().upload({
 			container: 'upac',
 			remote: 'teste-upac-'+filename,
 			local: req.files.uploadImage.path
