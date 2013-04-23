@@ -26,6 +26,8 @@ module.exports = function(app, passport, auth, cdn) {
 	app.put('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.update);
 	app.del('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.remove);
 
+	// route for testing uploads to the CDN server
+	//app.post('/uploadtest', article.uploadTest);
 
 	app.post('/tag/new', auth.requiresLogin, tag.create);
 	app.get('/tag/:id', tag.show);

@@ -115,19 +115,19 @@ module.exports = function(cdn){ return {
 			var path = req.files.image.name;
 			img.filename = path.split('/').slice(-2).join('/');
 			img.remote_name = 'article-'+article.id+'/images/'+img.filename;
-			fs.createReadStream(req.files.image.path).pipe( 
-				cdn().upload({
-					container: 'upac',
-					remote: img.remote_name,
-				},function(err) {
-					if (err) return next(err);
-					img.save();
-					article.images.push(img.id);
-					article.save(function(err){
-						if (err) return res.jsonx(500, {msg: "error saving image"});
-						res.jsonx({msg:"ok", image:img});
-					});
-				}));
+			cdn().upload({
+				container: 'upac',
+				remote: img.remote_name,
+				local: req.files.image.path // <-- image = name do item no form de upload
+			},function(err) {
+				if (err) return next(err);
+				img.save();
+				article.images.push(img.id);
+				article.save(function(err){
+					if (err) return res.jsonx(500, {msg: "error saving image"});
+					res.jsonx({msg:"ok", image:img});
+				});
+			});
 
 		});
 	},
@@ -139,21 +139,42 @@ module.exports = function(cdn){ return {
 			var path = req.files.upload.name;
 			attachment.filename = path.split('/').slice(-2).join('/');
 			attachment.remote_name = 'article-'+article.id+'/attachments/'+attachment.filename;
-			fs.createReadStream(req.files.upload.path).pipe(
-				cdn.upload({
-					container:'upac',
-					remote: attachment.remote_name,
-				}, function(err) {
-					if (err) return next(err);
-					attachment.save();
-					article.attachments.push(attachment.id);
-					article.save(function(err){
-						if (err) return res.jsonx(500, {msg: "error saving image"});
-						res.jsonx({msg:"ok", image:img});
-					});
+			cdn().upload({
+				container:'upac',
+				remote: attachment.remote_name,
+				local: req.files.attachment.path// <-- attachment = name do item no form de upload
+			}, function(err) {
+				if (err) return next(err);
+				attachment.save();
+				article.attachments.push(attachment.id);
+				article.save(function(err){
+					if (err) return res.jsonx(500, {msg: "error saving image"});
+					res.jsonx({msg:"ok", image:img});
+				});
 
-				})
-			);
+			});
 		});
-	}
+	},
+
+
+	/*
+	// route for testing uploads to the CDN server
+	uploadTest: function(req, res, next) {
+		//console.log(req.files);
+		var path = req.files.uploadImage.name;
+		//console.log('path -> '+path);
+		var filename = path.split('/').slice(-2).join('/');
+		//console.log('filename -> '+filename);
+		cdn().upload({
+			container: 'upac',
+			remote: 'teste-upac-'+filename,
+			local: req.files.uploadImage.path
+		}, function(err) {
+			if (err) {
+				console.error('upload falhou: '+err);
+				return;
+			}
+			console.info('upload com sucesso.');
+		});
+	}*/
 }};
