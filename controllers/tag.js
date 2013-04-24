@@ -81,4 +81,7 @@ module.exports = function (cdn) { return {
 			res.jsonx({msg: 'ok', tag:tag});
 		});
 	},
+	findStartingWith: function(req, res) {
+		
+	}
 }};

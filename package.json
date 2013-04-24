@@ -12,6 +12,8 @@
     "jpegtran": "0.0.4",
     "optipng": "0.0.4",
     "pkgcloud": "0.6.12",
+    "gm": "1.8.2",
+    "canvas": "1.0.2",
     "grunt": "~0.4.0"
   },
   "devDependencies": {

@@ -34,6 +34,8 @@ var ArticleSchema = new Schema({
 	references: [String],
 	images: [{type:ObjectId, ref:'Img'}],
 	attachments: [{type:ObjectId, ref:'Attachment'}],
+
+	tags: [{type:ObjectId, ref:'Tag'}],
 	publicationStatus: String,
 	publicationDate: Date,
 	createdAt: Date,

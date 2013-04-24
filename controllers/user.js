@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Article = mongoose.model('Article')
+  , Img = mongoose.model('Img')
 
 module.exports = function (cdn) { return {
 	logout: function(req, res) {
@@ -74,6 +75,29 @@ module.exports = function (cdn) { return {
 			}
 			res.jsonx({msg:'ok', user:user});
 		})
+	},
+	setImage: function(req, res, next) {
+		var image = new Img();
+		image.filename = req.files.image.name;
+		image.remote_name = 'user-'+user.id.toString()+"-"+image.filename;
+
+		cdn().upload({
+			container: "upac",
+			remote: image.remote_name,
+			local: req.files.image.path
+		}, function(err) {
+			if(err) return res.jsonx(500, {msg: "error uploading file to server"});
+			image.save(function(err) {
+				if (err) return res.jsonx(500, {msg: "database error", error:err});
+				var user = req.profile;
+				user.image = image.id;
+				user.save(function(err) {
+					if(err) return res.jsonx(500, {msg: "database error", error:err});
+					res.jsonx({msg: "ok", image:image});
+				});
+			});
+		})
+		var user = req.profile;
 	},
 	verify: function(req, res, next) {
 		var user = User
