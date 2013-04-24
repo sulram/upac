@@ -156,6 +156,42 @@ App.MapController = Em.Object.create({
         });
 
         return marker;
+
+        /*
+        // CUSTOM MARKER
+        createMarker = function(position, title, ID){
+
+            var image = new google.maps.MarkerImage(ocupanise_theme + 'img/marker-pessoa.png',
+            new google.maps.Size(30, 41),
+            new google.maps.Point(0,0),
+            new google.maps.Point(15, 41));
+
+            var shadow = new google.maps.MarkerImage(ocupanise_theme + 'img/marker-shadow.png',
+            new google.maps.Size(22, 11),
+            new google.maps.Point(0,0),
+            new google.maps.Point(11, 5));
+
+            var shape = {
+            coord: [1, 1, 1, 40, 30, 40, 30 , 1],
+            type: 'poly'
+            };
+
+            var marker = new google.maps.Marker({
+                position: position,
+                //draggable: true,
+                optimized: false,
+                icon: image,
+                shadow: shadow,
+                shape: shape,
+                title: title,
+                zIndex: 10
+            });
+
+            marker.ID = ID;
+
+            return marker;
+        };
+        */
     },
     onMapClick: function(e){
 
