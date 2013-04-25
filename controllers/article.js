@@ -116,7 +116,7 @@ module.exports = function(cdn){ return {
 			img.filename = path.split('/').slice(-2).join('/');
 			img.remote_name = 'article-'+article.id+'/images/'+img.filename;
 			cdn.create().upload({
-				container: 'upac',
+				container: cdn.container,
 				remote: img.remote_name,
 				local: req.files.image.path // <-- image = name do item no form de upload
 			},function(err) {
@@ -140,7 +140,7 @@ module.exports = function(cdn){ return {
 			attachment.filename = path.split('/').slice(-2).join('/');
 			attachment.remote_name = 'article-'+article.id+'/attachments/'+attachment.filename;
 			cdn.create().upload({
-				container:'upac',
+				container:cdn.container,
 				remote: attachment.remote_name,
 				local: req.files.attachment.path// <-- attachment = name do item no form de upload
 			}, function(err) {

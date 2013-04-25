@@ -81,8 +81,8 @@ module.exports = function (cdn) { return {
 		image.filename = req.files.image.name;
 		image.remote_name = 'user-'+user.id.toString()+"-"+image.filename;
 
-		cdn().upload({
-			container: "upac",
+		cdn.create().upload({
+			container: cdn.container,
 			remote: image.remote_name,
 			local: req.files.image.path
 		}, function(err) {

@@ -123,6 +123,7 @@ if ('development' == app.get('env')) {
 }
 var cdn = {
 	server_url: config.cdn_server_url,
+	container: config.cdn_container,
 	create: function() {
 		return require('pkgcloud').storage.createClient(config.cdn);
 	}
