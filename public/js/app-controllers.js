@@ -10,7 +10,10 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('currentPath')
 });
 
-App.RedeIndexController = Ember.Controller.extend({
+App.RedeProfileController = Ember.ObjectController.extend({
+    isTheLoggedUser: function(){
+        return this.get('model.username') == User.auth.username
+    }.property('model.username','User.auth.username'),
     startMarking: function(){
         App.MapController.startMarking();
     },
@@ -21,8 +24,6 @@ App.RedeIndexController = Ember.Controller.extend({
         App.MapController.finishMarking();
     }
 });
-
-
 
 App.UserIndexController = Ember.Controller.extend({
     isPosting: false,

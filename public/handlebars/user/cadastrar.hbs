@@ -1,8 +1,15 @@
 <form id="register" class="form-horizontal">
 	<div class="control-group">
+		<label class="control-label" for="name">Nome e sobrenome</label>
+		<div class="controls">
+			<input type="text" id="name" name="name" placeholder="" {{action "onFocus"}}>
+		</div>
+	</div>
+	<div class="control-group">
 		<label class="control-label" for="username">Nome de usuário</label>
 		<div class="controls">
 			<input type="text" id="username" name="username" placeholder="" {{action "onFocus"}}>
+			<span class="help-block">sem espaços ou acentos, seu login no site</span>
 		</div>
 	</div>
 	<div class="control-group">

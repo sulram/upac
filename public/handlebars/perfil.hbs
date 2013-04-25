@@ -1,22 +1,21 @@
-{{#if User.auth.loggedIn}}
-
 <div class="row-fluid">
+{{#if isLoaded}}
 	
 	<div class="span8">
 
-		<h1 class="upper">{{User.auth.username}}</h1>
+		<h1 class="upper">
+			{{#if name}}
+				{{name}}
+			{{else}}
+				{{username}}
+			{{/if}}
+		</h1>
 	
 		<hr/>
 
-		<h3>Publicações no site</h3>
-
 		<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, rem, nesciunt, repellendus, ab saepe libero dignissimos placeat animi nostrum eius molestiae obcaecati labore provident quasi excepturi voluptatum qui iure consequuntur.</p>
 
-		<hr/>
-
-		<h3>Comentários</h3>
-		
-		<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, rem, nesciunt, repellendus, ab saepe libero dignissimos placeat animi nostrum eius molestiae obcaecati labore provident quasi excepturi voluptatum qui iure consequuntur.</p>
+		<p>{{#linkTo 'rede.profile' model classNames="btn btn-large"}}Ver perfil no mapa{{/linkTo}}</p>
 
 	</div>
 
@@ -28,10 +27,23 @@
 		
 		<p></p>
 
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, ducimus, ut quasi enim quibusdam culpa impedit esse cupiditate incidunt tempore consequatur in fuga a hic nobis dolores mollitia et voluptatem!</p>
+		<dl class="">
+		  <dt>login</dt>
+		  <dd>{{username}}</dd>
+		  <dt>e-mail</dt>
+		  <dd>{{email}}</dd>
+		  <dt>participa desde</dt>
+		  <dd>{{createdAt}}</dd>
+		  <dt>último login</dt>
+		  <dd>{{lastLogin}}</dd>
+		</dl>
 
 	</div>
 	
-</div>
+{{else}}
+
+<p>Carregando...</p>
 
 {{/if}}
+
+</div>

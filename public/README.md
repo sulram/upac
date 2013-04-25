@@ -35,7 +35,13 @@ Descrição e informações úteis desse módulo do projeto
 
 #### Pesquisa Ember.js
 
-* dynamic routes + nested routes + linkTo
+* SERVIDOR
+* PERFIL COMPLETO
+* UPLOAD DE IMAGEM
+* ADICIONAR TAGS PRO AJAX
+* FILTRAR MAPA POR TAGS
+* MELHORAR ICONES
+* QUADRO DE AVISOS
 
 
 #### 18/04 alpha 0 / apresentar pra UPAC

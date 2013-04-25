@@ -12,7 +12,7 @@
 
 	{{#if User.auth.loggedIn}}
 		
-		<li class="menu_it profile">{{#linkTo 'perfil'}}<span><span class="ico"></span>Meu perfil</span>{{/linkTo}}</li>
+		<li class="menu_it profile">{{#linkTo 'rede.profile' User.model}}<span><span class="ico"></span>Meu perfil</span>{{/linkTo}}</li>
 
 		<li class="menu_it logout">{{#linkTo 'logout'}}<span><span class="ico"></span>Sair</span>{{/linkTo}}</li>
 

@@ -47,7 +47,7 @@ App.RedeMapaView = Ember.View.extend({
 
 //// OBJECTS
 
-App.MapMarker = Ember.Object.extend({
+/*App.MapMarker = Ember.Object.extend({
     latLng: null,
     latitude: function () {return this.latLng.lat()}.property('latLng'),
     longitude: function () {return this.latLng.lng()}.property('latLng'),
@@ -58,32 +58,36 @@ App.MapMarker = Ember.Object.extend({
     markerClick: function () {
         App.MapMarkers.set('selection', this);
     }
-});
+});*/
 
 App.MapController = Em.Object.create({
     isMarking: false,
     isFetching: true,
     markers: [],
+    icons: {
+        hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
+    },
     findUser: function(username){
         return _.findWhere(App.MapController.markers,{username: User.auth.username});
     },
     getMarkers: function(){  
         var that = this;
+        this.markers = [];
         that.set('isFetching',true);
         $.ajax({
             type: 'GET',
             url: '/users',
             data: { limit: 0 },
             success: function(data, status, jqXHR){
+                console.log('map: loaded users');
                 User.authenticate(data.auth);
                 $.each(data.users, function(i,user){
                     that.markers.push({
                         username: user.username,
                         geo: user.geo.length ? user.geo : [],
-                        mark: user.geo.length ? new google.maps.Marker({
-                            position: new google.maps.LatLng(user.geo[0],user.geo[1]),
-                            map: App.map
-                        }) : null
+                        mark: user.geo.length
+                                ? App.MapController.createMarker(user.username, new google.maps.LatLng(user.geo[0],user.geo[1]))
+                                : null
                     });
                 });
                 that.set('isFetching',false);
@@ -97,6 +101,7 @@ App.MapController = Em.Object.create({
     },
     startMarking: function(){
         this.set('isMarking',true);
+        App.map.setOptions({draggableCursor:'pointer'});
     },
     finishMarking: function(save){
         var that = this;
@@ -111,8 +116,11 @@ App.MapController = Em.Object.create({
                 url: '/user/'+User.get('auth.id'),
                 data: { geo: pos },
                 success: function(data, status, jqXHR){
+                    user.geo[0] = pos[0];
+                    user.geo[1] = pos[1];
                     User.authenticate(data.auth);
                     that.set('isMarking',false);
+                    App.map.setOptions({draggableCursor: App.MapController.icons.hand});
                     console.log('saved',pos);
                 },
                 error: function(jqXHR,status,error){
@@ -132,8 +140,58 @@ App.MapController = Em.Object.create({
                 )
             }
             that.set('isMarking',false);
+            App.map.setOptions({draggableCursor: App.MapController.icons.hand});
         }
         
+    },
+    createMarker: function(username, latLng){
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: App.map
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            if(App.MapController.isMarking) return false;
+            App.map.panTo(marker.getPosition());
+            window.location.hash = '/rede/perfil/'+username;
+        });
+
+        return marker;
+
+        /*
+        // CUSTOM MARKER
+        createMarker = function(position, title, ID){
+
+            var image = new google.maps.MarkerImage(ocupanise_theme + 'img/marker-pessoa.png',
+            new google.maps.Size(30, 41),
+            new google.maps.Point(0,0),
+            new google.maps.Point(15, 41));
+
+            var shadow = new google.maps.MarkerImage(ocupanise_theme + 'img/marker-shadow.png',
+            new google.maps.Size(22, 11),
+            new google.maps.Point(0,0),
+            new google.maps.Point(11, 5));
+
+            var shape = {
+            coord: [1, 1, 1, 40, 30, 40, 30 , 1],
+            type: 'poly'
+            };
+
+            var marker = new google.maps.Marker({
+                position: position,
+                //draggable: true,
+                optimized: false,
+                icon: image,
+                shadow: shadow,
+                shape: shape,
+                title: title,
+                zIndex: 10
+            });
+
+            marker.ID = ID;
+
+            return marker;
+        };
+        */
     },
     onMapClick: function(e){
 
@@ -143,15 +201,12 @@ App.MapController = Em.Object.create({
 
         } else {
 
-            console.log( 'mark!', e.latLng.kb );
-
             var user = App.MapController.findUser();
+            
+            console.log( 'mark!', e.latLng.kb, user );
 
             if(user.mark === null){
-                user.mark = new google.maps.Marker({
-                    position: e.latLng,
-                    map: App.map
-                });
+                user.mark = App.MapController.createMarker(e.latLng);
             } else {
                 user.mark.setPosition(e.latLng);
                 console.log(user.username,e.latLng);
