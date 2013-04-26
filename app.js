@@ -15,7 +15,8 @@ var express = require('express')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
   , auth = require('./helpers/auth')(_)
-  , crypto = require('crypto');
+  , crypto = require('crypto')
+  , img_helper = require('./helpers/image')(config.image_config, _);
 
 var app = express();
 
@@ -128,7 +129,8 @@ var cdn = {
 		return require('pkgcloud').storage.createClient(config.cdn);
 	}
 }
-require('./config/routes')(app, passport, auth, cdn);
+
+require('./config/routes')(app, passport, auth, cdn, img_helper);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

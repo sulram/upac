@@ -14,6 +14,15 @@ module.exports = {
 			// azure uses storageAccount - storageAccessKey
 			username: "username",
 			apiKey: "foobar"
+		},
+		image_config: {
+			sizes: [
+				{w:640, h:480},
+				{w:320, h:240},
+				{w:160, h:120},
+				{w:80,  h:60}
+			],
+			format: "jpg",
 		}
 	},
 	test: {

@@ -1,4 +1,4 @@
-module.exports = function(app, passport, auth, cdn) {
+module.exports = function(app, passport, auth, cdn, img) {
 
 	
 	var user = require('../controllers/user.js')(cdn);
