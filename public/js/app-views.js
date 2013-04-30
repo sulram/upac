@@ -4,6 +4,31 @@ App.MenuView = Em.View.extend({
     templateName: 'menu'
 });
 
+// UPLOAD DE FOTO
+
+App.UserPhoto = Ember.View.extend({
+    templateName: 'user_photo',
+    didInsertElement: function(){
+        this.$('#fileupload').fileupload({
+            url: '/user/'+this.get('controller').get('content._id')+'/updateimage',
+            dataType: 'json',
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').text(file.name).appendTo('#files');
+                });
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }
+        });
+        console.log('view!', this.get('controller').get('content._id'));
+    }
+});
+
 // SLIDESHOW HOME
 
 App.HomeSlidesView = Ember.View.extend({

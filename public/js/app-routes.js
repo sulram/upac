@@ -4,7 +4,9 @@ App.Router.map(function() {
     this.resource("rede", function(){
         this.route('profile', { path: '/perfil/:user_username' });
     });
-    this.resource("perfil", { path: '/perfil/:user_username' });
+    this.resource("perfil", { path: '/perfil/:user_username' }, function(){
+        this.route("editar");
+    });
     this.resource("blog",function(){
         this.route("recentes");
         this.route("populares");
@@ -32,8 +34,20 @@ App.PerfilRoute = Em.Route.extend({
         return { user_username: model.username };
     },
     setupController: function (controller, model){
-        console.log('profile!', model);
+        console.log('PERFIL', model);
         this._super(this, arguments);
+    }
+});
+
+App.PerfilIndexRoute = Em.Route.extend({
+    model: function (param){
+        return this.modelFor('perfil');
+    }
+});
+
+App.PerfilEditarRoute = Em.Route.extend({
+    model: function (param){
+        return this.modelFor('perfil');
     }
 });
 
@@ -53,7 +67,7 @@ App.RedeProfileRoute = Em.Route.extend({
         return { user_username: model.username };
     },
     setupController: function (controller, model){
-        console.log('profile!', model);
+        console.log('REDE', model);
         this._super(this, arguments);
     }
 });

@@ -10,9 +10,21 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('currentPath')
 });
 
+App.PerfilIndexController = Ember.ObjectController.extend({
+    isTheLoggedUser: function(){
+        return this.get('model.username') == User.auth.username;
+    }.property('model.username','User.auth.username')
+});
+
+App.PerfilEditarController = Ember.ObjectController.extend({
+    isTheLoggedUser: function(){
+        return this.get('model.username') == User.auth.username;
+    }.property('model.username','User.auth.username')
+});
+
 App.RedeProfileController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
-        return this.get('model.username') == User.auth.username
+        return this.get('model.username') == User.auth.username;
     }.property('model.username','User.auth.username'),
     startMarking: function(){
         App.MapController.startMarking();
