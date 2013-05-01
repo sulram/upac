@@ -18,7 +18,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.put('/user/:id', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.update);
 	app.get('/user/:username', user.show);
 	app.get('/user/:username/articles', article.byUser);
-	app.post('/user/:id/updateimage', user.setImage);
+	app.post('/user/:id/updateimage', auth.requiresLogin, user.preloadById, user.setImage);
 
 	app.all('/article', article.index);
 	app.get('/article/new', auth.requiresLogin, article.create);
