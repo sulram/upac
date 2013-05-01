@@ -67,7 +67,6 @@ App.RedeProfileRoute = Em.Route.extend({
         return { user_username: model.username };
     },
     setupController: function (controller, model){
-        console.log('REDE', model);
         this._super(this, arguments);
     }
 });

@@ -34,7 +34,13 @@ App.RedeProfileController = Ember.ObjectController.extend({
     },
     cancelMarking: function(){
         App.MapController.finishMarking();
-    }
+    },
+    focusUser: function(){
+        console.log('profile is loaded?',this.get('content.isLoaded'));
+        if(this.get('content.isLoaded')){
+            App.MapController.focusUser(this.get('content.username'));
+        }
+    }.observes('content.isLoaded')
 });
 
 App.UserIndexController = Ember.Controller.extend({

@@ -1,42 +1,53 @@
-<div class="span8">
-
-	<h1 class="upper">
-		{{#if name}}
-			{{name}}
-		{{else}}
-			{{username}}
-		{{/if}}
-	</h1>
-
-	<hr/>
-
-	<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, rem, nesciunt, repellendus, ab saepe libero dignissimos placeat animi nostrum eius molestiae obcaecati labore provident quasi excepturi voluptatum qui iure consequuntur.</p>
-
-	<p>{{#linkTo rede.profile model classNames="btn btn-large"}}Ver perfil no mapa{{/linkTo}}</p>
-	
-	{{#if isTheLoggedUser}}
-		<p>{{#linkTo perfil.editar model}}Editar{{/linkTo}}</p>
-	{{/if}}
-
+<div class="row">
+	<div class="span12">
+		<h1 class="upper">
+			{{nick}}
+		</h1>
+		<hr/>
+	</div>
 </div>
 
-<div class="span1">
-	&nbsp;
-</div>
+<div class="row">
 
-<div class="span3">
-	
-	<p></p>
+	<div class="span3">
+		
+		<p><img src="./img/perfil_user.png"/></p>
 
-	<dl class="">
-	  <dt>login</dt>
-	  <dd>{{username}}</dd>
-	  <dt>e-mail</dt>
-	  <dd>{{email}}</dd>
-	  <dt>participa desde</dt>
-	  <dd>{{createdAt}}</dd>
-	  <dt>último login</dt>
-	  <dd>{{lastLogin}}</dd>
-	</dl>
+		<dl class="">
+		  <dt>login</dt>
+		  <dd>{{username}}</dd>
+		  <dt>e-mail</dt>
+		  <dd>{{email}}</dd>
+		  <dt>participa desde</dt>
+		  <dd>{{momentago createdAt}}</dd>
+		  {{#if lastLogin}}
+			  <dt>último login</dt>
+			  <dd>{{momentago lastLogin}}</dd>
+		  {{/if}}
+		</dl>
+
+	</div>
+
+	<div class="span1">
+		&nbsp;
+	</div>
+
+	<div class="span8">
+
+		
+
+		<p>{{about}}</p>
+
+		<p>
+
+			{{#if isTheLoggedUser}}
+				{{#linkTo perfil.editar model classNames="btn btn-large"}}Editar meu perfil{{/linkTo}}
+			{{/if}}
+
+			{{#linkTo rede.profile model classNames="btn btn-large"}}Localizar no mapa{{/linkTo}}
+
+		</p>
+
+	</div>
 
 </div>
