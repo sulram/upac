@@ -26,23 +26,20 @@ Descrição e informações úteis desse módulo do projeto
 
 * [Listadas em Issues](https://github.com/ultraleve/upac/issues)
 
+#### TODOS
 
-#### Features do backend
-
-* artigo
-* usuario
-* middleware usuario
-
-#### Pesquisa Ember.js
-
-* SERVIDOR
-* PERFIL COMPLETO
 * UPLOAD DE IMAGEM
 * ADICIONAR TAGS PRO AJAX
+* PERFIL COMPLETO
 * FILTRAR MAPA POR TAGS
-* MELHORAR ICONES
+* MELHORAR ICONES DO MAPA
 * QUADRO DE AVISOS
-
+* BLOG
+* ADICIONAR POST
+* EVENTO
+* RSVP DO EVENTO
+* GRUNT
+	* concatenar libs e minimizar upac.js
 
 #### 18/04 alpha 0 / apresentar pra UPAC
 

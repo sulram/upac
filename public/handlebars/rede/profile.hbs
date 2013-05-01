@@ -1,11 +1,7 @@
 <div class="pad">
 	{{#if isLoaded}}
 		<h2>
-			{{#if name}}
-				{{name}}
-			{{else}}
-				{{username}}
-			{{/if}}
+			{{nick}}
 		</h2>
 
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, dolores, ullam dignissimos ea soluta asperiores nam impedit repudiandae iste facere unde eos consequatur architecto explicabo quam eligendi totam corporis magni?</p>
@@ -24,7 +20,7 @@
 			{{else}}
 				
 				<p>{{#linkTo 'perfil' model classNames="btn"}}Ver perfil completo{{/linkTo}}</p>
-				<p><a {{action startMarking App.MapController}} class="btn">Mudar minha posição no mapa</a></p>
+				<p><a {{action startMarking App.MapController}} class="btn">Mudar minha localização</a></p>
 
 			{{/if}}
 

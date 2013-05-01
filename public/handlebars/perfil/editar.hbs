@@ -1,0 +1,45 @@
+{{#if isTheLoggedUser}}
+
+<div class="span8">
+
+	<h1 class="upper">
+		{{#if name}}
+			{{name}}
+		{{else}}
+			{{username}}
+		{{/if}}
+	</h1>
+
+	<hr/>
+
+	<p>{{#linkTo perfil.index model}}Salvar{{/linkTo}}</p>
+	{{view App.UserPhoto}}
+
+</div>
+
+<div class="span1">
+	&nbsp;
+</div>
+
+<div class="span3">
+	
+	<p></p>
+
+	<dl class="">
+	  <dt>login</dt>
+	  <dd>{{username}}</dd>
+	  <dt>e-mail</dt>
+	  <dd>{{email}}</dd>
+	  <dt>participa desde</dt>
+	  <dd>{{createdAt}}</dd>
+	  <dt>último login</dt>
+	  <dd>{{lastLogin}}</dd>
+	</dl>
+
+</div>
+
+{{else}}
+	
+	Você não pode editar esse perfil. {{#linkTo perfil.index model}}Voltar{{/linkTo}}
+
+{{/if}}

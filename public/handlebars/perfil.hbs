@@ -1,44 +1,7 @@
 <div class="row-fluid">
 {{#if isLoaded}}
 	
-	<div class="span8">
-
-		<h1 class="upper">
-			{{#if name}}
-				{{name}}
-			{{else}}
-				{{username}}
-			{{/if}}
-		</h1>
-	
-		<hr/>
-
-		<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, rem, nesciunt, repellendus, ab saepe libero dignissimos placeat animi nostrum eius molestiae obcaecati labore provident quasi excepturi voluptatum qui iure consequuntur.</p>
-
-		<p>{{#linkTo 'rede.profile' model classNames="btn btn-large"}}Ver perfil no mapa{{/linkTo}}</p>
-
-	</div>
-
-	<div class="span1">
-		&nbsp;
-	</div>
-	
-	<div class="span3">
-		
-		<p></p>
-
-		<dl class="">
-		  <dt>login</dt>
-		  <dd>{{username}}</dd>
-		  <dt>e-mail</dt>
-		  <dd>{{email}}</dd>
-		  <dt>participa desde</dt>
-		  <dd>{{createdAt}}</dd>
-		  <dt>último login</dt>
-		  <dd>{{lastLogin}}</dd>
-		</dl>
-
-	</div>
+	{{outlet}}
 	
 {{else}}
 

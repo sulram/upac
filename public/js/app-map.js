@@ -64,11 +64,24 @@ App.MapController = Em.Object.create({
     isMarking: false,
     isFetching: true,
     markers: [],
+    focus: null,
     icons: {
         hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
     },
-    findUser: function(username){
+    findTheUser: function(){
         return _.findWhere(App.MapController.markers,{username: User.auth.username});
+    },
+    findUser: function(username){
+        return _.findWhere(App.MapController.markers,{username: username});
+    },
+    focusUser: function(username){
+        if(this.get('isFetching')){
+            this.set('saveFocus',username);
+        }else{
+            var marker = _.findWhere(App.MapController.markers,{username: username}).mark;
+            console.log("focus " + username);
+            App.map.panTo(marker.getPosition());
+        }
     },
     getMarkers: function(){  
         var that = this;
@@ -91,6 +104,11 @@ App.MapController = Em.Object.create({
                     });
                 });
                 that.set('isFetching',false);
+
+                if(that.get('saveFocus') != null){
+                    that.focusUser(that.get('saveFocus'));
+                    that.set('saveFocus',null);
+                }
             },
             error: function(jqXHR,status,error){
                 console.log(jqXHR);
@@ -105,7 +123,7 @@ App.MapController = Em.Object.create({
     },
     finishMarking: function(save){
         var that = this;
-        var user = App.MapController.findUser();
+        var user = App.MapController.findTheUser();
         if(save && user.mark != null){
             var pos = [
                 user.mark.getPosition().lat(),
@@ -151,7 +169,8 @@ App.MapController = Em.Object.create({
         });
         google.maps.event.addListener(marker, 'click', function() {
             if(App.MapController.isMarking) return false;
-            App.map.panTo(marker.getPosition());
+            //App.map.panTo(marker.getPosition());
+            //App.MapController.focusUser(username);
             window.location.hash = '/rede/perfil/'+username;
         });
 
@@ -197,19 +216,20 @@ App.MapController = Em.Object.create({
 
         if(!App.MapController.isMarking){
             
+            window.location.hash = '/rede';
+
             console.log( 'get position!', e.latLng );
 
         } else {
 
-            var user = App.MapController.findUser();
+            var user = App.MapController.findTheUser();
             
-            console.log( 'mark!', e.latLng.kb, user );
+            console.log( 'mark!', e.latLng.kb, user, user.mark );
 
             if(user.mark === null){
-                user.mark = App.MapController.createMarker(e.latLng);
+                user.mark = App.MapController.createMarker(user.username, e.latLng);
             } else {
                 user.mark.setPosition(e.latLng);
-                console.log(user.username,e.latLng);
             }
         }
     }
