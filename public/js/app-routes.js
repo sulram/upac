@@ -68,6 +68,9 @@ App.RedeProfileRoute = Em.Route.extend({
     },
     setupController: function (controller, model){
         this._super(this, arguments);
+        if(model.isLoaded){
+            controller.focusUser();
+        }
     }
 });
 
