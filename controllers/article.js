@@ -182,9 +182,9 @@ module.exports = function(cdn){ return {
 				})});
 			});
 		}
-	}
+	},
 
-	/*
+	//*
 	// route for testing uploads to the CDN server
 	uploadTest: function(req, res, next) {
 		//console.log(req.files);
@@ -203,5 +203,5 @@ module.exports = function(cdn){ return {
 			}
 			console.info('upload com sucesso.');
 		});
-	}*/
+	}//*/
 }};

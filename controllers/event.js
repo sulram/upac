@@ -25,5 +25,4 @@ module.exports = function(cdn) { return {
 		_Event.remove({_id: req.param('id')});
 		res.jsonx({msg: "ok"});
 	}
-
 }}

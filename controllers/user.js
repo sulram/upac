@@ -3,7 +3,7 @@ var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
   , Img = mongoose.model('Img')
 
-module.exports = function (cdn) { return {
+module.exports = function (cdn, img_helper) { return {
 	logout: function(req, res) {
 		req.logout();
 		res.jsonx({msg:'ok'});
@@ -79,8 +79,10 @@ module.exports = function (cdn) { return {
 	setImage: function(req, res, next) {
 		var image = new Img();
 		image.filename = req.files.image.name;
+		var user = req.profile;
 		image.remote_name = 'user-'+user.id.toString()+"-"+image.filename;
 
+		/*
 		cdn.create().upload({
 			container: cdn.container,
 			remote: image.remote_name,
@@ -97,7 +99,7 @@ module.exports = function (cdn) { return {
 				});
 			});
 		})
-		var user = req.profile;
+		*/
 	},
 	verify: function(req, res, next) {
 		var user = User

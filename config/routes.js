@@ -1,8 +1,8 @@
 module.exports = function(app, passport, auth, cdn, img) {
 
 	
-	var user = require('../controllers/user.js')(cdn);
-	var article = require('../controllers/article.js')(cdn);
+	var user = require('../controllers/user.js')(cdn, img);
+	var article = require('../controllers/article.js')(cdn, img);
 	var _event = require('../controllers/event.js')(cdn);
 	var tag = require('../controllers/tag.js')(cdn);
 
@@ -18,6 +18,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.put('/user/:id', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.update);
 	app.get('/user/:username', user.show);
 	app.get('/user/:username/articles', article.byUser);
+	
 	app.post('/user/:id/updateimage', user.setImage);
 
 	app.all('/article', article.index);
@@ -30,7 +31,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.get('/article/:id/attachments', article.getAttachments);
 
 	// route for testing uploads to the CDN server
-	//app.post('/uploadtest', article.uploadTest);
+	app.post('/uploadtest', article.uploadTest);
 
 	app.post('/tag/new', auth.requiresLogin, tag.create);
 	app.get('/tag/:id', tag.show);
