@@ -16,6 +16,7 @@ App.UserModel.reopen({
         $.getJSON('/user/' + username, function(data) {
             user.setProperties(data.user);
             user.set('isLoaded', true);
+            user.set('nick',user.get('name') || user.get('username'));
             console.log('loaded profile',user);
         });
 

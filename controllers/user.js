@@ -78,6 +78,7 @@ module.exports = function (cdn, img_helper) { return {
 	},
 	setImage: function(req, res, next) {
 		var image = new Img();
+		var user = req.profile;
 		image.filename = req.files.image.name;
 		var user = req.profile;
 		image.remote_name = 'user-'+user.id.toString()+"-"+image.filename;
@@ -91,7 +92,6 @@ module.exports = function (cdn, img_helper) { return {
 			if(err) return res.jsonx(500, {msg: "error uploading file to server"});
 			image.save(function(err) {
 				if (err) return res.jsonx(500, {msg: "database error", error:err});
-				var user = req.profile;
 				user.image = image.id;
 				user.save(function(err) {
 					if(err) return res.jsonx(500, {msg: "database error", error:err});
