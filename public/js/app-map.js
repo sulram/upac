@@ -47,15 +47,11 @@ App.RedeMapaView = Ember.View.extend({
 
 //// OBJECTS
 
-App.MapController = Em.Object.create({
-    isMarking: false,
-    isFetching: true,
-    markers: [],
-    focus: null,
-    icons: {
+App.MapStyles = Em.Object.create({
+    cursor: {
         hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
     },
-    pins: {
+    pin: {
         user: [
             new google.maps.MarkerImage(
                 './img/pin_user1.png',
@@ -80,7 +76,14 @@ App.MapController = Em.Object.create({
                 type: 'poly'
             }
         ]
-    },
+    }
+});
+
+App.MapController = Em.Object.create({
+    isMarking: false,
+    isFetching: true,
+    markers: [],
+    focus: null,
     findTheUser: function(){
         return _.findWhere(App.MapController.markers,{username: User.auth.username});
     },
@@ -89,6 +92,7 @@ App.MapController = Em.Object.create({
     },
     focusUser: function(username){
         if(this.get('isFetching')){
+            console.log('saved focus');
             this.set('saveFocus',username);
         }else{
             console.log("focus " + username);
@@ -98,8 +102,8 @@ App.MapController = Em.Object.create({
             this.unFocusAll();
 
             if(current.marker){
-                current.marker.setIcon(App.MapController.pins.user_select[0]);
-                current.marker.setShape(App.MapController.pins.user_select[1]);
+                current.marker.setIcon(App.MapStyles.pin.user_select[0]);
+                current.marker.setShape(App.MapStyles.pin.user_select[1]);
                 current.selected = true;
                 App.map.panTo(current.marker.getPosition());
             }
@@ -108,8 +112,8 @@ App.MapController = Em.Object.create({
     unFocusAll: function(){
         var last = _.findWhere(App.MapController.markers,{selected: true});
         if(last){
-            last.marker.setIcon(App.MapController.pins.user[0]);
-            last.marker.setShape(App.MapController.pins.user[1]);
+            last.marker.setIcon(App.MapStyles.pin.user[0]);
+            last.marker.setShape(App.MapStyles.pin.user[1]);
             last.selected = false;
         }
     },
@@ -137,6 +141,7 @@ App.MapController = Em.Object.create({
                 that.set('isFetching',false);
 
                 if(that.get('saveFocus') != null){
+                    console.log('delayed focus');
                     that.focusUser(that.get('saveFocus'));
                     that.set('saveFocus',null);
                 }
@@ -169,7 +174,7 @@ App.MapController = Em.Object.create({
                     user.geo[1] = pos[1];
                     User.authenticate(data.auth);
                     that.set('isMarking',false);
-                    App.map.setOptions({draggableCursor: App.MapController.icons.hand});
+                    App.map.setOptions({draggableCursor: App.MapStyles.cursor.hand});
                     console.log('saved',pos);
                 },
                 error: function(jqXHR,status,error){
@@ -189,12 +194,12 @@ App.MapController = Em.Object.create({
                 )
             }
             that.set('isMarking',false);
-            App.map.setOptions({draggableCursor: App.MapController.icons.hand});
+            App.map.setOptions({draggableCursor: App.MapStyles.cursor.hand});
         }
         
     },
     createMarker: function(username, latLng, select){
-        var pin_type = select ? App.MapController.pins.user_select : App.MapController.pins.user;
+        var pin_type = select ? App.MapStyles.pin.user_select : App.MapStyles.pin.user;
         var marker = new google.maps.Marker({
             position: latLng,
             map: App.map,
