@@ -18,7 +18,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.put('/user/:id', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.update);
 	app.get('/user/:username', user.show);
 	app.get('/user/:username/articles', article.byUser);
-	app.post('/user/:id/updateimage', auth.requiresLogin, user.preloadById, user.setImage);
+	app.post('/user/:id/updateimage', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.setImage);
 
 	app.all('/article', article.index);
 	app.get('/article/new', auth.requiresLogin, article.create);
@@ -37,6 +37,16 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.get('/tag/find/:slug', tag.bySlug);
 	app.put('/tag/:id', auth.requiresLogin, tag.preloadById, /* auth.tag.hasAuthorization, */ tag.update);
 
+	app.get('/event/new', auth.requiresLogin, _event.create);
+	app.get('/event/:id', _event.show);
+	app.del('/event/:id', auth.requiresLogin, _event.preloadById, auth.event.hasAuthorization, _event.remove);
+
+	app.get('/events/near', _event.near);
+
+	app.get('/events/happening', _event.happening);
+	app.get('/events/past', _event.past);
+	app.get('/events/future', _event.future);
+	
 
 
 	app.get('/', function(req, res) { res.render('index'); });

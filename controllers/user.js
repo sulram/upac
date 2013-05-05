@@ -83,7 +83,6 @@ module.exports = function (cdn, img_helper) { return {
 		var user = req.profile;
 		image.remote_name = 'user-'+user.id.toString()+"-"+image.filename;
 
-		/*
 		cdn.create().upload({
 			container: cdn.container,
 			remote: image.remote_name,
@@ -99,7 +98,6 @@ module.exports = function (cdn, img_helper) { return {
 				});
 			});
 		})
-		*/
 	},
 	verify: function(req, res, next) {
 		var user = User
