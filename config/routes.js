@@ -5,6 +5,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	var article = require('../controllers/article.js')(cdn, img);
 	var _event = require('../controllers/event.js')(cdn);
 	var tag = require('../controllers/tag.js')(cdn);
+	var notice = require('../controllers/notice.js');
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);
@@ -48,6 +49,9 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.get('/events/future', _event.future);
 	
 
+	app.all('/notices', notice.index);
+	app.post('/notice/new', auth.requiresLogin, notice.create);
+	app.get('/notice/:id', notice.show);
 
 	app.get('/', function(req, res) { res.render('index'); });
 

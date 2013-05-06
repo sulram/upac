@@ -9,16 +9,22 @@ module.exports = function (config) {
 			aws.config.update({
 				accessKeyId: config.keyId,
 				secretAccessKey: config.key,
-				region: "us-west-2"
+				sslEnabled: false,
+				region: "sa-east-2"
 			});
-			var s3 = new aws.S3({params: {Bucket: config.cdn_container}});
 			return {
 				upload:function(params, cb){
+					var s3 = new aws.S3({
+						params: {
+							Bucket:params.container,
+							Key:params.remote,
+						}});
+					s3.listObjects({Bucket:params.container}, function(err, data) {
+						console.info(err);
+						console.info(data);
+					});
 					s3.putObject({
-						ACL: "public-read",
-						Bucket: config.cdn_container,
-						Key: params.remote,
-						Body: require('fs').ReadStream(params.local)
+						Body: require('fs').createReadStream(params.local)
 					}, cb);
 				}
 			};
