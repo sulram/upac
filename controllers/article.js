@@ -193,7 +193,7 @@ module.exports = function(cdn){ return {
 		var filename = path.split('/').slice(-2).join('/');
 		//console.log('filename -> '+filename);
 		cdn.create().upload({
-			container: 'upac',
+			container: cdn.container,
 			remote: 'teste-upac-'+filename,
 			local: req.files.uploadImage.path
 		}, function(err) {

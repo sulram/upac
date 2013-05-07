@@ -7,23 +7,21 @@ module.exports = function (config) {
 		create = function() {
 			var aws = require('aws-sdk')
 			aws.config.update({
-				accessKeyId: config.keyId,
-				secretAccessKey: config.key,
-				sslEnabled: false,
-				region: "sa-east-2"
+				accessKeyId: config.cdn.keyId,
+				secretAccessKey: config.cdn.key,
+				//sslEnabled: false,
+				region: config.cdn.region
 			});
 			return {
 				upload:function(params, cb){
 					var s3 = new aws.S3({
 						params: {
 							Bucket:params.container,
-							Key:params.remote,
+							//Key:params.remote,
+							region: config.cdn.region,
 						}});
-					s3.listObjects({Bucket:params.container}, function(err, data) {
-						console.info(err);
-						console.info(data);
-					});
 					s3.putObject({
+						Key: params.remote,
 						Body: require('fs').createReadStream(params.local)
 					}, cb);
 				}
