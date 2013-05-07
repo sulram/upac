@@ -10,7 +10,7 @@
 			{{#if App.MapController.isMarking}}
 			
 			<div class="pad over">
-				<p>Navegue pelo mapa e clique no lugar que você deseja criar seu marcador.</p>
+				<p>Navegue pelo mapa e clique no ponto em que você deseja marcar sua localização.</p>
 				<p>
 					<a {{action finishMarking App.MapController}} class="btn">Salvar posição</a>
 					<a {{action cancelMarking App.MapController}} class="btn">Cancelar</a>
@@ -20,7 +20,12 @@
 			{{else}}
 				
 				<p>{{#linkTo 'perfil' model classNames="btn"}}Ver perfil completo{{/linkTo}}</p>
-				<p><a {{action startMarking App.MapController}} class="btn">Mudar minha localização</a></p>
+				
+				{{#if geo.length}}
+					<p><a {{action startMarking App.MapController}} class="btn">Mudar minha localização</a></p>
+				{{else}}
+					<p><a {{action startMarking App.MapController}} class="btn">Inserir minha localização</a></p>
+				{{/if}}
 
 			{{/if}}
 

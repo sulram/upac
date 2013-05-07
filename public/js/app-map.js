@@ -47,27 +47,43 @@ App.RedeMapaView = Ember.View.extend({
 
 //// OBJECTS
 
-/*App.MapMarker = Ember.Object.extend({
-    latLng: null,
-    latitude: function () {return this.latLng.lat()}.property('latLng'),
-    longitude: function () {return this.latLng.lng()}.property('latLng'),
-    removeFromMap: function () {
-        i = App.markers.get('content').indexOf(this);
-        App.MapMarkers.removeAt(i);
+App.MapStyles = Em.Object.create({
+    cursor: {
+        hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
     },
-    markerClick: function () {
-        App.MapMarkers.set('selection', this);
+    pin: {
+        user: [
+            new google.maps.MarkerImage(
+                './img/pin_user1.png',
+                new google.maps.Size(32, 32),
+                new google.maps.Point(0,0),
+                new google.maps.Point(16, 32)
+            ),
+            {
+                coord: [1, 1, 1, 32, 32, 32, 32 , 1],
+                type: 'poly'
+            }
+        ],
+        user_select: [
+            new google.maps.MarkerImage(
+                './img/pin_user_select.png',
+                new google.maps.Size(64, 64),
+                new google.maps.Point(0,0),
+                new google.maps.Point(32, 64)
+            ),
+            {
+                coord: [1, 1, 1, 64, 64, 64, 64 , 1],
+                type: 'poly'
+            }
+        ]
     }
-});*/
+});
 
 App.MapController = Em.Object.create({
     isMarking: false,
     isFetching: true,
     markers: [],
     focus: null,
-    icons: {
-        hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
-    },
     findTheUser: function(){
         return _.findWhere(App.MapController.markers,{username: User.auth.username});
     },
@@ -76,11 +92,29 @@ App.MapController = Em.Object.create({
     },
     focusUser: function(username){
         if(this.get('isFetching')){
+            console.log('saved focus');
             this.set('saveFocus',username);
         }else{
-            var marker = _.findWhere(App.MapController.markers,{username: username}).mark;
             console.log("focus " + username);
-            App.map.panTo(marker.getPosition());
+
+            var current = _.findWhere(App.MapController.markers,{username: username});
+            
+            this.unFocusAll();
+
+            if(current.marker){
+                current.marker.setIcon(App.MapStyles.pin.user_select[0]);
+                current.marker.setShape(App.MapStyles.pin.user_select[1]);
+                current.selected = true;
+                App.map.panTo(current.marker.getPosition());
+            }
+        }
+    },
+    unFocusAll: function(){
+        var last = _.findWhere(App.MapController.markers,{selected: true});
+        if(last){
+            last.marker.setIcon(App.MapStyles.pin.user[0]);
+            last.marker.setShape(App.MapStyles.pin.user[1]);
+            last.selected = false;
         }
     },
     getMarkers: function(){  
@@ -96,9 +130,10 @@ App.MapController = Em.Object.create({
                 User.authenticate(data.auth);
                 $.each(data.users, function(i,user){
                     that.markers.push({
+                        selected: false,
                         username: user.username,
                         geo: user.geo.length ? user.geo : [],
-                        mark: user.geo.length
+                        marker: user.geo.length
                                 ? App.MapController.createMarker(user.username, new google.maps.LatLng(user.geo[0],user.geo[1]))
                                 : null
                     });
@@ -106,6 +141,7 @@ App.MapController = Em.Object.create({
                 that.set('isFetching',false);
 
                 if(that.get('saveFocus') != null){
+                    console.log('delayed focus');
                     that.focusUser(that.get('saveFocus'));
                     that.set('saveFocus',null);
                 }
@@ -124,10 +160,10 @@ App.MapController = Em.Object.create({
     finishMarking: function(save){
         var that = this;
         var user = App.MapController.findTheUser();
-        if(save && user.mark != null){
+        if(save && user.marker != null){
             var pos = [
-                user.mark.getPosition().lat(),
-                user.mark.getPosition().lng()
+                user.marker.getPosition().lat(),
+                user.marker.getPosition().lng()
             ];
             $.ajax({
                 type: 'PUT',
@@ -138,7 +174,7 @@ App.MapController = Em.Object.create({
                     user.geo[1] = pos[1];
                     User.authenticate(data.auth);
                     that.set('isMarking',false);
-                    App.map.setOptions({draggableCursor: App.MapController.icons.hand});
+                    App.map.setOptions({draggableCursor: App.MapStyles.cursor.hand});
                     console.log('saved',pos);
                 },
                 error: function(jqXHR,status,error){
@@ -148,24 +184,28 @@ App.MapController = Em.Object.create({
             });
         } else {
             if(user.geo.length == 0){
-                if(user.mark){
-                    user.mark.setMap(null)
-                    user.mark = null;
+                if(user.marker){
+                    user.marker.setMap(null)
+                    user.marker = null;
                 }
             } else {
-                user.mark.setPosition(
+                user.marker.setPosition(
                     new google.maps.LatLng(user.geo[0],user.geo[1])
                 )
             }
             that.set('isMarking',false);
-            App.map.setOptions({draggableCursor: App.MapController.icons.hand});
+            App.map.setOptions({draggableCursor: App.MapStyles.cursor.hand});
         }
         
     },
-    createMarker: function(username, latLng){
+    createMarker: function(username, latLng, select){
+        var pin_type = select ? App.MapStyles.pin.user_select : App.MapStyles.pin.user;
         var marker = new google.maps.Marker({
             position: latLng,
-            map: App.map
+            map: App.map,
+            icon: pin_type[0],
+            shadow: null,
+            shape: pin_type[1]
         });
         google.maps.event.addListener(marker, 'click', function() {
             if(App.MapController.isMarking) return false;
@@ -175,47 +215,12 @@ App.MapController = Em.Object.create({
         });
 
         return marker;
-
-        /*
-        // CUSTOM MARKER
-        createMarker = function(position, title, ID){
-
-            var image = new google.maps.MarkerImage(ocupanise_theme + 'img/marker-pessoa.png',
-            new google.maps.Size(30, 41),
-            new google.maps.Point(0,0),
-            new google.maps.Point(15, 41));
-
-            var shadow = new google.maps.MarkerImage(ocupanise_theme + 'img/marker-shadow.png',
-            new google.maps.Size(22, 11),
-            new google.maps.Point(0,0),
-            new google.maps.Point(11, 5));
-
-            var shape = {
-            coord: [1, 1, 1, 40, 30, 40, 30 , 1],
-            type: 'poly'
-            };
-
-            var marker = new google.maps.Marker({
-                position: position,
-                //draggable: true,
-                optimized: false,
-                icon: image,
-                shadow: shadow,
-                shape: shape,
-                title: title,
-                zIndex: 10
-            });
-
-            marker.ID = ID;
-
-            return marker;
-        };
-        */
     },
     onMapClick: function(e){
 
         if(!App.MapController.isMarking){
             
+            App.MapController.unFocusAll();
             window.location.hash = '/rede';
 
             console.log( 'get position!', e.latLng );
@@ -224,12 +229,12 @@ App.MapController = Em.Object.create({
 
             var user = App.MapController.findTheUser();
             
-            console.log( 'mark!', e.latLng.kb, user, user.mark );
+            console.log( 'mark!', e.latLng.kb, user, user.marker );
 
-            if(user.mark === null){
-                user.mark = App.MapController.createMarker(user.username, e.latLng);
+            if(user.marker === null){
+                user.marker = App.MapController.createMarker(user.username, e.latLng, true);
             } else {
-                user.mark.setPosition(e.latLng);
+                user.marker.setPosition(e.latLng);
             }
         }
     }
