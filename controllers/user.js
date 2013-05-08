@@ -77,27 +77,22 @@ module.exports = function (cdn, img_helper) { return {
 		})
 	},
 	setImage: function(req, res, next) {
-		var image = new Img();
 		var user = req.profile;
-		image.filename = req.files.image.name;
-		var user = req.profile;
-		image.remote_name = 'user-'+user.id.toString()+"-"+image.filename;
-
-		cdn.create().upload({
-			container: cdn.container,
-			remote: image.remote_name,
-			local: req.files.image.path
-		}, function(err) {
-			if(err) return res.jsonx(500, {msg: "error uploading file to server"});
-			image.save(function(err) {
-				if (err) return res.jsonx(500, {msg: "database error", error:err});
-				user.image = image.id;
-				user.save(function(err) {
-					if(err) return res.jsonx(500, {msg: "database error", error:err});
-					res.jsonx({msg: "ok", image:image});
-				});
-			});
-		})
+		
+		img_helper.thumbnail.upload_save(
+			Img, cdn, req.files.image.path, 
+			'user-'+user.id.toString()+'-'+image.filename,
+			function(err, img) {
+				if (err) {
+					return res.jsonx(500, {msg: "error", error: err});
+				}
+				user.avatar = img.id;
+				res.jsonx({
+					msg: "ok",
+					image: img
+				})
+			}
+		);
 	},
 	verify: function(req, res, next) {
 		var user = User
@@ -165,5 +160,11 @@ module.exports = function (cdn, img_helper) { return {
 			if(err) return next(err);
 			res.jsonx({msg:'ok'});
 		});
+	},
+	uploadImageTest: function(req, res, next) {
+		var remote_name = 'user-test-'+req.files.image.name;
+		img_helper.thumbnail.upload_save(Img, cdn, req.files.image.path, function(err, img){
+			res.jsonx({msg: "ok", image: img});
+		})
 	}
 }}

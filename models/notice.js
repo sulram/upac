@@ -5,9 +5,11 @@ var mongoose = require('mongoose')
 var NoticeSchema = new Schema({
 	owner: {type: ObjectId, ref:'User'},
 	createdAt: Date,
-	geo: {type:[Number], index:"2d"},
+	order: Number,
+	//geo: {type:[Number], index:"2d"},
 	text: String,
-	replies: [{type: ObjectId, ref:'Notice'}]
+	url: String,
+	//replies: [{type: ObjectId, ref:'Notice'}]
 });
 
 
