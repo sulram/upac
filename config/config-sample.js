@@ -10,7 +10,7 @@ module.exports = {
 		cdn: { // this section is for configuring the pkgcloud library
 			provider: "rackspace", // or "amazon", or "azure"
 			// rackspace uses username - apiKey
-			// amazon uses key - keyId
+			// amazon uses key - keyId - region
 			// azure uses storageAccount - storageAccessKey
 			username: "username",
 			apiKey: "foobar"

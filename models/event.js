@@ -24,4 +24,13 @@ var EventSchema = new Schema({
 	resposnes: [RSVPSchema]
 });
 
+EventSchema.methods = {
+	findInRadius: function(place, radius, cb) {
+		return this.model('Event').find({geo: {
+			$nearSphere: place,
+			$maxDistance: radius
+		}}, cb);
+	},
+}
+
 mongoose.model('Event', EventSchema);

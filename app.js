@@ -122,13 +122,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
-var cdn = {
+
+var cdn = require('./helpers/cdn.js')(config);
+
+/*var cdn = {
 	server_url: config.cdn_server_url,
 	container: config.cdn_container,
 	create: function() {
 		return require('pkgcloud').storage.createClient(config.cdn);
 	}
-}
+}*/
 
 require('./config/routes')(app, passport, auth, cdn, img_helper);
 

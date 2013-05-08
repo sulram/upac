@@ -31,7 +31,7 @@ module.exports = function(cdn){ return {
 
 	},
 	create: function(req, res, next) {
-		var article = new Article(req.data);
+		var article = new Article(req.body);
 		article.owners.push(req.user.id);
 		article.save(function(err) {
 			if (err) return next(err);
@@ -182,9 +182,9 @@ module.exports = function(cdn){ return {
 				})});
 			});
 		}
-	}
+	},
 
-	/*
+	//*
 	// route for testing uploads to the CDN server
 	uploadTest: function(req, res, next) {
 		//console.log(req.files);
@@ -193,7 +193,7 @@ module.exports = function(cdn){ return {
 		var filename = path.split('/').slice(-2).join('/');
 		//console.log('filename -> '+filename);
 		cdn.create().upload({
-			container: 'upac',
+			container: cdn.container,
 			remote: 'teste-upac-'+filename,
 			local: req.files.uploadImage.path
 		}, function(err) {
@@ -203,5 +203,5 @@ module.exports = function(cdn){ return {
 			}
 			console.info('upload com sucesso.');
 		});
-	}*/
+	}//*/
 }};

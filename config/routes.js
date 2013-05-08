@@ -1,10 +1,11 @@
 module.exports = function(app, passport, auth, cdn, img) {
 
 	
-	var user = require('../controllers/user.js')(cdn);
-	var article = require('../controllers/article.js')(cdn);
+	var user = require('../controllers/user.js')(cdn, img);
+	var article = require('../controllers/article.js')(cdn, img);
 	var _event = require('../controllers/event.js')(cdn);
 	var tag = require('../controllers/tag.js')(cdn);
+	var notice = require('../controllers/notice.js');
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);
@@ -18,7 +19,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.put('/user/:id', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.update);
 	app.get('/user/:username', user.show);
 	app.get('/user/:username/articles', article.byUser);
-	app.post('/user/:id/updateimage', user.setImage);
+	app.post('/user/:id/updateimage', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.setImage);
 
 	app.all('/article', article.index);
 	app.get('/article/new', auth.requiresLogin, article.create);
@@ -30,14 +31,27 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.get('/article/:id/attachments', article.getAttachments);
 
 	// route for testing uploads to the CDN server
-	//app.post('/uploadtest', article.uploadTest);
+	app.post('/uploadtest', article.uploadTest);
 
 	app.post('/tag/new', auth.requiresLogin, tag.create);
 	app.get('/tag/:id', tag.show);
 	app.get('/tag/find/:slug', tag.bySlug);
 	app.put('/tag/:id', auth.requiresLogin, tag.preloadById, /* auth.tag.hasAuthorization, */ tag.update);
 
+	app.get('/event/new', auth.requiresLogin, _event.create);
+	app.get('/event/:id', _event.show);
+	app.del('/event/:id', auth.requiresLogin, _event.preloadById, auth.event.hasAuthorization, _event.remove);
 
+	app.get('/events/near', _event.near);
+
+	app.get('/events/happening', _event.happening);
+	app.get('/events/past', _event.past);
+	app.get('/events/future', _event.future);
+	
+
+	app.all('/notices', notice.index);
+	app.post('/notice/new', auth.requiresLogin, notice.create);
+	app.get('/notice/:id', notice.show);
 
 	app.get('/', function(req, res) { res.render('index'); });
 
