@@ -81,15 +81,19 @@ module.exports = function (cdn, img_helper) { return {
 		
 		img_helper.thumbnail.upload_save(
 			Img, cdn, req.files.image.path, 
-			'user-'+user.id.toString()+'-'+image.filename,
+			'profile',
 			function(err, img) {
 				if (err) {
 					return res.jsonx(500, {msg: "error", error: err});
 				}
 				user.avatar = img.id;
-				res.jsonx({
-					msg: "ok",
-					image: img
+				user.save(function(err) {
+					if(err) return res.jsonx(500, {msg: "database error", error: err});
+					res.jsonx({
+						msg: "ok",
+						image: img
+					})
+
 				})
 			}
 		);
@@ -163,7 +167,7 @@ module.exports = function (cdn, img_helper) { return {
 	},
 	uploadImageTest: function(req, res, next) {
 		var remote_name = 'user-test-'+req.files.image.name;
-		img_helper.thumbnail.upload_save(Img, cdn, req.files.image.path, function(err, img){
+		img_helper.thumbnails.upload_save(Img, cdn, req.files.image.path, "profile", function(err, img){
 			res.jsonx({msg: "ok", image: img});
 		})
 	}
