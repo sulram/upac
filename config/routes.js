@@ -20,6 +20,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.get('/user/:username', user.show);
 	app.get('/user/:username/articles', article.byUser);
 	app.post('/user/:id/updateimage', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.setImage);
+	app.post('/uploadimagetest', user.uploadImageTest);
 
 	app.all('/article', article.index);
 	app.get('/article/new', auth.requiresLogin, article.create);

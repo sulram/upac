@@ -16,7 +16,7 @@ var express = require('express')
   , LocalStrategy = require('passport-local').Strategy
   , auth = require('./helpers/auth')(_)
   , crypto = require('crypto')
-  , img_helper = require('./helpers/image')(config.image_config, _);
+  , img_helper = require('./helpers/image')(config, _);
 
 var app = express();
 
