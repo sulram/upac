@@ -155,7 +155,7 @@ function program17(depth0,data) {
 function program19(depth0,data) {
   
   
-  data.buffer.push("\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Busca</span></span>\n			");
+  data.buffer.push("\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Pesquisar</span></span>\n			");
   }
 
   data.buffer.push("<nav id=\"main_menu\" ");
@@ -197,10 +197,10 @@ function program19(depth0,data) {
   hashTypes = {};
   stack2 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(16, program16, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n\n		<li class=\"menu_it busca\">\n			");
+  data.buffer.push("\n\n		<li class=\"menu_it busca rede\">\n			");
   hashTypes = {};
   options = {hash:{},inverse:self.noop,fn:self.program(19, program19, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede", options) : helperMissing.call(depth0, "linkTo", "rede", options));
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.index", options) : helperMissing.call(depth0, "linkTo", "rede.index", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n		</li>\n	</ul>\n</div>");
   return buffer;

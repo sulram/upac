@@ -53,6 +53,7 @@ iframe {
 	top: 10px;
 	right: 10px;
 	z-index: 9000;
+	transition: right 500ms cubic-bezier(0.680, 0, 0.265, 1);
 }
 
 /* ---------------- MAIN MENU ITEMS ---------------- */
@@ -65,9 +66,8 @@ iframe {
 }
 
 #main_menu .menu_it {
-	margin: 0 0 4px;
+	margin: 0;
 	padding: 0;
-	position: absolute;
 }
 
 .menu_it a {
@@ -78,11 +78,11 @@ iframe {
 	position: relative;
 	background-color: #333;
 	font-size: 18px;
-	opacity: .6;
+	opacity: .8;
 	color: #fff;
 	-webkit-perspective: 600;
 	-webkit-perspective-origin: 64px center;
-	-webkit-transition: opacity 300ms cubic-bezier(0.680, 0, 0.265, 1);
+	-webkit-transition: opacity 1000ms cubic-bezier(0.680, 0, 0.265, 1);
 }
 
 .menu_it a .caption {
@@ -120,17 +120,6 @@ iframe {
 	height: 64px;
 }
 
-.menu_it:nth-child(1) { top: 0; }
-.menu_it:nth-child(2) { top: 64px; }
-.menu_it:nth-child(3) { top: 128px; }
-.menu_it:nth-child(4) { top: 192px; }
-.menu_it:nth-child(5) { top: 256px; }
-.menu_it:nth-child(6) { top: 320px; }
-.menu_it:nth-child(7) { top: 384px; }
-.menu_it:nth-child(8) { top: 448px; }
-.menu_it:nth-child(9) { top: 512px; }
-.menu_it:nth-child(10) { top: 576px; }
-
 .menu_it.home a:hover, .menu_it.home a.active { background-color: #333;  }
 .menu_it.upac a:hover, .menu_it.upac a.active { background-color: #4280a7; }
 .menu_it.rede a:hover, .menu_it.rede a.active { background-color: #6fb7ac; }
@@ -146,6 +135,18 @@ iframe {
 /* ---------------- SEC MENU ITEMS ---------------- */
 
 
+#sec_menu.rede {
+	right: 30%;
+}
+
+#sec_menu .menu_it.rede {
+	display: none;
+}
+
+#sec_menu.rede .menu_it.rede {
+	display: block;
+}
+
 #sec_menu .menu_it a {
 	-webkit-transition: right 300ms cubic-bezier(0.680, 0, 0.265, 1);
 	-webkit-perspective-origin: 0 center;
@@ -154,6 +155,7 @@ iframe {
 #sec_menu .menu_it a .caption {
 	left: auto;
 	right: 64px;
+	padding: 0 20px 0 30px;
 	-webkit-transform-origin: right center;
 	-webkit-transform: rotateY(-90deg);
 }
@@ -166,6 +168,8 @@ iframe {
 #sec_menu .menu_it.login a .ico { background-position: 0 -64px; }
 #sec_menu .menu_it.logout a .ico { background-position: -64px -64px; }
 #sec_menu .menu_it.profile a .ico { background-position: -128px -64px; }
+
+.menu_it.profile a:hover, .menu_it.profile a.active { background-color: #6fb7ac; }
 
 /* ---------------- CONTENT AND WRAPPER ---------------- */
 
@@ -316,7 +320,7 @@ iframe {
 
 #map_canvas {
 	position: absolute;
-	width: 100%;
+	width: 70%;
 	height: 100%;
 	z-index: 0;
 	display: none;
@@ -340,13 +344,15 @@ iframe {
 
 #rede_sidebar {
 	position: absolute;
-	top: 10px;
-	left: 84px;
+	top: 0;
+	right: 0;
 	background: rgba(111,183,172,.85);
-	width: 320px;
+	background: rgba(255,255,255,.85);
+	width: 30%;
+	height: 100%;
 	min-height: 320px;
 	z-index: 5;
-	color: #fff;
+	color: #444;
 }
 
 #rede_sidebar h1 {
