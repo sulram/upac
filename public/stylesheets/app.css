@@ -57,11 +57,11 @@ iframe {
 
 /* ---------------- MAIN MENU ITEMS ---------------- */
 
+#sec_menu ul,
 #main_menu ul {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
-	width: 64px;
 }
 
 #main_menu .menu_it {
@@ -74,25 +74,43 @@ iframe {
 	display: block;
 	min-width: 64px;
 	height: 64px;
-	overflow: hidden;
 	text-decoration: none;
-	color: #fff;
-	background-color: #333;
 	position: relative;
-	opacity: .6;
-	line-height: 64px;
-	transition: all 0.5s;
+	background-color: #333;
 	font-size: 18px;
+	opacity: .6;
+	color: #fff;
+	-webkit-perspective: 600;
+	-webkit-perspective-origin: 64px center;
+	-webkit-transition: opacity 300ms cubic-bezier(0.680, 0, 0.265, 1);
 }
 
-.menu_it a > span {
-	display: block;
-	padding: 0 0 0 64px;
-	width: 0;
+.menu_it a .caption {
+	background-color: inherit;
 	white-space: nowrap;
+	position: absolute;
+	left: 64px;
+	display: block;
+	width: auto;
+	height: 64px;
+	display: block;
+	line-height: 64px;
+	padding: 0 30px 0 20px;
+	-webkit-transform: rotateY(90deg);
+	-webkit-transform-origin: left center;
+	-webkit-transition: all 300ms cubic-bezier(0.680, 0, 0.265, 1);
 }
 
-.menu_it a span .ico {
+.menu_it a:hover,
+.menu_it a.active {
+	opacity: 1;
+}
+
+.menu_it a:hover .caption {
+	-webkit-transform: rotateY(0);
+}
+
+.menu_it a .ico {
 	background: url(../img/upac_menu_sprites.png) no-repeat 0 0;
 	position: absolute;
 	display: block;
@@ -102,21 +120,16 @@ iframe {
 	height: 64px;
 }
 
-.menu_it a:hover,
-.menu_it a.active {
-	opacity: 1;
-}
-
-.menu_it a:hover > span {
-	width: auto;
-	padding: 0 40px 0 84px;
-}
-
-.menu_it.home { top: 0;  }
-.menu_it.upac { top: 64px; }
-.menu_it.rede { top: 128px; }
-.menu_it.blog { top: 192px; }
-.menu_it.agenda { top: 256px; }
+.menu_it:nth-child(1) { top: 0; }
+.menu_it:nth-child(2) { top: 64px; }
+.menu_it:nth-child(3) { top: 128px; }
+.menu_it:nth-child(4) { top: 192px; }
+.menu_it:nth-child(5) { top: 256px; }
+.menu_it:nth-child(6) { top: 320px; }
+.menu_it:nth-child(7) { top: 384px; }
+.menu_it:nth-child(8) { top: 448px; }
+.menu_it:nth-child(9) { top: 512px; }
+.menu_it:nth-child(10) { top: 576px; }
 
 .menu_it.home a:hover, .menu_it.home a.active { background-color: #333;  }
 .menu_it.upac a:hover, .menu_it.upac a.active { background-color: #4280a7; }
@@ -124,32 +137,35 @@ iframe {
 .menu_it.blog a:hover, .menu_it.blog a.active { background-color: #bf3205; }
 .menu_it.agenda a:hover, .menu_it.agenda a.active { background-color: #ec932b; }
 
-.menu_it.upac a span .ico { background-position: -64px 0; }
-.menu_it.rede a span .ico { background-position: -128px 0; }
-.menu_it.blog a span .ico { background-position: -256px 0; }
-.menu_it.agenda a span .ico { background-position: -192px 0; }
+.menu_it.upac a .ico { background-position: -64px 0; }
+.menu_it.rede a .ico { background-position: -128px 0; }
+.menu_it.blog a .ico { background-position: -256px 0; }
+.menu_it.agenda a .ico { background-position: -192px 0; }
 
 
 /* ---------------- SEC MENU ITEMS ---------------- */
 
-#sec_menu .menu_it {
-	position: relative;
-	float: left;
-	top:0;
-	left: 0;
-	margin: 0;
-	padding: 0;
+
+#sec_menu .menu_it a {
+	-webkit-transition: right 300ms cubic-bezier(0.680, 0, 0.265, 1);
+	-webkit-perspective-origin: 0 center;
 }
 
-.home .menu_it.login a > span,
-#sec_menu .menu_it a:hover > span {
-	width: auto;
-	padding: 0 40px 0 64px;
+#sec_menu .menu_it a .caption {
+	left: auto;
+	right: 64px;
+	-webkit-transform-origin: right center;
+	-webkit-transform: rotateY(-90deg);
 }
 
-.menu_it.login a span .ico { background-position: 0 -64px; }
-.menu_it.logout a span .ico { background-position: -64px -64px; }
-.menu_it.profile a span .ico { background-position: -128px -64px; }
+#sec_menu.home .menu_it.login a .caption,
+#sec_menu .menu_it a:hover .caption {
+	-webkit-transform: rotateY(0);
+}
+
+#sec_menu .menu_it.login a .ico { background-position: 0 -64px; }
+#sec_menu .menu_it.logout a .ico { background-position: -64px -64px; }
+#sec_menu .menu_it.profile a .ico { background-position: -128px -64px; }
 
 /* ---------------- CONTENT AND WRAPPER ---------------- */
 
@@ -302,7 +318,7 @@ iframe {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	z-index: 1;
+	z-index: 0;
 	display: none;
 }
 

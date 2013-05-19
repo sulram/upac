@@ -10,7 +10,7 @@ App.UserPhoto = Ember.View.extend({
     templateName: 'user_photo',
     didInsertElement: function(){
         this.$('#fileupload').fileupload({
-            url: '/user/'+this.get('controller').get('content._id')+'/updateimage',
+            url: '/user/'+User.auth.id+'/updateimage',
             dataType: 'json',
             done: function (e, data) {
                 $.each(data.result.files, function (index, file) {
