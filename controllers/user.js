@@ -167,7 +167,7 @@ module.exports = function (cdn, img_helper) { return {
 	},
 	uploadImageTest: function(req, res, next) {
 		var remote_name = 'user-test-'+req.files.image.name;
-		img_helper.thumbnails.upload_save(Img, cdn, req.files.image.path, "profile", function(err, img){
+		img_helper.thumbnails.upload_save(Img, cdn, req.files.image.path, remote_name, "profile", function(err, img){
 			res.jsonx({msg: "ok", image: img});
 		})
 	}

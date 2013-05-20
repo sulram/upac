@@ -16,13 +16,20 @@ module.exports = {
 			apiKey: "foobar"
 		},
 		image_config: {
-			sizes: {
-				large:  {w:640, h:480},
-				medium: {w:320, h:240},
-				small:  {w:160, h:120},
-				icon:   {w:80,  h:60}
-			},
-			format: "jpg",
+			variants: {
+				profile:{
+					large: {w: 640, h: 480, ops: ['resize-crop']},
+					medium: {w: 320, h: 240, ops: ['resize-crop']},
+					small: {w: 160, h: 120, ops: ['resize-crop']},
+					icon: {w: 80, h: 60, ops: ['resize-crop']},
+				},
+				content:{
+					large: {w: 640, h: 480, ops: ['resize-crop']},
+					medium: {w: 320, h: 240, ops: ['resize-crop']},
+					small: {w: 160, h: 120, ops: ['resize-crop']},
+					icon: {w: 80, h: 60, ops: ['resize-crop']},
+				},
+			}
 		}
 	},
 	test: {
