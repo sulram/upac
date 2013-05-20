@@ -1,5 +1,5 @@
 module.exports = function(config, _){
-	var //gm = require('gm'),
+	var gm = require('gm'),
 		image_config = config.image_config,
 	    async = require('async'),
 	    temp = require('temp');
@@ -10,7 +10,21 @@ module.exports = function(config, _){
 			console.log(tempdir);
 			var files = [];	
 			var errors = [];
+			//console.log("variants: %j", image_config.variants[variant]);
+			_.each(image_config.variants[variant], function(size, sizename) {
+				console.log("imagem: %s tamanho: %s -> %j", base_name, sizename, size);
+				var endfilename = base_name + '_' + sizename + '.' + image_config.format;
+				var endfilepath = temp.path({suffix:"."+image_config.format});
+				gm(file).resize(size.w, size.h, "px").write(endfilepath, function(err){
+					if(err) return file_cb(err, {size: sizename, filename: endfilename, path:endfilepath});
+					console.log("printing %s", endfilename);
+					files.push( {size: sizename, filename: endfilename, path:endfilepath} );
+					file_cb(null, {size: sizename, filename: endfilename, path:endfilepath} );
+				});
+			});
+			/*
 			async.map(image_config.variants[variant], function(size, callback){
+				console.log("imagem: " + base_name + " tamanho: "+size.name);
 				var endfilename = base_name + '_' + size.name + '.' + image_config.format;
 				//var endfilepath = tempdir + '/' + endfilename;
 				var endfilepath = temp.path({suffix:image_config.format});
@@ -19,9 +33,10 @@ module.exports = function(config, _){
 					files.push( {size: size.name, filename: endfilename, path:endfilepath} );
 					file_cb(null, {size: size.name, filename: endfilename, path:endfilepath} );
 				});
-			}, function(err) {
+			}, function(err, result) {
 				return all_cb(err, files);
 			});
+			*/
 		});
 		
 	};
@@ -29,20 +44,23 @@ module.exports = function(config, _){
 		thumbnails: {
 			make_thumbs: make_thumbs,
 			upload_save: function(Img, cdn, file, base_name, variant, cb) {
-				//var uploader = cdn.create();
+				var uploader = cdn.create();
 				var sizes = {};
 				var errors = [];
 				var images = make_thumbs(file, base_name, variant, function(err, image) {
+					if(err) {
+						console.error("make_thumbs deu erro em %j", image);
+					}
 					uploader.upload({
 						container: cdn.container,
 						remote: image.filename,
-						local: image.endfilepath,
+						local: image.path,
 					}, function(err) {
 						if(err) {
-							errors.push({error: err, file: image.endfilepath});
+							errors.push({error: err, file: image.path});
 							return;
 						}
-						console.info(cdn.server_url + "/" + image.filename);
+						console.info("arquivo final: "+cdn.server_url + "/" + image.filename);
 						sizes[image.size] = cdn.server_url + "/" + image.filename;
 					})
 				}, function(err, all) {
