@@ -12,31 +12,15 @@ module.exports = function(config, _){
 			var errors = [];
 			//console.log("variants: %j", image_config.variants[variant]);
 			_.each(image_config.variants[variant], function(size, sizename) {
-				console.log("imagem: %s tamanho: %s -> %j", base_name, sizename, size);
+				//console.log("imagem: %s tamanho: %s -> %j", base_name, sizename, size);
 				var endfilename = base_name + '_' + sizename + '.' + image_config.format;
 				var endfilepath = temp.path({suffix:"."+image_config.format});
-				gm(file).resize(size.w, size.h, "px").write(endfilepath, function(err){
+				gm(file).resize(size.w, size.h).write(endfilepath, function(err){
 					if(err) return file_cb(err, {size: sizename, filename: endfilename, path:endfilepath});
-					console.log("printing %s", endfilename);
 					files.push( {size: sizename, filename: endfilename, path:endfilepath} );
 					file_cb(null, {size: sizename, filename: endfilename, path:endfilepath} );
 				});
 			});
-			/*
-			async.map(image_config.variants[variant], function(size, callback){
-				console.log("imagem: " + base_name + " tamanho: "+size.name);
-				var endfilename = base_name + '_' + size.name + '.' + image_config.format;
-				//var endfilepath = tempdir + '/' + endfilename;
-				var endfilepath = temp.path({suffix:image_config.format});
-				gm(file).resize(size.w, size.h, "px").write(endfilepath, function(err){
-					if(err) return file_cb(err);
-					files.push( {size: size.name, filename: endfilename, path:endfilepath} );
-					file_cb(null, {size: size.name, filename: endfilename, path:endfilepath} );
-				});
-			}, function(err, result) {
-				return all_cb(err, files);
-			});
-			*/
 		});
 		
 	};
@@ -45,11 +29,11 @@ module.exports = function(config, _){
 			make_thumbs: make_thumbs,
 			upload_save: function(Img, cdn, file, base_name, variant, cb) {
 				var uploader = cdn.create();
-				var sizes = {};
+				var sizes = [];
 				var errors = [];
 				var images = make_thumbs(file, base_name, variant, function(err, image) {
 					if(err) {
-						console.error("make_thumbs deu erro em %j", image);
+						return cb(err);
 					}
 					uploader.upload({
 						container: cdn.container,
@@ -60,18 +44,30 @@ module.exports = function(config, _){
 							errors.push({error: err, file: image.path});
 							return;
 						}
-						console.info("arquivo final: "+cdn.server_url + "/" + image.filename);
-						sizes[image.size] = cdn.server_url + "/" + image.filename;
+						//console.info("arquivo final: " + cdn.server_url + image.filename);
+						sizes.push( {
+							size: image.size,
+							cdn_id: image.filename,
+							cdn_url: cdn.server_url + image.filename
+						});
 					})
 				}, function(err, all) {
 					if(err) return cb(err);
-					var img = new Img();
-					img.filename = base_name;
-					img.sizes = sizes;
-					img.save(function(err2) {
-						if (err2) return cb(err2);
-						cb(null, img);
-					});
+					uploader.upload({
+						container: cdn.container,
+						remote: base_name,
+						local: file
+					}, function(err) {
+						if(err) return cb(err);
+						var img = new Img();
+						img.filename = base_name;
+						img.sizes = sizes;
+						img.save(function(err2) {
+							if (err2) return cb(err2);
+							cb(null, img);
+						});
+
+					})
 				});
 			},
 			get_size: function(Img, img_id, sizename) {
