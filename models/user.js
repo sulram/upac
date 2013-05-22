@@ -57,7 +57,6 @@ UserSchema.virtual('password').set(function(password){
 	return this._password;
 });
 
-
 UserSchema.path('username').validate(function(username) {
 	return /[a-z0-9]{3,}/.test(username);
 }, 'Invalid Username');

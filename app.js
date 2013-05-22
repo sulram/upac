@@ -41,21 +41,12 @@ passport.deserializeUser(function(email, done) {
 
 passport.use(new LocalStrategy(
 	function(username, password, done) {
-		User.findOne({username: username}, function(err, user) {
+		User.findOne({$or:[{username: username}, {email:username}]}, function(err, user) {
 			if (err) {
 				return done(err);
 			}
 			if (!user) {
-				User.findOne({email:username}, function(err, user) {
-					if(err) return done(err);
-					if(!user) return done(null, false, {message: 'Usuário ou senha incorretos'});
-					user.lastLogin = new Date();
-					user.save(function(err) {
-						if (err) return done(err);
-						return done(null, user);
-					});
-				});
-				return;
+				return done(null, false, {message: 'Usuário ou senha incorretos'});
 			}
 			if (!user.authenticate(password)) {
 				return done(null, false, {message: 'Usuário ou senha incorretos'});
@@ -82,8 +73,11 @@ app.use(express.session({secret:config.secret}))
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(connect_form({keepExtensions: true}));
-app.use(function(req, res, next){ // json extension middleware
+app.use(function(req, res, next){ // admin and json extension middleware
 	var flash = null;
+	req.isAdmin = function() {
+		return req.session.isAdmin || false;
+	};
 	res.addJFlash = function(type, msg) {
 		if (!flash) {
 			flash = {flash:[]};

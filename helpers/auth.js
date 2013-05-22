@@ -5,6 +5,11 @@ module.exports = function(_) { return {
 		}
 		next();
 	},
+	requiresAdmin: function(req, res, next) {
+		if (!req.isAdmin()) {
+			return res.jsonxf(401, [{error: 'not authorized'}], {error: 'needs admin privileges'});
+		}
+	},
 	user: {
 		isVerified: function(req, res, next) {
 			if (req.user.verificationToken != '') {
@@ -13,7 +18,7 @@ module.exports = function(_) { return {
 			next();
 		},
 		hasAuthorization: function(req, res, next) {
-			if(req.profile.id != req.user.id) {
+			if((req.profile.id != req.user.id)&&!req.isAdmin()) {
 				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});
 			}
 			next();
@@ -21,7 +26,7 @@ module.exports = function(_) { return {
 	},
 	article: {
 		hasAuthorization: function(req, res, next) {
-			if(_.contains(req.article.owners, req.user.id)) {
+			if(_.contains(req.article.owners, req.user.id)||req.isAdmin()) {
 				next();
 			} else {
 				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});
@@ -30,7 +35,7 @@ module.exports = function(_) { return {
 	},
 	tag: {
 		hasAuthorization: function(req, res, next) {
-			if(_.contains(req.tag.owners, req.user.id)) {
+			if(_.contains(req.tag.owners, req.user.id)||req.isAdmin()) {
 				next();
 			} else {
 				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});
@@ -44,6 +49,11 @@ module.exports = function(_) { return {
 			} else {
 				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});				
 			}			
+		}
+	},
+	notice: {
+		hasAuthorization: function(req, res, next) {
+			if(_.contains())
 		}
 	}
 }}
