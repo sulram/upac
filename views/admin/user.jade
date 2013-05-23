@@ -1,26 +1,37 @@
 extends layout
 
 block content
-	h1= user.username
+	h2= user.username
 	ul.info
-		li Nome:
+		li
+			label Nome:
 			span= user.name
-		li Email:
+		li
+			label Email:
 			span= user.email
-		li geo:
+		li 
+			label geo:
 			span= user.geo
-		li Acesso através de:
+		li 
+			label Acesso através de:
 			span= user.provider
-		li Data de nascimento:
+		li 
+			label Data de nascimento:
 			span= user.dateOfBirth
-		li Cidade:
+		li 
+			label Cidade:
 			span= user.city
-		li Estado:
+		li 
+			label Estado:
 			span= user.state
-		li País:
+		li 
+			label País:
 			span= user.country
-		li Gênero:
+		li 
+			label Gênero:
 			span= user.gender
-		li Sobre:
+		li 
+			label Sobre:
 			p!= md(user.about)
-
+	a(href='/admin/user/#{user.id}/edit') editar usuário
+	a(href='/admin/users') voltar à lista de usuários

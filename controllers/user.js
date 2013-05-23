@@ -44,6 +44,12 @@ module.exports = function (cdn, img_helper) { return {
 				res.render('admin/user',{user: user, title:"Usuário: "+user.username});
 			});
 		},
+		edit: function (req, res, next) {
+			User.findById(req.param('id'),function(err, user) {
+				if(err) return next(err);
+				res.render('admin/useredit',{user: user, title:"Editar usuário: "+user.username});
+			});
+		},
 		update: function (req, res, next) {
 			User.findById(req.param('id'), function(err, user) {
 				if(err) return next(err);

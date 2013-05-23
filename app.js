@@ -84,7 +84,7 @@ marked.setOptions({
 	pedantic: false
 });
 app.locals.md = function(text) {// helpers for the jade view engine
-	return marked(text);
+	return marked(text||"");
 }
 app.use(function(req, res, next){ // admin and json extension middleware
 	var flash = null;

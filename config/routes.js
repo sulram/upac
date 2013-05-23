@@ -7,10 +7,11 @@ module.exports = function(app, passport, auth, cdn, img) {
 	var tag = require('../controllers/tag.js')(cdn);
 	var notice = require('../controllers/notice.js');
 
+	app.post('/admin/user/:id', user.admin.update);
 	app.get('/admin/user/:id', user.admin.show);
+	app.get('/admin/user/:id/edit', user.admin.edit);
 	app.all('/admin/users', user.admin.index);
 	app.post('/admin/user', user.admin.create);
-	app.post('/admin/user/:id', user.admin.update);
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);
