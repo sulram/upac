@@ -16,7 +16,8 @@ var express = require('express')
   , LocalStrategy = require('passport-local').Strategy
   , auth = require('./helpers/auth')(_)
   , crypto = require('crypto')
-  , img_helper = require('./helpers/image')(config, _);
+  , img_helper = require('./helpers/image')(config, _)
+  , marked = require('marked');
 
 var app = express();
 
@@ -64,6 +65,8 @@ passport.use(new LocalStrategy(
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -73,6 +76,16 @@ app.use(express.session({secret:config.secret}))
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(connect_form({keepExtensions: true}));
+marked.setOptions({
+	gfm: true,
+	tables: true,
+	breaks: true,
+	sanitize: true,
+	pedantic: false
+});
+app.locals.md = function(text) {// helpers for the jade view engine
+	return marked(text);
+}
 app.use(function(req, res, next){ // admin and json extension middleware
 	var flash = null;
 	req.isAdmin = function() {

@@ -4,6 +4,60 @@ var mongoose = require('mongoose')
   , Img = mongoose.model('Img')
 
 module.exports = function (cdn, img_helper) { return {
+	admin: { 
+		create: function (req, res, next) {
+			var user = new User(req.body);
+			user.provider = 'local';
+			user.save(function(err) {
+				if(err) {
+					return next(err);
+				}
+				res.render('admin/user',{user:user});
+			});
+		},
+		index: function (req, res, next) {
+			var _from = req.param('from') || 0;
+			var limit = req.param('limit') || 10;
+			var sortby = req.param('sort_by') || '';
+			var sortorder = req.param('order') || 1; 
+
+			var query = User.find({});
+			if (sortby !== '') {
+				query.sort(sortby,sortorder?1:-1);
+			};
+
+			query.skip(_from).limit(limit);
+
+			query.exec(function(err, users) {
+				if(err) return next(err);
+				var total = 0;
+				User.count({}, function(err, count) {
+					if (err) return next(err);
+					total = count;
+				})
+				res.render('admin/users',{users:users, total:total});
+			});
+		},
+		show: function (req, res, next) {
+			User.findById(req.param('id'),function(err, user) {
+				if(err) return next(err);
+				res.render('admin/user',{user: user});
+			});
+		},
+		update: function (req, res, next) {
+			User.findById(req.param('id'), function(err, user) {
+				if(err) return next(err);
+				if(!user) return next(null);
+				
+				///TODO: update da maneira certa
+				user.save(function(err) {
+					if (err) return next(err);
+					res.redirect('/admin/user/'+req.param('id'))
+				})
+
+			});
+		}
+	},
 	logout: function(req, res) {
 		req.logout();
 		res.jsonx({msg:'ok'});
