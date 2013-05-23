@@ -12,7 +12,7 @@ module.exports = function (cdn, img_helper) { return {
 				if(err) {
 					return next(err);
 				}
-				res.render('admin/user',{user:user});
+				res.render('admin/user',{user:user, title:"Usuário novo: "+user.username});
 			});
 		},
 		index: function (req, res, next) {
@@ -35,13 +35,13 @@ module.exports = function (cdn, img_helper) { return {
 					if (err) return next(err);
 					total = count;
 				})
-				res.render('admin/users',{users:users, total:total});
+				res.render('admin/users',{users:users, total:total, title:"Usuários"});
 			});
 		},
 		show: function (req, res, next) {
 			User.findById(req.param('id'),function(err, user) {
 				if(err) return next(err);
-				res.render('admin/user',{user: user});
+				res.render('admin/user',{user: user, title:"Usuário: "+user.username});
 			});
 		},
 		update: function (req, res, next) {

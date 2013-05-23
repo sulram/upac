@@ -2,11 +2,14 @@ extends layout
 
 block content
 	table
-		th
-			td Nome de usuário
-			td Email
-		tr
-			td
-				a(href='/admin/user/'+user.id)= user.username
-			td
-				a(href="mailto:"+user.email)= user.email
+		thead
+			tr
+				td Nome de usuário
+				td Email
+		tbody
+			each user in users
+				tr
+					td
+						a(href='/admin/user/#{user.id}')= user.username
+					td
+						a(href="mailto:"+user.email)= user.email
