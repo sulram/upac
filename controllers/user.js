@@ -5,16 +5,6 @@ var mongoose = require('mongoose')
 
 module.exports = function (cdn, img_helper) { return {
 	admin: { 
-		create: function (req, res, next) {
-			var user = new User(req.body);
-			user.provider = 'local';
-			user.save(function(err) {
-				if(err) {
-					return next(err);
-				}
-				res.render('admin/user',{user:user, title:"Usuário novo: "+user.username});
-			});
-		},
 		index: function (req, res, next) {
 			var _from = req.param('from') || 0;
 			var limit = req.param('limit') || 10;
@@ -22,9 +12,7 @@ module.exports = function (cdn, img_helper) { return {
 			var sortorder = req.param('order') || 1; 
 
 			var query = User.find({});
-			if (sortby !== '') {
-				query.sort(sortby,sortorder?1:-1);
-			};
+			if (sortby !== '') query.sort(sortby,sortorder?1:-1);
 
 			query.skip(_from).limit(limit);
 
@@ -36,6 +24,16 @@ module.exports = function (cdn, img_helper) { return {
 					total = count;
 				})
 				res.render('admin/users',{users:users, total:total, title:"Usuários"});
+			});
+		},
+		create: function (req, res, next) {
+			var user = new User(req.body);
+			user.provider = 'local';
+			user.save(function(err) {
+				if(err) {
+					return next(err);
+				}
+				res.redirect('/admin/user/'+user._id.toString());
 			});
 		},
 		show: function (req, res, next) {
@@ -51,16 +49,19 @@ module.exports = function (cdn, img_helper) { return {
 			});
 		},
 		update: function (req, res, next) {
-			User.findById(req.param('id'), function(err, user) {
-				if(err) return next(err);
-				if(!user) return next(null);
-				
-				///TODO: update da maneira certa
-				user.save(function(err) {
-					if (err) return next(err);
+			User.findByIdAndUpdate(req.param('id'), 
+				{$set: req.body},
+				function(err, user) {
+					if(err) return next(err);
+					if(!user) return next(null);
 					res.redirect('/admin/user/'+req.param('id'))
-				})
-
+				}
+			);
+		},
+		remove: function (req, res, next) {
+			User.findByIdAndRemove(req.param('id'), function(err) {
+				if(err) return next(err);
+				res.redirect('/admin/users');
 			});
 		}
 	},

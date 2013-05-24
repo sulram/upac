@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	table
+		thead
+			tr
+				td Ordem
+				td Aviso
+				td Link
+				td Criado em
+		tbody
+			each notice in notices
+				tr
+					td
+						a(href='/admin/notice/#{notice.id}')= notice.order
+					td
+						|= md(notice.text)
+					td
+						a(href=notice.link)= notice.link
+					td
+						|= notice.createdAt

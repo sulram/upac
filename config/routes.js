@@ -7,11 +7,28 @@ module.exports = function(app, passport, auth, cdn, img) {
 	var tag = require('../controllers/tag.js')(cdn);
 	var notice = require('../controllers/notice.js');
 
+	app.get('/admin',function(req, res, next) {
+		res.render('admin/index',{title:"Administração do site UPAC"})
+	})
 	app.post('/admin/user/:id', user.admin.update);
 	app.get('/admin/user/:id', user.admin.show);
 	app.get('/admin/user/:id/edit', user.admin.edit);
 	app.all('/admin/users', user.admin.index);
 	app.post('/admin/user', user.admin.create);
+
+
+	app.post('/admin/notice/:id', notice.admin.update);
+	app.get('/admin/notice/:id', notice.admin.show);
+	app.get('/admin/notice/:id/edit', notice.admin.edit);
+	app.all('/admin/notices', notice.admin.index);
+	app.post('/admin/notice', notice.admin.create);
+	
+	app.post('/admin/article/:id', article.admin.update);
+	app.get('/admin/article/:id', article.admin.show);
+	app.get('/admin/article/:id/edit', article.admin.edit);
+	app.all('/admin/articles', article.admin.index);
+	app.post('/admin/article', article.admin.create);
+
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);

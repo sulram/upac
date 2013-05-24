@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+ var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Article = mongoose.model('Article')
   , Img = mongoose.model('Img')
@@ -6,6 +6,48 @@ var mongoose = require('mongoose')
   , fs = require('fs')
 
 module.exports = function(cdn){ return {
+	admin: {
+		index: function(req, res, next) {
+			var _from = req.param('from') || 0;
+			var limit = req.param('limit') || 10;
+			var sortby = req.param('sort_by') || '';
+			var sortorder = req.param('order') || 1; 
+
+			var query = Article.find({});
+			if (sortby != '') query.sort(sortby, sortorder?1:-1);
+			
+			query.skip(_from).limit(limit);
+			query.exec(function(err, articles) {
+				if(err) return next(err);
+				var total = 0;
+				Article.count({}, function(err, count){
+					if(err) return next(err);
+					total = count;
+				});
+				res.render('admin/articles', {articles:articles, total:total, title:'Artigos'});
+			});
+		},
+		create: function(req, res, next) {
+			var article = new Article(req.body);
+			article.createdAt = new Date();
+			article.save(function(err) {
+				if(err) return next(err);
+				res.render('admin/article',{article:article, title:"Artigo novo: "+article.title});
+			});
+		},
+		show: function(req, res, next) {
+
+		},
+		edit: function(req, res, next) {
+
+		},
+		update: function(req, res, next) {
+
+		},
+		remove: function(req, res, next) {
+
+		}
+	},
 	index: function(req, res) {
 		var from = req.param('from') || 0;
 		var limit = req.param('per_page') || 10;

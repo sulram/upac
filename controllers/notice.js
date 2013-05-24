@@ -3,6 +3,62 @@ var mongoose = require('mongoose')
   , Notice = mongoose.model('Notice')
 
 module.exports = {
+	admin: {
+		index: function(req, res, next) {
+			var _from = req.param('from') || 0;
+			var limit = req.param('limit') || 10;
+			var sortby = req.param('sort_by') || '';
+			var sortorder = req.param('order') || 1; 
+
+			var query = Notice.find({});
+			if (sortby != '') query.sort(sortby,sortorder?1:-1);
+			
+			query.skip(_from).limit(limit);
+
+			query.exec(function(err,notices){
+				if(err) return next(err);
+				var total = 0;
+				Notice.count({}, function(err, count){
+					if (err) return next(err);
+					total = count;
+				});
+				res.render('admin/notices', {notices:notices, total:total, title:"Avisos"});
+			});
+		},
+		create: function(req, res, next) {
+			var notice = new Notice(req.body);
+			notice.save(function(err) {
+				if(err) return next(err);
+				res.redirect('/admin/notice/'+notice._id.toString());
+			});
+		},
+		show: function(req, res, next) {
+			Notice.findById(req.param('id'), function(err, notice) {
+				if(err) return next(err);
+				res.render('admin/notice', {notice:notice, title:"Aviso: "+notice.id});
+			})
+		},
+		edit: function(req, res, next) {
+			Notice.findById(req.param('id'), function(err, notice) {
+				if(err) return next(err);
+				res.render('admin/noticeedit', {notice:notice, title:"Editar aviso: "+notice.id});
+			})
+		},
+		update: function(req, res, next) {
+			Notice.findByIdAndUpdate(req.param('id'), {$set: req.body},
+				function(err, notice) {
+					if(err) return next(err);
+					res.redirect('/admin/notice/'+req.param('id'));
+				}
+			);
+		},
+		remove: function(req, res, next) {
+			Notice.findByIdAndRemove(req.param('id'), function(err) {
+				if(err) return next(err);
+				res.redirect('/admin/notices');
+			})
+		}
+	},
 	show: function(req, res, next) {
 		Notice.findById(req.param.id, function(err, notice) {
 			if(err) return next(err);
