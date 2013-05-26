@@ -13,3 +13,8 @@ block content
 						a(href='/admin/user/#{user.id}')= user.username
 					td
 						a(href="mailto:"+user.email)= user.email
+	ul.options
+		li
+			a(href='/admin/user/new') Novo usuário
+		li
+			a(href='/admin') Voltar

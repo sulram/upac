@@ -10,6 +10,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.get('/admin',function(req, res, next) {
 		res.render('admin/index',{title:"Administração do site UPAC"})
 	})
+	app.get('/admin/user/new', user.admin.editnew);
 	app.post('/admin/user/:id', user.admin.update);
 	app.get('/admin/user/:id', user.admin.show);
 	app.get('/admin/user/:id/edit', user.admin.edit);

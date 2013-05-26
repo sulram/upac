@@ -1,0 +1,28 @@
+mixin field(member,formname,label,type)
+	tr
+		td
+			label(for=formname) #{label}:
+		td
+			input(type=type, name=formname, value=member) 
+
+extends layout
+
+block content
+	form(action='/admin/user',method='POST')
+		table.edit
+			mixin field("", 'name', 'Nome', 'text')
+			mixin field("", 'email', 'Email', 'text')
+			mixin field("", 'password', 'Senha', 'password')
+			mixin field("", 'geo', 'Loc. geográfica', 'text')
+			mixin field("", 'dateOfBirth', 'Data de nascimento', 'date')
+			mixin field("", 'city', 'Cidade', 'text')
+			mixin field("", 'state', 'Estado', 'text')
+			mixin field("", 'country', 'País', 'text')
+			mixin field("", 'gender', 'Gênero', 'text')
+			tr
+				td 
+					label(for='about') Sobre:
+				td
+					textarea(name='about')
+		input(type='submit',value='Enviar')
+	a(href='/admin/users') Cancelar

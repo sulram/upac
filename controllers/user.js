@@ -26,6 +26,9 @@ module.exports = function (cdn, img_helper) { return {
 				res.render('admin/users',{users:users, total:total, title:"Usuários"});
 			});
 		},
+		editnew: function(req, res, next) {
+			res.render('admin/usernew',{title:"Novo usuário"})
+		},
 		create: function (req, res, next) {
 			var user = new User(req.body);
 			user.provider = 'local';
