@@ -3,6 +3,7 @@ App.Router.map(function() {
     this.resource("agenda");
     this.resource("rede", function(){
         this.route('profile', { path: '/perfil/:user_username' });
+        this.route('avatar');
     });
     this.resource("perfil", { path: '/perfil/:user_username' }, function(){
         this.route("editar");
@@ -55,6 +56,13 @@ App.RedeRoute = Em.Route.extend({
     setupController: function(controller, song) {
         App.MapController.isMarking = false;
         App.MapController.getMarkers();
+    }
+});
+
+App.RedeIndexRoute = Em.Route.extend({
+    setupController: function (controller, model){
+        this._super(this, arguments);
+        App.MapController.unFocusAll();
     }
 });
 

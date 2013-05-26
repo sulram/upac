@@ -4,8 +4,8 @@
 App.RedeMapaView = Ember.View.extend({
     templateName: 'rede_mapa',
     handleZoom: function() {
-        if (App.map.getZoom() < 3){
-            App.map.setZoom(3);
+        if (App.map.getZoom() < 2){
+            App.map.setZoom(2);
         }
         console.log('zoom factor',App.map.getZoom());
     },

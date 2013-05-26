@@ -1,25 +1,72 @@
 <nav id="main_menu" {{bindAttr class="route_class"}}>
 	<ul>
-		<li class="menu_it home">{{#linkTo 'home'}}<span><span class="ico"></span>Entrada</span>{{/linkTo}}</li>
-		<li class="menu_it upac">{{#linkTo 'upac'}}<span><span class="ico"></span>Sobre a UPAC</span>{{/linkTo}}</li>
-		<li class="menu_it rede">{{#linkTo 'rede'}}<span><span class="ico"></span>Rede</span>{{/linkTo}}</li>
-		<li class="menu_it blog">{{#linkTo 'blog'}}<span><span class="ico"></span>Blog</span>{{/linkTo}}</li>
-		<li class="menu_it agenda">{{#linkTo 'agenda'}}<span><span class="ico"></span>Agenda</span>{{/linkTo}}</li>
+		<li class="menu_it home">
+			{{#linkTo 'home'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Entrada</span></span>
+			{{/linkTo}}
+		</li>
+		<li class="menu_it upac">
+			{{#linkTo 'upac'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Sobre a UPAC</span></span>
+			{{/linkTo}}
+		</li>
+		<li class="menu_it rede">
+			{{#linkTo 'rede'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Rede</span></span>
+			{{/linkTo}}
+		</li>
+		<li class="menu_it blog">
+			{{#linkTo 'blog'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Blog</span></span>
+			{{/linkTo}}
+		</li>
+		<li class="menu_it agenda">
+			{{#linkTo 'agenda'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Agenda</span></span>
+			{{/linkTo}}
+		</li>
 	</ul>
 </nav>
 
 <div id="sec_menu" {{bindAttr class="route_class"}}>
-
+	<ul>
 	{{#if User.auth.loggedIn}}
-		
-		<li class="menu_it profile">{{#linkTo 'rede.profile' User.model}}<span><span class="ico"></span>Meu perfil</span>{{/linkTo}}</li>
 
-		<li class="menu_it logout">{{#linkTo 'logout'}}<span><span class="ico"></span>Sair</span>{{/linkTo}}</li>
+		<li class="menu_it logout">
+			{{#linkTo 'logout'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Sair</span></span>
+			{{/linkTo}}
+		</li>
+
+		<li class="menu_it profile">
+			{{#linkTo 'rede.profile' User.model}}
+				<span class="ico"></span>
+				<span class="caption"><span>Meu perfil</span></span>
+			{{/linkTo}}
+		</li>
 
 	{{else}}
 
-		<li class="menu_it login">{{#linkTo 'user'}}<span><span class="ico"></span>Participar</span>{{/linkTo}}</li>
+		<li class="menu_it login">
+			{{#linkTo 'user'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Participar</span></span>
+			{{/linkTo}}
+		</li>
 
 	{{/if}}
 
+		<li class="menu_it busca rede">
+			{{#linkTo 'rede.index'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Pesquisar</span></span>
+			{{/linkTo}}
+		</li>
+	</ul>
 </div>
