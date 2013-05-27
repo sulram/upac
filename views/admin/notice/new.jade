@@ -1,0 +1,22 @@
+mixin field(member,formname,label,type)
+	tr
+		td
+			label(for=formname) #{label}:
+		td
+			input(type=type, name=formname, value=member)
+
+extends ../layout
+
+block content
+	form(action='/admin/notice',method='POST')
+		table.edit
+			mixin field("", 'owner', 'ID do usuário', 'text')
+			mixin field("", 'order', 'Ordem', 'number')
+			tr
+				td 
+					label(for='text') Texto:
+				td
+					textarea(name='text')
+			mixin field("", 'url', 'URL do link', 'text')
+		input(type='submit',value='Enviar')
+	a(href='/admin/notices') Cancelar

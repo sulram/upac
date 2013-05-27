@@ -23,11 +23,11 @@ module.exports = function (cdn, img_helper) { return {
 					if (err) return next(err);
 					total = count;
 				})
-				res.render('admin/users',{users:users, total:total, title:"Usuários"});
+				res.render('admin/user/index',{users:users, total:total, title:"Usuários"});
 			});
 		},
 		editnew: function(req, res, next) {
-			res.render('admin/usernew',{title:"Novo usuário"})
+			res.render('admin/user/new',{title:"Novo usuário"})
 		},
 		create: function (req, res, next) {
 			var user = new User(req.body);
@@ -42,13 +42,13 @@ module.exports = function (cdn, img_helper) { return {
 		show: function (req, res, next) {
 			User.findById(req.param('id'),function(err, user) {
 				if(err) return next(err);
-				res.render('admin/user',{user: user, title:"Usuário: "+user.username});
+				res.render('admin/user/show',{user: user, title:"Usuário: "+user.username});
 			});
 		},
 		edit: function (req, res, next) {
 			User.findById(req.param('id'),function(err, user) {
 				if(err) return next(err);
-				res.render('admin/useredit',{user: user, title:"Editar usuário: "+user.username});
+				res.render('admin/user/edit',{user: user, title:"Editar usuário: "+user.username});
 			});
 		},
 		update: function (req, res, next) {

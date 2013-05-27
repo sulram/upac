@@ -5,12 +5,12 @@ mixin field(member,formname,label,type)
 		td
 			input(type=type, name=formname, value=member)
 
-extends layout
+extends ../layout
 
 block content
 	form(action='/admin/notice/#{notice.id}',method='POST')
 		table.edit
-			mixin field(owner.id, 'owner', 'Nome', 'text')
+			mixin field(owner.id, 'owner', 'ID do usuário', 'text')
 			mixin field(notice.order, 'order', 'Ordem', 'number')
 			tr
 				td 

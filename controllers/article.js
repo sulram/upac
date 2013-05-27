@@ -24,7 +24,7 @@ module.exports = function(cdn){ return {
 					if(err) return next(err);
 					total = count;
 				});
-				res.render('admin/articles', {articles:articles, total:total, title:'Artigos'});
+				res.render('admin/article/index', {articles:articles, total:total, title:'Artigos'});
 			});
 		},
 		create: function(req, res, next) {
@@ -32,20 +32,36 @@ module.exports = function(cdn){ return {
 			article.createdAt = new Date();
 			article.save(function(err) {
 				if(err) return next(err);
-				res.render('admin/article',{article:article, title:"Artigo novo: "+article.title});
+				res.redirect('/admin/article/'+article.id);
+				//res.render('admin/article/shownew',{article:article, title:"Artigo novo: "+article.title});
 			});
 		},
+		editnew: function(req, res, next) {
+			res.render('admin/article/new', {title: 'Novo artigo'});
+		},
 		show: function(req, res, next) {
-
+			Article.findById(req.param('id'), function(err, article) {
+				if (err) return next(err);
+				res.render('admin/article/show', {article:article, title:'Artigo: '+article.title});
+			});
 		},
 		edit: function(req, res, next) {
-
+			Article.findById(req.param('id'), function(err, article) {
+				if (err) return next(err);
+				res.render('admin/article/edit', {article:article, title:'Artigo: '+article.title});
+			});
 		},
 		update: function(req, res, next) {
-
+			Article.findByIdAndUpdate(req.param('id'), {$set: req.body}, function(err, article) {
+				if (err) return next(err);
+				res.redirect('/admin/article/'+req.param('id'));
+			})
 		},
 		remove: function(req, res, next) {
-
+			Article.findByIdAndRemove(req.param('id'), function(err) {
+				if (err) return next(err);
+				res.redirect('/admin/articles');
+			})
 		}
 	},
 	index: function(req, res) {

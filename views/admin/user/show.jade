@@ -1,4 +1,4 @@
-extends ../layout
+extends layout
 
 block content
 	h2= user.username
@@ -33,5 +33,5 @@ block content
 		li 
 			label Sobre:
 			p!= md(user.about)
-	a(href='/admin/user/#{user.id}/edit') editar usuário
-	a(href='/admin/users') voltar à lista de usuários
+	a(href='/admin/user/#{user.id}/edit') Editar usuário
+	a(href='/admin/users') Voltar à lista de usuários

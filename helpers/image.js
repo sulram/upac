@@ -1,7 +1,6 @@
 module.exports = function(config, _){
 	var gm = require('gm'),
 		image_config = config.image_config,
-	    async = require('async'),
 	    temp = require('temp');
 	//var make_thumbs =  function(file, variant, file_cb, all_cb) {
 	var make_thumbs =  function(file, base_name, variant, file_cb, all_cb) {

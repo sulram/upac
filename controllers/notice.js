@@ -22,7 +22,7 @@ module.exports = {
 					if (err) return next(err);
 					total = count;
 				});
-				res.render('admin/notices', {notices:notices, total:total, title:"Avisos"});
+				res.render('admin/notice/index', {notices:notices, total:total, title:"Avisos"});
 			});
 		},
 		create: function(req, res, next) {
@@ -32,16 +32,19 @@ module.exports = {
 				res.redirect('/admin/notice/'+notice._id.toString());
 			});
 		},
+		editnew: function(req, res, next) {
+			res.render('admin/notice/new', {title: "Novo aviso"});
+		},
 		show: function(req, res, next) {
 			Notice.findById(req.param('id'), function(err, notice) {
 				if(err) return next(err);
-				res.render('admin/notice', {notice:notice, title:"Aviso: "+notice.id});
+				res.render('admin/notice/show', {notice:notice, title:"Aviso: "+notice.id});
 			})
 		},
 		edit: function(req, res, next) {
 			Notice.findById(req.param('id'), function(err, notice) {
 				if(err) return next(err);
-				res.render('admin/noticeedit', {notice:notice, title:"Editar aviso: "+notice.id});
+				res.render('admin/notice/edit', {notice:notice, title:"Editar aviso: "+notice.id});
 			})
 		},
 		update: function(req, res, next) {

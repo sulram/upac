@@ -18,12 +18,14 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.post('/admin/user', user.admin.create);
 
 
+	app.get('/admin/notice/new', notice.admin.editnew);
 	app.post('/admin/notice/:id', notice.admin.update);
 	app.get('/admin/notice/:id', notice.admin.show);
 	app.get('/admin/notice/:id/edit', notice.admin.edit);
 	app.all('/admin/notices', notice.admin.index);
 	app.post('/admin/notice', notice.admin.create);
 	
+	app.get('/admin/article/new', notice.admin.editnew);
 	app.post('/admin/article/:id', article.admin.update);
 	app.get('/admin/article/:id', article.admin.show);
 	app.get('/admin/article/:id/edit', article.admin.edit);
