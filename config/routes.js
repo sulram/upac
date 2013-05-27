@@ -25,7 +25,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.all('/admin/notices', notice.admin.index);
 	app.post('/admin/notice', notice.admin.create);
 	
-	app.get('/admin/article/new', notice.admin.editnew);
+	app.get('/admin/article/new', article.admin.editnew);
 	app.post('/admin/article/:id', article.admin.update);
 	app.get('/admin/article/:id', article.admin.show);
 	app.get('/admin/article/:id/edit', article.admin.edit);

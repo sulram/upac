@@ -1,37 +1,38 @@
-extends layout
+extends ../layout
 
 block content
 	h2= user.username
-	ul.info
-		li
-			label Nome:
-			span= user.name
-		li
-			label Email:
-			span= user.email
-		li 
-			label geo:
-			span= user.geo
-		li 
-			label Acesso através de:
-			span= user.provider
-		li 
-			label Data de nascimento:
-			span= user.dateOfBirth
-		li 
-			label Cidade:
-			span= user.city
-		li 
-			label Estado:
-			span= user.state
-		li 
-			label País:
-			span= user.country
-		li 
-			label Gênero:
-			span= user.gender
-		li 
-			label Sobre:
-			p!= md(user.about)
-	a(href='/admin/user/#{user.id}/edit') Editar usuário
-	a(href='/admin/users') Voltar à lista de usuários
+	table.table
+		tr
+			td.label Nome:
+			td= user.name
+		tr
+			td.label Email:
+			td= user.email
+		tr 
+			td.label geo:
+			td= user.geo
+		tr 
+			td.label Acesso através de:
+			td= user.provider
+		tr 
+			td.label Data de nascimento:
+			td= user.dateOfBirth
+		tr 
+			td.label Cidade:
+			td= user.city
+		tr 
+			td.label Estado:
+			td= user.state
+		tr 
+			td.label País:
+			td= user.country
+		tr 
+			td.label Gênero:
+			td= user.gender
+		tr 
+			td.label Sobre:
+			td!= md(user.about)
+	.btn-group
+		a(href='/admin/user/#{user.id}/edit').btn Editar usuário
+		a(href='/admin/users').btn Voltar à lista de usuários

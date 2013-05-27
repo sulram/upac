@@ -1,11 +1,11 @@
 extends ../layout
 
 block content
-	table
+	table.table.table-striped
 		thead
 			tr
-				td Nome de usuário
-				td Email
+				th Nome de usuário
+				th Email
 		tbody
 			each user in users
 				tr
@@ -13,8 +13,6 @@ block content
 						a(href='/admin/user/#{user.id}')= user.username
 					td
 						a(href="mailto:"+user.email)= user.email
-	ul.options
-		li
-			a(href='/admin/user/new') Novo usuário
-		li
-			a(href='/admin') Voltar
+	.btn-group
+		a(href='/admin/user/new').btn Novo usuário
+		a(href='/admin').btn Voltar

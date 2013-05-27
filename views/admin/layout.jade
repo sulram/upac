@@ -1,9 +1,22 @@
 doctype 5
+mixin field(data,member,label,type)
+	tr
+		td.label
+			label(for=member) #{label}
+		td
+			input(type=type, name=member, value=data)
+mixin textfield(data, member, label)
+	tr
+		td.label
+			label(for=member) #{label}:
+		td
+			textarea(name=member)= data
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
-  body
-    h1= title
-    block content
+	head
+		title= title
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
+	body
+		.container
+			h1= title
+			block content

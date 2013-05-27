@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+	table.table.table-striped
+		thead
+			tr
+				th Título
+				th Slug
+				th Excerpt
+				th Mãe
+				th Status
+				th Data de publicação
+				th Data de criação
+				th Última atualização
+		for article in articles
+			tr
+				td
+					a(href='/admin/article/'+article.id)= article.title
+				td= article.slug
+				td
+					p= article.excerpt
+				td= article.parent
+				td= article.publicationStatus
+				td= article.publicationDate
+				td= article.createdAt
+				td= article.updatedAt
+	.btn-group
+		a(href='/admin/article/new').btn Novo artigo
+		a(href='/admin').btn Voltar

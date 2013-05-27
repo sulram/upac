@@ -1,26 +1,24 @@
 extends ../layout
 
 block content
-	table
+	table.table.table-striped
 		thead
 			tr
-				td Ordem
-				td Aviso
-				td Link
-				td Criado em
+				tr
+					th Ordem
+					th Aviso
+					th Link
+					th Criado em
 		tbody
 			each notice in notices
 				tr
 					td
 						a(href='/admin/notice/#{notice.id}')= notice.order
-					td
-						|= md(notice.text)
+					td!= md(notice.text)
 					td
 						a(href=notice.link)= notice.link
 					td
 						|= notice.createdAt
-	ul.options
-		li
-			a(href='/admin/notice/new') Novo aviso
-		li
-			a(href='/admin') Voltar
+	.btn-group
+		a(href='/admin/notice/new').btn Novo aviso
+		a(href='/admin').btn Voltar

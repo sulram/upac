@@ -67,6 +67,7 @@ ArticleSchema.pre('save', function(next) {
 			this.slug = this.id;
 		}
 	}
+	this.updatedAt = new Date();
 	next();
 });
 mongoose.model('Attachment', AttachmentSchema);

@@ -1,8 +1,7 @@
 extends layout
 
 block content
-	ul.options
-		li
-			a(href='/admin/users') Usuários
-		li
-			a(href='/admin/notices') Avisos
+	.btn-group
+		a(href='/admin/users').btn Usuários
+		a(href='/admin/articles').btn Artigos
+		a(href='/admin/notices').btn Avisos

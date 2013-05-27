@@ -28,6 +28,10 @@ module.exports = function(cdn){ return {
 			});
 		},
 		create: function(req, res, next) {
+			if(req.body.parent == '') {
+				delete req.body.parent;
+			}
+			console.log(req.body);
 			var article = new Article(req.body);
 			article.createdAt = new Date();
 			article.save(function(err) {
@@ -52,6 +56,9 @@ module.exports = function(cdn){ return {
 			});
 		},
 		update: function(req, res, next) {
+			if(req.body.parent == '') {
+				delete req.body.parent;
+			}
 			Article.findByIdAndUpdate(req.param('id'), {$set: req.body}, function(err, article) {
 				if (err) return next(err);
 				res.redirect('/admin/article/'+req.param('id'));
