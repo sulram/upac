@@ -2,7 +2,7 @@ extends ../layout
 
 block content
 	form(action='/admin/notice/#{notice.id}',method='POST')
-		table.edit
+		table.table.table-condensed
 			+field(owner.id, 'owner', 'ID do usuário', 'text')
 			+field(notice.order, 'order', 'Ordem', 'number')
 			tr

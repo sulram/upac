@@ -1,36 +1,41 @@
 module.exports = function(app, passport, auth, cdn, img) {
 
 	
-	var user = require('../controllers/user.js')(cdn, img);
-	var article = require('../controllers/article.js')(cdn, img);
-	var _event = require('../controllers/event.js')(cdn);
-	var tag = require('../controllers/tag.js')(cdn);
-	var notice = require('../controllers/notice.js');
+	var user = require('../controllers/user')(cdn, img);
+	var article = require('../controllers/article')(cdn, img);
+	var _event = require('../controllers/event')(cdn);
+	var tag = require('../controllers/tag')(cdn);
+	var notice = require('../controllers/notice');
+	var admin = require('../controllers/admin');
 
-	app.get('/admin',function(req, res, next) {
+	app.get('/admin', auth.requiresAdminLogin, function(req, res, next) {
 		res.render('admin/index',{title:"Administração do site UPAC"})
 	})
-	app.get('/admin/user/new', user.admin.editnew);
-	app.post('/admin/user/:id', user.admin.update);
-	app.get('/admin/user/:id', user.admin.show);
-	app.get('/admin/user/:id/edit', user.admin.edit);
-	app.all('/admin/users', user.admin.index);
-	app.post('/admin/user', user.admin.create);
+	app.get('/admin/signin', admin.signin);
+	app.post('/admin/login', passport.authenticate('local'), user.login);
+	app.all('/admin/logout', admin.logout);
+
+	app.get('/admin/user/new', auth.requiresAdminLogin, user.admin.editnew);
+	app.post('/admin/user/:id', auth.requiresAdminLogin, user.admin.update);
+	app.get('/admin/user/:id', auth.requiresAdminLogin, user.admin.show);
+	app.get('/admin/user/:id/edit', auth.requiresAdminLogin, user.admin.edit);
+	app.all('/admin/users', auth.requiresAdminLogin, user.admin.index);
+	app.post('/admin/user', auth.requiresAdminLogin, user.admin.create);
 
 
-	app.get('/admin/notice/new', notice.admin.editnew);
-	app.post('/admin/notice/:id', notice.admin.update);
-	app.get('/admin/notice/:id', notice.admin.show);
-	app.get('/admin/notice/:id/edit', notice.admin.edit);
-	app.all('/admin/notices', notice.admin.index);
-	app.post('/admin/notice', notice.admin.create);
+	app.get('/admin/notice/new', auth.requiresAdminLogin, notice.admin.editnew);
+	app.post('/admin/notice/:id', auth.requiresAdminLogin, notice.admin.update);
+	app.get('/admin/notice/:id', auth.requiresAdminLogin, notice.admin.show);
+	app.get('/admin/notice/:id/edit', auth.requiresAdminLogin, notice.admin.edit);
+	app.all('/admin/notices', auth.requiresAdminLogin, notice.admin.index);
+	app.post('/admin/notice', auth.requiresAdminLogin, notice.admin.create);
 	
-	app.get('/admin/article/new', article.admin.editnew);
-	app.post('/admin/article/:id', article.admin.update);
-	app.get('/admin/article/:id', article.admin.show);
-	app.get('/admin/article/:id/edit', article.admin.edit);
-	app.all('/admin/articles', article.admin.index);
-	app.post('/admin/article', article.admin.create);
+	app.get('/admin/article/new', auth.requiresAdminLogin, article.admin.editnew);
+	app.post('/admin/article/:id', auth.requiresAdminLogin, article.admin.update);
+	app.get('/admin/article/:id', auth.requiresAdminLogin, article.admin.show);
+	app.get('/admin/article/:id/edit', auth.requiresAdminLogin, article.admin.edit);
+	app.all('/admin/articles', auth.requiresAdminLogin, article.admin.index);
+	app.post('/admin/article', auth.requiresAdminLogin, article.admin.create);
 
 
 	//app.get('/login', user.login);

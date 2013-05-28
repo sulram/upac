@@ -29,14 +29,19 @@ fs.readdirSync(models_path).forEach(function(file) {
 	require(models_path+'/'+file);
 });
 
-var User = mongoose.model('User');
+var User = mongoose.model('User'), AdminUser = mongoose.model('AdminUser');
 passport.serializeUser(function(user, done) {
 	done(null, user.email);
 });
 
 passport.deserializeUser(function(email, done) {
 	User.findOne({email:email}, function(err, user) {
-		done(err, user);
+		if(err) return done(err);
+		AdminUser.findOne({user:user.id}, function(err, admin) {
+			if(err) return done(err);
+			if(admin) user.admin = true;
+			done(null, user);
+		});
 	});
 });
 
@@ -55,8 +60,12 @@ passport.use(new LocalStrategy(
 			user.lastLogin = new Date();
 			user.save(function(err) {
 				if (err) return done(err);
-				return done(null, user);
-			})
+				AdminUser.findOne({user:user.id}, function(err, admin) {
+					if (err) return done(err);
+					if (admin) user.admin = true;
+					return done(null, user);
+				});
+			});
 		});
 	}
 ));
@@ -89,7 +98,7 @@ app.locals.md = function(text) {// helpers for the jade view engine
 app.use(function(req, res, next){ // admin and json extension middleware
 	var flash = null;
 	req.isAdmin = function() {
-		return req.session.isAdmin || false;
+		return (req.user && req.user.admin) || config.everyone_is_admin;
 	};
 	res.addJFlash = function(type, msg) {
 		if (!flash) {

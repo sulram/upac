@@ -9,6 +9,13 @@ module.exports = function(_) { return {
 		if (!req.isAdmin()) {
 			return res.jsonxf(401, [{error: 'not authorized'}], {error: 'needs admin privileges'});
 		}
+		next();
+	},
+	requiresAdminLogin: function(req, res, next) {
+		if(!req.isAdmin()) {
+			return res.redirect('/admin/signin');
+		}
+		next();
 	},
 	user: {
 		isVerified: function(req, res, next) {

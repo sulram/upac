@@ -3,6 +3,7 @@ module.exports = {
 		app: {
 			name: "UPAC"
 		},
+		everyone_is_admin: true, // set to false when you assign the first admin users in the admin interface
 		db: "mongodb://localhost/upac",
 		secret: "your secret string here",
 		cdn_server_url: "//blablablablabla.cdn.com/", // url for the root path of the CDN server - without http: so it might work over secure connections
