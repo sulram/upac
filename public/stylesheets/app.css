@@ -160,14 +160,15 @@ iframe {
 	-webkit-transform: rotateY(-90deg);
 }
 
-#sec_menu.home .menu_it.login a .caption,
+#sec_menu.home .menu_it.participate a .caption,
 #sec_menu .menu_it a:hover .caption {
 	-webkit-transform: rotateY(0);
 }
 
-#sec_menu .menu_it.login a .ico { background-position: 0 -64px; }
+#sec_menu .menu_it.participate a .ico { background-position: 0 -64px; }
 #sec_menu .menu_it.logout a .ico { background-position: -64px -64px; }
 #sec_menu .menu_it.profile a .ico { background-position: -128px -64px; }
+#sec_menu .menu_it.busca a .ico { background-position: -192px -64px; }
 
 .menu_it.profile a:hover, .menu_it.profile a.active { background-color: #6fb7ac; }
 
@@ -360,7 +361,7 @@ iframe {
 }
 
 #rede_sidebar a {
-	color: #444;
+	/*color: #444;*/
 }
 
 /* ---------------- TEMP ---------------- */

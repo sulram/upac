@@ -138,7 +138,7 @@ function program14(depth0,data) {
 function program16(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
-  data.buffer.push("\n\n		<li class=\"menu_it login\">\n			");
+  data.buffer.push("\n\n		<li class=\"menu_it participate\">\n			");
   hashTypes = {};
   options = {hash:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "user", options) : helperMissing.call(depth0, "linkTo", "user", options));
@@ -602,10 +602,10 @@ function program3(depth0,data) {
   data.buffer.push("\n			\n			<div class=\"pad over\">\n				<p>Navegue pelo mapa e clique no ponto em que você deseja marcar sua localização.</p>\n				<p>\n					<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "finishMarking", "App.MapController", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"btn\">Salvar posição</a>\n					<a ");
+  data.buffer.push(" class=\"btn btn-primary\">Salvar posição</a>\n					<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancelMarking", "App.MapController", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"btn\">Cancelar</a>\n				</p>\n			</div>\n\n			");
+  data.buffer.push(" class=\"btn btn-danger\">Cancelar</a>\n				</p>\n			</div>\n\n			");
   return buffer;
   }
 
