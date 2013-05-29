@@ -7,8 +7,10 @@ block content
 			tr
 				th ID
 				th Nome de usuário
+				th Nome completo
 				th Email
 				th Administrador
+				th Opções
 		tbody
 			each user in users
 				tr
@@ -16,12 +18,16 @@ block content
 						a(href='/admin/user/'+user.id)= user.id
 					td
 						a(href='/admin/user/'+user.id)= user.username
+					td= user.name
 					td
 						a(href="mailto:"+user.email)= user.email
 					td
 						if user.admin == true
 							i.icon-ok
 						else
+							i.icon-remove
+					td
+						a(href="/admin/user/#{user.id}/remove",title="Excluir")
 							i.icon-remove
 	.btn-group
 		a(href='/admin/user/new').btn Novo usuário

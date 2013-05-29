@@ -19,6 +19,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.post('/admin/user/:id', auth.requiresAdminLogin, user.admin.update);
 	app.get('/admin/user/:id', auth.requiresAdminLogin, user.admin.show);
 	app.get('/admin/user/:id/edit', auth.requiresAdminLogin, user.admin.edit);
+	app.get('/admin/user/:id/remove', auth.requiresAdminLogin, user.admin.remove);
 	app.all('/admin/users', auth.requiresAdminLogin, user.admin.index);
 	app.post('/admin/user', auth.requiresAdminLogin, user.admin.create);
 
@@ -27,6 +28,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.post('/admin/notice/:id', auth.requiresAdminLogin, notice.admin.update);
 	app.get('/admin/notice/:id', auth.requiresAdminLogin, notice.admin.show);
 	app.get('/admin/notice/:id/edit', auth.requiresAdminLogin, notice.admin.edit);
+	app.get('/admin/notice/:id/remove', auth.requiresAdminLogin, notice.admin.remove);
 	app.all('/admin/notices', auth.requiresAdminLogin, notice.admin.index);
 	app.post('/admin/notice', auth.requiresAdminLogin, notice.admin.create);
 	
@@ -34,6 +36,7 @@ module.exports = function(app, passport, auth, cdn, img) {
 	app.post('/admin/article/:id', auth.requiresAdminLogin, article.admin.update);
 	app.get('/admin/article/:id', auth.requiresAdminLogin, article.admin.show);
 	app.get('/admin/article/:id/edit', auth.requiresAdminLogin, article.admin.edit);
+	app.get('/admin/article/:id/remove', auth.requiresAdminLogin, article.admin.remove)
 	app.all('/admin/articles', auth.requiresAdminLogin, article.admin.index);
 	app.post('/admin/article', auth.requiresAdminLogin, article.admin.create);
 

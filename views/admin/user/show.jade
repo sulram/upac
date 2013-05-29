@@ -16,5 +16,6 @@ block content
 		+table_rec_row("Gênero", user.gender)
 		+table_rec_row_raw("Sobre", md(user.about))
 	.btn-group
-		a(href='/admin/user/#{user.id}/edit').btn Editar usuário
+		a(href='/admin/user/#{user.id}/edit').btn.btn-primary Editar usuário
+		a(href='/admin/user/#{user.id}/remove').btn.btn-danger Remover usuário
 		a(href='/admin/users').btn Voltar à lista de usuários
