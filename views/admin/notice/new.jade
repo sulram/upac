@@ -1,15 +1,11 @@
 extends ../layout
 
 block content
-	form(action='/admin/notice',method='POST')
-		table.table.table-condensed
-			+field("", 'owner', 'ID do usuário', 'text')
-			+field("", 'order', 'Ordem', 'number')
-			tr
-				td.label
-					label(for='text') Texto:
-				td
-					textarea(name='text')
-			+field("", 'url', 'URL do link', 'text')
-		input(type='submit',value='Enviar')
+	h2 Novo aviso
+	form(action='/admin/notice',method='POST').form-horizontal
+		+field("", 'owner', 'ID do usuário', 'text')
+		+field("", 'order', 'Ordem', 'number')
+		+textfield("", 'text', 'Texto')
+		+field("", 'url', 'URL do link', 'text')
+		button(type='submit').btn.btn-primary Enviar
 	a(href='/admin/notices').btn Cancelar

@@ -46,7 +46,11 @@ var UserSchema = new Schema({
 			Img.remove({_id: this.image});
 		}
 		return newimg;
-	}}
+	}},
+	admin: {
+		type: Boolean,
+		default: false
+	}
 });
 
 UserSchema.virtual('password').set(function(password){

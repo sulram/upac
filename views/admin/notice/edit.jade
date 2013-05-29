@@ -12,6 +12,5 @@ block content
 					textarea(name='text')= notice.text
 			+field(notice.url, 'url', 'URL do link', 'text')
 			
-		input(type='submit',value='Enviar')
+		button(type='submit').btn.btn-primary Enviar
 	a(href='/admin/notice/#{notice.id}').btn Cancelar
- 

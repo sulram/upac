@@ -1,12 +1,14 @@
 extends ../layout
 
 block content
+	h2 Usuários
 	table.table.table-striped
 		thead
 			tr
 				th ID
 				th Nome de usuário
 				th Email
+				th Administrador
 		tbody
 			each user in users
 				tr
@@ -16,6 +18,11 @@ block content
 						a(href='/admin/user/'+user.id)= user.username
 					td
 						a(href="mailto:"+user.email)= user.email
+					td
+						if user.admin == true
+							i.icon-ok
+						else
+							i.icon-remove
 	.btn-group
 		a(href='/admin/user/new').btn Novo usuário
 		a(href='/admin').btn Voltar

@@ -1,6 +1,5 @@
 var mongoose = require('mongoose')
-  , User = mongoose.model('User')
-  , AdminUser = mongoose.model('AdminUser')
+  , User = mongoose.model('User');
 
 module.exports = {
 	signin: function(req, res, next) {

@@ -1,23 +1,13 @@
 extends ../layout
 
 block content
-	table.table
-		tr
-			td.label ID
-			td= notice.id
-		tr
-			td.label Ordem
-			td= notice.order
-		tr
-			td.label Aviso
-			td!= md(notice.text)
-		tr
-			td.label Link
-			td
-				a(href=notice.link)= notice.link
-		tr
-			td.label Criado em
-			td notice.createdAt
+	h1 Aviso: #{notice.id}
+	table.table-condensed
+		+table_rec_row("ID", notice.id)
+		+table_rec_row("Ordem", notice.order)
+		+table_rec_row_raw("Texto", md(notice.text))
+		+table_rec_row_link("Link", notice.link, notice.link)
+		+table_rec_row("Data de criação", notice.createdAt)
 	.btn-group
 		a(href='/admin/notice/'+notice.id+'/edit').btn Editar artigo
 		a(href='/admin/notices').btn Voltar

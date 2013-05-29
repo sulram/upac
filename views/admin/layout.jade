@@ -1,16 +1,49 @@
 doctype 5
-mixin field(data,member,label,type)
+mixin table_rec_row(label, data)
 	tr
-		td.label
-			label(for=member) #{label}
 		td
+			strong= label
+		td= data
+mixin table_rec_row_raw(label, data)
+	tr
+		td
+			strong= label
+		td!= data
+mixin table_rec_row_link(label, data, url)
+	tr
+		td
+			strong= label
+		td
+			a(href=url)= data
+mixin table_rec_row_check(label, data)
+	tr
+		td
+			strong= label
+		td
+			if data == true
+				i.icon-ok
+			else
+				i.icon-remove
+mixin field(data,member,label,type)
+	.control-group
+		label(for=member).control-label #{label}
+		.controls
 			input(type=type, name=member, value=data)
 mixin textfield(data, member, label)
-	tr
-		td.label
-			label(for=member) #{label}:
-		td
+	.control-group
+		label(for=member).control-label #{label}
+		.controls
 			textarea(name=member)= data
+mixin checkbox(data, member, label)
+	.control-group
+		.controls
+			label(for=member).checkbox
+				if data == true
+					input(name=member, type="checkbox", value="true")
+				else
+					input(name=member, type="checkbox")
+				| #{label}
+
 html
 	head
 		title= title
@@ -18,5 +51,4 @@ html
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
 	body
 		.container
-			h1= title
 			block content

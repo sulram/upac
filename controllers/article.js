@@ -31,7 +31,6 @@ module.exports = function(cdn){ return {
 			if(req.body.parent == '') {
 				delete req.body.parent;
 			}
-			console.log(req.body);
 			var article = new Article(req.body);
 			article.createdAt = new Date();
 			article.save(function(err) {
@@ -59,8 +58,15 @@ module.exports = function(cdn){ return {
 			if(req.body.parent == '') {
 				delete req.body.parent;
 			}
-			Article.findByIdAndUpdate(req.param('id'), {$set: req.body}, function(err, article) {
-				if (err) return next(err);
+			Article.update(req.param('id'), {$set: req.body}, function(err, article) {
+				if (err) {
+					if (err.code === 11000) { // duplicate key
+						req.flash('error', 'Slug já existe');
+						res.redirect('/admin/article/'+req.param('id'))
+					} else {
+						return next(err);
+					}
+				}
 				res.redirect('/admin/article/'+req.param('id'));
 			})
 		},

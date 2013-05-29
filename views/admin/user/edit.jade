@@ -1,33 +1,21 @@
-mixin field(member,formname,label,type)
-	tr
-		td
-			label(for=formname) #{label}:
-		td
-			input(type=type, name=formname, value=member)
-
 extends ../layout
 
 block content
-	h2= user.username
-	form(action='/admin/user/#{user.id}',method='POST')
-		table.edit
-			mixin field(user.name, 'name', 'Nome', 'text')
-			mixin field(user.email, 'email', 'Email', 'text')
-			mixin field(user.geo, 'geo', 'Loc. geográfica', 'text')
-			tr 
-				td
-					label Acesso através de:
-				td
-					span= user.provider
-			mixin field(user.dateOfBirth, 'dateOfBirth', 'Data de nascimento', 'date')
-			mixin field(user.city, 'city', 'Cidade', 'text')
-			mixin field(user.state, 'state', 'Estado', 'text')
-			mixin field(user.country, 'country', 'País', 'text')
-			mixin field(user.gender, 'gender', 'Gênero', 'text')
-			tr
-				td 
-					label(for='about') Sobre:
-				td
-					textarea(name='about')= user.about
-		input(type='submit',value='Enviar')
-	a(href='/admin/user/#{user.id}') Cancelar
+	h2 Editar usuário: #{user.id}
+	form(action='/admin/user/#{user.id}',method='POST').form-horizontal
+		+field(user.name, 'name', 'Nome', 'text')
+		+field(user.email, 'email', 'Email', 'text')
+		+checkbox(user.admin, 'admin', 'Administrador')
+		+field(user.geo, 'geo', 'Loc. geográfica', 'text')
+		.control-group 
+			label.control-label Acesso através de:
+			.controls
+				input(type='text', value=user.provider, disabled)
+		+field(user.dateOfBirth, 'dateOfBirth', 'Data de nascimento', 'date')
+		+field(user.city, 'city', 'Cidade', 'text')
+		+field(user.state, 'state', 'Estado', 'text')
+		+field(user.country, 'country', 'País', 'text')
+		+field(user.gender, 'gender', 'Gênero', 'text')
+		+textfield(user.about, 'about', 'Sobre')
+		button(type='submit').btn.btn-primary Enviar
+	a(href='/admin/user/#{user.id}').btn Cancelar

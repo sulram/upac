@@ -1,14 +1,13 @@
 extends ../layout
 
 block content
-	form(action='/admin/article',method='POST')
-		table.table
-			+field("",'title','Título', 'text')
-			+field("", 'slug', 'Slug', 'text')
-			+textfield("",'excerpt','Excerpt')
-			+textfield("",'content','Conteúdo')
-			+field("", 'parent', 'Artigo mãe', 'text')
-			+field("", 'publicationStatus', 'Status da publicação', 'text')
-			+field("", 'publicationDate', 'Data da publicação', 'date')
-		input(type='submit',value="Enviar")
+	form(action='/admin/article',method='POST').form-horizontal
+		+field("",'title','Título', 'text')
+		+field("", 'slug', 'Slug', 'text')
+		+textfield("",'excerpt','Excerpt')
+		+textfield("",'content','Conteúdo')
+		+field("", 'parent', 'Artigo mãe', 'text')
+		+field("", 'publicationStatus', 'Status da publicação', 'text')
+		+field("", 'publicationDate', 'Data da publicação', 'date')
+		button(type='submit').btn.btn-primary Enviar
 	a(href='/admin/articles').btn Cancelar

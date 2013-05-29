@@ -29,7 +29,7 @@ fs.readdirSync(models_path).forEach(function(file) {
 	require(models_path+'/'+file);
 });
 
-var User = mongoose.model('User'), AdminUser = mongoose.model('AdminUser');
+var User = mongoose.model('User');
 passport.serializeUser(function(user, done) {
 	done(null, user.email);
 });
@@ -37,11 +37,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(email, done) {
 	User.findOne({email:email}, function(err, user) {
 		if(err) return done(err);
-		AdminUser.findOne({user:user.id}, function(err, admin) {
-			if(err) return done(err);
-			if(admin) user.admin = true;
-			done(null, user);
-		});
+		done(null, user);
 	});
 });
 
@@ -60,11 +56,7 @@ passport.use(new LocalStrategy(
 			user.lastLogin = new Date();
 			user.save(function(err) {
 				if (err) return done(err);
-				AdminUser.findOne({user:user.id}, function(err, admin) {
-					if (err) return done(err);
-					if (admin) user.admin = true;
-					return done(null, user);
-				});
+				done(null, user);
 			});
 		});
 	}

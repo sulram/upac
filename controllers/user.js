@@ -30,6 +30,7 @@ module.exports = function (cdn, img_helper) { return {
 			res.render('admin/user/new',{title:"Novo usuário"})
 		},
 		create: function (req, res, next) {
+			req.body.admin = false; // não serão criados admins por signup
 			var user = new User(req.body);
 			user.provider = 'local';
 			user.save(function(err) {
@@ -52,11 +53,13 @@ module.exports = function (cdn, img_helper) { return {
 			});
 		},
 		update: function (req, res, next) {
-			User.findByIdAndUpdate(req.param('id'), 
+			if(!req.isAdmin() && req.body.admin) {
+				delete req.body.admin;
+			}
+			User.update(req.param('id'), 
 				{$set: req.body},
-				function(err, user) {
+				function(err) {
 					if(err) return next(err);
-					if(!user) return next(null);
 					res.redirect('/admin/user/'+req.param('id'))
 				}
 			);

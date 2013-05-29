@@ -51,8 +51,8 @@ TagSchema.path('slug').validate(function(slug){
 	return /[a-z0-9-_]+/.test(slug);
 });
 TagSchema.methods = {
-	addRef: function() { this.refcount += 1; this.save(); },
-	rmRef: function() { this.refcount -= 1; this.save(); }
+	addRef: function() { this.update({$incr:{refcount: 1}}, function(err) { if (err) console.error("Erro ao subir refcount da tag %s", this.id)}); },
+	rmRef: function() { this.update({$decr:{refcount: 1}}, function(err) { if (err) console.error("Erro ao descer refcount da tag %s", this.id)}); }
 }
 
 mongoose.model('Tag', TagSchema);

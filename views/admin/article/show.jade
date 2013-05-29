@@ -3,34 +3,14 @@ extends ../layout
 block content
 	h1= article.title
 	table.table.table-condensed
-		tr
-			td.label ID
-			td= article.id
-		tr
-			td.label Slug
-			td= article.slug
-		tr
-			td.label Excerpt
-			td
-				p= article.excerpt
-		tr
-			td.label Conteúdo
-			td!= md(article.content)
-		tr
-			td.label Artigo mãe
-			td= article.parent
-		tr
-			td.label Status da publicação
-			td= article.publicationStatus
-		tr
-			td.label Data da publicação
-			td= article.publicationDate
-		tr
-			td.label Data da criação
-			td= article.createdAt
-		tr
-			td.label Última atualização
-			td= article.updatedAt
+		+table_rec_row("ID", article.id)
+		+table_rec_row("Slug", article.slug)
+		+table_rec_row("Excerpt", article.excerpt)
+		+table_rec_row_raw("Conteúdo", md(article.content))
+		+table_rec_row_link("Artigo mãe", article.parent,'/admin/article/'+article.parent)
+		+table_rec_row("Status da publicação", article.publicationStatus)
+		+table_rec_row("Data de criação", article.createdAt)
+		+table_rec_row("Última Atualização", article.updatedAt)
 	.btn-group
 		a(href='/admin/article/'+article.id+'/edit').btn Editar artigo
 		a(href='/admin/articles').btn Voltar
