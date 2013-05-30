@@ -5,27 +5,19 @@
   , Attachment = mongoose.model('Attachment')
   , fs = require('fs')
 
-module.exports = function(cdn){ return {
+module.exports = function(cdn, img_helper, paginate){ return {
 	admin: {
 		index: function(req, res, next) {
-			var _from = req.param('from') || 0;
-			var limit = req.param('limit') || 10;
-			var sortby = req.param('sort_by') || '';
-			var sortorder = req.param('order') || 1; 
-
-			var query = Article.find({});
-			if (sortby != '') query.sort(sortby, sortorder?1:-1);
-			
-			query.skip(_from).limit(limit);
-			query.exec(function(err, articles) {
-				if(err) return next(err);
-				var total = 0;
-				Article.count({}, function(err, count){
+			paginate.paginate(Article,{},{}, req, function(err, articles, pagination) {
 					if(err) return next(err);
-					total = count;
-				});
-				res.render('admin/article/index', {articles:articles, total:total, title:'Artigos'});
-			});
+					var total = 0;
+					Article.count({}, function(err, count){
+						if(err) return next(err);
+						total = count;
+					});
+					res.render('admin/article/index', {articles:articles, total:total, title:'Artigos', pagination:pagination});
+				}
+			);
 		},
 		create: function(req, res, next) {
 			if(req.body.parent == '') {

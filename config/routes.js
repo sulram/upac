@@ -1,11 +1,11 @@
-module.exports = function(app, passport, auth, cdn, img) {
+module.exports = function(app, passport, auth, cdn, img, paginate) {
 
 	
-	var user = require('../controllers/user')(cdn, img);
-	var article = require('../controllers/article')(cdn, img);
-	var _event = require('../controllers/event')(cdn);
-	var tag = require('../controllers/tag')(cdn);
-	var notice = require('../controllers/notice');
+	var user = require('../controllers/user')(cdn, img, paginate);
+	var article = require('../controllers/article')(cdn, img, paginate);
+	var _event = require('../controllers/event')(cdn, img, paginate);
+	var tag = require('../controllers/tag')(cdn, paginate);
+	var notice = require('../controllers/notice')(paginate);
 	var admin = require('../controllers/admin');
 
 	app.get('/admin', auth.requiresAdminLogin, function(req, res, next) {

@@ -3,7 +3,18 @@ var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
   , Tag = mongoose.model('Tag')
 
-module.exports = function (cdn) { return {
+module.exports = function (cdn, paginate) { return {
+	admin: {
+		index: function(req, res, next) {
+			
+		},
+		editnew: function(req, res, next) {
+
+		},
+		create: function(req, res, next) {
+			
+		}
+	},
 	create: function(req, res) {
 		var tag = new Tag(req.body);
 		tag.save(function (err) {

@@ -3,20 +3,10 @@ var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
   , Img = mongoose.model('Img')
 
-module.exports = function (cdn, img_helper) { return {
+module.exports = function (cdn, img_helper, paginate) { return {
 	admin: { 
 		index: function (req, res, next) {
-			var _from = req.param('from') || 0;
-			var limit = req.param('limit') || 10;
-			var sortby = req.param('sort_by') || '';
-			var sortorder = req.param('order') || 1; 
-
-			var query = User.find({});
-			if (sortby !== '') query.sort(sortby,sortorder?1:-1);
-
-			query.skip(_from).limit(limit);
-
-			query.exec(function(err, users) {
+			paginate.paginate(User,{},{},req,function(err, users, pagination){
 				if(err) return next(err);
 				var total = 0;
 				User.count({}, function(err, count) {

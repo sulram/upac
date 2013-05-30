@@ -4,6 +4,9 @@ var mongoose = require('mongoose'),
 	_Event = mongoose.model('Event');
 
 module.exports = function(cdn) { return {
+	admin: {
+
+	},
 	show: function(req, res, next) {
 		_Event.findById(req.param.id, function(err, _event) {
 			if (err) return next(err);
