@@ -1,5 +1,8 @@
 extends ../layout
 
+block link
+	-var selected = 'usuarios';
+
 block content
 	h2 Editar usuário: #{user.id}
 	form(action='/admin/user/#{user.id}',method='POST').form-horizontal

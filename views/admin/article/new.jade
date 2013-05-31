@@ -1,6 +1,10 @@
 extends ../layout
 
+block link
+	-var selected = 'artigos';
+
 block content
+	h2 Novo Artigo
 	form(action='/admin/article',method='POST').form-horizontal
 		+field("",'title','Título', 'text')
 		+field("", 'slug', 'Slug', 'text')
@@ -9,5 +13,6 @@ block content
 		+field("", 'parent', 'Artigo mãe', 'text')
 		+field("", 'publicationStatus', 'Status da publicação', 'text')
 		+field("", 'publicationDate', 'Data da publicação', 'date')
+		
 		button(type='submit').btn.btn-primary Enviar
-	a(href='/admin/articles').btn Cancelar
+		a(href='/admin/articles').btn Cancelar

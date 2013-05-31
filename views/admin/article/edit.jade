@@ -1,6 +1,10 @@
 extends ../layout
 
+block link
+	-var selected = 'artigos';
+
 block content
+	h2= article.title
 	form(action='/admin/article/#{article.id}',method='POST').form-horizontal
 		+field(article.title,'title','Título', 'text')
 		+field(article.slug, 'slug', 'Slug', 'text')

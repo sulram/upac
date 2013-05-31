@@ -24,7 +24,7 @@ module.exports = function(paginate) {
 				});
 			},
 			editnew: function(req, res, next) {
-				res.render('admin/notice/new', {title: "Novo aviso"});
+				res.render('admin/notice/new', {title: "Novo aviso", user: req.user.id || '' });
 			},
 			show: function(req, res, next) {
 				Notice.findById(req.param('id'), function(err, notice) {

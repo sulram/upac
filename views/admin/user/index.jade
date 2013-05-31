@@ -1,7 +1,12 @@
 extends ../layout
 
+block link
+	-var selected = 'usuarios';
+
 block content
-	h2 Usuários
+	p
+		a(href='/admin/user/new').btn Novo usuário
+		
 	table.table.table-striped
 		thead
 			tr
@@ -29,6 +34,3 @@ block content
 					td
 						a(href="/admin/user/#{user.id}/remove",title="Excluir")
 							i.icon-remove
-	.btn-group
-		a(href='/admin/user/new').btn Novo usuário
-		a(href='/admin').btn Voltar
