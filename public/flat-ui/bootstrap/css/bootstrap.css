@@ -1265,7 +1265,7 @@ textarea::-webkit-input-placeholder {
 
 .controls > .radio:first-child,
 .controls > .checkbox:first-child {
-  padding-top: 5px;
+  /*padding-top: 5px;*/
 }
 
 .radio.inline,

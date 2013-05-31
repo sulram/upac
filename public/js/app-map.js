@@ -132,8 +132,8 @@ App.MapController = Em.Object.create({
                     that.markers.push({
                         selected: false,
                         username: user.username,
-                        geo: user.geo.length ? user.geo : [],
-                        marker: user.geo.length
+                        geo: user.geo && user.geo.length ? user.geo : [],
+                        marker: user.geo && user.geo.length
                                 ? App.MapController.createMarker(user.username, new google.maps.LatLng(user.geo[0],user.geo[1]))
                                 : null
                     });
