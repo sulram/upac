@@ -354,6 +354,7 @@ iframe {
 	min-height: 320px;
 	z-index: 5;
 	color: #444;
+	overflow: auto;
 }
 
 #rede_sidebar h1 {

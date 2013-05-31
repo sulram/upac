@@ -20,7 +20,7 @@
 			{{else}}
 				
 				<p>{{#linkTo 'rede.avatar' classNames="btn"}}Mudar foto{{/linkTo}}</p>
-				<p>{{#linkTo 'perfil' model classNames="btn"}}Ver perfil completo{{/linkTo}}</p>
+				<p>{{#linkTo 'timeline' model classNames="btn"}}Linha do tempo{{/linkTo}}</p>
 				
 				{{#if geo.length}}
 					<p><a {{action startMarking App.MapController}} class="btn">Mudar minha localização</a></p>
@@ -32,7 +32,7 @@
 
 		{{else}}
 
-			<p>{{#linkTo 'perfil' model classNames="btn"}}Ver perfil completo{{/linkTo}}</p>
+			<p>{{#linkTo 'timeline' model classNames="btn"}}Linha do tempo{{/linkTo}}</p>
 			
 		{{/if}}
 

@@ -10,19 +10,19 @@ App.ApplicationController = Ember.Controller.extend({
     }.observes('currentPath')
 });
 
-App.PerfilIndexController = Ember.ObjectController.extend({
+App.TimelineIndexController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
         return this.get('model.username') == User.auth.username;
     }.property('model.username','User.auth.username')
 });
 
-App.PerfilEditarController = Ember.ObjectController.extend({
+App.TimelineEditarController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
         return this.get('model.username') == User.auth.username;
     }.property('model.username','User.auth.username')
 });
 
-App.RedeProfileController = Ember.ObjectController.extend({
+App.RedePerfilController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
         return this.get('model.username') == User.auth.username;
     }.property('model.username','User.auth.username'),
