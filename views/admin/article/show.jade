@@ -16,6 +16,7 @@ block content
 		+table_rec_row("Data de criação", article.createdAt)
 		+table_rec_row("Última Atualização", article.updatedAt)
 	.btn-group
-		a(href='/admin/article/'+article.id+'/edit').btn Editar artigo
-		a(href='/admin/article/'+article.id+'/remove').btn Remover artigo
 		a(href='/admin/articles').btn Voltar
+		a(href='/admin/article/'+article.id+'/edit').btn.btn-primary Editar artigo
+		a(href='/admin/article/'+article.id+'/remove').btn.btn-danger Remover artigo
+		

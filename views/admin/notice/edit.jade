@@ -11,6 +11,8 @@ block content
 		+field(notice.order, 'order', 'Ordem', 'number')
 		+textfield(notice.text, 'text', 'Texto')
 		+field(notice.url, 'url', 'URL do link', 'text')
-			
-		button(type='submit').btn.btn-primary Enviar
-		a(href='/admin/notice/#{notice.id}').btn Cancelar
+		.control-group
+			.controls
+				button(type='submit').btn.btn-primary Enviar
+				&nbsp; &nbsp; 
+				a(href='/admin/notice/#{notice.id}').btn Cancelar
