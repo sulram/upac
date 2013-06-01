@@ -47,7 +47,7 @@ App.RedeMapaView = Ember.View.extend({
 
         var InfoBoxOptions = {
              content: null
-            ,disableAutoPan: false
+            ,disableAutoPan: true
             ,maxWidth: 0
             ,pixelOffset: new google.maps.Size(-104, 0)
             ,zIndex: null
@@ -61,7 +61,7 @@ App.RedeMapaView = Ember.View.extend({
             ,enableEventPropagation: false
         };
 
-        App.map_box = new InfoBox(InfoBoxOptions);
+        App.map_infobox = new InfoBox(InfoBoxOptions);
     }
 });
 
@@ -123,6 +123,7 @@ App.MapController = Em.Object.create({
             this.unFocusAll();
 
             if(current.marker){
+                google.maps.event.trigger(current.marker, 'mouseover');
                 current.marker.setIcon(App.MapStyles.pin.user_select[0]);
                 current.marker.setShape(App.MapStyles.pin.user_select[1]);
                 current.selected = true;
@@ -136,6 +137,9 @@ App.MapController = Em.Object.create({
             last.marker.setIcon(App.MapStyles.pin.user[0]);
             last.marker.setShape(App.MapStyles.pin.user[1]);
             last.selected = false;
+        }
+        if(App.map_infobox){
+            App.map_infobox.close();
         }
     },
     getMarkers: function(){  
@@ -237,11 +241,15 @@ App.MapController = Em.Object.create({
         });
         google.maps.event.addListener(marker, 'mouseover', function() {
             var user = App.MapController.findUser(username);
-            App.map_box.setContent(App.MapStyles.info_box.split('{{content}}').join(user.name || user.username));
-            App.map_box.open(App.map, this);
+            App.map_infobox.setContent(App.MapStyles.info_box.split('{{content}}').join(user.name || user.username));
+            App.map_infobox.open(App.map, this);
         });
         google.maps.event.addListener(marker, 'mouseout', function() {
-            //App.map_box.close();
+            //App.map_infobox.close();
+            var last = _.findWhere(App.MapController.markers,{selected: true});
+            if(last){
+                google.maps.event.trigger(last.marker, 'mouseover');
+            }
         });
         return marker;
     },
@@ -251,8 +259,7 @@ App.MapController = Em.Object.create({
             
             App.MapController.unFocusAll();
             window.location.hash = '/rede';
-
-            console.log( 'get position!', e.latLng );
+            //console.log( 'get position!', e.latLng );
 
         } else {
 
