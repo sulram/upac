@@ -42,12 +42,33 @@ App.RedeMapaView = Ember.View.extend({
             App.MapController.onMapClick(e);
         });
         google.maps.event.addListener(App.map, 'zoom_changed', this.handleZoom);
+
+        //// INFOBOX
+
+        var InfoBoxOptions = {
+             content: null
+            ,disableAutoPan: false
+            ,maxWidth: 0
+            ,pixelOffset: new google.maps.Size(-104, 0)
+            ,zIndex: null
+            ,boxStyle: { 
+              width: "207px"
+             }
+            ,closeBoxURL: ""
+            ,infoBoxClearance: new google.maps.Size(1, 1)
+            ,isHidden: false
+            ,pane: "floatPane"
+            ,enableEventPropagation: false
+        };
+
+        App.map_box = new InfoBox(InfoBoxOptions);
     }
 });
 
 //// OBJECTS
 
 App.MapStyles = Em.Object.create({
+    info_box: '<div class="tooltip bottom fade in" style="top: 0px; left: 0px; display: block;"><div class="tooltip-arrow" style=""></div><div class="tooltip-inner">{{content}}</div></div>',
     cursor: {
         hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
     },
@@ -131,6 +152,7 @@ App.MapController = Em.Object.create({
                 $.each(data.users, function(i,user){
                     that.markers.push({
                         selected: false,
+                        name: user.name,
                         username: user.username,
                         geo: user.geo && user.geo.length ? user.geo : [],
                         marker: user.geo && user.geo.length
@@ -213,7 +235,14 @@ App.MapController = Em.Object.create({
             //App.MapController.focusUser(username);
             window.location.hash = '/rede/perfil/'+username;
         });
-
+        google.maps.event.addListener(marker, 'mouseover', function() {
+            var user = App.MapController.findUser(username);
+            App.map_box.setContent(App.MapStyles.info_box.split('{{content}}').join(user.name || user.username));
+            App.map_box.open(App.map, this);
+        });
+        google.maps.event.addListener(marker, 'mouseout', function() {
+            //App.map_box.close();
+        });
         return marker;
     },
     onMapClick: function(e){

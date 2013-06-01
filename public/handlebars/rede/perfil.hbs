@@ -4,6 +4,15 @@
 			{{nick}}
 		</h2>
 
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<a class="btn" href="#fakelink"><i class="fui-time"></i></a>
+				<a class="btn" href="#fakelink"><i class="fui-location"></i></a>
+				<a class="btn" href="#fakelink"><i class="fui-new"></i></a>
+				<a class="btn" href="#fakelink"><i class="fui-eye"></i></a>
+			</div>
+		</div>
+
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, dolores, ullam dignissimos ea soluta asperiores nam impedit repudiandae iste facere unde eos consequatur architecto explicabo quam eligendi totam corporis magni?</p>
 		
 		{{#if isTheLoggedUser}}
@@ -19,11 +28,11 @@
 
 			{{else}}
 				
-				<p>{{#linkTo 'rede.avatar' classNames="btn"}}Mudar foto{{/linkTo}}</p>
+				<p>{{#linkTo 'rede.avatar' classNames="btn"}}Mudar foto <span class="fui-new"></span>{{/linkTo}}</p>
 				<p>{{#linkTo 'timeline' model classNames="btn"}}Linha do tempo{{/linkTo}}</p>
 				
 				{{#if geo.length}}
-					<p><a {{action startMarking App.MapController}} class="btn">Mudar minha localização</a></p>
+					<p><a {{action startMarking App.MapController}} class="btn"><span class="fui-location"></span> Mudar minha localização</a></p>
 				{{else}}
 					<p><a {{action startMarking App.MapController}} class="btn">Inserir minha localização</a></p>
 				{{/if}}

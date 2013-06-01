@@ -10,7 +10,9 @@ Descrição e informações úteis desse módulo do projeto
 * [handlebars](http://handlebarsjs.com/)
 * [jQuery](http://jquery.com/)
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/)
+* [Flat UI](http://designmodo.github.io/Flat-UI/)
 * [Google Maps](https://developers.google.com/maps/)
+* [Google Maps Utility Livrary v3](https://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries)
 
 ### Guias e documentação
 
@@ -20,47 +22,3 @@ Descrição e informações úteis desse módulo do projeto
 * [Google Maps v3 API](https://developers.google.com/maps/documentation/javascript/reference?hl=pt-br)
 * [Google Maps v3 Examples](https://developers.google.com/maps/documentation/javascript/examples/?hl=pt-br)
 
----
-
-#### Briefing e Issues
-
-* [Listadas em Issues](https://github.com/ultraleve/upac/issues)
-
-#### TODOS
-
-* UPLOAD DE IMAGEM
-* ADICIONAR TAGS PRO AJAX
-* PERFIL COMPLETO
-* FILTRAR MAPA POR TAGS
-* MELHORAR ICONES DO MAPA
-* QUADRO DE AVISOS
-* BLOG
-* ADICIONAR POST
-* EVENTO
-* RSVP DO EVENTO
-* GRUNT
-	* concatenar libs e minimizar upac.js
-
-#### 18/04 alpha 0 / apresentar pra UPAC
-
-* dummy pages: home, blog, profile, agenda
-* users / profiles
-* mapa / tags
-* upload profile image
-
-#### 24/04 alpha 1 / abrir para rede
-
-* clippings
-* dominio
-* hospedagem
-* CDN
-
-#### 18/05 beta 0 / mais features
-
-* static content
-* interface storify
-* esqueci minha senha / recuperar senha / redefinir senha
-* blog
-* eventos
-* upload pics
-* rsvp

@@ -1,0 +1,12 @@
+<div class="pad">
+	{{#if User.auth.loggedIn}}
+		
+		<h3>O que gostaria de adicionar?</h3>
+
+		<input type="text"/>
+
+	{{else}}
+		<p>Conecte-se e participe da nossa rede!</p>
+		<p>{{#linkTo 'user' classNames="btn"}}Participar{{/linkTo}}</p>
+	{{/if}}
+</div>

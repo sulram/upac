@@ -5,6 +5,7 @@ App.Router.map(function() {
         this.route('perfil', { path: '/perfil/:user_username' });
         this.route('avatar');
         this.route('editar');
+        this.route('add');
     });
     this.resource("timeline", { path: '/timeline/:user_username' }, function(){
         this.route("editar");
