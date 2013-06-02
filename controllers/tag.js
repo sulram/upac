@@ -13,7 +13,8 @@ module.exports = function (cdn, paginate) { return {
 		},
 		create: function(req, res, next) {
 			
-		}
+		},
+		
 	},
 	create: function(req, res) {
 		var tag = new Tag(req.body);

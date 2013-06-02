@@ -13,7 +13,7 @@ module.exports = function (cdn, img_helper, paginate) { return {
 					if (err) return next(err);
 					total = count;
 				})
-				res.render('admin/user/index',{users:users, total:total, title:"Usuários"});
+				res.render('admin/user/index',{users:users, total:total, title:"Usuários", pagination:pagination});
 			});
 		},
 		editnew: function(req, res, next) {

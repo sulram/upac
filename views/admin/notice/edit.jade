@@ -3,7 +3,7 @@ extends ../layout
 block content
 	form(action='/admin/notice/#{notice.id}',method='POST')
 		table.table.table-condensed
-			+field(owner.id, 'owner', 'ID do usuário', 'text')
+			+field(notice.owner, 'owner', 'ID do usuário', 'text')
 			+field(notice.order, 'order', 'Ordem', 'number')
 			tr
 				td 

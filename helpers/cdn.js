@@ -24,7 +24,18 @@ module.exports = function (config) {
 						Key: params.remote,
 						Body: require('fs').createReadStream(params.local)
 					}, cb);
-				}
+				},
+				remove:function(params, cb) {
+					var s3 = new aws.S3({
+						params: {
+							Bucket:params.container,
+							region: config.cdn.region,
+						}
+					});
+					s3.deleteObject({
+						Key: params.remote
+					}, cb);
+				},
 			};
 		}
 	}
