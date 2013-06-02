@@ -418,3 +418,12 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .tooltip.bottom .tooltip-arrow {
 	border-bottom-color: rgba(50,50,50,.8);
 }
+
+.nav-pills >  li > a {
+	text-decoration: none;
+}
+
+.nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus {
+	background-color: #6fb7ac;
+}
+
