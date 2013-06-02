@@ -43,6 +43,34 @@ App.RedePerfilController = Ember.ObjectController.extend({
     }.observes('content.isLoaded')
 });
 
+App.RedeEditarController = Ember.ObjectController.extend({
+    isPosting: false,
+    flashMsg: null,
+    onFocus: function(){
+        this.set('flashMsg',null);
+    },
+    submit: function(){
+        var data = $('form').serialize();
+        this.set('isPosting',true);
+        this.set('flashMsg',null);
+        var _controller = this;
+        $.ajax({
+            type: 'PUT',
+            url: '/user/' + User.auth.id,
+            data: data,
+            success: function(data, status, jqXHR){
+                console.log(data);
+                _controller.set('isPosting',false);
+                User.authenticate(data.auth);
+            },
+            error: function(jqXHR,status,error){
+                console.log(arguments);
+                _controller.set('isPosting',false);
+            }
+        });
+    }
+});
+
 App.UserIndexController = Ember.Controller.extend({
     isPosting: false,
     flashMsg: null,

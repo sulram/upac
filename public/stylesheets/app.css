@@ -32,10 +32,11 @@ iframe {
 
 .pad {
 	padding: 20px;
+	position: relative;
 }
 
 .pad .pad.over {
-	background: rgba(0,0,0,.25);
+	background: rgba(0,0,0,.1);
 	margin: 0 -10px -10px;
 }
 
@@ -250,7 +251,7 @@ iframe {
 	margin: 0 0;
 	padding: 100px 0 0;
 	width: 100%;
-	max-width: 1280px;
+	max-width: 100%;
 	font-size: 1.1em;
 	line-height: 1.3em;
 }
@@ -364,6 +365,23 @@ iframe {
 
 #rede_sidebar a {
 	/*color: #444;*/
+}
+
+.rede_perfil_foto {
+	position: relative;
+	max-width: 320px;
+}
+
+.rede_perfil_foto .rede_perfil_foto_editar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	display: none;
+	background: rgba(50,50,50,.8);	
+}
+
+.rede_perfil_foto:hover .rede_perfil_foto_editar {
+	display: block;
 }
 
 /* ---------------- TEMP ---------------- */
