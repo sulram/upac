@@ -1,21 +1,32 @@
 extends ../layout
 
+block link
+	-var selected = 'usuarios';
+
 block content
 	h2 Editar usuário: #{user.id}
+	hr
 	form(action='/admin/user/#{user.id}',method='POST').form-horizontal
-		+field(user.name, 'name', 'Nome', 'text')
-		+field(user.email, 'email', 'Email', 'text')
-		+checkbox(user.admin, 'admin', 'Administrador')
-		+field(user.geo, 'geo', 'Loc. geográfica', 'text')
-		.control-group 
-			label.control-label Acesso através de:
-			.controls
-				input(type='text', value=user.provider, disabled)
-		+field(user.dateOfBirth, 'dateOfBirth', 'Data de nascimento', 'date')
-		+field(user.city, 'city', 'Cidade', 'text')
-		+field(user.state, 'state', 'Estado', 'text')
-		+field(user.country, 'country', 'País', 'text')
-		+field(user.gender, 'gender', 'Gênero', 'text')
-		+textfield(user.about, 'about', 'Sobre')
-		button(type='submit').btn.btn-primary Enviar
-	a(href='/admin/user/#{user.id}').btn Cancelar
+		.row
+			.span6
+				+field(user.name, 'name', 'Nome', 'text')
+				+field(user.email, 'email', 'Email', 'text')
+				+field(user.dateOfBirth, 'dateOfBirth', 'Data de nascimento', 'date')
+				+field(user.geo, 'geo', 'Loc. geográfica', 'text')
+				.control-group 
+					label.control-label Acesso através de:
+					.controls
+						input(type='text', value=user.provider, disabled)
+				+checkbox(user.admin, 'admin', 'Administrador')
+			.span6
+				
+				+field(user.city, 'city', 'Cidade', 'text')
+				+field(user.state, 'state', 'Estado', 'text')
+				+field(user.country, 'country', 'País', 'text')
+				+field(user.gender, 'gender', 'Gênero', 'text')
+				+textfield(user.about, 'about', 'Sobre')
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/user/#{user.id}').btn Cancelar

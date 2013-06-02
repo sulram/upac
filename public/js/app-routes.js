@@ -2,10 +2,12 @@ App.Router.map(function() {
     this.resource("home");
     this.resource("agenda");
     this.resource("rede", function(){
-        this.route('profile', { path: '/perfil/:user_username' });
+        this.route('perfil', { path: '/perfil/:user_username' });
         this.route('avatar');
+        this.route('editar');
+        this.route('add');
     });
-    this.resource("perfil", { path: '/perfil/:user_username' }, function(){
+    this.resource("timeline", { path: '/timeline/:user_username' }, function(){
         this.route("editar");
     });
     this.resource("blog",function(){
@@ -26,7 +28,7 @@ App.IndexRoute = Em.Route.extend({
     }
 });
 
-App.PerfilRoute = Em.Route.extend({
+App.TimelineRoute = Em.Route.extend({
     model: function (param){
         console.log('App.UserModel.find', param.user_username);
         return App.UserModel.find(param.user_username);
@@ -40,15 +42,15 @@ App.PerfilRoute = Em.Route.extend({
     }
 });
 
-App.PerfilIndexRoute = Em.Route.extend({
+App.TimelineIndexRoute = Em.Route.extend({
     model: function (param){
-        return this.modelFor('perfil');
+        return this.modelFor('timeline');
     }
 });
 
-App.PerfilEditarRoute = Em.Route.extend({
+App.TimelineEditarRoute = Em.Route.extend({
     model: function (param){
-        return this.modelFor('perfil');
+        return this.modelFor('timeline');
     }
 });
 
@@ -66,7 +68,7 @@ App.RedeIndexRoute = Em.Route.extend({
     }
 });
 
-App.RedeProfileRoute = Em.Route.extend({
+App.RedePerfilRoute = Em.Route.extend({
     model: function (param){
         console.log('App.UserModel.find', param.user_username);
         return App.UserModel.find(param.user_username);

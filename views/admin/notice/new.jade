@@ -1,11 +1,16 @@
 extends ../layout
 
+block link
+	-var selected = 'avisos';
+
 block content
 	h2 Novo aviso
+	hr
 	form(action='/admin/notice',method='POST').form-horizontal
-		+field("", 'owner', 'ID do usuário', 'text')
+		+field(user, 'owner', 'ID do usuário', 'text')
 		+field("", 'order', 'Ordem', 'number')
 		+textfield("", 'text', 'Texto')
 		+field("", 'url', 'URL do link', 'text')
+
 		button(type='submit').btn.btn-primary Enviar
-	a(href='/admin/notices').btn Cancelar
+		a(href='/admin/notices').btn Cancelar

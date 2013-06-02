@@ -1,6 +1,12 @@
 extends ../layout
 
+block link
+	-var selected = 'posts';
+
 block content
+	p
+		a(href='/admin/article/new').btn.btn-small Novo post
+
 	table.table.table-striped
 		thead
 			tr
@@ -12,6 +18,7 @@ block content
 				th Data de publicação
 				th Data de criação
 				th Última atualização
+				th Opções
 		for article in articles
 			tr
 				td
@@ -24,6 +31,6 @@ block content
 				td= article.publicationDate
 				td= article.createdAt
 				td= article.updatedAt
-	.btn-group
-		a(href='/admin/article/new').btn Novo artigo
-		a(href='/admin').btn Voltar
+				td
+					a(href="/admin/article/#{article.id}/remove",title="Excluir")
+						i.icon-remove

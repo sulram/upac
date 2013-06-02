@@ -1,7 +1,12 @@
 extends ../layout
 
+block link
+	-var selected = 'avisos';
+
 block content
-	h2 Avisos
+	p
+		a(href='/admin/notice/new').btn Novo aviso
+
 	table.table.table-striped
 		thead
 			tr
@@ -10,6 +15,7 @@ block content
 					th Aviso
 					th Link
 					th Criado em
+					th Opções
 		tbody
 			each notice in notices
 				tr
@@ -17,9 +23,8 @@ block content
 						a(href='/admin/notice/#{notice.id}')= notice.order
 					td!= md(notice.text)
 					td
-						a(href=notice.link)= notice.link
+						a(href=notice.url)= notice.url
+					td= notice.createdAt
 					td
-						|= notice.createdAt
-	.btn-group
-		a(href='/admin/notice/new').btn Novo aviso
-		a(href='/admin').btn Voltar
+						a(href="/admin/notice/#{notice.id}/remove",title="Excluir")
+							i.icon-remove

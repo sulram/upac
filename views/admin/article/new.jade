@@ -1,13 +1,24 @@
 extends ../layout
 
+block link
+	-var selected = 'posts';
+
 block content
+	h2 Novo post
+	hr
 	form(action='/admin/article',method='POST').form-horizontal
-		+field("",'title','Título', 'text')
-		+field("", 'slug', 'Slug', 'text')
-		+textfield("",'excerpt','Excerpt')
-		+textfield("",'content','Conteúdo')
-		+field("", 'parent', 'Artigo mãe', 'text')
-		+field("", 'publicationStatus', 'Status da publicação', 'text')
-		+field("", 'publicationDate', 'Data da publicação', 'date')
-		button(type='submit').btn.btn-primary Enviar
-	a(href='/admin/articles').btn Cancelar
+		.row
+			.span6
+				+field("",'title','Título', 'text')
+				+field("", 'slug', 'Slug', 'text')
+				+textfield("",'excerpt','Excerpt')
+				+textfield("",'content','Conteúdo')
+			.span6
+				+field("", 'parent', 'Artigo mãe', 'text')
+				+field("", 'publicationStatus', 'Status da publicação', 'text')
+				+field("", 'publicationDate', 'Data da publicação', 'date')
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/articles').btn Cancelar

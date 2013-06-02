@@ -24,5 +24,10 @@ NoticeSchema.methods = {
 		this.find({id: user_id}).sort('date',-1).skip(skip).limit(limit).exec(cb);
 	}
 }
-
+NoticeSchema.pre('save', function(next) {
+	if(this.isNew) {
+		this.createdAt = new Date();
+	}
+	next();
+});
 mongoose.model('Notice', NoticeSchema);

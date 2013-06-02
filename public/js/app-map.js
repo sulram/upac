@@ -42,12 +42,33 @@ App.RedeMapaView = Ember.View.extend({
             App.MapController.onMapClick(e);
         });
         google.maps.event.addListener(App.map, 'zoom_changed', this.handleZoom);
+
+        //// INFOBOX
+
+        var InfoBoxOptions = {
+             content: null
+            ,disableAutoPan: true
+            ,maxWidth: 0
+            ,pixelOffset: new google.maps.Size(-104, 0)
+            ,zIndex: null
+            ,boxStyle: { 
+              width: "207px"
+             }
+            ,closeBoxURL: ""
+            ,infoBoxClearance: new google.maps.Size(1, 1)
+            ,isHidden: false
+            ,pane: "floatPane"
+            ,enableEventPropagation: false
+        };
+
+        App.map_infobox = new InfoBox(InfoBoxOptions);
     }
 });
 
 //// OBJECTS
 
 App.MapStyles = Em.Object.create({
+    info_box: '<div class="tooltip bottom fade in" style="top: 0px; left: 0px; display: block;"><div class="tooltip-arrow" style=""></div><div class="tooltip-inner">{{content}}</div></div>',
     cursor: {
         hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
     },
@@ -102,6 +123,7 @@ App.MapController = Em.Object.create({
             this.unFocusAll();
 
             if(current.marker){
+                google.maps.event.trigger(current.marker, 'mouseover');
                 current.marker.setIcon(App.MapStyles.pin.user_select[0]);
                 current.marker.setShape(App.MapStyles.pin.user_select[1]);
                 current.selected = true;
@@ -115,6 +137,9 @@ App.MapController = Em.Object.create({
             last.marker.setIcon(App.MapStyles.pin.user[0]);
             last.marker.setShape(App.MapStyles.pin.user[1]);
             last.selected = false;
+        }
+        if(App.map_infobox){
+            App.map_infobox.close();
         }
     },
     getMarkers: function(){  
@@ -131,9 +156,10 @@ App.MapController = Em.Object.create({
                 $.each(data.users, function(i,user){
                     that.markers.push({
                         selected: false,
+                        name: user.name,
                         username: user.username,
-                        geo: user.geo.length ? user.geo : [],
-                        marker: user.geo.length
+                        geo: user.geo && user.geo.length ? user.geo : [],
+                        marker: user.geo && user.geo.length
                                 ? App.MapController.createMarker(user.username, new google.maps.LatLng(user.geo[0],user.geo[1]))
                                 : null
                     });
@@ -213,7 +239,18 @@ App.MapController = Em.Object.create({
             //App.MapController.focusUser(username);
             window.location.hash = '/rede/perfil/'+username;
         });
-
+        google.maps.event.addListener(marker, 'mouseover', function() {
+            var user = App.MapController.findUser(username);
+            App.map_infobox.setContent(App.MapStyles.info_box.split('{{content}}').join(user.name || user.username));
+            App.map_infobox.open(App.map, this);
+        });
+        google.maps.event.addListener(marker, 'mouseout', function() {
+            //App.map_infobox.close();
+            var last = _.findWhere(App.MapController.markers,{selected: true});
+            if(last){
+                google.maps.event.trigger(last.marker, 'mouseover');
+            }
+        });
         return marker;
     },
     onMapClick: function(e){
@@ -222,8 +259,7 @@ App.MapController = Em.Object.create({
             
             App.MapController.unFocusAll();
             window.location.hash = '/rede';
-
-            console.log( 'get position!', e.latLng );
+            //console.log( 'get position!', e.latLng );
 
         } else {
 

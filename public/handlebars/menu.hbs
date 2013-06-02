@@ -44,13 +44,6 @@
 			{{/linkTo}}
 		</li>
 
-		<li class="menu_it profile">
-			{{#linkTo 'rede.profile' User.model}}
-				<span class="ico"></span>
-				<span class="caption"><span>Meu perfil</span></span>
-			{{/linkTo}}
-		</li>
-
 	{{else}}
 
 		<li class="menu_it participate">
@@ -68,5 +61,24 @@
 				<span class="caption"><span>Pesquisar</span></span>
 			{{/linkTo}}
 		</li>
+
+	{{#if User.auth.loggedIn}}
+
+		<li class="menu_it profile">
+			{{#linkTo 'rede.perfil' User.model}}
+				<span class="ico"></span>
+				<span class="caption"><span>Meu perfil</span></span>
+			{{/linkTo}}
+		</li>
+
+		<li class="menu_it add rede">
+			{{#linkTo 'rede.add'}}
+				<span class="ico"></span>
+				<span class="caption"><span>Adicionar</span></span>
+			{{/linkTo}}
+		</li>
+
+	{{/if}}
+
 	</ul>
 </div>

@@ -169,6 +169,7 @@ iframe {
 #sec_menu .menu_it.logout a .ico { background-position: -64px -64px; }
 #sec_menu .menu_it.profile a .ico { background-position: -128px -64px; }
 #sec_menu .menu_it.busca a .ico { background-position: -192px -64px; }
+#sec_menu .menu_it.add a .ico { background-position: -256px -64px; }
 
 .menu_it.profile a:hover, .menu_it.profile a.active { background-color: #6fb7ac; }
 
@@ -354,6 +355,7 @@ iframe {
 	min-height: 320px;
 	z-index: 5;
 	color: #444;
+	overflow: auto;
 }
 
 #rede_sidebar h1 {
@@ -391,3 +393,10 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	      -o-border-radius: 0;
 	         border-radius: 0;
 	}
+
+.tooltip-inner {
+	background: rgba(50,50,50,.8);
+}
+.tooltip.bottom .tooltip-arrow {
+	border-bottom-color: rgba(50,50,50,.8);
+}

@@ -1,16 +1,22 @@
 extends ../layout
 
+block link
+	-var selected = 'posts';
+	
 block content
-	h1= article.title
+	h2= article.title
 	table.table.table-condensed
 		+table_rec_row("ID", article.id)
 		+table_rec_row("Slug", article.slug)
 		+table_rec_row("Excerpt", article.excerpt)
 		+table_rec_row_raw("Conteúdo", md(article.content))
 		+table_rec_row_link("Artigo mãe", article.parent,'/admin/article/'+article.parent)
+		+table_rec_row("Data da publicação", article.publicationDate)
 		+table_rec_row("Status da publicação", article.publicationStatus)
 		+table_rec_row("Data de criação", article.createdAt)
 		+table_rec_row("Última Atualização", article.updatedAt)
 	.btn-group
-		a(href='/admin/article/'+article.id+'/edit').btn Editar artigo
 		a(href='/admin/articles').btn Voltar
+		a(href='/admin/article/'+article.id+'/edit').btn.btn-primary Editar post
+		a(href='/admin/article/'+article.id+'/remove').btn.btn-danger Remover post
+		

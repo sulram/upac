@@ -1,16 +1,18 @@
 extends ../layout
 
+block link
+	-var selected = 'avisos';
+
 block content
-	form(action='/admin/notice/#{notice.id}',method='POST')
-		table.table.table-condensed
-			+field(notice.owner, 'owner', 'ID do usuário', 'text')
-			+field(notice.order, 'order', 'Ordem', 'number')
-			tr
-				td 
-					label(for='text') Texto:
-				td
-					textarea(name='text')= notice.text
-			+field(notice.url, 'url', 'URL do link', 'text')
-			
-		button(type='submit').btn.btn-primary Enviar
-	a(href='/admin/notice/#{notice.id}').btn Cancelar
+	h2 Aviso: #{notice.id}
+	hr
+	form(action='/admin/notice/#{notice.id}',method='POST').form-horizontal
+		+field(notice.owner, 'owner', 'ID do usuário', 'text')
+		+field(notice.order, 'order', 'Ordem', 'number')
+		+textfield(notice.text, 'text', 'Texto')
+		+field(notice.url, 'url', 'URL do link', 'text')
+		.control-group
+			.controls
+				button(type='submit').btn.btn-primary Enviar
+				&nbsp; &nbsp; 
+				a(href='/admin/notice/#{notice.id}').btn Cancelar
