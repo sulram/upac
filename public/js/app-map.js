@@ -247,7 +247,7 @@ App.MapController = Em.Object.create({
         google.maps.event.addListener(marker, 'mouseout', function() {
             //App.map_infobox.close();
             var last = _.findWhere(App.MapController.markers,{selected: true});
-            if(last){
+            if(last && last.marker != this){
                 google.maps.event.trigger(last.marker, 'mouseover');
             }
         });

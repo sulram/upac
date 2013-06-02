@@ -136,7 +136,7 @@ module.exports = function (cdn, img_helper, paginate) { return {
 	setImage: function(req, res, next) {
 		var user = req.profile;
 		
-		img_helper.thumbnail.upload_save(
+		img_helper.thumbnails.upload_save(
 			Img, cdn, req.files.image.path, 
 			'profile',
 			function(err, img) {

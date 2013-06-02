@@ -55,7 +55,7 @@ App.TimelineEditarRoute = Em.Route.extend({
 });
 
 App.RedeRoute = Em.Route.extend({
-    setupController: function(controller, song) {
+    setupController: function(controller, model) {
         App.MapController.isMarking = false;
         App.MapController.getMarkers();
     }
@@ -64,7 +64,6 @@ App.RedeRoute = Em.Route.extend({
 App.RedeIndexRoute = Em.Route.extend({
     setupController: function (controller, model){
         this._super(this, arguments);
-        App.MapController.unFocusAll();
     }
 });
 
@@ -74,13 +73,22 @@ App.RedePerfilRoute = Em.Route.extend({
         return App.UserModel.find(param.user_username);
     },
     serialize: function(model) {
-        return { user_username: model.username };
+        if(model) return { user_username: model.username };
     },
     setupController: function (controller, model){
         this._super(this, arguments);
         if(model.isLoaded){
             controller.focusUser();
         }
+    },
+    deactivate: function(){
+         App.MapController.unFocusAll();
+    }
+});
+
+App.RedeEditarRoute = Em.Route.extend({
+    setupController: function (controller, model){
+        this._super(this, arguments);
     }
 });
 
