@@ -70,5 +70,9 @@ ArticleSchema.pre('save', function(next) {
 	this.updatedAt = new Date();
 	next();
 });
+
+ArticleSchema.statics.findByTagId = function(id, options, cb) {
+	this.find({tags: id}, null, options, cb);
+}
 mongoose.model('Attachment', AttachmentSchema);
 mongoose.model('Article', ArticleSchema);
