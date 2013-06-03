@@ -1,7 +1,8 @@
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
   , ObjectId = Schema.ObjectId
-  , crypto = require('crypto');
+  , crypto = require('crypto')
+  , _ = require('underscore');
 
 var UserSchema = new Schema({
 	name: String,
@@ -50,7 +51,11 @@ var UserSchema = new Schema({
 	admin: {
 		type: Boolean,
 		default: false
-	}
+	},
+	tags: [{
+		type: [ObjectId],
+		ref: "Tag"
+	}]
 });
 
 UserSchema.virtual('password').set(function(password){
@@ -102,13 +107,12 @@ UserSchema.methods = {
 		return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
 	},
 	toJSON: function() {
-		var obj = this.toObject();
-		delete obj.hashed_password;
-		delete obj.salt;
-		delete obj.verifyToken;
-		delete obj.provider;
-		return obj;
+		return _.omit(this.toObject(), 'hashed_password', 'salt', 'verifyToken', 'provider');
 	}
+}
+
+UserSchema.statics.findByTagId = function(id, options, cb) {
+	this.find({tags: id}, null, options, cb);
 }
 
 mongoose.model('User', UserSchema)

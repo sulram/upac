@@ -1,7 +1,9 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Article = mongoose.model('Article')
+  , Tag = mongoose.model('Tag')
   , Img = mongoose.model('Img')
+  , _ = require('underscore')
 
 module.exports = function (cdn, img_helper, paginate) { return {
 	admin: { 
@@ -123,7 +125,11 @@ module.exports = function (cdn, img_helper, paginate) { return {
 	},
 	update: function(req, res) {
 		var user = req.profile;
-		user.geo = req.body.geo;
+		var body = _.pick(req.body, 
+			'geo', 'about'
+		);
+		if(body.geo && (body.geo.length == 0)) delete body.geo;
+		user.set(body);
 		user.save(function(err) {
 			if (err) {
 				return res.jsonxf(500, 
@@ -213,7 +219,12 @@ module.exports = function (cdn, img_helper, paginate) { return {
 		query.exec(function(err, user) {
 			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
 			if(!user) return res.jsonx(401, {msg: 'user not found'});
-			res.jsonx({user:user});
+			var userdata = user.toJSON();
+			Tag.find({id:user.tags||[]}, function(err, tags) {
+				if(err) return res.jsonx(401, {msg: 'error', error: err});
+				userdata.tags = tags;
+				res.jsonx({user:userdata});
+			})
 		});
 	},
 	remove: function(req, res, next) {
