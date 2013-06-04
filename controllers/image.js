@@ -60,7 +60,7 @@ module.exports = function(cdn, img_helper, paginate) {
 		},
 
 		upload: function(req, res, next) {
-
+			
 		},
 
 		remove: function(req, res, next) {

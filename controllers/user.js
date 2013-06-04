@@ -128,6 +128,9 @@ module.exports = function (cdn, img_helper, paginate) { return {
 		var body = _.pick(req.body, 
 			'geo', 'about'
 		);
+
+		console.log(body.geo);
+		
 		if(body.geo && (body.geo.length == 0)) delete body.geo;
 		user.set(body);
 		user.save(function(err) {

@@ -46,12 +46,15 @@ mixin checkbox(data, member, label)
 
 html
 	head
-		title= title
+		title
+			block title
+				| UPAC ADMIN
 		link(rel='stylesheet', href='/flat-ui/bootstrap/css/bootstrap.css')
 		link(rel='stylesheet', href='/flat-ui/bootstrap/css/bootstrap-responsive.css')
 		link(rel='stylesheet', href='/flat-ui/css/flat-ui.css')
 		//if lt ie 9
 			script(src='/flat-ui/js/html5shiv.js')
+		block scripts
 	body
 		
 		-var menu = {'home': '/admin', 'avisos': '/admin/notices', 'posts': '/admin/articles', 'usuarios': '/admin/users' };
@@ -81,7 +84,7 @@ html
 		script(src='/flat-ui/js/bootstrap-switch.js')
 		script(src='/flat-ui/js/jquery.placeholder.js')
 		script(src='/flat-ui/js/jquery.tagsinput.js')
-		script(src='/flat-ui/js/jquery.stackable.js')
+		script(src='/flat-ui/js/jquery.stacktable.js')
 		script(src='/flat-ui/js/flatui-checkbox.js')
 		script(src='/flat-ui/js/flatui-radio.js')
 		script(src='/flat-ui/js/application.js')
