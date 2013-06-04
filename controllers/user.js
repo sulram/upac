@@ -5,7 +5,7 @@ var mongoose = require('mongoose')
   , Img = mongoose.model('Img')
   , _ = require('underscore')
 
-module.exports = function (cdn, img_helper, paginate) { return {
+module.exports = function (cdn, paginate) { return {
 	admin: { 
 		index: function (req, res, next) {
 			paginate.paginate(User,{},{},req,function(err, users, pagination){
@@ -144,10 +144,7 @@ module.exports = function (cdn, img_helper, paginate) { return {
 	},
 	setImage: function(req, res, next) {
 		var user = req.profile;
-		
-		img_helper.thumbnails.upload_save(
-			Img, cdn, req.files.image.path, 
-			'profile',
+		Img.uploadAndReplace(user.avatar, cdn, req.image_config, user.id, req.files.image.path, 'profile',
 			function(err, img) {
 				if (err) {
 					return res.jsonx(500, {msg: "error", error: err});
@@ -238,7 +235,7 @@ module.exports = function (cdn, img_helper, paginate) { return {
 	},
 	uploadImageTest: function(req, res, next) {
 		var remote_name = 'user-test-'+req.files.image.name;
-		img_helper.thumbnails.upload_save(Img, cdn, req.files.image.path, remote_name, "profile", function(err, img){
+		img_helper.thumbnails.upload_save(Img, cdn, req.user.id, req.files.image.path, remote_name, "profile", function(err, img){
 			res.jsonx({msg: "ok", image: img});
 		})
 	}

@@ -16,17 +16,17 @@ var inner = {
 	}
 }
 
-module.exports = function(cdn, img_helper, paginate) {
+module.exports = function(cdn, paginate) {
 	return {
 		admin: {
 			index: function(req, res, next) {
 				paginate.paginate(Img, {}, {}, req, function(err, imgs, pagination) {
 					if(err) return next(err);
-					res.render('admin/image/index',{title:"Administrar imagens no CDN", imgs:imgs, pagination:pagination});
+					res.render('admin/image/index',{imgs:imgs, pagination:pagination});
 				});
 			},
 			editnew: function(req, res, next) {
-				res.render('admin/image/new',{title:"Nova imagem"});
+				res.render('admin/image/new',{});
 			},
 			create: function(req, res, next) {
 				var img = new Img(req.body);
@@ -38,7 +38,7 @@ module.exports = function(cdn, img_helper, paginate) {
 			edit: function(req, res, next) {
 				Img.findById(req.param('id'), function(err, img) {
 					if (err) return next(err);
-					res.render('admin/image/edit',{title:"Editar imagem "+img.id, img:img});
+					res.render('admin/image/edit',{img:img});
 				});
 			},
 			update: function(req, res, next) {
@@ -53,8 +53,9 @@ module.exports = function(cdn, img_helper, paginate) {
 			},
 			remove: function(req, res, next) {
 				Img.findByIdAndRemove(req.param('id'), function(err, img) {
-
-				})
+					if (err) return next(err);
+					res.redirect('/admin/images');
+				});
 			}
 
 		},

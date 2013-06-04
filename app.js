@@ -16,7 +16,6 @@ var express = require('express')
   , LocalStrategy = require('passport-local').Strategy
   , auth = require('./helpers/auth')(_)
   , crypto = require('crypto')
-  , img_helper = require('./helpers/image')(config, _)
   , paginate = require('./helpers/paginate')(_)
   , marked = require('marked');
 
@@ -90,6 +89,7 @@ app.locals.md = function(text) {// helpers for the jade view engine
 }
 app.use(function(req, res, next){ // admin and json extension middleware
 	var flash = null;
+	req.image_config = config.image_config;
 	req.isAdmin = function() {
 		return (req.user && req.user.admin) || config.everyone_is_admin;
 	};
@@ -142,7 +142,7 @@ var cdn = require('./helpers/cdn.js')(config);
 	}
 }*/
 
-require('./config/routes')(app, passport, auth, cdn, img_helper, paginate);
+require('./config/routes')(app, passport, auth, cdn, paginate);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

@@ -1,9 +1,9 @@
-module.exports = function(app, passport, auth, cdn, img, paginate) {
+module.exports = function(app, passport, auth, cdn, paginate) {
 
 	
-	var user = require('../controllers/user')(cdn, img, paginate);
-	var article = require('../controllers/article')(cdn, img, paginate);
-	var _event = require('../controllers/event')(cdn, img, paginate);
+	var user = require('../controllers/user')(cdn, paginate);
+	var article = require('../controllers/article')(cdn, paginate);
+	var _event = require('../controllers/event')(cdn, paginate);
 	var tag = require('../controllers/tag')(cdn, paginate);
 	var notice = require('../controllers/notice')(paginate);
 	var admin = require('../controllers/admin');
