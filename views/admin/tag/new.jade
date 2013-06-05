@@ -6,9 +6,9 @@ block link
 	-var selected = 'avisos';
 
 block content
-	h2 Novo aviso
+	h2 Nova tag
 	hr
-	form(action='/admin/notice',method='POST').form-horizontal
+	form(action='/admin/tag',method='POST').form-horizontal
 		+field(user, 'owner', 'ID do usuário', 'text')
 		+field("", 'order', 'Ordem', 'number')
 		+textfield("", 'text', 'Texto')

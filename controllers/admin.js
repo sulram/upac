@@ -3,7 +3,7 @@ var mongoose = require('mongoose')
 
 module.exports = {
 	signin: function(req, res, next) {
-		res.render('admin/login', {title:"Login Administração UPAC"});
+		res.render('admin/login');
 	},
 	login: function(req, res, next) {
 		res.redirect('/admin');

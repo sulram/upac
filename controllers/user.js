@@ -1,9 +1,11 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Article = mongoose.model('Article')
+  , Tag = mongoose.model('Tag')
   , Img = mongoose.model('Img')
+  , _ = require('underscore')
 
-module.exports = function (cdn, img_helper, paginate) { return {
+module.exports = function (cdn, paginate) { return {
 	admin: { 
 		index: function (req, res, next) {
 			paginate.paginate(User,{},{},req,function(err, users, pagination){
@@ -13,7 +15,7 @@ module.exports = function (cdn, img_helper, paginate) { return {
 					if (err) return next(err);
 					total = count;
 				})
-				res.render('admin/user/index',{users:users, total:total, title:"Usuários"});
+				res.render('admin/user/index',{users:users, total:total, title:"Usuários", pagination:pagination});
 			});
 		},
 		editnew: function(req, res, next) {
@@ -123,7 +125,14 @@ module.exports = function (cdn, img_helper, paginate) { return {
 	},
 	update: function(req, res) {
 		var user = req.profile;
-		user.geo = req.body.geo;
+		var body = _.pick(req.body, 
+			'geo', 'about'
+		);
+
+		console.log(body.geo);
+		
+		if(body.geo && (body.geo.length == 0)) delete body.geo;
+		user.set(body);
 		user.save(function(err) {
 			if (err) {
 				return res.jsonxf(500, 
@@ -136,9 +145,12 @@ module.exports = function (cdn, img_helper, paginate) { return {
 	setImage: function(req, res, next) {
 		var user = req.profile;
 		
-		img_helper.thumbnails.upload_save(
-			Img, cdn, req.files.image.path, 
-			'profile',
+		Img.uploadAndReplace(user.avatar, cdn, req.image_config,
+			
+			user.id,
+			req.files.image.path,
+			'user-avatar-'+user.id+"-"+(new Date()).getTime(), 'profile',
+			
 			function(err, img) {
 				if (err) {
 					return res.jsonx(500, {msg: "error", error: err});
@@ -189,6 +201,7 @@ module.exports = function (cdn, img_helper, paginate) { return {
 		};
 
 		query.skip(_from).limit(limit);
+		query.populate('avatar');
 
 		query.exec(function(err, users) {
 			if(err) return next(err);
@@ -209,11 +222,16 @@ module.exports = function (cdn, img_helper, paginate) { return {
 		});
 	},
 	show: function(req, res, next) {
-		var query = User.findOne({username: req.params.username});
+		var query = User.findOne({username: req.params.username}).populate('avatar');
 		query.exec(function(err, user) {
 			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
 			if(!user) return res.jsonx(401, {msg: 'user not found'});
-			res.jsonx({user:user});
+			var userdata = user.toJSON();
+			Tag.find({id:user.tags||[]}, function(err, tags) {
+				if(err) return res.jsonx(401, {msg: 'error', error: err});
+				userdata.tags = tags;
+				res.jsonx({user:userdata});
+			})
 		});
 	},
 	remove: function(req, res, next) {
@@ -224,7 +242,7 @@ module.exports = function (cdn, img_helper, paginate) { return {
 	},
 	uploadImageTest: function(req, res, next) {
 		var remote_name = 'user-test-'+req.files.image.name;
-		img_helper.thumbnails.upload_save(Img, cdn, req.files.image.path, remote_name, "profile", function(err, img){
+		img_helper.thumbnails.upload_save(Img, cdn, req.user.id, req.files.image.path, remote_name, "profile", function(err, img){
 			res.jsonx({msg: "ok", image: img});
 		})
 	}

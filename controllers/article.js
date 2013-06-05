@@ -5,7 +5,7 @@
   , Attachment = mongoose.model('Attachment')
   , fs = require('fs')
 
-module.exports = function(cdn, img_helper, paginate){ return {
+module.exports = function(cdn, paginate){ return {
 	admin: {
 		index: function(req, res, next) {
 			paginate.paginate(Article,{},{}, req, function(err, articles, pagination) {
@@ -15,7 +15,7 @@ module.exports = function(cdn, img_helper, paginate){ return {
 						if(err) return next(err);
 						total = count;
 					});
-					res.render('admin/article/index', {articles:articles, total:total, title:'Artigos', pagination:pagination});
+					res.render('admin/article/index', {articles:articles, total:total, pagination:pagination});
 				}
 			);
 		},
@@ -37,13 +37,13 @@ module.exports = function(cdn, img_helper, paginate){ return {
 		show: function(req, res, next) {
 			Article.findById(req.param('id'), function(err, article) {
 				if (err) return next(err);
-				res.render('admin/article/show', {article:article, title:'Artigo: '+article.title});
+				res.render('admin/article/show', {article:article});
 			});
 		},
 		edit: function(req, res, next) {
 			Article.findById(req.param('id'), function(err, article) {
 				if (err) return next(err);
-				res.render('admin/article/edit', {article:article, title:'Artigo: '+article.title});
+				res.render('admin/article/edit', {article:article});
 			});
 		},
 		update: function(req, res, next) {

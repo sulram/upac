@@ -6,14 +6,18 @@ var mongoose = require('mongoose')
 module.exports = function (cdn, paginate) { return {
 	admin: {
 		index: function(req, res, next) {
-			
+			paginate.paginate(Tag, {}, {}, req, function(err, tags, pagination) {
+				if (err) return next(err);
+				res.render('admin/tag/index', {title: "Tags", tags:tags, pagination:pagination});
+			});
 		},
 		editnew: function(req, res, next) {
-
+			res.render('admin/tag/new', {})
 		},
 		create: function(req, res, next) {
 			
-		}
+		},
+
 	},
 	create: function(req, res) {
 		var tag = new Tag(req.body);
@@ -91,6 +95,22 @@ module.exports = function (cdn, paginate) { return {
 			}
 			res.jsonx({msg: 'ok', tag:tag});
 		});
+	},
+	byUserId: function(req, res) {
+		User.findById(req.param('id'), function(err, user) {
+			if(err) {
+				return res.jsonxf(500, [{error: 'database error'}],
+					{msg: 'database error', error: err});
+			}
+			if(!user) {
+				return res.jsonxf(404, [{error: 'user not found'}],
+					{msg: 'user not found', user_id: req.param('id')});
+			}
+			paginate.paginate(Tag, {id: user.tags}, {}, req, function(err, tags, pag) {
+				if(err) return err;
+				res.jsonx({msg: 'ok', tags: tags, paginate:pag});
+			});
+		})
 	},
 	findStartingWith: function(req, res) {
 		

@@ -1,5 +1,7 @@
 extends ../layout
 
+block title
+	| Editar usuário: #{user.id}
 block link
 	-var selected = 'usuarios';
 
@@ -12,7 +14,8 @@ block content
 				+field(user.name, 'name', 'Nome', 'text')
 				+field(user.email, 'email', 'Email', 'text')
 				+field(user.dateOfBirth, 'dateOfBirth', 'Data de nascimento', 'date')
-				+field(user.geo, 'geo', 'Loc. geográfica', 'text')
+				+field(user.geo[0], 'geo[]', 'Latitude', 'text')
+				+field(user.geo[1], 'geo[]', 'Longitude', 'text')
 				.control-group 
 					label.control-label Acesso através de:
 					.controls

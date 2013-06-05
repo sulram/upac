@@ -1,0 +1,32 @@
+extends ../layout
+
+block title
+	| Tags
+
+block link
+	-var selected = 'tags';
+
+block content
+	p
+		a(href='/admin/tag/new').btn Nova tag
+
+	table.table.table-striped
+		thead
+			tr
+				tr
+					th Nome
+					th Slug
+					th Referências
+					th Tipo
+					th Opções
+		tbody
+			each notice in notices
+				tr
+					td
+						a(href='/admin/tag/#{tag.id}')= tag.name
+					td= tag.slug
+					td= tag.refcount
+					td= tag.type
+					td
+						a(href="/admin/tag/#{tag.id}/remove",title="Excluir")
+							i.icon-remove
