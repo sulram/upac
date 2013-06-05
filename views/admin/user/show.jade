@@ -3,7 +3,7 @@ extends ../layout
 block title
 	|= user.username
 block link
-	-var selected = 'usuarios';
+	-var selected = 'usuarios'
 
 block content
 	h2= user.username
@@ -19,7 +19,8 @@ block content
 		+table_rec_row("Estado", user.state)
 		+table_rec_row("País", user.country)
 		+table_rec_row("Gênero", user.gender)
-		+table_rec_row_raw("Sobre", md(user.about))
+		+table_rec_row_raw("Sobre", md(user.about).replace(/\n/g, '\\n'))
+		
 	.btn-group
 		a(href='/admin/users').btn Voltar
 		a(href='/admin/user/#{user.id}/edit').btn.btn-primary Editar usuário

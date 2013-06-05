@@ -8,15 +8,44 @@ module.exports = function (cdn, paginate) { return {
 		index: function(req, res, next) {
 			paginate.paginate(Tag, {}, {}, req, function(err, tags, pagination) {
 				if (err) return next(err);
-				res.render('admin/tag/index', {title: "Tags", tags:tags, pagination:pagination});
+				res.render('admin/tag/index', {tags:tags, pagination:pagination});
 			});
 		},
 		editnew: function(req, res, next) {
 			res.render('admin/tag/new', {})
 		},
 		create: function(req, res, next) {
-			
+			var tag = new Tag(req.body);
+			tag.save(function(err) {
+				if(err) return next(err);
+				res.redirect('/admin/tag/'+tag.id);
+			});
 		},
+		show: function(req, res, next) {
+			Tag.findById(req.param('id'), function(err, tag) {
+				if(err) return next(err);
+				res.render('admin/tag/show', {tag:tag});
+			})
+		},
+		edit: function(req, res, next) {
+			Tag.findById(req.param('id'), function(err, tag) {
+				if(err) return next(err);
+				res.render('admin/tag/edit', {tag:tag});
+			});
+		},
+		update: function(req, res, next) {
+			Tag.update({id:req.param('id')}, {$set: req.body}, function(err) {
+				if(err) return next(err);
+				res.redirect('/admin/tag/'+req.param('id'));
+			});
+		},
+		remove: function(req, res, next) {
+			Tag.findByIdAndRemove(req.param('id'), function(err, tag) {
+				if(err) return next(err);
+				res.redirect('/admin/tag')
+			})
+		}
+
 
 	},
 	create: function(req, res) {

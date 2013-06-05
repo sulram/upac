@@ -20,7 +20,7 @@ block content
 					th Tipo
 					th Opções
 		tbody
-			each notice in notices
+			each tag in tags
 				tr
 					td
 						a(href='/admin/tag/#{tag.id}')= tag.name

@@ -40,6 +40,14 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.all('/admin/articles', auth.requiresAdminLogin, article.admin.index);
 	app.post('/admin/article', auth.requiresAdminLogin, article.admin.create);
 
+	app.get('/admin/tag/new', auth.requiresAdminLogin, tag.admin.editnew);
+	app.post('/admin/tag/:id', auth.requiresAdminLogin, tag.admin.update);
+	app.get('/admin/tag/:id', auth.requiresAdminLogin, tag.admin.show);
+	app.get('/admin/tag/:id/edit', auth.requiresAdminLogin, tag.admin.edit);
+	app.get('/admin/tag/:id/remove', auth.requiresAdminLogin, tag.admin.remove)
+	app.all('/admin/tags', auth.requiresAdminLogin, tag.admin.index);
+	app.post('/admin/tag', auth.requiresAdminLogin, tag.admin.create);
+
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);
@@ -57,7 +65,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	//app.post('/uploadimagetest', user.uploadImageTest);
 
 	app.all('/article', article.index);
-	app.get('/article/new', auth.requiresLogin, article.create);
+	app.post('/article/new', auth.requiresLogin, article.create);
 	app.get('/article/find/:slug', article.bySlug);
 	app.get('/article/:id', article.show);
 	app.put('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.update);

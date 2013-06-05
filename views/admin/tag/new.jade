@@ -9,10 +9,9 @@ block content
 	h2 Nova tag
 	hr
 	form(action='/admin/tag',method='POST').form-horizontal
-		+field(user, 'owner', 'ID do usuário', 'text')
-		+field("", 'order', 'Ordem', 'number')
-		+textfield("", 'text', 'Texto')
-		+field("", 'url', 'URL do link', 'text')
-
+		+field('', 'name', 'Nome', 'text')
+		+field('', 'slug', 'Slug', 'text')
+		+field('', 'type', 'Tipo', 'text')
+		
 		button(type='submit').btn.btn-primary Enviar
 		a(href='/admin/notices').btn Cancelar
