@@ -8,6 +8,10 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	var notice = require('../controllers/notice')(paginate);
 	var admin = require('../controllers/admin');
 
+	app.get('/editor', auth.requiresAdminLogin, function(req, res, next) {
+		res.render('editor',{title:"Editor"})
+	})
+
 	app.get('/admin', auth.requiresAdminLogin, function(req, res, next) {
 		res.render('admin/index',{title:"Administração do site UPAC"})
 	})
