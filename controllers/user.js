@@ -144,7 +144,13 @@ module.exports = function (cdn, paginate) { return {
 	},
 	setImage: function(req, res, next) {
 		var user = req.profile;
-		Img.uploadAndReplace(user.avatar, cdn, req.image_config, user.id, req.files.image.path, 'profile',
+		
+		Img.uploadAndReplace(user.avatar, cdn, req.image_config,
+			
+			user.id,
+			req.files.image.path,
+			'user-avatar-'+user.id+"-"+(new Date()).getTime(), 'profile',
+			
 			function(err, img) {
 				if (err) {
 					return res.jsonx(500, {msg: "error", error: err});
@@ -195,6 +201,7 @@ module.exports = function (cdn, paginate) { return {
 		};
 
 		query.skip(_from).limit(limit);
+		query.populate('avatar');
 
 		query.exec(function(err, users) {
 			if(err) return next(err);
@@ -215,7 +222,7 @@ module.exports = function (cdn, paginate) { return {
 		});
 	},
 	show: function(req, res, next) {
-		var query = User.findOne({username: req.params.username});
+		var query = User.findOne({username: req.params.username}).populate('avatar');
 		query.exec(function(err, user) {
 			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
 			if(!user) return res.jsonx(401, {msg: 'user not found'});
