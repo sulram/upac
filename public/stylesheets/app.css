@@ -397,6 +397,26 @@ iframe {
 	z-index: 5;
 }
 
+/* ---------------- EDITOR ---------------- */
+
+.editor_media {
+	background: #ccc;
+	height: 100%;
+}
+
+.editor .editor_markdown .CodeMirror {
+	width: 100%;
+	height: 100%;
+	font-family: Monaco, Menlo, 'Ubuntu Mono', 'Droid Sans Mono', Consolas, monospace;
+	line-height: 1.5em;
+}
+
+.editor > .container-fluid,
+.editor > .container-fluid > .row-fluid,
+.editor_panes, .editor_markdown {
+	height: 100%;
+}
+
 /* ---------------- BOOTSTRAP REPLACE ---------------- */
 
 .btn,
