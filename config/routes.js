@@ -8,6 +8,10 @@ module.exports = function(app, passport, auth, cdn, img, paginate) {
 	var notice = require('../controllers/notice')(paginate);
 	var admin = require('../controllers/admin');
 
+	app.get('/editor', auth.requiresAdminLogin, function(req, res, next) {
+		res.render('editor',{title:"Editor"})
+	})
+
 	app.get('/admin', auth.requiresAdminLogin, function(req, res, next) {
 		res.render('admin/index',{title:"Administração do site UPAC"})
 	})
@@ -57,7 +61,7 @@ module.exports = function(app, passport, auth, cdn, img, paginate) {
 	app.post('/uploadimagetest', user.uploadImageTest);
 
 	app.all('/article', article.index);
-	app.get('/article/new', auth.requiresLogin, article.create);
+	app.post('/article/new', auth.requiresLogin, article.create);
 	app.get('/article/find/:slug', article.bySlug);
 	app.get('/article/:id', article.show);
 	app.put('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.update);
