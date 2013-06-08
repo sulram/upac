@@ -5,6 +5,12 @@ module.exports = function(_) { return {
 		}
 		next();
 	},
+	requiresLoginFront: function(req, res, next) {
+		if (!req.isAuthenticated()) {
+			return res.redirect('/#/user');
+		}
+		next();
+	},
 	requiresAdmin: function(req, res, next) {
 		if (!req.isAdmin()) {
 			return res.jsonxf(401, [{error: 'not authorized'}], {error: 'needs admin privileges'});
