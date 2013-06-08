@@ -1,4 +1,4 @@
-var delay, showdown = new Showdown.converter({extensions:["table", "upac"]});
+var delay, showdown = new Showdown.converter({extensions:["table", "UFM"]});
 var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 	mode: 'markdown',
 	lineNumbers: true,
