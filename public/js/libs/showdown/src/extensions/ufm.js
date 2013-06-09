@@ -50,7 +50,7 @@
     };
 
     // Client-side export
-    if (typeof window !== 'undefined' && window.Showdown && window.Showdown.extensions) { window.Showdown.extensions.UFM = UFM; }
+    if (typeof window !== 'undefined' && window.Showdown && window.Showdown.extensions) { window.Showdown.extensions.ufm = UFM; }
     // Server-side export
     if (typeof module !== 'undefined') module.exports = UFM;
 
