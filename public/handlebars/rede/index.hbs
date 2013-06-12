@@ -14,10 +14,7 @@
 		<p>{{#linkTo 'rede.perfil' User.model classNames="btn"}}Meu perfil{{/linkTo}}</p>
 
 	{{else}}
-		
-		<p>Conecte-se e participe da nossa rede!</p>
-		<p>{{#linkTo 'user' classNames="btn"}}Participar{{/linkTo}}</p>
-
+		{{partial "anonymous"}}
 	{{/if}}
 
 {{/if}}
