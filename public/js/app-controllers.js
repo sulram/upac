@@ -59,12 +59,13 @@ App.RedeEditarController = Ember.ObjectController.extend({
             url: '/user/' + User.auth.id,
             data: data,
             success: function(data, status, jqXHR){
-                console.log(data);
+                console.log('success', data);
                 _controller.set('isPosting',false);
                 User.authenticate(data.auth);
+                window.location.hash = '/rede/perfil/' + data.user.username;
             },
             error: function(jqXHR,status,error){
-                console.log(arguments);
+                console.log('error', arguments);
                 _controller.set('isPosting',false);
             }
         });
