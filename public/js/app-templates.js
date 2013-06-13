@@ -58,7 +58,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   
 
 
-  data.buffer.push("<h1>Blog</h1>\n\n<img src=\"./img/temp/blog_01.jpg\"/>");
+  data.buffer.push("<img src=\"./img/temp/blog_01.jpg\"/>");
   
 });
 
@@ -178,7 +178,7 @@ function program19(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(20, program20, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.perfil", "User.model", options) : helperMissing.call(depth0, "linkTo", "rede.perfil", "User.model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n		</li>\n\n		<li class=\"menu_it add rede\">\n			");
+  data.buffer.push("\n		</li>\n\n		<li class=\"menu_it add\">\n			");
   hashTypes = {};
   options = {hash:{},inverse:self.noop,fn:self.program(22, program22, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.add", options) : helperMissing.call(depth0, "linkTo", "rede.add", options));
@@ -195,7 +195,7 @@ function program20(depth0,data) {
 function program22(depth0,data) {
   
   
-  data.buffer.push("\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Adicionar</span></span>\n			");
+  data.buffer.push("\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Criar conteúdo</span></span>\n			");
   }
 
   data.buffer.push("<nav id=\"main_menu\" ");
@@ -377,7 +377,7 @@ function program1(depth0,data) {
   data.buffer.push(" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "onFocus", {hash:{},contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\n			</div>\n		</div>\n		<div class=\"control-group\">\n			<label class=\"control-label\" for=\"email\">E-mail</label>\n			<div class=\"controls\">\n				<input type=\"text\" id=\"email\" name=\"email\" placeholder=\"\" ");
+  data.buffer.push(">\n			</div>\n		</div>\n		<!--<div class=\"control-group\">\n			<label class=\"control-label\" for=\"email\">E-mail</label>\n			<div class=\"controls\">\n				<input type=\"text\" id=\"email\" name=\"email\" placeholder=\"\" ");
   hashTypes = {'value': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'value': ("User.model.email")
@@ -385,7 +385,7 @@ function program1(depth0,data) {
   data.buffer.push(" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "onFocus", {hash:{},contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\n			</div>\n		</div>\n		<div class=\"control-group\">\n			<label class=\"control-label\" for=\"about\">Sobre você</label>\n			<div class=\"controls\">\n				");
+  data.buffer.push(">\n			</div>\n		</div>-->\n		<div class=\"control-group\">\n			<label class=\"control-label\" for=\"about\">Sobre você</label>\n			<div class=\"controls\">\n				");
   hashTypes = {'valueBinding': "STRING",'rows': "STRING",'id': "STRING",'name': "STRING"};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.TextArea", {hash:{
     'valueBinding': ("User.model.about"),
@@ -412,7 +412,12 @@ function program1(depth0,data) {
   hashTypes = {};
   stack2 = helpers['if'].call(depth0, "flashMsg", {hash:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n			</div>\n		</div>\n	</form>\n	");
+  data.buffer.push("\n			</div>\n		</div>\n	</form>\n	<hr/>\n	<p><small>Para alterar e-mail ou senha, ");
+  hashTypes = {};
+  options = {hash:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.perfil", "User.model", options) : helperMissing.call(depth0, "linkTo", "rede.perfil", "User.model", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push(".</small></p>\n	");
   return buffer;
   }
 function program2(depth0,data) {
@@ -433,6 +438,12 @@ function program4(depth0,data) {
 
 function program6(depth0,data) {
   
+  
+  data.buffer.push("clique aqui");
+  }
+
+function program8(depth0,data) {
+  
   var buffer = '', stack1, hashTypes, options;
   data.buffer.push("\n		");
   hashTypes = {};
@@ -444,7 +455,7 @@ function program6(depth0,data) {
 
   data.buffer.push("<div class=\"pad\">\n	");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(6, program6, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(8, program8, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>");
   return buffer;
