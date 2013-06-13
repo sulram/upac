@@ -9,6 +9,7 @@
 (function(){
 
     var UFM = function(converter) {
+        var img_uploader_count = 0;
         return [
 
             // @username syntax
@@ -35,7 +36,15 @@
             { type: 'lang', regex: '\\\\@', replace: '@' },
 
             // !img upload tag
-            { type: 'lang', regex: '!img', replace: '<div class="image-upload"><form action="/editor/upload" method="POST" enctype="multipart/form-data"><input type="file" name="image"/><button type="submit">Enviar</button></form></div>'},
+            { type: 'lang', regex: '!img', 
+            init: function() { img_uploader_count = 0; },
+            replace: function(match, leadingSlash, tag) {
+                if (leadingSlash === '\\') {
+                    return match;
+                } else {
+                    return '<div class="image-upload" data-match-num="'+(img_uploader_count++)+'"><form action="/editor/upload" method="POST" enctype="multipart/form-data"><input type="file" name="image"/><button type="submit">Enviar</button></form></div>';
+                }
+            }},
 
             {
               // strike-through
