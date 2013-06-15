@@ -69,6 +69,19 @@ module.exports = function(cdn, paginate){ return {
 			})
 		}
 	},
+	neweditor: function(req, res, next) {
+		var article = new Article({
+			owner:req.user.id,
+			status:"draft"
+		});
+		res.render('editor',{title:"Editor", article:article});
+	},
+	editor: function(req, res, next) {
+		Article.findById(req.param('id'), function(err, article) {
+			if(err) return next(err);
+			res.render('editor',{title:"Editor", article:article});
+		});
+	},
 	index: function(req, res) {
 		var from = req.param('from') || 0;
 		var limit = req.param('per_page') || 10;
@@ -125,7 +138,9 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	update: function(req, res) {
-		req.article.updateAt = new Date();
+
+		req.article.set(req.body);
+		req.article.updatedAt = new Date();
 		req.article.save(function(err) {
 			if (err) return res.jsonx(500, {error: 'internal server error'});
 			res.jsonx({
