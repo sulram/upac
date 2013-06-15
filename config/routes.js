@@ -73,6 +73,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.post('/article/new', auth.requiresLogin, article.create);
 	app.get('/article/find/:slug', article.bySlug);
 	app.get('/article/:id', article.show);
+	app.post('/article/:id', auth.requiresLogin, article.editorsave);
 	app.put('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.update);
 	app.del('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.remove);
 	app.get('/article/:id/images', article.getImages);

@@ -4,6 +4,7 @@
   , Img = mongoose.model('Img')
   , Attachment = mongoose.model('Attachment')
   , fs = require('fs')
+  , _ = require('underscore')
 
 module.exports = function(cdn, paginate){ return {
 	admin: {
@@ -81,6 +82,38 @@ module.exports = function(cdn, paginate){ return {
 			if(err) return next(err);
 			res.render('editor',{title:"Editor", article:article});
 		});
+	},
+	editorsave: function(req, res, next) {
+		var data = _.pick(req.body,
+			'title', 'content', 'excerpt', 
+			'publicationDate', 'publicationStatus');
+		data.updatedAt = new Date;
+		// TODO: pegar tags e transformar em ObjectIDs
+		Article.findById(req.param('id'), function(err, article) {
+			if(err) return res.jsonx(500, {error: err});
+			if(!article) {
+				article = new Article(data);
+			}
+			article.save(function(err) {
+				if(err) return res.jsonx(500, {error: err});
+				res.jsonx({
+					msg: 'ok',
+					article: article,
+				});
+			});
+		});
+		/*
+		Article.update({'id':req.param('id')},
+			{$set: data},
+			{upsert: true},
+			function(err, article) {
+				if (err) return res.jsonx(500, {error: err});
+				res.jsonx({
+					msg: 'ok',
+					article: article,
+				});
+			});
+		*/
 	},
 	index: function(req, res) {
 		var from = req.param('from') || 0;
