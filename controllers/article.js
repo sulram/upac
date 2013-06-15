@@ -73,13 +73,15 @@ module.exports = function(cdn, paginate){ return {
 	neweditor: function(req, res, next) {
 		var article = new Article({
 			owner:req.user.id,
-			status:"draft"
+			publicationStatus:""
 		});
 		res.render('editor',{title:"Editor", article:article});
 	},
 	editor: function(req, res, next) {
 		Article.findById(req.param('id'), function(err, article) {
 			if(err) return next(err);
+			if(!article) return next(null, article);
+			console.info(article);
 			res.render('editor',{title:"Editor", article:article});
 		});
 	},
@@ -92,7 +94,11 @@ module.exports = function(cdn, paginate){ return {
 		Article.findById(req.param('id'), function(err, article) {
 			if(err) return res.jsonx(500, {error: err});
 			if(!article) {
+				data._id = mongoose.Types.ObjectId(req.body.id);
 				article = new Article(data);
+				article._id = mongoose.Types.ObjectId(req.body.id);
+			} else {
+				article.set(data);
 			}
 			article.save(function(err) {
 				if(err) return res.jsonx(500, {error: err});
