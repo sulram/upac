@@ -397,6 +397,44 @@ iframe {
 	z-index: 5;
 }
 
+/* ---------------- MODAL ADD ---------------- */
+
+.overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+}
+
+.overlay .overlay-bg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.8);
+}
+
+.overlay .overlay-modal {
+	position: absolute;
+	display: block;
+	width: 200px;
+	height: 200px;
+	padding: 50px;
+	top: 50%;
+	left: 50%;
+	margin-left: -150px;
+	margin-top: -150px;
+	background: #fff;
+}
+
+.overlay .overlay-modal ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+
 /* ---------------- EDITOR ---------------- */
 
 .editor_media {

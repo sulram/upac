@@ -34,8 +34,17 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, hashTypes, escapeExpression=this.escapeExpression, self=this;
 
+function program1(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n	");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.AddModalView", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n");
+  return buffer;
+  }
 
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.MenuView", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
@@ -47,7 +56,11 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   data.buffer.push(">\n\n	<section id=\"content\">\n		\n		");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "outlet", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n\n	</section>\n	\n</div>");
+  data.buffer.push("\n\n	</section>\n	\n</div>\n\n");
+  hashTypes = {};
+  stack1 = helpers['if'].call(depth0, "contentModalVisible", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n");
   return buffer;
   
 });
@@ -178,24 +191,16 @@ function program19(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(20, program20, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.perfil", "User.model", options) : helperMissing.call(depth0, "linkTo", "rede.perfil", "User.model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n		</li>\n\n		<li class=\"menu_it add\">\n			");
+  data.buffer.push("\n		</li>\n\n		<li class=\"menu_it add\">\n			<a ");
   hashTypes = {};
-  options = {hash:{},inverse:self.noop,fn:self.program(22, program22, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.add", options) : helperMissing.call(depth0, "linkTo", "rede.add", options));
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n		</li>\n\n	");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "showContentModal", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Criar conteúdo</span></span>\n			</a>\n		</li>\n\n	");
   return buffer;
   }
 function program20(depth0,data) {
   
   
   data.buffer.push("\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Meu perfil</span></span>\n			");
-  }
-
-function program22(depth0,data) {
-  
-  
-  data.buffer.push("\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Criar conteúdo</span></span>\n			");
   }
 
   data.buffer.push("<nav id=\"main_menu\" ");
@@ -247,6 +252,20 @@ function program22(depth0,data) {
   stack2 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.noop,fn:self.program(19, program19, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n\n	</ul>\n</div>");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["modal-content"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div class=\"overlay\">\n	<a ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "hideContentModal", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(" class=\"overlay-bg\"></a>\n	<div class=\"overlay-modal\">\n		<ul>\n			<li><a class=\"btn\" href=\"/editor\">Criar post</a></li>\n		</ul>\n	</div>\n</div>");
   return buffer;
   
 });

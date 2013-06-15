@@ -7,7 +7,16 @@ App.ApplicationController = Ember.Controller.extend({
         var route_class = path_array.length > 1 ? path_array[0] + ' ' + path_array.join('-') : path_array[0];
         this.set('route_class',route_class);
         App.set('currentPath', route_class);
-    }.observes('currentPath')
+    }.observes('currentPath'),
+    contentModalVisible: false,
+    showContentModal: function(){
+        this.set('contentModalVisible',true);
+        console.log('show modal content');
+    },
+    hideContentModal: function(){
+        this.set('contentModalVisible',false);
+        console.log('hide modal content');
+    }
 });
 
 App.TimelineIndexController = Ember.ObjectController.extend({

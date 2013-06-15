@@ -4,6 +4,10 @@ App.MenuView = Em.View.extend({
     templateName: 'menu'
 });
 
+App.AddModalView = Em.View.extend({
+    templateName: 'modal-content'
+});
+
 // UPLOAD DE FOTO
 
 App.UserPhoto = Ember.View.extend({
