@@ -8,11 +8,8 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	var notice = require('../controllers/notice')(paginate);
 	var admin = require('../controllers/admin');
 
-	app.get('/editor', auth.requiresAdminLogin, function(req, res, next) {
-		res.render('editor',{title:"Editor"})
-	})
 
-	app.get('/admin', auth.requiresLoginFront, function(req, res, next) {
+	app.get('/admin', auth.requiresAdminLogin, function(req, res, next) {
 		res.render('admin/index',{title:"Administração do site UPAC"})
 	})
 	app.get('/admin/signin', admin.signin);
@@ -67,6 +64,10 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/user/:username/articles', article.byUser);
 	app.post('/user/:id/updateimage', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.setImage);
 	//app.post('/uploadimagetest', user.uploadImageTest);
+	
+	app.get('/editor', auth.requiresLoginFront, article.neweditor);
+	app.get('/editor/:id', auth.requiresLoginFront, article.editor);
+
 
 	app.all('/article', article.index);
 	app.post('/article/new', auth.requiresLogin, article.create);
@@ -78,7 +79,6 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/article/:id/attachments', article.getAttachments);
 
 	// route for testing uploads to the CDN server
-	app.post('/uploadtest', article.uploadTest);
 
 	app.post('/tag/new', auth.requiresLogin, tag.create);
 	app.get('/tag/:id', tag.show);
