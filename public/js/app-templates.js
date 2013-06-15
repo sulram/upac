@@ -265,7 +265,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   data.buffer.push("<div class=\"overlay\">\n	<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "hideContentModal", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"overlay-bg\"></a>\n	<div class=\"overlay-modal\">\n		<ul>\n			<li><a class=\"btn\" href=\"/editor\">Criar post</a></li>\n		</ul>\n	</div>\n</div>");
+  data.buffer.push(" class=\"overlay-bg\"></a>\n	<div class=\"overlay-modal\">\n		<ul>\n			<li><a class=\"btn\" href=\"/editor\">Criar post</a></li>\n			<li><a class=\"btn\" href=\"/editor\">Criar evento</a></li>\n			<li><a class=\"btn\" href=\"#/rede\">Adicionar ponto no mapa</a></li>\n		</ul>\n	</div>\n</div>");
   return buffer;
   
 });

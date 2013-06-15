@@ -7,6 +7,7 @@ App.ApplicationController = Ember.Controller.extend({
         var route_class = path_array.length > 1 ? path_array[0] + ' ' + path_array.join('-') : path_array[0];
         this.set('route_class',route_class);
         App.set('currentPath', route_class);
+        this.hideContentModal();
     }.observes('currentPath'),
     contentModalVisible: false,
     showContentModal: function(){
