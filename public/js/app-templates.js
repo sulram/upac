@@ -1030,10 +1030,14 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<form id=\"register\" class=\"form-horizontal\">\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"name\">Nome e sobrenome</label>\n		<div class=\"controls\">\n			<input type=\"text\" id=\"name\" name=\"name\" placeholder=\"\" ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "onFocus", {hash:{},contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\n		</div>\n	</div>\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"username\">Nome de usuário</label>\n		<div class=\"controls\">\n			<input type=\"text\" id=\"username\" name=\"username\" placeholder=\"\" ");
+  data.buffer.push("<form id=\"register\" class=\"form-horizontal\">\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"name\">Nome e sobrenome</label>\n		<div class=\"controls\">\n			");
+  hashTypes = {'id': "STRING",'name': "STRING",'placeholder': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.AutoFocusTextField", {hash:{
+    'id': ("name"),
+    'name': ("name"),
+    'placeholder': ("")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n		</div>\n	</div>\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"username\">Nome de usuário</label>\n		<div class=\"controls\">\n			<input type=\"text\" id=\"username\" name=\"username\" placeholder=\"\" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "onFocus", {hash:{},contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data})));
   data.buffer.push(">\n			<span class=\"help-block\">sem espaços ou acentos, seu login no site</span>\n		</div>\n	</div>\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"email\">E-mail</label>\n		<div class=\"controls\">\n			<input type=\"text\" id=\"email\" name=\"email\" placeholder=\"\" ");
@@ -1077,10 +1081,14 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<form id=\"login\" class=\"form-horizontal\">\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"username\">Usuário ou e-mail</label>\n		<div class=\"controls\">\n			<input type=\"text\" id=\"username\" name=\"username\" placeholder=\"\" ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "onFocus", {hash:{},contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\n		</div>\n	</div>\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"password\">Senha</label>\n		<div class=\"controls\">\n			<input type=\"password\" id=\"password\" name=\"password\" placeholder=\"\" ");
+  data.buffer.push("<form id=\"login\" class=\"form-horizontal\">\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"username\">Usuário ou e-mail</label>\n		<div class=\"controls\">\n			");
+  hashTypes = {'id': "STRING",'name': "STRING",'placeholder': "STRING"};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.AutoFocusTextField", {hash:{
+    'id': ("username"),
+    'name': ("username"),
+    'placeholder': ("")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n		</div>\n	</div>\n	<div class=\"control-group\">\n		<label class=\"control-label\" for=\"password\">Senha</label>\n		<div class=\"controls\">\n			<input type=\"password\" id=\"password\" name=\"password\" placeholder=\"\" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "onFocus", {hash:{},contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data})));
   data.buffer.push(">\n		</div>\n	</div>\n	<div class=\"control-group\">\n		<div class=\"controls\">\n			<p><button type=\"submit\" class=\"btn\" ");

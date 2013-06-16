@@ -71,3 +71,15 @@ App.HomeSlidesView = Ember.View.extend({
     }
     
 });
+
+// UTIL
+
+App.AutoFocusTextField = Ember.TextField.extend({
+    didInsertElement: function() {
+        this.$().focus();
+    },
+    click: function(){
+        console.log(this.get('target'));
+        this.get('controller').send('onFocus');
+    }
+});
