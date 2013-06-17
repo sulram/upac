@@ -5,6 +5,7 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
   , temp = require('temp');
 
+var Img;
 var ImgSizeSchema = new Schema({
 	size: String,
 	cdn_id: String,
@@ -16,7 +17,10 @@ var ImgSchema = new Schema({
 	uploader: {type: ObjectId, ref: 'User'},
 	filename: String,
 	cdn_id: String,
-	sizes: [ImgSizeSchema]
+	original_cdn_url: String,
+	sizes: [ImgSizeSchema],
+	upload_complete: Boolean,
+	createdAt: Date
 });
 var make_thumbs =  function(file, base_name, image_config, variant, file_cb, all_cb) {
 	console.info('preparando thumbs.')
@@ -25,6 +29,7 @@ var make_thumbs =  function(file, base_name, image_config, variant, file_cb, all
 		//console.log(tempdir);
 		var files = [];	
 		var errors = [];
+		if(!image_config || !image_config.format) return all_cb({error: "formato dos thumbnails das imagens não especificado"});
 		if(!image_config || (!image_config.variants) || (image_config.variants.length == 0)) return all_cb({error: "nenhuma variante configurada para criar os thumbnails."});
 		if(!image_config.variants[variant]) return all_cb({error:"variante especificada '"+variant+"' não configurada"});
 		//console.log("variants: %j", image_config.variants[variant]);
@@ -53,41 +58,61 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, file_name, base_
 	var sizes = [];
 	var errors = [];
 	var callb = cb;
-	var images = make_thumbs(file_name, base_name, image_config, variant, function(err, image, complete_) {
-		if(err) return cb(err);
-		var complete_cb = complete_;
-		console.log("fazendo upload de %s", image.filename);
-		uploader.upload({
-			container: cdn.container,
-			remote: image.filename,
-			local: image.path,
-		}, function(err) {
-			if(err) { errors.push({error: err, file: image.path}); return; }
-			console.info("arquivo final: " + cdn.server_url + image.filename);
-			sizes.push( {
-				size: image.size,
-				cdn_id: image.filename,
-				cdn_url: cdn.server_url + image.filename
-			});
-			//console.info("complete: %s", complete_cb)
-			complete_cb();
-		});
-	}, function(err, all) {
-		console.info("errors: %j", err);
-		if(err) return callb(err);
-		console.info("arquivos subidos.");
+	var file_pieces = file_name.split('/');
+	var original_url = base_name+'-original-'+file_pieces[file_pieces.length-1];
+
+	uploader.upload({
+		container: cdn.container,
+		remote: original_url,
+		local: file_name
+	}, function(err) {
 		var img = create_img();
+		if (err) return jsonx(500, {msg:'CDN error', error:'Could not upload file to CDN'});
 		img.set({
-			uploader: user_id,
+			uploader: user.id,
 			filename: base_name,
-			sizes: sizes,
+			original_cdn_url: original_url,
+			upload_complete: false,
+			createdAt: new Date(),
 		});
-		img.save(function(err2) {
-			if (err2) return callb(err2);
-			console.info("imagem salva no banco de dados.");
-			cb(null, img);
+		img.save(function(err) {
+			if(err) {return cb(err);}
+			cb(null, img); // callback com infos temporárias - upload é feito em seguida
+			var images = make_thumbs(file_name, base_name, image_config, variant, function(err, image, complete_) {
+				if(err) return cb(err);
+				var complete_cb = complete_;
+				console.log("fazendo upload de %s", image.filename);
+				uploader.upload({
+					container: cdn.container,
+					remote: image.filename,
+					local: image.path,
+				}, function(err) {
+					if(err) { errors.push({error: err, file: image.path}); return; }
+					console.info("arquivo final: " + cdn.server_url + image.filename);
+					sizes.push( {
+						size: image.size,
+						cdn_id: image.filename,
+						cdn_url: cdn.server_url + image.filename
+					});
+					//console.info("complete: %s", complete_cb)
+					complete_cb();
+				});
+			}, function(err, all) {
+				console.info("errors: %j", err);
+				if(err) return callb(err);
+				console.info("arquivos subidos.");
+				img.set({
+					sizes: sizes,
+					upload_complete:true
+				});
+				img.save(function(err2) {
+					if (err2) return callb(err2);
+					console.info("imagem salva no banco de dados.");
+				});
+			});
 		});
 	});
+	
 }
 ImgSchema.statics.uploadAndReplace = function(prev_id, cdn, image_config, user_id, file_name, base_name, variant, cb) {
 	return this.upload(cdn, image_config, user_id, file_name, base_name, variant, function(err, image) {
@@ -95,7 +120,7 @@ ImgSchema.statics.uploadAndReplace = function(prev_id, cdn, image_config, user_i
 		if((prev_id == null) || (prev_id == undefined)) {
 			return cb(null, image);
 		}
-		this.findByIdAndRemove(prev_id, function(err, oldimg) {
+		Img.findByIdAndRemove(prev_id, function(err, oldimg) {
 			var cdn_obj = cdn.create();
 			_.each(oldimg.sizes, function(size) {
 				cdn.info('deletando imagem %s', size.cdn_id);
@@ -119,7 +144,7 @@ var ArticleImgRefSchema = new Schema({
 	article: {type: ObjectId, ref: 'Article'}
 });
 
-var Img = mongoose.model('Img', ImgSchema);
+Img = mongoose.model('Img', ImgSchema);
 mongoose.model('ArticleImgRef', ArticleImgRefSchema);
 
 create_img = function() {

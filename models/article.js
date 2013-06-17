@@ -71,6 +71,7 @@ ArticleSchema.pre('save', function(next) {
 	next();
 });
 
+ArticleSchema.
 ArticleSchema.statics.findByTagId = function(id, options, cb) {
 	this.find({tags: id}, null, options, cb);
 }

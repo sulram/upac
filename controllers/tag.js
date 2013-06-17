@@ -142,6 +142,13 @@ module.exports = function (cdn, paginate) { return {
 		})
 	},
 	findStartingWith: function(req, res) {
-		
+		Tag.find({name: {$regex:req.param('start')}}).limit(20).exec(function(err, tags){
+			if(err) {
+				return res.jsonxf(500,
+					[{error: 'database error'}],
+					{msg: 'database error', error: err});
+			}
+			return res.jsonx({msg:'ok', tags:tags});
+		});
 	}
 }};

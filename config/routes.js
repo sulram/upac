@@ -85,6 +85,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/tag/:id', tag.show);
 	app.get('/tag/find/:slug', tag.bySlug);
 	app.put('/tag/:id', auth.requiresLogin, tag.preloadById, /* auth.tag.hasAuthorization, */ tag.update);
+	app.get('/tags/startwith/:start', tag.findStartingWith);
 
 	app.get('/event/new', auth.requiresLogin, _event.create);
 	app.get('/event/:id', _event.show);

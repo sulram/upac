@@ -52,7 +52,7 @@ module.exports = function(cdn, paginate) {
 				}
 			},
 			remove: function(req, res, next) {
-				Img.findByIdAndRemove(req.param('id'), function(err, img) {
+				Img.remove({'id':req.param('id')}, function(err) {
 					if (err) return next(err);
 					res.redirect('/admin/images');
 				});

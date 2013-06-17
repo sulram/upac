@@ -22,7 +22,6 @@ module.exports = function (cdn, paginate) { return {
 			res.render('admin/user/new',{title:"Novo usuário"})
 		},
 		create: function (req, res, next) {
-			req.body.admin = false; // não serão criados admins por signup
 			var user = new User(req.body);
 			user.provider = 'local';
 			user.save(function(err) {
@@ -45,10 +44,7 @@ module.exports = function (cdn, paginate) { return {
 			});
 		},
 		update: function (req, res, next) {
-			if(!req.isAdmin() && req.body.admin) {
-				delete req.body.admin;
-			}
-			User.update(req.param('id'), 
+			User.update({id: req.param('id')}, 
 				{$set: req.body},
 				function(err) {
 					if(err) return next(err);
@@ -78,6 +74,7 @@ module.exports = function (cdn, paginate) { return {
 	},
 
 	create: function(req, res) {
+		req.body.admin = false; // não serão criados admins por signup
 		var user = new User(req.body);
 		user.provider = 'local';
 		user.save(function(err){
