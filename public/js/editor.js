@@ -4,7 +4,7 @@ Dropzone.autoDiscover = false;
 var delay, showdown = new Showdown.converter({extensions:["table", "ufm"]});
 var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 	mode: 'markdown',
-	lineNumbers: true,
+	lineNumbers: false,
     lineWrapping: true,
 	theme: "default",
 	extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
@@ -20,3 +20,58 @@ editor.on("change", function() {
 	clearTimeout(delay);
 	delay = setTimeout(updatePreview, 300);
 });
+
+
+// MORE INFO
+
+var more = true;
+
+$('#toggle').click(function(e){
+	e.preventDefault();
+	toggleHeader();
+});
+
+$('#title').on('click focus',function(e){
+	openHeader();
+});
+
+$('.CodeMirror').click(function(e){
+	closeHeader();
+});
+
+function toggleHeader(){
+	if(more){
+		$('.editor_header').addClass('less');
+	} else {
+		$('.editor_header').removeClass('less');
+	}
+	more = !more;
+	resize();
+}
+
+function openHeader(){
+	more = false;
+	toggleHeader();
+}
+
+function closeHeader(){
+	more = true;
+	toggleHeader();
+}
+
+// RESIZE
+
+$(window).resize(resize);
+
+function resize(e){
+	var win = $(window);
+	if(!more){
+		$('.CodeMirror').height(win.height() - 206);
+		$('#preview').height(win.height() - 206);
+	} else {
+		$('.CodeMirror').height(win.height() - 476);
+		$('#preview').height(win.height() - 476);
+	}
+}
+
+resize();
