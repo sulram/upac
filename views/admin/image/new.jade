@@ -1,27 +1,19 @@
 extends ../layout
 
 block title
-	| Novo post
+	| Nova Imagem
 
 block link
-	-var selected = 'posts';
+	-var selected = 'images';
 
 block content
 	h2 Novo post
 	hr
-	form(action='/admin/article',method='POST').form-horizontal
+	form(action='/admin/image',method='POST',enctype="multipart/").form-horizontal
 		.row
-			.span6
-				+field("",'title','Título', 'text')
-				+field("", 'slug', 'Slug', 'text')
-				+textfield("",'excerpt','Excerpt')
-				+textfield("",'content','Conteúdo')
-			.span6
-				+field("", 'parent', 'Artigo mãe', 'text')
-				+field("", 'publicationStatus', 'Status da publicação', 'text')
-				+field("", 'publicationDate', 'Data da publicação', 'date')
-				.control-group
-					.controls
-						button(type='submit').btn.btn-primary Enviar
-						&nbsp; &nbsp; 
-						a(href='/admin/articles').btn Cancelar
+			+field("",'image','Imagem', 'file')
+			.control-group
+				.controls
+					button(type='submit').btn.btn-primary Enviar
+					&nbsp; &nbsp; 
+					a(href='/admin/images').btn Cancelar

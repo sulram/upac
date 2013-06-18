@@ -6,6 +6,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	var _event = require('../controllers/event')(cdn, paginate);
 	var tag = require('../controllers/tag')(cdn, paginate);
 	var notice = require('../controllers/notice')(paginate);
+	var img = require('../controllers/image')(cdn, paginate);
 	var admin = require('../controllers/admin');
 
 
@@ -49,6 +50,15 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.all('/admin/tags', auth.requiresAdminLogin, tag.admin.index);
 	app.post('/admin/tag', auth.requiresAdminLogin, tag.admin.create);
 
+	app.get('/admin/image/new', auth.requiresAdminLogin, img.admin.editnew);
+	app.post('/admin/image/:id', auth.requiresAdminLogin, img.admin.update);
+	app.get('/admin/image/:id', auth.requiresAdminLogin, img.admin.show);
+	app.get('/admin/image/:id/edit', auth.requiresAdminLogin, img.admin.edit);
+	app.get('/admin/image/:id/remove', auth.requiresAdminLogin, img.admin.remove)
+	app.all('/admin/images', auth.requiresAdminLogin, img.admin.index);
+	app.post('/admin/image', auth.requiresAdminLogin, img.admin.create);
+
+
 
 	//app.get('/login', user.login);
 	app.get('/logout', user.logout);
@@ -56,6 +66,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/verify/:token', user.verify);
 
 	app.all('/users', user.index);
+	app.all('/users/:term', user.searchStartingWith);
 	app.post('/user', user.create);
 	app.post('/user/session', passport.authenticate('local'), user.login);
 

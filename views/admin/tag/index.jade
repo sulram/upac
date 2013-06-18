@@ -10,6 +10,9 @@ block content
 	p
 		a(href='/admin/tag/new').btn Nova tag
 
+	form(action="/admin/tags/search", method="post").navbar-search.pull-left
+		input(type="text", name="term", placeholder="Procurar tags").search-query
+
 	table.table.table-striped
 		thead
 			tr

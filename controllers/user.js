@@ -238,12 +238,11 @@ module.exports = function (cdn, paginate) { return {
 			res.jsonx({msg:'ok'});
 		});
 	},
-	uploadImageTest: function(req, res, next) {
-		var remote_name = 'user-test-'+req.files.image.name;
-		img_helper.thumbnails.upload_save(Img, cdn, req.user.id,
-			req.files.image.name, req.files.image.path,
-			remote_name, "profile", function(err, img){
-			res.jsonx({msg: "ok", image: img});
+	searchStartingWith: function(req, res, next) {
+		var term = '^'+req.param('term');
+		User.find({$or:[{username: {$regex: term}}, {name: {$regex: term}}]}).limit(10).exec(function(err, users){
+			if (err) return res.jsonx(401, {msg: 'error', error:err});
+			res.jsonx({msg:'ok', term:req.param('term'), users:users});
 		})
 	}
 }}

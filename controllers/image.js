@@ -25,6 +25,12 @@ module.exports = function(cdn, paginate) {
 					res.render('admin/image/index',{imgs:imgs, pagination:pagination});
 				});
 			},
+			show: function(req, res, next) {
+				Img.findById(req.param('id'), function(err, img) {
+					if(err) return next(err);
+					res.render('admin/image/show', {image:img});
+				})
+			},
 			editnew: function(req, res, next) {
 				res.render('admin/image/new',{});
 			},
