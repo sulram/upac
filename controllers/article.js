@@ -124,28 +124,22 @@ module.exports = function(cdn, paginate){ return {
 		*/
 	},
 	index: function(req, res) {
-		var from = req.param('from') || 0;
-		var limit = req.param('per_page') || 10;
-		var sortby = req.param('sort_by') || null;
-		var order = req.param('order') || 1;
-		var query = Article.find({});
-		if(sortby) {
-			var qobj = {};
-			qobj[sortby] = order;
-			query.sort(sortby, order);
-		}
-		query.skip(from).limit(limit);
-		query.exec(function(err, articles) {
-			if (err) return next(err);
-			res.jsonx({
-				msg:'ok',
-				articles: articles,
-				from: from,
-				sort_by: sortby,
-				order: order
-			});
-		});
-
+		paginate.paginate(Article,{},{}, req, function(err, articles, pagination) {
+				if(err) return next(err);
+				var total = 0;
+				Article.count({}, function(err, count){
+					if(err) return next(err);
+					total = count;
+				});
+				res.jsonx({
+					msg:'ok',
+					articles: articles,
+					from: pagination.from,
+					sort_by: pagination.sort_by,
+					order: pagination.order
+				});
+			}
+		);
 	},
 	create: function(req, res, next) {
 		var article = new Article(req.body);
