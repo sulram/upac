@@ -259,7 +259,7 @@ iframe {
 	margin: 20px auto 0;
 	overflow: hidden;
 	position: relative;
-	z-index: 10;
+	padding-right: 36px;
 }
 
 #wrapper.home .home_wrapper h1 {
@@ -276,18 +276,50 @@ iframe {
 }
 
 #wrapper.home .home_wrapper .destaque {
-	background: rgba(50,50,50,.7);
+	background: rgba(50,50,50,.8);
 	width: 720px;
-	min-height: 360px;
+	min-height: 300px;
 	margin-left: 50px;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 #wrapper.home .home_wrapper .noticias {
-	background: rgba(50,50,50,.7);
-	width: 680px;
-	padding: 20px;
+	width: 720px;
 	margin-left: 50px;
+	overflow: hidden;
+	height: 100px;
+}
+
+#wrapper.home .home_wrapper .noticias ul {
+	width: 10000px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#wrapper.home .home_wrapper .noticias li {
+	background: rgba(50,50,50,.8);
+	width: 335px;
+	min-height: 100px;
+	padding: 10px;
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#wrapper.home .home_wrapper .maisnoticias {
+	display: block;
+	width: 36px;
+	height: 36px;
+	background: #fff;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+
+	text-align: center;
+	line-height: 34px;
+	text-decoration: none;
+	font-size: 24px;
 }
 
 /* ---------------- UPAC ---------------- */
@@ -436,12 +468,6 @@ iframe {
 
 .rede_perfil_foto:hover .rede_perfil_foto_editar {
 	display: block;
-}
-
-/* ---------------- TEMP ---------------- */
-
-#wrapper.agenda {
-	background: url(../img/temp/agenda_01.png) repeat-x 0 10px;
 }
 
 /* ---------------- MODAL ADD ---------------- */
@@ -670,3 +696,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	background-color: #6fb7ac;
 }
 
+/* ---------------- TEMP ---------------- */
+
+#wrapper.agenda {
+	background: url(../img/temp/agenda_01.png) repeat-x 0 10px;
+}

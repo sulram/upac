@@ -24,6 +24,31 @@ App.UserModel.reopen({
     }
 });
 
+//// NOTICE MODEL
+
+App.NoticeModel = Ember.Object.create({
+    id: null,
+    order: null,
+    text: null,
+    url: null
+});
+App.NoticeModel.reopen({
+    findAll: function() {
+        $.getJSON('/notices').then(
+            function(response) {
+                var notices = [];
+                response.notices.forEach(function (child) {
+                    var notice = Ember.Object.create(child);
+                    //notice.setProperties(child);
+                    notices.push(notice);
+                    console.log(notice.get('text'));
+                });
+                return notices;
+            }
+        );
+    }
+});
+
 
 //// THE USER Object
 

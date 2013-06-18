@@ -20,6 +20,29 @@ App.ApplicationController = Ember.Controller.extend({
     }
 });
 
+App.HomeController = Ember.ObjectController.extend({
+    notices: [],
+    current: 0,
+    nextnews: function(){
+        this.current = (this.current + 1) % (this.notices.length - 1);
+        $('.noticias').animate({
+            scrollLeft: this.current * 365
+        }, 500);
+    },
+    init: function(){
+        console.log('INIT HOME');
+        var _this = this;
+        $.getJSON('/notices', function(data){
+            var notices = [];
+            $.each(data.notices, function(i, child) {
+                var notice = Ember.Object.create(child);
+                notices.push(notice);
+            });
+            _this.set('notices', notices);
+        });
+    }
+});
+
 App.TimelineIndexController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
         return this.get('model.username') == User.auth.username;
