@@ -4,6 +4,10 @@ App.MenuView = Em.View.extend({
     templateName: 'menu'
 });
 
+App.AddModalView = Em.View.extend({
+    templateName: 'modal-content'
+});
+
 // UPLOAD DE FOTO
 
 App.UserPhoto = Ember.View.extend({
@@ -66,4 +70,16 @@ App.HomeSlidesView = Ember.View.extend({
         this.$(window).unbind('resize');
     }
     
+});
+
+// UTIL
+
+App.AutoFocusTextField = Ember.TextField.extend({
+    didInsertElement: function() {
+        this.$().focus();
+    },
+    click: function(){
+        console.log(this.get('target'));
+        this.get('controller').send('onFocus');
+    }
 });

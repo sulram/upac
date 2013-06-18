@@ -123,7 +123,7 @@ module.exports = function (cdn, paginate) { return {
 	update: function(req, res) {
 		var user = req.profile;
 		var body = _.pick(req.body, 
-			'geo', 'about'
+			'name', 'geo', 'about'
 		);
 
 		console.log(body.geo);

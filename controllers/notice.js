@@ -84,7 +84,7 @@ module.exports = function(paginate) {
 		index: function(req, res, next) {
 			var from = req.param.from || 0;
 			var limit = req.param.limit || 10;
-			Notice.find({}).sort('date',-1).skip(from).limit(limit).exec(function(err, notices) {
+			Notice.find({}).sort('order').skip(from).limit(limit).exec(function(err, notices) {
 				if (err) return next(err);
 				if (!notices) return res.jsonx(500, {msg: "Database error", error: "Notices array nonexistent"});
 				res.jsonx({

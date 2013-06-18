@@ -1,4 +1,5 @@
 <div class="pad">
+	{{#if User.auth.loggedIn}}
 	<h2>Editar perfil</h2>
 	<form id="editar_perfil">
 		<div class="control-group">
@@ -7,12 +8,12 @@
 				<input type="text" id="name" name="name" placeholder="" {{bindAttr value="User.model.name"}} {{action "onFocus"}}>
 			</div>
 		</div>
-		<div class="control-group">
+		<!--<div class="control-group">
 			<label class="control-label" for="email">E-mail</label>
 			<div class="controls">
 				<input type="text" id="email" name="email" placeholder="" {{bindAttr value="User.model.email"}} {{action "onFocus"}}>
 			</div>
-		</div>
+		</div>-->
 		<div class="control-group">
 			<label class="control-label" for="about">Sobre você</label>
 			<div class="controls">
@@ -33,4 +34,9 @@
 			</div>
 		</div>
 	</form>
+	<hr/>
+	<p><small>Para alterar e-mail ou senha, {{#linkTo 'rede.perfil' User.model}}clique aqui{{/linkTo}}.</small></p>
+	{{else}}
+		{{partial "anonymous"}}
+	{{/if}}
 </div>
