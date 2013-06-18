@@ -10,8 +10,8 @@ module.exports = function(_){
 			var options = _.defaults(defaults, inner_defaults);
 			options = _.defaults(req.params, options)
 			var query = model.find(query_terms);
-			if(options.sortby != '') {
-				query.sort((options.order==-1)?'-'+options.sortby:options.sortby);
+			if(options.sort_by != '') {
+				query.sort((options.order==-1)?'-'+options.sort_by:options.sort_by);
 			}
 			query.skip(options.from).limit(options.limit);
 			query.exec(function(err, data) {

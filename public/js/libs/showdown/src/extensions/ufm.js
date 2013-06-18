@@ -11,7 +11,17 @@
     var UFM = function(converter) {
         var img_uploader_count = 0;
         return [
-
+            {
+                type: 'lang', 
+                regex: '^[^\[]https?://([\S]+\.)+[\S]+(/[a-z0-9\._/~%\-\+&\#\?!=\(\)@]*)?',
+                replace: function(match, leadingSlash, url) {
+                    if (leadingSlash === '\\') {
+                        return match;
+                    } else {
+                        return '<a href="' + url + '">' + url + '</a>';
+                    }
+                }
+            },
             // @username syntax
             { type: 'lang', regex: '\\B(\\\\)?@([\\S]+)\\b', replace: function(match, leadingSlash, username) {
                 // Check if we matched the leading \ and return nothing changed if so
@@ -22,15 +32,15 @@
                 }
             }},
 
-            // #hashtag syntax
-            { type: 'lang', regex: '\\B(\\\\)?#([\\S]+)\\b', replace: function(match, leadingSlash, tag) {
+            // #hashtag syntax (causing trouble with @username syntax)
+            /*{ type: 'lang', regex: '\\B(\\\\)?#([\\S]+)\\b', replace: function(match, leadingSlash, tag) {
                 // Check if we matched the leading \ and return nothing changed if so
                 if (leadingSlash === '\\') {
                     return match;
                 } else {
-                    return '<a href="/#/tag/' + tag + '">#' + tag + '</a>';
+                    return '<a href="/\\#/tag/' + tag + '">#' + tag + '</a>';
                 }
-            }},
+            }},*/
 
             // Escaped @'s
             { type: 'lang', regex: '\\\\@', replace: '@' },
@@ -60,7 +70,7 @@
               replace : function(match, prefix, content, suffix) {
                   return '<del>' + content + '</del>';
               }
-            },
+            }
         ];
     };
 

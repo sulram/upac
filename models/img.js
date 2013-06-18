@@ -18,6 +18,7 @@ var ImgSchema = new Schema({
 	filename: String,
 	cdn_id: String,
 	original_cdn_url: String,
+	variant: String,
 	sizes: [ImgSizeSchema],
 	upload_complete: Boolean,
 	createdAt: Date
@@ -81,6 +82,7 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, orig_name, file_
 			filename: base_name,
 			original_cdn_id: original_url,
 			original_cdn_url: cdn.server_url + original_url,
+			variant: variant,
 			upload_complete: false,
 			createdAt: new Date(),
 		});

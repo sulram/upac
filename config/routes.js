@@ -66,7 +66,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/verify/:token', user.verify);
 
 	app.all('/users', user.index);
-	app.all('/users/:term', user.searchStartingWith);
+	app.all('/users/startingwith/:term', user.searchStartingWith);
 	app.post('/user', user.create);
 	app.post('/user/session', passport.authenticate('local'), user.login);
 
