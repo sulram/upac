@@ -67,7 +67,7 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, file_name, base_
 		local: file_name
 	}, function(err) {
 		var img = create_img();
-		if (err) return jsonx(500, {msg:'CDN error', error:'Could not upload file to CDN'});
+		if (err) return cb({error:'Could not upload file to CDN'});
 		img.set({
 			uploader: user.id,
 			filename: base_name,
