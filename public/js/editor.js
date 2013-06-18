@@ -21,6 +21,7 @@ editor.on("change", function() {
 	delay = setTimeout(updatePreview, 300);
 });
 
+updatePreview();
 
 // MORE INFO
 
@@ -35,7 +36,7 @@ $('#title').on('click focus',function(e){
 	openHeader();
 });
 
-$('.CodeMirror').click(function(e){
+$('.CodeMirror').on('click',function(e){
 	closeHeader();
 });
 

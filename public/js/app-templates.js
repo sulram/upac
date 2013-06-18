@@ -78,20 +78,10 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
 Ember.TEMPLATES["home"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', stack1, stack2, hashTypes, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
 
-function program1(depth0,data) {
-  
-  
-  data.buffer.push("<img src=\"./img/temp/home_01.png\"/>");
-  }
 
-  data.buffer.push("<div class=\"static_home\">");
-  hashTypes = {};
-  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "upac", options) : helperMissing.call(depth0, "linkTo", "upac", options));
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("</div>\n\n");
+  data.buffer.push("<div class=\"home_wrapper\">\n	\n	<h1><span>Universidade</span> <span>Popular de Arte</span> <span>e Ciência</span></h1>\n	\n	<div class=\"destaque\">\n		imagem em destaque que pode ser mudada pelo admin\n	</div>\n\n	<div class=\"noticias\">\n		\n	</div>\n\n</div>\n\n");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.HomeSlidesView", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   return buffer;
