@@ -9,10 +9,12 @@ block content
 	h2 Novo usuário
 	form(action='/admin/user',method='POST').form-horizontal
 		+field("", 'name', 'Nome', 'text')
+		+field("", 'username', 'Nome de usuário', 'text')
 		+field("", 'email', 'Email', 'text')
 		+field("", 'password', 'Senha', 'password')
-		+checkbox(user.admin, 'admin', 'Administrador')
-		+field("", 'geo', 'Loc. geográfica', 'text')
+		+checkbox(false, 'admin', 'Administrador')
+		+field("", 'geo[]', 'Latitude', 'text')
+		+field("", 'geo[]', 'Longitude', 'text')
 		+field("", 'dateOfBirth', 'Data de nascimento', 'date')
 		+field("", 'city', 'Cidade', 'text')
 		+field("", 'state', 'Estado', 'text')

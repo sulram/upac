@@ -44,11 +44,22 @@ module.exports = function (cdn, paginate) { return {
 				if(err) return next(err);
 				res.redirect('/admin/tag')
 			})
+		},
+		search: function(req, res, next) {
+			paginate.paginate(Tag,
+				{$or: [{name: req.param('term')}, {slug: req.param('term')}]},
+				{}, req, function(err, tags, pagination) {
+					if (err) return next(err);
+					res.render('admin/tag/index', {tags:tags, pagination:pagination});
+				}
+			);
 		}
-
 
 	},
 	create: function(req, res) {
+		if(req.body.type) {
+			delete req.body.type;
+		}
 		var tag = new Tag(req.body);
 		tag.save(function (err) {
 			if(err) {
@@ -79,6 +90,9 @@ module.exports = function (cdn, paginate) { return {
 		});
 	},
 	update: function(req, res) {
+		if(req.body.type) {
+			delete req.body.type;
+		}
 		req.tag.update(req.body);
 		req.save(function(err) {
 			if(err) {
@@ -142,6 +156,13 @@ module.exports = function (cdn, paginate) { return {
 		})
 	},
 	findStartingWith: function(req, res) {
-		
+		Tag.find({$or:[{name: {$regex:req.param('start')}},{slug:{$regex:req.param('start')}}]}).limit(20).exec(function(err, tags){
+			if(err) {
+				return res.jsonxf(500,
+					[{error: 'database error'}],
+					{msg: 'database error', error: err});
+			}
+			return res.jsonx({msg:'ok', tags:tags});
+		});
 	}
 }};

@@ -22,7 +22,6 @@ module.exports = function (cdn, paginate) { return {
 			res.render('admin/user/new',{title:"Novo usuário"})
 		},
 		create: function (req, res, next) {
-			req.body.admin = false; // não serão criados admins por signup
 			var user = new User(req.body);
 			user.provider = 'local';
 			user.save(function(err) {
@@ -45,10 +44,7 @@ module.exports = function (cdn, paginate) { return {
 			});
 		},
 		update: function (req, res, next) {
-			if(!req.isAdmin() && req.body.admin) {
-				delete req.body.admin;
-			}
-			User.update(req.param('id'), 
+			User.update({id: req.param('id')}, 
 				{$set: req.body},
 				function(err) {
 					if(err) return next(err);
@@ -78,6 +74,7 @@ module.exports = function (cdn, paginate) { return {
 	},
 
 	create: function(req, res) {
+		req.body.admin = false; // não serão criados admins por signup
 		var user = new User(req.body);
 		user.provider = 'local';
 		user.save(function(err){
@@ -148,6 +145,7 @@ module.exports = function (cdn, paginate) { return {
 		Img.uploadAndReplace(user.avatar, cdn, req.image_config,
 			
 			user.id,
+			req.files.image.name,
 			req.files.image.path,
 			'user-avatar-'+user.id+"-"+(new Date()).getTime(), 'profile',
 			
@@ -240,10 +238,11 @@ module.exports = function (cdn, paginate) { return {
 			res.jsonx({msg:'ok'});
 		});
 	},
-	uploadImageTest: function(req, res, next) {
-		var remote_name = 'user-test-'+req.files.image.name;
-		img_helper.thumbnails.upload_save(Img, cdn, req.user.id, req.files.image.path, remote_name, "profile", function(err, img){
-			res.jsonx({msg: "ok", image: img});
+	searchStartingWith: function(req, res, next) {
+		var term = '^'+req.param('term');
+		User.find({$or:[{username: {$regex: term}}, {name: {$regex: term}}]}).limit(10).exec(function(err, users){
+			if (err) return res.jsonx(401, {msg: 'error', error:err});
+			res.jsonx({msg:'ok', term:req.param('term'), users:users});
 		})
 	}
 }}

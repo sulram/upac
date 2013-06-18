@@ -11,7 +11,7 @@ module.exports = function(_){
 			options = _.defaults(req.params, options)
 			var query = model.find(query_terms);
 			if(options.sortby != '') {
-				query.sort(options.sortby, options.order);
+				query.sort((options.order==-1)?'-'+options.sortby:options.sortby);
 			}
 			query.skip(options.from).limit(options.limit);
 			query.exec(function(err, data) {

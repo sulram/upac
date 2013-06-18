@@ -54,7 +54,6 @@ html
 		link(rel='stylesheet', href='/flat-ui/css/flat-ui.css')
 		//if lt ie 9
 			script(src='/flat-ui/js/html5shiv.js')
-		block scripts
 	body
 		
 		-var menu = {'home': '/admin', 'avisos': '/admin/notices', 'posts': '/admin/articles', 'usuarios': '/admin/users', 'tags': '/admin/tags' };
@@ -88,3 +87,4 @@ html
 		script(src='/flat-ui/js/flatui-checkbox.js')
 		script(src='/flat-ui/js/flatui-radio.js')
 		script(src='/flat-ui/js/application.js')
+		block scripts

@@ -126,15 +126,15 @@ app.use(function(req, res, next){ // admin and json extension middleware
 });
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(function(req, res, next) {
-	res.status(404).render('404', {page: req.url})
-});
+
 
 // development only
 if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
-
+app.use(function(req, res, next) {
+	res.status(404).render('404', {page: req.url})
+});
 var cdn = require('./helpers/cdn.js')(config);
 
 /*var cdn = {

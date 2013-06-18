@@ -30,7 +30,8 @@ module.exports = {
 					small: {w: 160, h: 120, ops: ['resize-crop']},
 					icon: {w: 80, h: 60, ops: ['resize-crop']},
 				},
-			}
+			},
+			format: "jpg"
 		}
 	},
 	test: {

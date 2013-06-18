@@ -1,0 +1,24 @@
+extends ../layout
+
+block title
+	| Editar imagem: #{image.title}
+
+block link
+	-var selected = 'images';
+
+block content
+	h2 Imagem: #{image.title}
+	hr
+	form(action='/admin/image/#{image.id}',method='POST').form-horizontal
+		.row
+			.span6
+				
+				for size in image.sizes
+
+				img(src="@{image.original_cdn_url}")
+			.span6
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/images').btn Cancelar

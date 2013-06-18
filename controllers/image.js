@@ -25,6 +25,12 @@ module.exports = function(cdn, paginate) {
 					res.render('admin/image/index',{imgs:imgs, pagination:pagination});
 				});
 			},
+			show: function(req, res, next) {
+				Img.findById(req.param('id'), function(err, img) {
+					if(err) return next(err);
+					res.render('admin/image/show', {image:img});
+				})
+			},
 			editnew: function(req, res, next) {
 				res.render('admin/image/new',{});
 			},
@@ -52,7 +58,7 @@ module.exports = function(cdn, paginate) {
 				}
 			},
 			remove: function(req, res, next) {
-				Img.findByIdAndRemove(req.param('id'), function(err, img) {
+				Img.remove({'id':req.param('id')}, function(err) {
 					if (err) return next(err);
 					res.redirect('/admin/images');
 				});

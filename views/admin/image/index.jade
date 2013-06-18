@@ -1,0 +1,29 @@
+extends ../layout
+
+block title
+	| Imagens
+
+block link
+	-var selected = 'images';
+
+block content
+	p
+		a(href='/admin/image/new').btn.btn-small Nova imagem
+
+	table.table.table-striped
+		thead
+			tr
+				th ID
+				th Uploader
+				th Imagem
+				th Opções
+		for article in articles
+			tr
+				td= image.id
+				td
+					a(href='/admin/user/'+image.owner.id)= image.owner.username
+				td
+					img(src="#{image.sizes.small.url}")
+				td
+					a(href="/admin/image/#{image.id}/remove",title="Excluir")
+						i.icon-remove
