@@ -9,6 +9,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") {
 //// INIT
 
 moment.lang('pt-br');
+var showdown = new Showdown.converter({extensions:["table", "ufm"]});
 
 //// EMBER APP
 
@@ -24,4 +25,9 @@ window.App = Ember.Application.create({
 Ember.Handlebars.registerBoundHelper('momentago', function(value, options) {
   var escaped = Handlebars.Utils.escapeExpression(value);
   return new Handlebars.SafeString('<span class="momentago">' + moment(escaped).fromNow() + '</span>');
+});
+
+Ember.Handlebars.registerBoundHelper('ufm', function(value, options) {
+  var escaped = Handlebars.Utils.escapeExpression(value);
+  return new Handlebars.SafeString( showdown.makeHtml(escaped) );
 });
