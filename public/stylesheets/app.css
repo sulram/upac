@@ -259,7 +259,7 @@ iframe {
 	margin: 20px auto 0;
 	overflow: hidden;
 	position: relative;
-	padding-right: 36px;
+	padding-right: 21px;
 }
 
 #wrapper.home .home_wrapper h1 {
@@ -299,27 +299,32 @@ iframe {
 
 #wrapper.home .home_wrapper .noticias li {
 	background: rgba(50,50,50,.8);
-	width: 335px;
+	width: 345px;
 	min-height: 100px;
 	padding: 10px;
 	float: left;
-	margin-right: 10px;
-	margin-bottom: 10px;
+	margin-right: 1px;
+}
+
+#wrapper.home .home_wrapper .noticias li a {
+	text-transform: uppercase;
+	text-decoration: none;
+	font-size: .8em;
 }
 
 #wrapper.home .home_wrapper .maisnoticias {
 	display: block;
-	width: 36px;
-	height: 36px;
-	background: #fff;
+	width: 20px;
+	height: 100px;
+	background: rgba(30,30,30,.8);
 	position: absolute;
 	bottom: 0;
 	right: 0;
 
 	text-align: center;
-	line-height: 34px;
+	line-height: 96px;
 	text-decoration: none;
-	font-size: 24px;
+	font-size: 18px;
 }
 
 /* ---------------- UPAC ---------------- */

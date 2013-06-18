@@ -26,7 +26,7 @@ App.HomeController = Ember.ObjectController.extend({
     nextnews: function(){
         this.current = (this.current + 1) % (this.notices.length - 1);
         $('.noticias').animate({
-            scrollLeft: this.current * 365
+            scrollLeft: this.current * 366
         }, 500);
     },
     init: function(){

@@ -102,7 +102,7 @@ function program1(depth0,data) {
   data.buffer.push("\n				<li>&nbsp;</li>\n		</ul>\n	</div>\n\n	<a class=\"maisnoticias\" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "nextnews", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">+</a>\n\n</div>\n\n");
+  data.buffer.push(">&raquo;</a>\n\n</div>\n\n");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.HomeSlidesView", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   return buffer;
