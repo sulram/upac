@@ -68,20 +68,178 @@ function program1(depth0,data) {
 Ember.TEMPLATES["blog"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  var buffer = '', stack1, stack2, hashTypes, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+
+function program1(depth0,data) {
   
+  
+  data.buffer.push("Blog");
+  }
 
+  data.buffer.push("<h1>");
+  hashTypes = {};
+  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "blog", options) : helperMissing.call(depth0, "linkTo", "blog", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("</h1>\n\n<hr/>\n\n");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "outlet", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  return buffer;
+  
+});
 
-  data.buffer.push("<img src=\"./img/temp/blog_01.jpg\"/>");
+Ember.TEMPLATES["blog/post"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  var stack1, hashTypes, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1, hashTypes;
+  data.buffer.push("\n\n	<h3>");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.title", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("</h3>\n\n	<blockquote>");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.excerpt", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("</blockquote>\n\n	");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.content", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n\n	<p>Postado por ");
+  hashTypes = {};
+  stack1 = helpers.each.call(depth0, "owner", "in", "article.owners", {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\n\n	<p><a ");
+  hashTypes = {'href': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'href': ("edit_link")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">Editar</a></p>\n\n");
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var hashTypes;
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "owner", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  }
+
+function program4(depth0,data) {
+  
+  
+  data.buffer.push("\n\n	<img src=\"/img/ajax-loader.gif\"/>\n\n");
+  }
+
+  hashTypes = {};
+  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  else { data.buffer.push(''); }
+  
+});
+
+Ember.TEMPLATES["blog/recentes"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  var stack1, hashTypes, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1, hashTypes;
+  data.buffer.push("\n	<div class=\"grid_posts\">\n		");
+  hashTypes = {};
+  stack1 = helpers['if'].call(depth0, "articles.length", {hash:{},inverse:self.program(6, program6, data),fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n	</div>\n\n");
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = '', stack1, hashTypes;
+  data.buffer.push("\n			");
+  hashTypes = {};
+  stack1 = helpers.each.call(depth0, "article", "in", "articles", {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n		");
+  return buffer;
+  }
+function program3(depth0,data) {
+  
+  var buffer = '', stack1, stack2, hashTypes, options;
+  data.buffer.push("\n				<article ");
+  hashTypes = {'id': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'id': ("article._id")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\n					");
+  hashTypes = {'title': "ID"};
+  options = {hash:{
+    'title': ("article.excerpt")
+  },inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "blog.post", "article", options) : helperMissing.call(depth0, "linkTo", "blog.post", "article", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n				</article>\n			");
+  return buffer;
+  }
+function program4(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n						<span class=\"figure\">\n							");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article._id", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n						</span>\n						<span class=\"title\">\n							");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.title", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n						</span>\n					");
+  return buffer;
+  }
+
+function program6(depth0,data) {
+  
+  
+  data.buffer.push("\n			Não há mais postagens\n		");
+  }
+
+function program8(depth0,data) {
+  
+  
+  data.buffer.push("\n\n	<img src=\"/img/ajax-loader.gif\"/>\n\n");
+  }
+
+  hashTypes = {};
+  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(8, program8, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  else { data.buffer.push(''); }
   
 });
 
 Ember.TEMPLATES["home"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, hashTypes, escapeExpression=this.escapeExpression, self=this;
 
+function program1(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n				<li>\n					<p>");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "notice.text", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("</p>\n					<p><a class=\"leia mais\" ");
+  hashTypes = {'href': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'href': ("notice.url")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">Leia mais</a></p>\n				</li>\n			");
+  return buffer;
+  }
 
-  data.buffer.push("<div class=\"home_wrapper\">\n	\n	<h1><span>Universidade</span> <span>Popular de Arte</span> <span>e Ciência</span></h1>\n	\n	<div class=\"destaque\">\n		imagem em destaque que pode ser mudada pelo admin\n	</div>\n\n	<div class=\"noticias\">\n		\n	</div>\n\n</div>\n\n");
+  data.buffer.push("<div class=\"home_wrapper\">\n	\n	<h1><span>Universidade</span> <span>Popular de Arte</span> <span>e Ciência</span></h1>\n	\n	<div class=\"destaque\">\n		imagem em destaque que pode ser alterada pelo admin\n	</div>\n\n	<div class=\"noticias\">\n		<ul>\n			");
+  hashTypes = {};
+  stack1 = helpers.each.call(depth0, "notice", "in", "notices", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n				<li>&nbsp;</li>\n		</ul>\n	</div>\n\n	<a class=\"maisnoticias\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "nextnews", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">&raquo;</a>\n\n</div>\n\n");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.HomeSlidesView", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   return buffer;

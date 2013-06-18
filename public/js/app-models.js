@@ -17,13 +17,12 @@ App.UserModel.reopen({
             user.setProperties(data.user);
             user.set('isLoaded', true);
             user.set('nick',user.get('name') || user.get('username'));
-            console.log('loaded profile',user);
+            //console.log('loaded profile',user);
         });
 
         return user;
     }
 });
-
 
 //// THE USER Object
 

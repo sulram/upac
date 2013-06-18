@@ -3,12 +3,22 @@
 	<h1><span>Universidade</span> <span>Popular de Arte</span> <span>e Ciência</span></h1>
 	
 	<div class="destaque">
-		imagem em destaque que pode ser mudada pelo admin
+		imagem em destaque que pode ser alterada pelo admin
 	</div>
 
 	<div class="noticias">
-		
+		<ul>
+			{{#each notice in notices}}
+				<li>
+					<p>{{notice.text}}</p>
+					<p><a class="leia mais" {{bindAttr href="notice.url"}}>Leia mais</a></p>
+				</li>
+			{{/each}}
+				<li>&nbsp;</li>
+		</ul>
 	</div>
+
+	<a class="maisnoticias" {{action nextnews}}>&raquo;</a>
 
 </div>
 

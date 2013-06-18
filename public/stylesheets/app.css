@@ -18,6 +18,7 @@ html, body, #wrapper, body > .ember-view {
 body {
 	font-family: "Roboto";
 	min-width: 960px;
+	color: #444;
 }
 
 .upper {
@@ -259,7 +260,7 @@ iframe {
 	margin: 20px auto 0;
 	overflow: hidden;
 	position: relative;
-	z-index: 10;
+	padding-right: 21px;
 }
 
 #wrapper.home .home_wrapper h1 {
@@ -276,18 +277,55 @@ iframe {
 }
 
 #wrapper.home .home_wrapper .destaque {
-	background: rgba(50,50,50,.7);
+	background: rgba(50,50,50,.8);
 	width: 720px;
-	min-height: 360px;
+	min-height: 300px;
 	margin-left: 50px;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 #wrapper.home .home_wrapper .noticias {
-	background: rgba(50,50,50,.7);
-	width: 680px;
-	padding: 20px;
+	width: 720px;
 	margin-left: 50px;
+	overflow: hidden;
+	height: 100px;
+}
+
+#wrapper.home .home_wrapper .noticias ul {
+	width: 10000px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#wrapper.home .home_wrapper .noticias li {
+	background: rgba(50,50,50,.8);
+	width: 345px;
+	min-height: 100px;
+	padding: 10px;
+	float: left;
+	margin-right: 1px;
+}
+
+#wrapper.home .home_wrapper .noticias li a {
+	text-transform: uppercase;
+	text-decoration: none;
+	font-size: .8em;
+}
+
+#wrapper.home .home_wrapper .maisnoticias {
+	display: block;
+	width: 20px;
+	height: 100px;
+	background: rgba(30,30,30,.8);
+	position: absolute;
+	bottom: 0;
+	right: 0;
+
+	text-align: center;
+	line-height: 96px;
+	text-decoration: none;
+	font-size: 18px;
 }
 
 /* ---------------- UPAC ---------------- */
@@ -438,10 +476,40 @@ iframe {
 	display: block;
 }
 
-/* ---------------- TEMP ---------------- */
+/* ---------------- BLOG ---------------- */
 
-#wrapper.agenda {
-	background: url(../img/temp/agenda_01.png) repeat-x 0 10px;
+#wrapper.blog {
+	padding-bottom: 100px;
+}
+
+#wrapper.blog a {
+	color: #bf3205;
+	text-decoration: none;
+}
+
+#wrapper.blog h1 a {
+	text-transform: uppercase;
+	color: #444;
+}
+
+#wrapper.blog .grid_posts article {
+	width: 200px;
+	height: 250px;
+	background: #efefef;
+	float: left;
+	margin: 2px;
+}
+
+#wrapper.blog .grid_posts article .figure {
+	width: 200px;
+	height: 150px;
+	background: #ccc;
+	display: block;
+}
+
+#wrapper.blog .grid_posts article .title {
+	padding: 20px;
+	display: block;
 }
 
 /* ---------------- MODAL ADD ---------------- */
@@ -670,3 +738,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	background-color: #6fb7ac;
 }
 
+/* ---------------- TEMP ---------------- */
+
+#wrapper.agenda {
+	background: url(../img/temp/agenda_01.png) repeat-x 0 10px;
+}

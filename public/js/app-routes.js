@@ -11,9 +11,8 @@ App.Router.map(function() {
         this.route("editar");
     });
     this.resource("blog",function(){
-        this.route("recentes");
-        this.route("populares");
-        this.route("user");
+        this.route("post", { path: '/post/:post_id' });
+        this.route("recentes", { path: '/recentes/:page_num' });
     });
     this.resource("upac");
     this.resource("user",function(){
@@ -21,6 +20,8 @@ App.Router.map(function() {
     });
     this.route('logout');
 });
+
+// TIMELINE
 
 App.IndexRoute = Em.Route.extend({
     redirect: function() {
@@ -38,6 +39,7 @@ App.TimelineRoute = Em.Route.extend({
     },
     setupController: function (controller, model){
         console.log('PERFIL', model);
+        controller.set('model', model);
         this._super(this, arguments);
     }
 });
@@ -53,6 +55,8 @@ App.TimelineEditarRoute = Em.Route.extend({
         return this.modelFor('timeline');
     }
 });
+
+// REDE
 
 App.RedeRoute = Em.Route.extend({
     setupController: function(controller, model) {
@@ -91,6 +95,44 @@ App.RedeEditarRoute = Em.Route.extend({
         this._super(this, arguments);
     }
 });
+
+// BLOG
+
+App.BlogIndexRoute = Em.Route.extend({
+    redirect: function() {
+        this.transitionTo('blog.recentes', Ember.Object.create({page_num: 1}));   
+    }
+});
+
+App.BlogRecentesRoute = Em.Route.extend({
+    model: function(param){
+        return Ember.Object.create({page_num: param.page_num});
+    },
+    serialize: function(model) {
+        if(model) return { page_num: model.page_num };
+    },
+    setupController: function (controller, model){
+        controller.set('model', model);
+        controller.getcontent();
+        this._super(this, arguments);
+    }
+});
+
+App.BlogPostRoute = Em.Route.extend({
+    model: function(param){
+        return Ember.Object.create({post_id: param.post_id});
+    },
+    serialize: function(model) {
+        if(model) return { post_id: model.post_id };
+    },
+    setupController: function (controller, model){
+        controller.set('model', model);
+        controller.getcontent();
+        this._super(this, arguments);
+    }
+});
+
+// LOGOUT
 
 App.LogoutRoute = Ember.Route.extend({
     redirect: function() {

@@ -20,6 +20,64 @@ App.ApplicationController = Ember.Controller.extend({
     }
 });
 
+App.HomeController = Ember.ObjectController.extend({
+    notices: [],
+    current: 0,
+    nextnews: function(){
+        this.current = (this.current + 1) % (this.notices.length - 1);
+        $('.noticias').animate({
+            scrollLeft: this.current * 366
+        }, 500);
+    },
+    init: function(){
+        console.log('INIT HOME');
+        var _this = this;
+        $.getJSON('/notices', function(data){
+            var notices = [];
+            $.each(data.notices, function(i, child) {
+                var notice = Ember.Object.create(child);
+                notices.push(notice);
+            });
+            _this.set('notices', notices);
+        });
+    }
+});
+
+App.BlogRecentesController = Ember.ObjectController.extend({
+    articles: [],
+    isLoaded: false,
+    getcontent: function(){
+        var _this = this;
+        var page = this.get('model.page_num');
+        var posts = 24;
+        $.getJSON('/article', {from: (page-1) * posts, per_page: posts}, function(data){
+            var articles = [];
+            $.each(data.articles, function(i, article) {
+                var article = Ember.Object.create(article);
+                article.set('post_id',article.get('_id'));
+                articles.push(article);
+            });
+            _this.set('articles', articles);
+            _this.set('isLoaded', true);
+        });
+    }
+});
+
+App.BlogPostController = Ember.ObjectController.extend({
+    isLoaded: false,
+    getcontent: function(){
+        var _this = this;
+        var id = this.get('model.post_id');
+        
+        this.set('model.edit_link','/editor/'+id);
+
+        $.getJSON('/article/'+id, function(data){
+            _this.set('article', data.article);
+            _this.set('isLoaded', true);
+        });
+    }
+});
+
 App.TimelineIndexController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
         return this.get('model.username') == User.auth.username;

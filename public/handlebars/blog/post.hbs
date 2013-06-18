@@ -1,0 +1,17 @@
+{{#if isLoaded}}
+
+	<h3>{{article.title}}</h3>
+
+	<blockquote>{{article.excerpt}}</blockquote>
+
+	{{article.content}}
+
+	<p>Postado por {{#each owner in article.owners}}{{owner}}{{/each}}</p>
+
+	<p><a {{bindAttr href="edit_link"}}>Editar</a></p>
+
+{{else}}
+
+	<img src="/img/ajax-loader.gif"/>
+
+{{/if}}
