@@ -17,38 +17,12 @@ App.UserModel.reopen({
             user.setProperties(data.user);
             user.set('isLoaded', true);
             user.set('nick',user.get('name') || user.get('username'));
-            console.log('loaded profile',user);
+            //console.log('loaded profile',user);
         });
 
         return user;
     }
 });
-
-//// NOTICE MODEL
-
-App.NoticeModel = Ember.Object.create({
-    id: null,
-    order: null,
-    text: null,
-    url: null
-});
-App.NoticeModel.reopen({
-    findAll: function() {
-        $.getJSON('/notices').then(
-            function(response) {
-                var notices = [];
-                response.notices.forEach(function (child) {
-                    var notice = Ember.Object.create(child);
-                    //notice.setProperties(child);
-                    notices.push(notice);
-                    console.log(notice.get('text'));
-                });
-                return notices;
-            }
-        );
-    }
-});
-
 
 //// THE USER Object
 

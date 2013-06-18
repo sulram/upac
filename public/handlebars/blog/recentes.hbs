@@ -1,0 +1,25 @@
+{{#if isLoaded}}
+	<div class="grid_posts">
+		{{#if articles.length}}
+			{{#each article in articles}}
+				<article {{bindAttr id="article._id"}}>
+					{{#linkTo blog.post article title=article.excerpt}}
+						<span class="figure">
+							{{article._id}}
+						</span>
+						<span class="title">
+							{{article.title}}
+						</span>
+					{{/linkTo}}
+				</article>
+			{{/each}}
+		{{else}}
+			Não há mais postagens
+		{{/if}}
+	</div>
+
+{{else}}
+
+	<img src="/img/ajax-loader.gif"/>
+
+{{/if}}
