@@ -145,6 +145,7 @@ module.exports = function (cdn, paginate) { return {
 		Img.uploadAndReplace(user.avatar, cdn, req.image_config,
 			
 			user.id,
+			req.files.image.name,
 			req.files.image.path,
 			'user-avatar-'+user.id+"-"+(new Date()).getTime(), 'profile',
 			
@@ -239,7 +240,9 @@ module.exports = function (cdn, paginate) { return {
 	},
 	uploadImageTest: function(req, res, next) {
 		var remote_name = 'user-test-'+req.files.image.name;
-		img_helper.thumbnails.upload_save(Img, cdn, req.user.id, req.files.image.path, remote_name, "profile", function(err, img){
+		img_helper.thumbnails.upload_save(Img, cdn, req.user.id,
+			req.files.image.name, req.files.image.path,
+			remote_name, "profile", function(err, img){
 			res.jsonx({msg: "ok", image: img});
 		})
 	}

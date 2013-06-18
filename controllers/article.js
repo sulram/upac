@@ -51,17 +51,19 @@ module.exports = function(cdn, paginate){ return {
 			if(req.body.parent == '') {
 				delete req.body.parent;
 			}
-			Article.update(req.param('id'), {$set: req.body}, function(err, article) {
-				if (err) {
-					if (err.code === 11000) { // duplicate key
-						req.flash('error', 'Slug já existe');
-						res.redirect('/admin/article/'+req.param('id'))
-					} else {
-						return next(err);
+			Article.update({id:req.param('id')}, {$set: req.body},
+				function(err, article) {
+					if (err) {
+						if (err.code === 11000) { // duplicate key
+							req.flash('error', 'Slug já existe');
+							res.redirect('/admin/article/'+req.param('id'))
+						} else {
+							return next(err);
+						}
 					}
+					res.redirect('/admin/article/'+req.param('id'));
 				}
-				res.redirect('/admin/article/'+req.param('id'));
-			})
+			);
 		},
 		remove: function(req, res, next) {
 			Article.findByIdAndRemove(req.param('id'), function(err) {

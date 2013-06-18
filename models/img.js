@@ -43,7 +43,6 @@ var make_thumbs =  function(file, base_name, image_config, variant, file_cb, all
 			var endfilename = base_name + '_' + sizename + '.' + image_config.format;
 			var endfilepath = temp.path({suffix:"."+image_config.format});
 			gm(file).resize(size.w, size.h).write(endfilepath, function(err){
-				console.log("resize: erro? %j", err);
 				if(err) return file_cb(err, {size: sizename, filename: endfilename, path:endfilepath});
 				console.log("resize na imagem %s para o formato %s feito.", file, sizename);
 				files.push( {size: sizename, filename: endfilename, path:endfilepath} );
@@ -53,25 +52,35 @@ var make_thumbs =  function(file, base_name, image_config, variant, file_cb, all
 	});
 	
 };
-ImgSchema.statics.upload = function(cdn, image_config, user_id, file_name, base_name, variant, cb) {
+ImgSchema.statics.upload = function(cdn, image_config, user_id, orig_name, file_name, base_name, variant, cb) {
 	var uploader = cdn.create();
 	var sizes = [];
 	var errors = [];
 	var callb = cb;
-	var file_pieces = file_name.split('/');
+	var file_pieces = orig_name.split('/');
+	file_pieces = file_pieces[file_pieces.length - 1].split('\\');
+
 	var original_url = base_name+'-original-'+file_pieces[file_pieces.length-1];
 
+	console.log(original_url);
 	uploader.upload({
 		container: cdn.container,
 		remote: original_url,
 		local: file_name
-	}, function(err) {
+	}, function(err, data) {
+		if (err && err.statusCode && (err.statusCode != 200)){
+			return cb({
+				msg: 'Could not upload file to CDN',
+				error: err,
+				data: data
+			});
+		}
 		var img = create_img();
-		if (err) return cb({error:'Could not upload file to CDN'});
 		img.set({
-			uploader: user.id,
+			uploader: user_id,
 			filename: base_name,
-			original_cdn_url: original_url,
+			original_cdn_id: original_url,
+			original_cdn_url: cdn.server_url + original_url,
 			upload_complete: false,
 			createdAt: new Date(),
 		});
@@ -98,8 +107,10 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, file_name, base_
 					complete_cb();
 				});
 			}, function(err, all) {
-				console.info("errors: %j", err);
-				if(err) return callb(err);
+				if(err) {
+					console.info("errors: %j", err);
+					return callb(err);	
+				}
 				console.info("arquivos subidos.");
 				img.set({
 					sizes: sizes,
@@ -114,23 +125,33 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, file_name, base_
 	});
 	
 }
-ImgSchema.statics.uploadAndReplace = function(prev_id, cdn, image_config, user_id, file_name, base_name, variant, cb) {
-	return this.upload(cdn, image_config, user_id, file_name, base_name, variant, function(err, image) {
+ImgSchema.statics.uploadAndReplace = function(prev_id, cdn, image_config, user_id, orig_name, file_name, base_name, variant, cb) {
+	return this.upload(cdn, image_config, user_id, orig_name, file_name, base_name, variant, function(err, image) {
 		if(err) return cb(err, image);
 		if((prev_id == null) || (prev_id == undefined)) {
 			return cb(null, image);
 		}
 		Img.findByIdAndRemove(prev_id, function(err, oldimg) {
-			var cdn_obj = cdn.create();
-			_.each(oldimg.sizes, function(size) {
-				cdn.info('deletando imagem %s', size.cdn_id);
-				cdn_obj.remove({
-					container: cdn.container,
-					remote: size.cdn_id
-				}, function(err) {
+			if(oldimg) {
+				var cdn_obj = cdn.create();
+				_.each(oldimg.sizes, function(size) {
+					console.info('deletando imagem %s', size.cdn_id);
+					cdn_obj.remove({
+						container: cdn.container,
+						remote: size.cdn_id
+					}, function(err) {
 
+					});
 				});
-			});
+				if(oldimg.original_cdn_id) {
+					cdn_obj.remove({
+						container: cdn.container,
+						remote: oldimg.original_cdn_id
+					}, function(err) {
+
+					});				
+				}
+			}
 			cb(null, image);
 		});
 	})
