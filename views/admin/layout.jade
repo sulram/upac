@@ -43,7 +43,23 @@ mixin checkbox(data, member, label)
 				else
 					input(name=member, type="checkbox", data-toggle="checkbox")
 				| #{label}
-
+mixin pagination(url, pagination)
+	- var pages = pagination_helper(pagination);
+	span Total: #{pagination.count} itens.
+	.pagination
+		ul
+			if pagination.from > 0
+				li
+					a(href="#{url}?from=#{pagination.from-pagination.limit}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}") Página anterior
+			each page, i in pages
+				li
+					if page.from == pagination.from
+						a(href="#{url}?from=#{page.from}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}").active= i+1
+					else
+						a(href="#{url}?from=#{page.from}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")= i+1
+			if pagination.from < (pagination.count - pagination.limit)
+				li
+					a(href="#{url}?from=#{pagination.from+pagination.limit}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}") Página seguinte
 html
 	head
 		title

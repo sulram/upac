@@ -124,7 +124,7 @@ module.exports = function(cdn, paginate){ return {
 		*/
 	},
 	index: function(req, res) {
-		paginate.paginate(Article,{},{}, req, function(err, articles, pagination) {
+		paginate.paginate(Article,{publicationStatus:'published'},{}, req, function(err, articles, pagination) {
 				if(err) return next(err);
 				res.jsonx({
 					msg:'ok',
@@ -284,25 +284,18 @@ module.exports = function(cdn, paginate){ return {
 			});
 		}
 	},
-
-	//*
-	// route for testing uploads to the CDN server
-	uploadTest: function(req, res, next) {
-		//console.log(req.files);
-		var path = req.files.uploadImage.name;
-		//console.log('path -> '+path);
-		var filename = path.split('/').slice(-2).join('/');
-		//console.log('filename -> '+filename);
-		cdn.create().upload({
-			container: cdn.container,
-			remote: 'teste-upac-'+filename,
-			local: req.files.uploadImage.path
-		}, function(err) {
-			if (err) {
-				console.error('upload falhou: '+err);
-				return;
+	listByLoggedInUser: function(req, res, next) {
+		paginate.paginate(Article,{owner: req.user.id},{}, req, function(err, articles, pagination) {
+				if(err) return next(err);
+				res.jsonx({
+					msg:'ok',
+					articles: articles,
+					from: pagination.from,
+					sort_by: pagination.sort_by,
+					order: pagination.order,
+					count: pagination.count
+				});
 			}
-			console.info('upload com sucesso.');
-		});
-	}//*/
+		);
+	},
 }};

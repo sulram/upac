@@ -87,6 +87,13 @@ marked.setOptions({
 app.locals.md = function(text) {// helpers for the jade view engine
 	return marked(text||"");
 }
+app.locals.pagination_helper = function(pagination) {
+	var pages = [];
+	for(var i = 0; i <= pagination.count; i+= pagination.limit) {
+		pages.push({from:i, limit:pagination.limit, sort_by:pagination.sort_by, order:pagination.order});
+	}
+	return pages;
+}
 app.use(function(req, res, next){ // admin and json extension middleware
 	var flash = null;
 	req.image_config = config.image_config;
