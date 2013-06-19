@@ -11,6 +11,11 @@ var AttachmentSchema = new Schema({
 	createdAt: Date,
 });
 
+var ImageRefSchema = new Schema({
+	image: {type: ObjectId, ref:'Img'},
+	size: String
+});
+
 var ArticleSchema = new Schema({
 	owners: [{
 		type:ObjectId,
@@ -32,7 +37,7 @@ var ArticleSchema = new Schema({
 		ref: 'Tag'
 	}],
 	references: [String],
-	images: [{type:ObjectId, ref:'Img'}],
+	images: [ImageRefSchema],
 	attachments: [{type:ObjectId, ref:'Attachment'}],
 
 	tags: [{type:ObjectId, ref:'Tag'}],

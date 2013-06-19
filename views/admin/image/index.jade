@@ -17,13 +17,14 @@ block content
 				th Uploader
 				th Imagem
 				th Opções
-		for article in articles
+		for image in images
 			tr
-				td= image.id
 				td
-					a(href='/admin/user/'+image.owner.id)= image.owner.username
+					a(href='/admin/image/#{image.id}')= image.id
 				td
-					img(src="#{image.sizes.small.url}")
+					a(href='/admin/user/'+image.uploader.id)= image.uploader.username
+				td
+					img(src="#{image.original_cdn_url}", style="max-height: 100px; width: auto;")
 				td
 					a(href="/admin/image/#{image.id}/remove",title="Excluir")
 						i.icon-remove

@@ -49,8 +49,8 @@ var updatePreview = function() {
 				console.log(response);
 				var occ = Number($this.data('match-id'));
 				var idx = $("#image-refs input").length / 2
-				var $img_id = $('<input type="hidden">').attr('name', 'image['+idx+'][0]').attr('value', response.image._id);
-				var $img_size = $('<input type="hidden">').attr('name', 'image['+idx+'][1]').attr('value', '');
+				var $img_id = $('<input type="hidden">').attr('name', 'images['+idx+'][0]').attr('value', response.image._id);
+				var $img_size = $('<input type="hidden">').attr('name', 'images['+idx+'][1]').attr('value', '');
 				$('#image-refs').append($img_id).append($img_size);
 				$('#link-refs').append('['+response.image._id+']: '+response.image.original_cdn_url+"\n");
 				var text_replace = editor.getValue();

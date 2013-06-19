@@ -14,7 +14,7 @@ block content
 		tr
 			td Thumb
 			td
-				a(href=image.sizes.icon.cdn_url)
+				img(src="#{image.original_cdn_url}", style="max-height: 100px; width: auto;")
 	.btn-group
 		a(href='/admin/images').btn Voltar
 		a(href='/admin/image/'+image.id+'/remove').btn.btn-danger Remover imagem

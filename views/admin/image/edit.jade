@@ -14,8 +14,8 @@ block content
 			.span6
 				
 				for size in image.sizes
-
-				img(src="@{image.original_cdn_url}")
+					
+				img(src="#{image.original_cdn_url}", style="max-height: 100px; width: auto;")
 			.span6
 				.control-group
 					.controls

@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 module.exports = function(cdn) { return {
 	admin: {
-
+		
 	},
 	show: function(req, res, next) {
 		_Event.findById(req.param.id, function(err, _event) {

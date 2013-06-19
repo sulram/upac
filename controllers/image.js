@@ -20,9 +20,9 @@ module.exports = function(cdn, paginate) {
 	return {
 		admin: {
 			index: function(req, res, next) {
-				paginate.paginate(Img, {}, {}, req, function(err, imgs, pagination) {
+				paginate.paginate(Img, {}, {populate: 'uploader'}, req, function(err, imgs, pagination) {
 					if(err) return next(err);
-					res.render('admin/image/index',{imgs:imgs, pagination:pagination});
+					res.render('admin/image/index',{images:imgs, pagination:pagination});
 				});
 			},
 			show: function(req, res, next) {
@@ -44,7 +44,7 @@ module.exports = function(cdn, paginate) {
 			edit: function(req, res, next) {
 				Img.findById(req.param('id'), function(err, img) {
 					if (err) return next(err);
-					res.render('admin/image/edit',{img:img});
+					res.render('admin/image/edit',{image:img});
 				});
 			},
 			update: function(req, res, next) {

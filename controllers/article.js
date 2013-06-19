@@ -89,8 +89,15 @@ module.exports = function(cdn, paginate){ return {
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
-			'publicationDate', 'publicationStatus');
+			'publicationDate', 'publicationStatus',
+			'images', 'attachments', 'owners'//, 'tags'
+		);
 		data.updatedAt = new Date;
+		console.info(data.images);
+		data.images = _.map(data.images, function(image) {
+			return {image:image[0], size:image[1]}
+		})
+		console.info(data.images);
 		// TODO: pegar tags e transformar em ObjectIDs
 		Article.findById(req.param('id'), function(err, article) {
 			if(err) return res.jsonx(500, {error: err});
@@ -169,8 +176,17 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	update: function(req, res) {
-		req.article.set(req.body);
-		req.article.updatedAt = new Date();
+		var data = _.pick(req.body,
+			'title', 'content', 'excerpt', 
+			'publicationDate', 'publicationStatus',
+			'images', 'tags', 'attachments', 'owners');
+		data.updatedAt = new Date;
+		console.info(data.images);
+		data.images = _.map(data.images, function(image) {
+			return {image:image[0], size:image[1]}
+		})
+		console.info(data.images);
+		req.article.set(data);
 		req.article.save(function(err) {
 			if (err) return res.jsonx(500, {error: 'internal server error'});
 			res.jsonx({
