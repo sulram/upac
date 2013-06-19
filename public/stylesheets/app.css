@@ -482,6 +482,11 @@ iframe {
 	padding-bottom: 100px;
 }
 
+
+#wrapper.blog #content {
+	margin: 0 80px;
+}
+
 #wrapper.blog h1 a,
 #wrapper.blog .grid_posts a {
 	color: #444;
@@ -490,6 +495,11 @@ iframe {
 
 #wrapper.blog h1 a {
 	text-transform: uppercase;
+}
+
+#wrapper.blog .grid_posts {
+	margin-right: -50px;
+	overflow: hidden;
 }
 
 #wrapper.blog .grid_posts article {
@@ -705,6 +715,10 @@ body.editor {
 .editor .editor_markdown {
 	margin-right: -1px;
 	border-right: 1px solid #eee;
+}
+
+.editor .editor_markdown textarea {
+	display: none;
 }
 
 .editor .editor_markdown .CodeMirror {
