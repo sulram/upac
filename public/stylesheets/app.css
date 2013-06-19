@@ -717,10 +717,6 @@ body.editor {
 	border-right: 1px solid #eee;
 }
 
-.editor .editor_markdown textarea {
-	display: none;
-}
-
 .editor .editor_markdown .CodeMirror {
 	width: 100%;
 	height: 500px;
