@@ -55,6 +55,11 @@ iframe {
 	top: 10px;
 	right: 10px;
 	z-index: 9000;
+
+	-webkit-transition: right 500ms cubic-bezier(0.680, 0, 0.265, 1);
+	-moz-transition: right 500ms cubic-bezier(0.680, 0, 0.265, 1);
+	-o-transition: right 500ms cubic-bezier(0.680, 0, 0.265, 1);
+	-ms-transition: right 500ms cubic-bezier(0.680, 0, 0.265, 1);
 	transition: right 500ms cubic-bezier(0.680, 0, 0.265, 1);
 }
 
@@ -82,8 +87,16 @@ iframe {
 	font-size: 18px;
 	opacity: .8;
 	color: #fff;
+
 	perspective: 600;
 	perspective-origin: 64px center;
+	
+	-webkit-perspective: 600;
+	-webkit-perspective-origin: 64px center;
+	-webkit-transition: opacity 1000ms cubic-bezier(0.680, 0, 0.265, 1);
+	-moz-transition: opacity 1000ms cubic-bezier(0.680, 0, 0.265, 1);
+	-o-transition: opacity 1000ms cubic-bezier(0.680, 0, 0.265, 1);
+	-ms-transition: opacity 1000ms cubic-bezier(0.680, 0, 0.265, 1);
 	transition: opacity 1000ms cubic-bezier(0.680, 0, 0.265, 1);
 }
 
@@ -98,8 +111,23 @@ iframe {
 	display: block;
 	line-height: 64px;
 	padding: 0 30px 0 20px;
+
+	-webkit-transform: rotateY(90deg);
+	-moz-transform: rotateY(90deg);
+	-o-transform: rotateY(90deg);
+	-ms-transform: rotateY(90deg);
 	transform: rotateY(90deg);
+
+	-webkit-transform-origin: left center;
+	-moz-transform-origin: left center;
+	-o-transform-origin: left center;
+	-ms-transform-origin: left center;
 	transform-origin: left center;
+
+	-webkit-transition: all 300ms cubic-bezier(0.680, 0, 0.265, 1);
+	-moz-transition: all 300ms cubic-bezier(0.680, 0, 0.265, 1);
+	-o-transition: all 300ms cubic-bezier(0.680, 0, 0.265, 1);
+	-ms-transition: all 300ms cubic-bezier(0.680, 0, 0.265, 1);
 	transition: all 300ms cubic-bezier(0.680, 0, 0.265, 1);
 }
 
@@ -109,6 +137,10 @@ iframe {
 }
 
 .menu_it a:hover .caption {
+	-webkit-transform: rotateY(0);
+	-moz-transform: rotateY(0);
+	-o-transform: rotateY(0);
+	-ms-transform: rotateY(0);
 	transform: rotateY(0);
 }
 
@@ -668,6 +700,7 @@ body.editor {
 	width: 64px;
 	height: 64px;
 	background: url(../img/upac_menu_sprites.png) no-repeat -288px -160px;
+	z-index: 2000;
 }
 
 .editor_header #toggle {
@@ -788,6 +821,15 @@ body.editor {
 	border-bottom: 1px solid rgba(0,0,0,.2);
 }
 
+.editor #loading {
+	display: none;
+	margin-left: 20px;
+}
+
+.editor #loading.show {
+	display: inline-block;
+}
+
 .editor_header ::-webkit-input-placeholder { /* WebKit browsers */
     color: #999 !important;
 }
@@ -799,6 +841,24 @@ body.editor {
 }
 .editor_header :-ms-input-placeholder { /* Internet Explorer 10+ */
     color: #999 !important;
+}
+
+#info {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    height: auto;
+    z-index: 11000;
+}
+#info .notification {
+    padding: 30px;
+    margin-bottom: 12px;
+    color: white;
+    background: #252525;
+    display: none;
+    opacity: 0.8;
+    font-weight: bold;
 }
 
 /* ---------------- BOOTSTRAP REPLACE ---------------- */
@@ -815,6 +875,10 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	      -o-border-radius: 0;
 	         border-radius: 0;
 	}
+
+.btn-w-icon {
+	padding-right: 20px;
+}
 
 .tooltip-inner {
 	background: rgba(50,50,50,.8);

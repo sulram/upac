@@ -7,7 +7,7 @@ var delay, showdown = new Showdown.converter({extensions:["table", "ufm"]});
 var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 	mode: 'markdown',
 	lineNumbers: false,
-    lineWrapping: true,
+	lineWrapping: true,
 	theme: "default",
 	extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"},
 	autofocus: true
@@ -187,30 +187,54 @@ function closeHeader(){
 	toggleHeader();
 }
 
+// NOTIFY
+
+function notify(msg,log) {
+	$('<div></div>')
+		.addClass('notification')
+		.text(msg)
+		.appendTo('#info')
+		.fadeIn(1000)
+		.delay(4000)
+		.slideUp(500,function(){$(this).remove();});
+
+	console.log(msg,log);
+}
+
 // FORM SUBMIT
 
 var form = $('#editor_form');
-
+var submit = $('#submit_anchor');
+submit.click(function(e){
+	e.preventDefault();
+	$('#submit').click();	
+});
 form.submit(function(e){
-	var data, action;
+	var data, action, loading = $('#loading');
 	e.preventDefault();
 	Picker.convertToSubmit();
 	data = form.serialize();
 	action = form.attr('action');
 	console.log('saving... ', action, data);
+	loading.addClass('show');
 	$.ajax({
-        type: 'POST',
-        url: action,
-        data: data,
-        success: function(data, status, jqXHR){
-            console.log('success', data);
-            Picker.convertToView();
-        },
-        error: function(jqXHR,status,error){
-            console.log('error', arguments);
-            Picker.convertToView();
-        }
-    });
+		type: 'POST',
+		url: action,
+		data: data,
+		success: function(data, status, jqXHR){
+			var url = '/#/blog/post/'+data.article._id;
+			$('#post_remove').removeClass('hide');
+			$('#post_view').attr('href',url).removeClass('hide');
+			notify('A publicação foi salva com sucesso!', data);
+			Picker.convertToView();
+			loading.removeClass('show');
+		},
+		error: function(jqXHR,status,error){
+			notify('Erro ao salvar, tente novamente.', params);
+			Picker.convertToView();
+			loading.removeClass('show');
+		}
+	});
 });
 
 

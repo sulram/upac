@@ -77,13 +77,13 @@ module.exports = function(cdn, paginate){ return {
 			owners:[req.user.id],
 			publicationStatus:""
 		});
-		res.render('editor',{title:"Editor", article:article});
+		res.render('editor',{title:"Editor", article:article, is_new:true});
 	},
 	editor: function(req, res, next) {
 		Article.findById(req.param('id'), function(err, article) {
 			if(err) return next(err);
 			if(!article) return next(null, article);
-			res.render('editor',{title:"Editor", article:article});
+			res.render('editor',{title:"Editor", article:article, is_new:false});
 		});
 	},
 	editorsave: function(req, res, next) {
