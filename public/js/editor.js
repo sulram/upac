@@ -42,6 +42,60 @@ editor.on("change", function() {
 
 updatePreview();
 
+// RESIZE
+
+$(window).resize(resize);
+
+function resize(e){
+	var win = $(window);
+	if(!more){
+		$('.CodeMirror').height(win.height() - 206);
+		$('#preview').height(win.height() - 206);
+	} else {
+		$('.CodeMirror').height(win.height() - 476);
+		$('#preview').height(win.height() - 476);
+	}
+}
+
+resize();
+
+// DATE PICKER
+
+var Picker = function(){
+		
+	var _that = this;
+
+	this.target = $('#datetimepicker');
+	this.input = $('#publicationDate');
+	
+	this.target.datetimepicker({
+		language: 'pt-BR'
+	});
+	
+	this.picker = this.target.data('datetimepicker');
+	
+	this.input.click(function(){
+		$('span', _that.target).click();
+	});
+
+	this.convertToView = function(){
+		this.picker.setLocalDate(new Date(this.input.val()));
+	};
+
+	this.convertToSubmit = function(){
+		this.input.val(this.picker.getLocalDate());	
+	};
+
+	if(this.input.val() == null){	
+		this.picker.setLocalDate(new Date());
+	}else{
+		this.convertToView();
+	}
+
+	return this;
+
+}();
+
 // MORE INFO
 
 var more = true;
@@ -79,19 +133,26 @@ function closeHeader(){
 	toggleHeader();
 }
 
-// RESIZE
+// FORM SUBMIT
 
-$(window).resize(resize);
+var form = $('#editor_form');
 
-function resize(e){
-	var win = $(window);
-	if(!more){
-		$('.CodeMirror').height(win.height() - 206);
-		$('#preview').height(win.height() - 206);
-	} else {
-		$('.CodeMirror').height(win.height() - 476);
-		$('#preview').height(win.height() - 476);
-	}
-}
+form.submit(function(e){
+	e.preventDefault();
+	Picker.convertToSubmit();
+	$.ajax({
+        type: 'POST',
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(data, status, jqXHR){
+            console.log('success', data);
+            Picker.convertToView();
+        },
+        error: function(jqXHR,status,error){
+            console.log('error', arguments);
+            Picker.convertToView();
+        }
+    });
+});
 
-resize();
+

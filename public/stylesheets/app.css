@@ -733,7 +733,7 @@ body.editor {
 	left: 0;
 	text-transform: uppercase;
 	font-size: 10px;
-	z-index: 9999;
+	z-index: 2000;
 	color: #666;
 }
 
@@ -746,7 +746,7 @@ body.editor {
 	padding-top: 20px;
 	background: #fff;
 	border-top: 1px solid #eee;
-	z-index: 9999;
+	z-index: 2000;
 }
 
 .editor .footer .arquivo {
@@ -761,6 +761,15 @@ body.editor {
 	margin: 20px 0;
 	padding: 20px;
 	background: #efefef;
+}
+
+.editor #datetimepicker .add-on {
+	background: #444;
+	border: 0;
+}
+
+.editor #datetimepicker #publicationDate {
+	border-bottom: 1px solid rgba(0,0,0,.2);
 }
 
 /* ---------------- BOOTSTRAP REPLACE ---------------- */
