@@ -28,6 +28,7 @@ Ember.Handlebars.registerBoundHelper('momentago', function(value, options) {
 });
 
 Ember.Handlebars.registerBoundHelper('ufm', function(value, options) {
-  var escaped = Handlebars.Utils.escapeExpression(value);
-  return new Handlebars.SafeString( showdown.makeHtml(escaped) );
+  //var escaped = Handlebars.Utils.escapeExpression(value);
+  //return new Handlebars.SafeString(showdown.makeHtml(escaped));
+  if(value) return new Handlebars.SafeString(showdown.makeHtml(value));
 });

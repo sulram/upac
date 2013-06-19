@@ -12,7 +12,11 @@
 								{{article.title}}
 							</span>
 							<span class="date">
-								{{momentago article.publicationDate}}
+								{{#if article.publicationDate}}
+									{{momentago article.publicationDate}}
+								{{else}}
+									sem data
+								{{/if}}
 							</span>
 						</div>
 					{{/linkTo}}

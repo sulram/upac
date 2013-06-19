@@ -25,7 +25,9 @@
 				<p><a class="btn" {{bindAttr href="edit_link"}}>Editar</a></p>
 			</div>
 			<div class="span8 post_content">
-				{{ufm article.content}}
+				{{#if article.content}}
+					{{ufm article.content}}
+				{{/if}}
 			</div>
 		</div>
 
