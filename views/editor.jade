@@ -12,7 +12,7 @@ html
 	body(data-article-id="#{article.id}").editor
 		form(action="/article/#{article.id}", method="POST")#editor_form
 			.editor_header
-				a#close(href="/")
+				a#close(href="/#/blog")
 					| fechar
 				.container
 					label.input_label(for="title")
@@ -39,13 +39,16 @@ html
 							#datetimepicker.input-prepend.date
 								span.add-on
 									i(data-time-icon="icon-time", data-date-icon="icon-calendar")
-								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate
+								if article.publicationDate
+									input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate
+								else
+									input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate
 								
 							br
 							label.input_label(for="tags")
 								| Palavras-chave
 							.input_tags
-								textarea(name="excerpt", rows="5", placeholder="")#tags
+								textarea(name="tags", rows="5", placeholder="")#tags
 				
 
 			.container

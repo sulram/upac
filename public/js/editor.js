@@ -85,10 +85,12 @@ var Picker = function(){
 	this.convertToSubmit = function(){
 		this.input.val(this.picker.getLocalDate());	
 	};
-
-	if(this.input.val() == null){	
+	//console.log(this.input.val());
+	if(this.input.val() === ""){
+		//console.log(0);
 		this.picker.setLocalDate(new Date());
 	}else{
+		//console.log(1);
 		this.convertToView();
 	}
 
@@ -138,12 +140,16 @@ function closeHeader(){
 var form = $('#editor_form');
 
 form.submit(function(e){
+	var data, action;
 	e.preventDefault();
 	Picker.convertToSubmit();
+	data = form.serialize();
+	action = form.attr('action');
+	console.log('saving... ', action, data);
 	$.ajax({
         type: 'POST',
-        url: form.attr('action'),
-        data: form.serialize(),
+        url: action,
+        data: data,
         success: function(data, status, jqXHR){
             console.log('success', data);
             Picker.convertToView();

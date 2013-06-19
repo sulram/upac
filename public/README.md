@@ -13,6 +13,10 @@ Descrição e informações úteis desse módulo do projeto
 * [Flat UI](http://designmodo.github.io/Flat-UI/)
 * [Google Maps](https://developers.google.com/maps/)
 * [Google Maps Utility Livrary v3](https://code.google.com/p/google-maps-utility-library-v3/wiki/Libraries)
+* [Date/Time Picker for Twitter Boostrap](http://tarruda.github.io/bootstrap-datetimepicker/)
+* [Showdow](https://github.com/coreyti/showdown)
+* [CodeMirror](http://codemirror.net/)
+* [Dropzone](http://www.dropzonejs.com/)
 
 ### Guias e documentação
 
