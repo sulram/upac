@@ -80,7 +80,9 @@ module.exports = function(cdn, paginate){ return {
 		res.render('editor',{title:"Editor", article:article});
 	},
 	editor: function(req, res, next) {
-		Article.findById(req.param('id'), function(err, article) {
+		Article.findById(req.param('id'))
+			.populate('images.image')
+			.exec(function(err, article) {
 			if(err) return next(err);
 			if(!article) return next(null, article);
 			res.render('editor',{title:"Editor", article:article});
@@ -131,7 +133,7 @@ module.exports = function(cdn, paginate){ return {
 		*/
 	},
 	index: function(req, res) {
-		paginate.paginate(Article,{publicationStatus:'published'},{}, req, function(err, articles, pagination) {
+		paginate.paginate(Article,{publicationStatus:'published'},{populate:'images.image'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
 				res.jsonx({
 					msg:'ok',
@@ -156,15 +158,18 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	show: function(req, res, next) {
-		Article.findById(req.params.id, function(err, article){
+		Article.findById(req.params.id)
+			.populate('images.image owners')
+			.exec(function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
-			res.jsonx({article:{
-				title: article.title,
-				content: article.content,
-				owners: article.owners,
-				slug: article.slug
-			}});
+			_.each(article.images, function(image){
+				var size = {cdn_url:image.image.original_cdn_url};
+				var nsize = _.detect(image.image.sizes,function(img){ return img.size == image.size; });
+				size = nsize||size;
+				article.content+=("\n["+image.image.id+"]: "+size.cdn_url);				
+			})
+			res.jsonx({article:article});
 		});
 	},
 	preloadById: function(req, res, next) {
@@ -220,7 +225,7 @@ module.exports = function(cdn, paginate){ return {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.jsonx(404, {msg: "user not found"});
-			Article.find({owners:user.id}, function(err, articles) {
+			Article.find({owners:user.id}).populate('images.image').exec(function(err, articles) {
 				if(err) return next(err);
 				if(!articles) return res.jsonx(404, {msg: "no articles found"});
 				res.jsonx({

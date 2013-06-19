@@ -55,8 +55,8 @@ var updatePreview = function() {
 				$('#link-refs').append('['+response.image._id+']: '+response.image.original_cdn_url+"\n");
 				var text_replace = editor.getValue();
 				var parts = text_replace.split(/\b!img\b/)
-				console.log(parts)
 				var first = parts.splice(0, occ+1).join('!img')
+				console.log(parts)
 				var rest = parts.join("!img")
 				console.log("first: %s, rest: %s", first, rest)
 				console.log(parts);

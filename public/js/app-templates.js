@@ -125,7 +125,7 @@ function program2(depth0,data) {
   
   var hashTypes;
   hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "owner", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "owner.name", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   }
 
 function program4(depth0,data) {
