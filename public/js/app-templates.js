@@ -24,10 +24,10 @@ function program1(depth0,data) {
 Ember.TEMPLATES["agenda"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '';
+  
 
 
-  return buffer;
+  data.buffer.push("<h1>Seus eventos na rede</h1>\n<p>Em breve você poderá anunciar seus eventos na rede UPAC! Aguarde!</p>\n\n<p><img src=\"/img/temp/agenda_01.png\"></p>");
   
 });
 

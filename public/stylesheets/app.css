@@ -916,6 +916,3 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 /* ---------------- TEMP ---------------- */
 
-#wrapper.agenda {
-	background: url(../img/temp/agenda_01.png) repeat-x 0 10px;
-}
