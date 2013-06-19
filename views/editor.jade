@@ -62,9 +62,11 @@ html
 						.span3.arquivo
 							label.input_label(for="status")
 								| Arquivo
-							select(name="status")#status
-								option(name="published") postar no blog
-								option(name="draft") salvar como rascunho
+								- draft = ('draft'==article.publicationStatus) ? 'selected' : null; 
+								- published = ('published'==article.publicationStatus) ? 'selected' : null;
+							select(name="publicationStatus")#status
+								option(name="published", value="published", selected=published) postar no blog
+								option(name="draft",value="draft", selected=draft) salvar como rascunho
 						.span3
 							input(type="submit", name="submit", value="Salvar publicação")#submit.btn.btn-primary
 
