@@ -216,7 +216,7 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	uploadImage: function(req, res, next) {
-		var article_id = req.param(':id');
+		var article_id = req.param('id');
 		Img.upload(cdn, req.image_config,
 			req.user.id,
 			req.files.image.name,

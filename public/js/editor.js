@@ -12,7 +12,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 	extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
 });
 var updatePreview = function() {
-	$("#preview").html(showdown.makeHtml(editor.getValue()));
+	$("#preview").html(showdown.makeHtml(editor.getValue()+'\n'+$('#link-refs').val()));
 	$('#preview .image-upload').each(function(index){
 		var $this = $(this);
 		$this.find(".fallback").hide(0);
@@ -47,6 +47,20 @@ var updatePreview = function() {
 			],
 			uploadFinished: function(i, file, response, time) {
 				console.log(response);
+				var occ = Number($this.data('match-id'));
+				var idx = $("#image-refs input").length / 2
+				var $img_id = $('<input type="hidden">').attr('name', 'image['+idx+'][0]').attr('value', response.image._id);
+				var $img_size = $('<input type="hidden">').attr('name', 'image['+idx+'][1]').attr('value', '');
+				$('#image-refs').append($img_id).append($img_size);
+				$('#link-refs').append('['+response.image._id+']: '+response.image.original_cdn_url+"\n");
+				var text_replace = editor.getValue();
+				var parts = text_replace.split(/\b!img\b/)
+				console.log(parts)
+				var first = parts.splice(0, occ+1).join('!img')
+				var rest = parts.join("!img")
+				console.log("first: %s, rest: %s", first, rest)
+				console.log(parts);
+				editor.setValue(first+'!['+response.image._id+'][]'+rest);
 			}
 
 		})

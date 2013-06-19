@@ -48,6 +48,14 @@ html
 						span.editor-type
 							| Editor
 						textarea(name="content")#editor= article.content
+						textarea(disabled)#link-refs
+							each image in article.images
+								- var img = (image.image.sizes[image.size] === undefined)?image.image.original_cdn_url:image.image.sizes[image.size].cdn_url
+								| [#{image.image.id}]: #{img}
+						#image-refs
+							each image, i in article.images
+								input(type="hidden", name="image[#{i}][0]", value=image.image.id)
+								input(type="hidden", name="image[#{i}][1]", value=image.size)
 					.editor_preview.span6
 						span.editor-type
 							| Visualização
