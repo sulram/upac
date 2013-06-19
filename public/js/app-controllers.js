@@ -50,13 +50,11 @@ App.BlogRecentesController = Ember.ObjectController.extend({
         var _this = this;
         var page = this.get('model.page_num');
         var posts = 4;
-        $.getJSON('/article', {from: (page-1) * posts, limit: posts}, function(data){
+        $.getJSON('/article', {from: (page-1) * posts, limit: posts, sort_by: 'publicationDate', order: -1}, function(data){
             var articles = [];
             $.each(data.articles, function(i, article) {
                 var article = Ember.Object.create(article);
-                var publicationDate = article.get('publicationDate') || article.get('createdAt');
                 article.set('post_id', article.get('_id'));
-                article.set('publicationDate', publicationDate);
                 articles.push(article);
             });
             console.log(articles[0]);
