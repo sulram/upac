@@ -94,6 +94,62 @@ editor.on("change", function() {
 
 updatePreview();
 
+// RESIZE
+
+$(window).resize(resize);
+
+function resize(e){
+	var win = $(window);
+	if(!more){
+		$('.CodeMirror').height(win.height() - 206);
+		$('#preview').height(win.height() - 206);
+	} else {
+		$('.CodeMirror').height(win.height() - 476);
+		$('#preview').height(win.height() - 476);
+	}
+}
+
+resize();
+
+// DATE PICKER
+
+var Picker = function(){
+		
+	var _that = this;
+
+	this.target = $('#datetimepicker');
+	this.input = $('#publicationDate');
+	
+	this.target.datetimepicker({
+		language: 'pt-BR'
+	});
+	
+	this.picker = this.target.data('datetimepicker');
+	
+	this.input.click(function(){
+		$('span', _that.target).click();
+	});
+
+	this.convertToView = function(){
+		this.picker.setLocalDate(new Date(this.input.val()));
+	};
+
+	this.convertToSubmit = function(){
+		this.input.val(this.picker.getLocalDate());	
+	};
+	//console.log(this.input.val());
+	if(this.input.val() === ""){
+		//console.log(0);
+		this.picker.setLocalDate(new Date());
+	}else{
+		//console.log(1);
+		this.convertToView();
+	}
+
+	return this;
+
+}();
+
 // MORE INFO
 
 var more = true;
@@ -131,19 +187,30 @@ function closeHeader(){
 	toggleHeader();
 }
 
-// RESIZE
+// FORM SUBMIT
 
-$(window).resize(resize);
+var form = $('#editor_form');
 
-function resize(e){
-	var win = $(window);
-	if(!more){
-		$('.CodeMirror').height(win.height() - 206);
-		$('#preview').height(win.height() - 206);
-	} else {
-		$('.CodeMirror').height(win.height() - 476);
-		$('#preview').height(win.height() - 476);
-	}
-}
+form.submit(function(e){
+	var data, action;
+	e.preventDefault();
+	Picker.convertToSubmit();
+	data = form.serialize();
+	action = form.attr('action');
+	console.log('saving... ', action, data);
+	$.ajax({
+        type: 'POST',
+        url: action,
+        data: data,
+        success: function(data, status, jqXHR){
+            console.log('success', data);
+            Picker.convertToView();
+        },
+        error: function(jqXHR,status,error){
+            console.log('error', arguments);
+            Picker.convertToView();
+        }
+    });
+});
 
-resize();
+

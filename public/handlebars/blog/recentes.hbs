@@ -3,13 +3,22 @@
 		{{#if articles.length}}
 			{{#each article in articles}}
 				<article {{bindAttr id="article._id"}}>
-					{{#linkTo blog.post article title=article.excerpt}}
-						<span class="figure">
+					{{#linkTo blog.post article}}
+						<div class="figure">
 							{{article._id}}
-						</span>
-						<span class="title">
-							{{article.title}}
-						</span>
+						</div>
+						<div class="info">
+							<span class="title">
+								{{article.title}}
+							</span>
+							<span class="date">
+								{{#if article.publicationDate}}
+									{{momentago article.publicationDate}}
+								{{else}}
+									sem data
+								{{/if}}
+							</span>
+						</div>
 					{{/linkTo}}
 				</article>
 			{{/each}}

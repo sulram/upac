@@ -3,15 +3,16 @@ html
 	head
 		title Editor
 		link(rel='stylesheet', href='/flat-ui/bootstrap/css/bootstrap.css')
+		link(rel='stylesheet', href='/js/libs/datetimepicker/datetimepicker.css')
 		link(rel='stylesheet', href='/flat-ui/css/flat-ui.css')
 		link(rel='stylesheet', href='/dropzone/css/dropzone.css')
 		link(rel='stylesheet', href='/js/libs/codemirror/lib/codemirror.css')
 		link(rel='stylesheet', href='/stylesheets/app.css')
 
 	body(data-article-id="#{article.id}").editor
-		form(action="/article/#{article.id}", method="POST")
+		form(action="/article/#{article.id}", method="POST")#editor_form
 			.editor_header
-				a#close(href="/")
+				a#close(href="/#/blog")
 					| fechar
 				.container
 					label.input_label(for="title")
@@ -34,12 +35,20 @@ html
 						.span6
 							label.input_label(for="publicationDate")
 								| Data
-								input(type="date", name="publicationDate", value="#{article.publicationDate}")#publicationDate
+								//input(type="text", name="publicationDate", value="#{article.publicationDate}")#publicationDate
+							#datetimepicker.input-prepend.date
+								span.add-on
+									i(data-time-icon="icon-time", data-date-icon="icon-calendar")
+								if article.publicationDate
+									input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate
+								else
+									input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate
+								
 							br
 							label.input_label(for="tags")
 								| Palavras-chave
 							.input_tags
-								textarea(name="excerpt", rows="5", placeholder="")#tags
+								textarea(name="tags", rows="5", placeholder="")#tags
 				
 
 			.container
@@ -59,7 +68,7 @@ html
 					.editor_preview.span6
 						span.editor-type
 							| Visualização
-						#preview
+						#preview.post_content
 			
 			.footer
 				.container
@@ -70,15 +79,19 @@ html
 						.span3.arquivo
 							label.input_label(for="status")
 								| Arquivo
-							select(name="status")#status
-								option(name="published") postar no blog
-								option(name="draft") salvar como rascunho
+								- draft = ('draft'==article.publicationStatus) ? 'selected' : null; 
+								- published = ('published'==article.publicationStatus) ? 'selected' : null;
+							select(name="publicationStatus")#status
+								option(name="published", value="published", selected=published) postar no blog
+								option(name="draft",value="draft", selected=draft) salvar como rascunho
 						.span3
 							input(type="submit", name="submit", value="Salvar publicação")#submit.btn.btn-primary
 
 
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')
 		script(src='/js/jquery.filedrop.js')
+		script(src='/js/libs/prefixfree.min.js')
+		script(src='/flat-ui/js/bootstrap.min.js')
 		script(src='/js/libs/codemirror/lib/codemirror.js')
 		script(src='/js/libs/codemirror/mode/markdown/markdown.js')
 		script(src='/js/libs/codemirror/mode/gfm/gfm.js')
@@ -86,4 +99,5 @@ html
 		script(src='/js/libs/showdown/src/showdown.js')
 		script(src='/js/libs/showdown/src/extensions/table.js')
 		script(src='/js/libs/showdown/src/extensions/ufm.js')
+		script(src='/js/libs/datetimepicker/datetimepicker.js')
 		script(src='/js/editor.js')
