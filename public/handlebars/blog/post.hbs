@@ -1,17 +1,38 @@
-{{#if isLoaded}}
+<div class="thepost">
 
-	<h3>{{article.title}}</h3>
+	{{#if isLoaded}}
+		
+		<div class="row-fluid">
+			<div class="span4">
+				
+			</div>
+			<div class="span8">
+				<h3 class="title">{{article.title}}</h3>
+				<p class="date">{{article.publishDate}}</p>
+				<p class="excerpt">{{article.excerpt}}</p>
+			</div>
+		</div>
 
-	<blockquote>{{article.excerpt}}</blockquote>
+		<div class="row-fluid">
+			<div class="span12 firstimage">
+				<img src="/img/home02.jpg"/>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span4">
+				<p>Postado por {{#each owner in article.owners}}{{owner}}{{/each}}</p>
+				<p><a class="btn" {{bindAttr href="edit_link"}}>Editar</a></p>
+			</div>
+			<div class="span8 post_content">
+				{{ufm article.content}}
+			</div>
+		</div>
 
-	{{ufm article.content}}
+	{{else}}
 
-	<p>Postado por {{#each owner in article.owners}}{{owner}}{{/each}}</p>
+		<img src="/img/ajax-loader.gif"/>
 
-	<p><a {{bindAttr href="edit_link"}}>Editar</a></p>
+	{{/if}}
 
-{{else}}
-
-	<img src="/img/ajax-loader.gif"/>
-
-{{/if}}
+</div>

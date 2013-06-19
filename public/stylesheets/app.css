@@ -482,35 +482,90 @@ iframe {
 	padding-bottom: 100px;
 }
 
-#wrapper.blog a {
-	color: #bf3205;
+#wrapper.blog h1 a,
+#wrapper.blog .grid_posts a {
+	color: #444;
 	text-decoration: none;
 }
 
 #wrapper.blog h1 a {
 	text-transform: uppercase;
-	color: #444;
 }
 
 #wrapper.blog .grid_posts article {
-	width: 200px;
-	height: 250px;
+	width: 250px;
+	height: 300px;
 	background: #efefef;
 	float: left;
 	margin: 2px;
 }
 
 #wrapper.blog .grid_posts article .figure {
-	width: 200px;
-	height: 150px;
+	width: 250px;
+	height: 200px;
 	background: #ccc;
 	display: block;
 }
 
-#wrapper.blog .grid_posts article .title {
+#wrapper.blog .grid_posts article .info {
 	padding: 20px;
-	display: block;
 }
+
+#wrapper.blog .grid_posts article .title {
+	display: block;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	margin-bottom: 0.2em;
+}
+
+#wrapper.blog .grid_posts article .date {
+	font-size: 0.9em;
+	color: #666;
+}
+
+#wrapper.blog .thepost {
+	min-width: 780px;
+	max-width: 940px;
+	font-size: 16px;
+	line-height: 1.5em;
+}
+
+#wrapper.blog .thepost p {
+	margin-bottom: 1em;
+}
+
+#wrapper.blog .thepost .title {
+	font-size: 2.2em;
+	margin-bottom: 0.4em;
+}
+
+#wrapper.blog .thepost .date {
+	color: #666;
+	font-size: 0.8em;
+	margin-bottom: 1em;
+}
+
+#wrapper.blog .thepost .excerpt {
+	font-size: 0.8em;
+	text-transform: uppercase;
+	margin-bottom: 2em;
+	line-height: 1.5em;
+}
+
+#wrapper.blog .thepost .firstimage {
+	margin-bottom: 30px;
+	text-align: right;
+}
+
+.post_content {
+	font-size: 16px;
+	line-height: 1.5em;
+}
+
+.post_content p {
+	margin-bottom: 1em;
+}
+
 
 /* ---------------- MODAL ADD ---------------- */
 
