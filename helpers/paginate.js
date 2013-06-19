@@ -16,7 +16,10 @@ module.exports = function(_){
 			}
 			query.skip(options.from).limit(options.limit);
 			query.exec(function(err, data) {
-				return cb(err, data, options);
+				model.count(query_terms, function(err, count) {
+					return cb(err, data, _.extend({count:count},options));
+				})
+				
 			});
 		},
 		paginate_view: function(data) {

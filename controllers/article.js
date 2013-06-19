@@ -74,7 +74,7 @@ module.exports = function(cdn, paginate){ return {
 	},
 	neweditor: function(req, res, next) {
 		var article = new Article({
-			owner:req.user.id,
+			owners:[req.user.id],
 			publicationStatus:""
 		});
 		res.render('editor',{title:"Editor", article:article});
@@ -83,7 +83,6 @@ module.exports = function(cdn, paginate){ return {
 		Article.findById(req.param('id'), function(err, article) {
 			if(err) return next(err);
 			if(!article) return next(null, article);
-			console.info(article);
 			res.render('editor',{title:"Editor", article:article});
 		});
 	},
@@ -99,6 +98,7 @@ module.exports = function(cdn, paginate){ return {
 				data._id = mongoose.Types.ObjectId(req.body.id);
 				article = new Article(data);
 				article._id = mongoose.Types.ObjectId(req.body.id);
+				article.owners = [req.user.id];
 			} else {
 				article.set(data);
 			}
@@ -126,17 +126,13 @@ module.exports = function(cdn, paginate){ return {
 	index: function(req, res) {
 		paginate.paginate(Article,{},{}, req, function(err, articles, pagination) {
 				if(err) return next(err);
-				var total = 0;
-				Article.count({}, function(err, count){
-					if(err) return next(err);
-					total = count;
-				});
 				res.jsonx({
 					msg:'ok',
 					articles: articles,
 					from: pagination.from,
 					sort_by: pagination.sort_by,
-					order: pagination.order
+					order: pagination.order,
+					count: pagination.count
 				});
 			}
 		);
