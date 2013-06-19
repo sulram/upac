@@ -2,8 +2,8 @@
 /* ---------------- BASICS ---------------- */
 
 
-::-moz-selection{ background: #fff; color:#000; text-shadow: none; }
-::selection { background:#fff; color:#000; text-shadow: none; } 
+::-moz-selection{ background: #444; color:#fff; text-shadow: none; }
+::selection { background:#444; color:#fff; text-shadow: none; } 
 
 a { outline: none; }
 :-moz-any-link:focus { outline: none; }
@@ -737,6 +737,11 @@ body.editor {
 	padding-top: 30px; 
 }
 
+.editor #editor,
+.editor #link-refs {
+	display: none;
+}
+
 .editor .editor-type {
 	position: absolute;
 	top: 10px;
@@ -781,6 +786,19 @@ body.editor {
 
 .editor #datetimepicker #publicationDate {
 	border-bottom: 1px solid rgba(0,0,0,.2);
+}
+
+.editor_header ::-webkit-input-placeholder { /* WebKit browsers */
+    color: #999 !important;
+}
+.editor_header :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #999 !important;
+}
+.editor_header ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #999 !important;
+}
+.editor_header :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #999 !important;
 }
 
 /* ---------------- BOOTSTRAP REPLACE ---------------- */

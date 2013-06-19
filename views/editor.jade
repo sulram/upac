@@ -11,7 +11,7 @@ html
 
 	body(data-article-id="#{article.id}").editor
 		form(action="/article/#{article.id}", method="POST")#editor_form
-			.editor_header
+			.editor_header.less
 				a#close(href="/#/blog")
 					| fechar
 				.container
@@ -55,7 +55,7 @@ html
 				.editor_panes.row
 					.editor_markdown.span6
 						span.editor-type
-							| Editor
+							| Texto
 						textarea(name="content")#editor= article.content
 						textarea(disabled)#link-refs
 							each image in article.images

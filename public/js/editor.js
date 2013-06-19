@@ -9,7 +9,8 @@ var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 	lineNumbers: false,
     lineWrapping: true,
 	theme: "default",
-	extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
+	extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"},
+	autofocus: true
 });
 var updatePreview = function() {
 	$("#preview").html(showdown.makeHtml(editor.getValue()+'\n'+$('#link-refs').val()));
@@ -87,29 +88,15 @@ var updatePreview = function() {
 		}
 	});*/
 }
-editor.on("change", function() {
+editor.on('change', function() {
+	closeHeader();
 	clearTimeout(delay);
 	delay = setTimeout(updatePreview, 300);
 });
-
+editor.on('focus',function(){
+	closeHeader();
+});
 updatePreview();
-
-// RESIZE
-
-$(window).resize(resize);
-
-function resize(e){
-	var win = $(window);
-	if(!more){
-		$('.CodeMirror').height(win.height() - 206);
-		$('#preview').height(win.height() - 206);
-	} else {
-		$('.CodeMirror').height(win.height() - 476);
-		$('#preview').height(win.height() - 476);
-	}
-}
-
-resize();
 
 // DATE PICKER
 
@@ -150,9 +137,26 @@ var Picker = function(){
 
 }();
 
-// MORE INFO
+// RESIZE
 
-var more = true;
+var more_info = false;
+
+$(window).resize(resize);
+
+function resize(e){
+	var win = $(window);
+	if(!more_info){
+		$('.CodeMirror').height(win.height() - 206);
+		$('#preview').height(win.height() - 206);
+	} else {
+		$('.CodeMirror').height(win.height() - 476);
+		$('#preview').height(win.height() - 476);
+	}
+}
+
+resize();
+
+// MORE INFO
 
 $('#toggle').click(function(e){
 	e.preventDefault();
@@ -163,27 +167,23 @@ $('#title').on('click focus',function(e){
 	openHeader();
 });
 
-$('.CodeMirror').on('click',function(e){
-	closeHeader();
-});
-
 function toggleHeader(){
-	if(more){
+	if(more_info){
 		$('.editor_header').addClass('less');
 	} else {
 		$('.editor_header').removeClass('less');
 	}
-	more = !more;
+	more_info = !more_info;
 	resize();
 }
 
 function openHeader(){
-	more = false;
+	more_info = false;
 	toggleHeader();
 }
 
 function closeHeader(){
-	more = true;
+	more_info = true;
 	toggleHeader();
 }
 
