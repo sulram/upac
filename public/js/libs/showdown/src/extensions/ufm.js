@@ -52,13 +52,14 @@
                 if (leadingSlash === '\\') {
                     return match;
                 } else {
-                    return '<div class="image-upload" data-match-num="'+(img_uploader_count++)+'">'+
-                    '<form action="/editor/upload" method="POST" enctype="multipart/form-data" class="dropzone">'+
+                    return '<div data-match-num="'+(img_uploader_count++)+'" class="image-upload">'+
                         '<div class="fallback">'+
+                            '<form action="/editor/upload" method="POST" enctype="multipart/form-data" data-match-num="'+(img_uploader_count++)+'">'+
                             '<input type="file" name="image"/>'+
                             '<button type="submit">Enviar</button>'+
+                            '</form>'+
                         '</div>'+
-                    '</form></div>';
+                    '</div>';
                 }
             }},
 

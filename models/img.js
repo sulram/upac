@@ -23,6 +23,7 @@ var ImgSchema = new Schema({
 	upload_complete: Boolean,
 	createdAt: Date
 });
+
 var make_thumbs =  function(file, base_name, image_config, variant, file_cb, all_cb) {
 	console.info('preparando thumbs.')
 	temp.mkdir('upac-thumbnails', function(err, tempdir) {
@@ -160,6 +161,85 @@ ImgSchema.statics.uploadAndReplace = function(prev_id, cdn, image_config, user_i
 }
 ImgSchema.methods.getSize = function(variant) {
 	return this.sizes[variant];
+}
+ImgSchema.methods.replace = function(cdn, image_config, orig_name, file_name, base_name, variant, cb) {
+	var uploader = cdn.create();
+	var sizes = [];
+	var errors = [];
+	var callb = cb;
+	var file_pieces = orig_name.split('/');
+	file_pieces = file_pieces[file_pieces.length - 1].split('\\');
+
+	var original_url = base_name+'-original-'+file_pieces[file_pieces.length-1];
+	var oldimg = _.pick(this, 'sizes', 'original_cdn_id');
+
+	console.log(original_url);
+	uploader.upload({
+		container: cdn.container,
+		remote: original_url,
+		local: file_name
+	}, function(err, data) {
+		if (err && err.statusCode && (err.statusCode != 200)){
+			return cb({
+				msg: 'Could not upload file to CDN',
+				error: err,
+				data: data
+			});
+		}
+		this.set({
+			filename: base_name,
+			original_cdn_id: original_url,
+			original_cdn_url: cdn.server_url + original_url,
+			variant: variant,
+			upload_complete: false,
+			sizes: null
+		});
+		var img = this;
+		this.save(function(err) {
+			if(err) {return cb(err);}
+			cb(null, img); // callback com infos temporárias - upload é feito em seguida
+			_.each(oldimg.sizes, function(size) {
+				console.info('deletando imagem %s', size.cdn_id);
+				uploader.remove({
+					container: cdn.container,
+					remote: size.cdn_id
+				}, function(err) {});
+			});
+			uploader.remove({
+				container: cdn.container,
+				remote: oldimg.original_cdn_id
+			}, function(err) {});
+			var images = make_thumbs(file_name, base_name, image_config, variant, function(err, image, complete_) {
+				if(err) return cb(err);
+				var complete_cb = complete_;
+				uploader.upload({
+					container: cdn.container,
+					remote: image.filename,
+					local: image.path,
+				}, function(err) {
+					if(err) { errors.push({error: err, file: image.path}); return; }
+					sizes.push( {
+						size: image.size,
+						cdn_id: image.filename,
+						cdn_url: cdn.server_url + image.filename
+					});
+					//console.info("complete: %s", complete_cb)
+					complete_cb();
+				});
+			}, function(err, all) {
+				if(err) {
+					return callb(err);	
+				}
+				img.set({
+					sizes: sizes,
+					upload_complete:true
+				});
+				img.save(function(err2) {
+					if (err2) return callb(err2);
+				});
+			});
+		})
+	});
 }
 
 var ArticleImgRefSchema = new Schema({

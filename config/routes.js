@@ -88,6 +88,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.put('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.update);
 	app.del('/article/:id', auth.requiresLogin, article.preloadById, auth.article.hasAuthorization, article.remove);
 	app.get('/article/:id/images', article.getImages);
+	app.post('/article/:id/imageupload', auth.requiresLogin, article.uploadImage);
 	app.get('/article/:id/attachments', article.getAttachments);
 
 	// route for testing uploads to the CDN server
@@ -112,6 +113,8 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.all('/notices', notice.index);
 	app.post('/notice/new', auth.requiresLogin, notice.create);
 	app.get('/notice/:id', notice.show);
+
+	app.get('/image/:id', img.show);
 
 	app.get('/', function(req, res) { res.render('index'); });
 

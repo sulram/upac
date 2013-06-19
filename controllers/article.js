@@ -96,9 +96,9 @@ module.exports = function(cdn, paginate){ return {
 			if(err) return res.jsonx(500, {error: err});
 			if(!article) {
 				data._id = mongoose.Types.ObjectId(req.body.id);
+				data.owners = req.param('owners')||[req.user.id];
 				article = new Article(data);
 				article._id = mongoose.Types.ObjectId(req.body.id);
-				article.owners = [req.user.id];
 			} else {
 				article.set(data);
 			}
@@ -169,7 +169,6 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	update: function(req, res) {
-
 		req.article.set(req.body);
 		req.article.updatedAt = new Date();
 		req.article.save(function(err) {
@@ -217,28 +216,21 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	uploadImage: function(req, res, next) {
-		Article.findById(req.param('id'), function(err, article){
-			if(err) return next(err);
-			if(!article) return res.jsonx(404, {msg: "article not found"});
-			var img = new Img();
-			var path = req.files.image.name;
-			img.filename = path.split('/').slice(-2).join('/');
-			img.remote_name = 'article-'+article.id+'/images/'+img.filename;
-			cdn.create().upload({
-				container: cdn.container,
-				remote: img.remote_name,
-				local: req.files.image.path // <-- image = name do item no form de upload
-			},function(err) {
-				if (err) return next(err);
-				img.save();
-				article.images.push(img.id);
-				article.save(function(err){
-					if (err) return res.jsonx(500, {msg: "error saving image"});
-					res.jsonx({msg:"ok", image:img});
+		var article_id = req.param(':id');
+		Img.upload(cdn, req.image_config,
+			req.user.id,
+			req.files.image.name,
+			req.files.image.path,
+			'article-'+article_id+'-content',
+			'content',
+			function(err, image) {
+				if(err) return next(err);
+				res.jsonx({
+					msg:'ok',
+					image: image
 				});
 			});
-
-		});
+		
 	},
 	uploadAttachment: function(req, res, next) {
 		Article.findById(req.param('id'), function(err, article){
