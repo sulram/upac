@@ -46,11 +46,12 @@ App.HomeController = Ember.ObjectController.extend({
 App.BlogRecentesController = Ember.ObjectController.extend({
     articles: [],
     isLoaded: false,
+    postsCount: 0,
+    postsLimit: 4,
     getcontent: function(){
         var _this = this;
         var page = this.get('model.page_num');
-        var posts = 4;
-        $.getJSON('/article', {from: (page-1) * posts, limit: posts, sort_by: 'publicationDate', order: -1}, function(data){
+        $.getJSON('/article', {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
             var articles = [];
             $.each(data.articles, function(i, article) {
                 var article = Ember.Object.create(article);
@@ -58,10 +59,33 @@ App.BlogRecentesController = Ember.ObjectController.extend({
                 articles.push(article);
             });
             console.log(articles[0]);
+            _this.set('postsCount', data.count);
             _this.set('articles', articles);
             _this.set('isLoaded', true);
         });
-    }
+    },
+    needPagination: function(){
+        return this.get('numPages') > 1;
+    }.property('numPages'),
+    numPages: function(){
+        return Math.ceil(this.get('postsCount') / this.get('postsLimit'));
+    }.property('postsCount','model.page_num'),
+    prevPage: function(){
+        var n = this.get('model.page_num');
+        return Ember.Object.create({page_num: n > 1 ? n - 1 : 1});
+    }.property('model.page_num'),
+    nextPage: function(){
+        var n = this.get('model.page_num');
+        var total = this.get('numPages');
+        return Ember.Object.create({page_num: n < total ? Number(n) + 1 : total});
+    }.property('numPages','model.page_num'),
+    pages: function(){
+        var p = [];
+        for(var i = 1; i <= this.get('numPages'); i++){
+            p.push(Ember.Object.create({page_num: i, is_current: i == this.get('model.page_num')}));
+        }
+        return p;
+    }.property('numPages','model.page_num')
 });
 
 App.BlogPostController = Ember.ObjectController.extend({

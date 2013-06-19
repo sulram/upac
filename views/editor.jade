@@ -11,7 +11,7 @@ html
 
 	body(data-article-id="#{article.id}").editor
 		form(action="/article/#{article.id}", method="POST")#editor_form
-			.editor_header
+			.editor_header.less
 				a#close(href="/#/blog")
 					| fechar
 				.container
@@ -49,13 +49,12 @@ html
 								| Palavras-chave
 							.input_tags
 								textarea(name="tags", rows="5", placeholder="")#tags
-				
 
 			.container
 				.editor_panes.row
 					.editor_markdown.span6
 						span.editor-type
-							| Editor
+							| Texto
 						textarea(name="content")#editor= article.content
 						textarea(disabled)#link-refs
 							each image in article.images
@@ -74,8 +73,18 @@ html
 				.container
 					.row
 						.span6
-							a(href="#").btn
-								| deletar publicação
+							- post_remove = is_new ? 'btn btn-w-icon hide' : 'btn btn-w-icon'
+							- post_view = is_new ? 'btn btn-info btn-w-icon hide' : 'btn btn-info btn-w-icon'
+							a(href="#",class="#{post_remove}")#post_remove
+								i.fui-cross
+								&nbsp;
+								| Remover
+							&nbsp;
+							a(href="/#/blog/post/#{article.id}",class="#{post_view}")#post_view
+								i.fui-eye
+								&nbsp;
+								| Visualizar no blog
+
 						.span3.arquivo
 							label.input_label(for="status")
 								| Arquivo
@@ -85,13 +94,18 @@ html
 								option(name="published", value="published", selected=published) postar no blog
 								option(name="draft",value="draft", selected=draft) salvar como rascunho
 						.span3
-							input(type="submit", name="submit", value="Salvar publicação")#submit.btn.btn-primary
+							input(type='submit')#submit.hide
+							a(href="#")#submit_anchor.btn.btn-primary.btn-w-icon
+								i.fui-check
+								&nbsp;
+								| Salvar publicação
+							img(src='/img/ajax-loader.gif')#loading
 
+			#info
 
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')
 		script(src='/js/underscore-min.js')
 		script(src='/js/jquery.filedrop.js')
-		script(src='/js/libs/prefixfree.min.js')
 		script(src='/flat-ui/js/bootstrap.min.js')
 		script(src='/js/libs/codemirror/lib/codemirror.js')
 		script(src='/js/libs/codemirror/mode/markdown/markdown.js')
