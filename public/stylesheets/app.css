@@ -566,7 +566,16 @@ iframe {
 	height: 200px;
 	background: #ccc;
 	display: block;
+	overflow: hidden;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
 }
+
+/*#wrapper.blog .grid_posts article .figure img {
+	height: 100%;
+	width: auto;
+}*/
 
 #wrapper.blog .grid_posts article .info {
 	padding: 20px;
@@ -625,6 +634,10 @@ iframe {
 
 .post_content p {
 	margin-bottom: 1em;
+}
+
+.post_content .image-upload {
+	display: none;
 }
 
 

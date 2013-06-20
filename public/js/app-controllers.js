@@ -47,18 +47,24 @@ App.BlogRecentesController = Ember.ObjectController.extend({
     articles: [],
     isLoaded: false,
     postsCount: 0,
-    postsLimit: 4,
+    postsLimit: 10,
     getcontent: function(){
         var _this = this;
         var page = this.get('model.page_num');
         $.getJSON('/article', {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
             var articles = [];
-            $.each(data.articles, function(i, article) {
-                var article = Ember.Object.create(article);
+            $.each(data.articles, function(i, _article) {
+                var article = Ember.Object.create(_article);
                 article.set('post_id', article.get('_id'));
+                if(_article.images[0]){
+                    var img = 'http:'+_.findWhere(_article.images[0].image.sizes,{size:'medium'}).cdn_url;
+                    article.set('img', img);
+                    article.set('bgimg', 'background-image: url('+img+');');
+                    console.log(img);
+                }
                 articles.push(article);
             });
-            console.log(articles[0]);
+            //console.log(articles[0]);
             _this.set('postsCount', data.count);
             _this.set('articles', articles);
             _this.set('isLoaded', true);

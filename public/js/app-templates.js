@@ -110,7 +110,7 @@ function program1(depth0,data) {
   data.buffer.push(")</p>\n				<p class=\"excerpt\">");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.excerpt", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</p>\n			</div>\n		</div>\n\n		<div class=\"row-fluid\">\n			<div class=\"span12 firstimage\">\n				<img src=\"/img/home02.jpg\"/>\n			</div>\n		</div>\n		\n		<div class=\"row-fluid\">\n			<div class=\"span4\">\n				<p>Postado por ");
+  data.buffer.push("</p>\n			</div>\n		</div>\n\n		<!--<div class=\"row-fluid\">\n			<div class=\"span12 firstimage\">\n				<img src=\"/img/home02.jpg\"/>\n			</div>\n		</div>-->\n		\n		<div class=\"row-fluid\">\n			<div class=\"span4\">\n				<p>Postado por ");
   hashTypes = {};
   stack2 = helpers.each.call(depth0, "owner", "in", "article.owners", {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
@@ -207,10 +207,12 @@ function program3(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n						<div class=\"figure\">\n							");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article._id", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n						</div>\n						<div class=\"info\">\n							<span class=\"title\">\n								");
+  data.buffer.push("\n						<div class=\"figure\" ");
+  hashTypes = {'style': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'style': ("article.bgimg")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push("/>\n						</div>\n						<div class=\"info\">\n							<span class=\"title\">\n								");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.title", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push("\n							</span>\n							<span class=\"date\">\n								");
