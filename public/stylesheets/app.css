@@ -780,7 +780,12 @@ body.editor {
 	height: 500px;
 	overflow: auto;
 	font-size: 16px;
+	padding-right: 20px;
 	/*background: #efefef;*/
+}
+
+.editor #preview img {
+	max-width: 100%;
 }
 
 .editor .editor_markdown,
@@ -829,6 +834,28 @@ body.editor {
 	margin: 20px 0;
 	padding: 20px;
 	background: #efefef;
+	cursor: pointer;
+}
+
+.editor .image-upload .aviso {
+	padding: 20px;
+	border: 1px dashed #ccc;
+	font-size: 14px;
+	text-align: center;
+}
+
+.editor .image-upload:hover,
+.editor .image-upload.hover  {
+	background: #ddd;
+}
+
+.editor .image-upload.uploading,
+.editor .image-upload.uploading:hover {
+	background: #efefef url('../img/ajax-loader-efefef.gif') no-repeat center center;
+}
+
+.editor .image-upload.uploading .aviso {
+	text-indent: -9999px;
 }
 
 .editor #datetimepicker .add-on {
