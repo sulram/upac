@@ -81,7 +81,7 @@ module.exports = function(cdn, paginate){ return {
 	},
 	editor: function(req, res, next) {
 		var query = {_id: req.param('id')}
-		if (false) {
+		if (!req.isAdmin()) {
 			query['owners'] = req.user.id;
 		}
 		Article.findOne(query)
