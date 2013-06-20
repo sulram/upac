@@ -60,14 +60,15 @@ var updatePreview = function() {
 			uploadFinished: function(i, file, response, time) {
 				is_uploading = false;
 				console.log(response);
-				var occ = Number($this.data('match-id'));
+				var occ = Number($this.data('match-num'));
+				console.log(occ);
 				var idx = $("#image-refs input").length / 2
 				var $img_id = $('<input type="hidden">').attr('name', 'images['+idx+'][0]').attr('value', response.image._id);
 				var $img_size = $('<input type="hidden">').attr('name', 'images['+idx+'][1]').attr('value', '');
 				$('#image-refs').append($img_id).append($img_size);
 				$('#link-refs').append('['+response.image._id+']: '+response.image.original_cdn_url+"\n");
 				var text_replace = editor.getValue();
-				var parts = text_replace.split(/\b!img\b/)
+				var parts = text_replace.split(/!img\b/g)
 				console.log(parts);
 				var first = parts.splice(0, occ+1).join('!img')
 				console.log(parts)
