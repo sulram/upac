@@ -80,16 +80,19 @@ module.exports = function(cdn, paginate){ return {
 		res.render('editor',{title:"Editor", article:article, is_new:true});
 	},
 	editor: function(req, res, next) {
-		Article.findById(req.param('id'))
+		var query = {_id: req.param('id')}
+		if (false) {
+			query['owners'] = req.user.id;
+		}
+		Article.findOne(query)
 			.populate('images.image')
 			.exec(function(err, article) {
-			if(err) return next(err);
-			if(!article) return next(null, article);
-			if(!req.isAdmin() || !_.detect(article.owners, function(owner) { return owner.id == req.user.id;})) {
-				return next({msg:"error", error: "Não é possível editar esse artigo com as credenciais atuais"}, article);
+				if(err) return next(err);
+				console.log(article);
+				if(!article) return next(null, article);
+				res.render('editor',{title:"Editor", article:article, is_new:false});
 			}
-			res.render('editor',{title:"Editor", article:article, is_new:false});
-		});
+		);
 	},
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
