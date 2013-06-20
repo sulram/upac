@@ -24,7 +24,12 @@ window.App = Ember.Application.create({
 
 Ember.Handlebars.registerBoundHelper('momentago', function(value, options) {
   var escaped = Handlebars.Utils.escapeExpression(value);
-  return new Handlebars.SafeString('<span class="momentago">' + moment(escaped).fromNow() + '</span>');
+  if(value) return new Handlebars.SafeString('<span class="momentago">' + moment(escaped).fromNow() + '</span>');
+});
+
+Ember.Handlebars.registerBoundHelper('momentdate', function(value, options) {
+  var escaped = Handlebars.Utils.escapeExpression(value);
+  if(value) return new Handlebars.SafeString('<span class="momentdate">' + moment(escaped).format('L') + '</span>');
 });
 
 Ember.Handlebars.registerBoundHelper('ufm', function(value, options) {
