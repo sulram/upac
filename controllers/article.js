@@ -143,7 +143,7 @@ module.exports = function(cdn, paginate){ return {
 		*/
 	},
 	index: function(req, res) {
-		paginate.paginate(Article,{publicationStatus:'published'},{populate:'images.image'}, req, function(err, articles, pagination) {
+		paginate.paginate(Article,{publicationStatus:'published'},{populate:'images.image owners'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
 				res.jsonx({
 					msg:'ok',
