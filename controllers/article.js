@@ -107,7 +107,7 @@ module.exports = function(cdn, paginate){ return {
 		})
 		console.info(data.images);
 		// TODO: pegar tags e transformar em ObjectIDs
-		var query = {id: req.param('id')}
+		var query = {_id: req.param('id')}
 		if(!req.isAdmin()) {
 			query['owners'] = req.user.id;
 		}
