@@ -21,7 +21,7 @@
 		
 		<div class="row-fluid">
 			<div class="span4">
-				<p>Postado por {{#each owner in article.owners}}{{owner}}{{/each}}</p>
+				<p>Postado por {{#each owner in article.owners}}{{owner.name}}{{/each}}</p>
 				<p><a class="btn" {{bindAttr href="edit_link"}}>Editar</a></p>
 			</div>
 			<div class="span8 post_content">

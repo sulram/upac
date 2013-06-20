@@ -80,9 +80,14 @@ module.exports = function(cdn, paginate){ return {
 		res.render('editor',{title:"Editor", article:article, is_new:true});
 	},
 	editor: function(req, res, next) {
-		Article.findById(req.param('id'), function(err, article) {
+		Article.findById(req.param('id'))
+			.populate('images.image')
+			.exec(function(err, article) {
 			if(err) return next(err);
 			if(!article) return next(null, article);
+			if(!req.isAdmin() || !_.detect(article.owners, function(owner) { return owner.id == req.user.id;})) {
+				return next({msg:"error", error: "Não é possível editar esse artigo com as credenciais atuais"}, article);
+			}
 			res.render('editor',{title:"Editor", article:article, is_new:false});
 		});
 	},
@@ -99,7 +104,11 @@ module.exports = function(cdn, paginate){ return {
 		})
 		console.info(data.images);
 		// TODO: pegar tags e transformar em ObjectIDs
-		Article.findById(req.param('id'), function(err, article) {
+		var query = {id: req.param('id')}
+		if(!req.isAdmin()) {
+			query['owners'] = req.user.id;
+		}
+		Article.findOne(query, function(err, article) {
 			if(err) return res.jsonx(500, {error: err});
 			if(!article) {
 				data._id = mongoose.Types.ObjectId(req.body.id);
@@ -131,7 +140,7 @@ module.exports = function(cdn, paginate){ return {
 		*/
 	},
 	index: function(req, res) {
-		paginate.paginate(Article,{publicationStatus:'published'},{}, req, function(err, articles, pagination) {
+		paginate.paginate(Article,{publicationStatus:'published'},{populate:'images.image'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
 				res.jsonx({
 					msg:'ok',
@@ -156,15 +165,18 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	show: function(req, res, next) {
-		Article.findById(req.params.id, function(err, article){
+		Article.findById(req.params.id)
+			.populate('images.image owners')
+			.exec(function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
-			res.jsonx({article:{
-				title: article.title,
-				content: article.content,
-				owners: article.owners,
-				slug: article.slug
-			}});
+			_.each(article.images, function(image){
+				var size = {cdn_url:image.image.original_cdn_url};
+				var nsize = _.detect(image.image.sizes,function(img){ return img.size == image.size; });
+				size = nsize||size;
+				article.content+=("\n["+image.image.id+"]: "+size.cdn_url);				
+			})
+			res.jsonx({article:article});
 		});
 	},
 	preloadById: function(req, res, next) {
@@ -196,7 +208,11 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	remove: function(req, res, next) {
-		Article.remove({_id: id},function(err){
+		var query = {_id: id};
+		if(!req.isAdmin()) {
+			query['owners'] = req.user.id;
+		}
+		Article.remove(query,function(err){
 			if (err) {
 				res.jflash('error', 'internal server error');
 				return res.jsonx(500, {msg:'internal server error'});
@@ -220,7 +236,7 @@ module.exports = function(cdn, paginate){ return {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.jsonx(404, {msg: "user not found"});
-			Article.find({owners:user.id}, function(err, articles) {
+			Article.find({owners:user.id}).populate('images.image').exec(function(err, articles) {
 				if(err) return next(err);
 				if(!articles) return res.jsonx(404, {msg: "no articles found"});
 				res.jsonx({
