@@ -536,6 +536,7 @@ iframe {
 
 #wrapper.blog #content {
 	margin: 0 80px;
+	max-width: none;
 }
 
 #wrapper.blog h1 a,
