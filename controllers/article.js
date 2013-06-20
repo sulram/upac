@@ -85,6 +85,9 @@ module.exports = function(cdn, paginate){ return {
 			.exec(function(err, article) {
 			if(err) return next(err);
 			if(!article) return next(null, article);
+			if(!req.isAdmin() || !_.detect(article.owners, function(owner) { return owner.id == req.user.id;})) {
+				return next({msg:"error", error: "Não é possível editar esse artigo com as credenciais atuais"}, article);
+			}
 			res.render('editor',{title:"Editor", article:article, is_new:false});
 		});
 	},
@@ -101,7 +104,11 @@ module.exports = function(cdn, paginate){ return {
 		})
 		console.info(data.images);
 		// TODO: pegar tags e transformar em ObjectIDs
-		Article.findById(req.param('id'), function(err, article) {
+		var query = {id: req.param('id')}
+		if(!req.isAdmin()) {
+			query['owners'] = req.user.id;
+		}
+		Article.findOne(query, function(err, article) {
 			if(err) return res.jsonx(500, {error: err});
 			if(!article) {
 				data._id = mongoose.Types.ObjectId(req.body.id);
@@ -201,7 +208,11 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	remove: function(req, res, next) {
-		Article.remove({_id: id},function(err){
+		var query = {_id: id};
+		if(!req.isAdmin()) {
+			query['owners'] = req.user.id;
+		}
+		Article.remove(query,function(err){
 			if (err) {
 				res.jflash('error', 'internal server error');
 				return res.jsonx(500, {msg:'internal server error'});
