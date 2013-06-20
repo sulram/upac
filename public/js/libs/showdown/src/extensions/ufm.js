@@ -46,7 +46,7 @@
             { type: 'lang', regex: '\\\\@', replace: '@' },
 
             // !img upload tag
-            { type: 'lang', regex: '!img', 
+            { type: 'lang', regex: '(\\\\)?(!img)\\b', 
             init: function() { img_uploader_count = 0; },
             replace: function(match, leadingSlash, tag) {
                 if (leadingSlash === '\\') {
@@ -71,6 +71,18 @@
               replace : function(match, prefix, content, suffix) {
                   return '<del>' + content + '</del>';
               }
+            },
+
+            {
+                type: 'lang',
+                regex: '(\\\\)?~\\[(https?://)?youtu.be/([\\w_]+)\\]'
+                replace: function(match, leadingSlash, scheme, code) {
+                    if(leadingSlash == '\\') {
+                        return match;
+                    } else {
+                        return '<iframe width="560" height="315" src="http://www.youtube.com/embed/'+code+'" frameborder="0" allowfullscreen></iframe>'
+                    }
+                }
             }
         ];
     };
