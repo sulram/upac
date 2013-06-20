@@ -74,9 +74,22 @@
             },
 
             {
+                // links de youtube (link curto)
                 type: 'lang',
-                regex: '(\\\\)?~\\[(https?://)?youtu.be/([\\w_]+)\\]'
+                regex: '(\\\\)?~~\\[(https?://)?youtu.be/([\\w_]+)\\]',
                 replace: function(match, leadingSlash, scheme, code) {
+                    if(leadingSlash == '\\') {
+                        return match;
+                    } else {
+                        return '<iframe width="560" height="315" src="http://www.youtube.com/embed/'+code+'" frameborder="0" allowfullscreen></iframe>'
+                    }
+                }
+            },
+            {
+                // links de youtube (link curto)
+                type: 'lang',
+                regex: '(\\\\)?~~\\[(https?://)?(\\w+\\.)?youtube.com/\\?watch=([\\w_]+)\\.*\\]',
+                replace: function(match, leadingSlash, scheme, subdomain, code) {
                     if(leadingSlash == '\\') {
                         return match;
                     } else {
