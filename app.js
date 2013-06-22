@@ -73,7 +73,13 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
-app.use(express.session({secret:config.secret}))
+app.use(express.session({
+	secret:config.secret,
+	cookie: {
+		//secure: true,  // só quando habilitar HTTPS
+		httpOnly: true
+	}
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(connect_form({keepExtensions: true}));

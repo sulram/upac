@@ -14,7 +14,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 		res.render('admin/index',{title:"Administração do site UPAC"})
 	})
 	app.get('/admin/signin', admin.signin);
-	app.post('/admin/login', passport.authenticate('local'), user.login);
+	app.post('/admin/login', passport.authenticate('local'), admin.login);
 	app.all('/admin/logout', admin.logout);
 
 	app.get('/admin/user/new', auth.requiresAdminLogin, user.admin.editnew);
