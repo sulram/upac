@@ -9,7 +9,7 @@ block content
 		form(action='/admin/login', method='POST')
 			fieldset
 				.clearfix
-					input(type="text", placeholder="Nome de usuário ou email")
+					input(type="text", name="username", placeholder="Nome de usuário ou email")
 				.clearfix
-					input(type="password", placeholder="Senha")
+					input(type="password", name="password", placeholder="Senha")
 				button.btn.btn-primary(type="submit") Entrar
