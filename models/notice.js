@@ -9,6 +9,7 @@ var NoticeSchema = new Schema({
 	//geo: {type:[Number], index:"2d"},
 	text: String,
 	url: String,
+	image: {type: ObjectId, ref:'Img'},
 	//replies: [{type: ObjectId, ref:'Notice'}]
 });
 

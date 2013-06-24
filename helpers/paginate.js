@@ -17,7 +17,11 @@ module.exports = function(_){
 			if(options.sort_by != '') {
 				query.sort((options.order==-1)?'-'+options.sort_by:options.sort_by);
 			}
-			query.skip(options.from).limit(options.limit);
+			if(options.limit > 0) {
+				query.skip(options.from).limit(options.limit);
+			} else {
+				options.from = 0;
+			}
 			query.exec(function(err, data) {
 				model.count(query_terms, function(err, count) {
 					return cb(err, data, _.extend({count:count},options));

@@ -6,7 +6,12 @@ module.exports = function(paginate) {
 	return {
 		admin: {
 			index: function(req, res, next) {
-				paginate.paginate(Notice,{},{},req, function(err, notices, pagination) {
+				paginate.paginate(Notice,{},{
+					sort_by: 'order',
+					order: -1, 
+					limit: -1, // no limit
+					populate:'owner image'
+				},req, function(err, notices, pagination) {
 					if(err) return next(err);
 					var total = 0;
 					Notice.count({}, function(err, count){
@@ -84,7 +89,7 @@ module.exports = function(paginate) {
 		index: function(req, res, next) {
 			var from = req.param.from || 0;
 			var limit = req.param.limit || 10;
-			Notice.find({}).sort('-date').skip(from).limit(limit).exec(function(err, notices) {
+			Notice.find({}).sort('-order').skip(from).limit(limit).populate('image owner').exec(function(err, notices) {
 				if (err) return next(err);
 				if (!notices) return res.jsonx(500, {msg: "Database error", error: "Notices array nonexistent"});
 				res.jsonx({
