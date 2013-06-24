@@ -31,7 +31,7 @@ block content
 						a(href='/admin/notice/#{notice.id}')!= md(notice.text)
 					td
 						a(href=notice.url)= notice.url
-					td= notice.createdAt
+					td.moment-me= notice.createdAt
 					td
 						a(href="/admin/notice/#{notice.id}/remove",title="Excluir")
 							i.icon-remove

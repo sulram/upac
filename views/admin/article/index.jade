@@ -31,9 +31,9 @@ block content
 					p= article.excerpt
 				td= article.parent
 				td= article.publicationStatus
-				td= article.publicationDate
-				td= article.createdAt
-				td= article.updatedAt
+				td.moment-me= article.publicationDate
+				td.moment-me= article.createdAt
+				td.moment-me= article.updatedAt
 				td
 					a(href="/admin/article/#{article.id}/remove",title="Excluir")
 						i.icon-remove
