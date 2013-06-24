@@ -6,7 +6,7 @@ module.exports = function(paginate) {
 	return {
 		admin: {
 			index: function(req, res, next) {
-				paginate.paginate(Notice,{},{},req, function(err, notices, pagination) {
+				paginate.paginate(Notice,{},{sort_by: 'order', limit: 100},req, function(err, notices, pagination) {
 					if(err) return next(err);
 					var total = 0;
 					Notice.count({}, function(err, count){
