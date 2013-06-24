@@ -13,7 +13,7 @@ block content
 		+table_rec_row("Ordem", notice.order)
 		+table_rec_row_raw("Texto", md(notice.text))
 		+table_rec_row_link("Link", notice.url, notice.url)
-		+table_rec_row("Data de criação", notice.createdAt)
+		+table_rec_row_date("Data de criação", notice.createdAt)
 	hr
 	.btn-group
 		a(href='/admin/notices').btn Voltar

@@ -17,6 +17,7 @@ Descrição e informações úteis desse módulo do projeto
 * [Showdow](https://github.com/coreyti/showdown)
 * [CodeMirror](http://codemirror.net/)
 * [Dropzone](http://www.dropzonejs.com/)
+* [FileDrop](http://www.github.com/weixiyen/jquery-filedrop)
 
 ### Guias e documentação
 

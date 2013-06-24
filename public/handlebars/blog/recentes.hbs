@@ -4,8 +4,7 @@
 			{{#each article in articles}}
 				<article {{bindAttr id="article._id"}}>
 					{{#linkTo blog.post article}}
-						<div class="figure">
-							{{article._id}}
+						<div class="figure" {{bindAttr style='article.bgimg'}}/>
 						</div>
 						<div class="info">
 							<span class="title">

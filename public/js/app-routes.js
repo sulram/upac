@@ -23,13 +23,20 @@ App.Router.map(function() {
 
 // TIMELINE
 
-App.IndexRoute = Em.Route.extend({
+App.UpacRoute = Em.Route.extend({
+    setupController:function(controller,model){
+        window.scrollTo(0, 0);
+        this._super(this, arguments);
+    }
+});
+
+App.IndexRoute = App.UpacRoute.extend({
     redirect: function() {
         this.transitionTo('home');   
     }
 });
 
-App.TimelineRoute = Em.Route.extend({
+App.TimelineRoute = App.UpacRoute.extend({
     model: function (param){
         console.log('App.UserModel.find', param.user_username);
         return App.UserModel.find(param.user_username);
@@ -44,13 +51,13 @@ App.TimelineRoute = Em.Route.extend({
     }
 });
 
-App.TimelineIndexRoute = Em.Route.extend({
+App.TimelineIndexRoute = App.UpacRoute.extend({
     model: function (param){
         return this.modelFor('timeline');
     }
 });
 
-App.TimelineEditarRoute = Em.Route.extend({
+App.TimelineEditarRoute = App.UpacRoute.extend({
     model: function (param){
         return this.modelFor('timeline');
     }
@@ -58,20 +65,20 @@ App.TimelineEditarRoute = Em.Route.extend({
 
 // REDE
 
-App.RedeRoute = Em.Route.extend({
+App.RedeRoute = App.UpacRoute.extend({
     setupController: function(controller, model) {
         App.MapController.isMarking = false;
         App.MapController.getMarkers();
     }
 });
 
-App.RedeIndexRoute = Em.Route.extend({
+App.RedeIndexRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         this._super(this, arguments);
     }
 });
 
-App.RedePerfilRoute = Em.Route.extend({
+App.RedePerfilRoute = App.UpacRoute.extend({
     model: function (param){
         console.log('App.UserModel.find', param.user_username);
         return App.UserModel.find(param.user_username);
@@ -90,7 +97,7 @@ App.RedePerfilRoute = Em.Route.extend({
     }
 });
 
-App.RedeEditarRoute = Em.Route.extend({
+App.RedeEditarRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         this._super(this, arguments);
     }
@@ -98,13 +105,13 @@ App.RedeEditarRoute = Em.Route.extend({
 
 // BLOG
 
-App.BlogIndexRoute = Em.Route.extend({
+App.BlogIndexRoute = App.UpacRoute.extend({
     redirect: function() {
         this.transitionTo('blog.recentes', Ember.Object.create({page_num: 1}));   
     }
 });
 
-App.BlogRecentesRoute = Em.Route.extend({
+App.BlogRecentesRoute = App.UpacRoute.extend({
     model: function(param){
         return Ember.Object.create({page_num: param.page_num});
     },
@@ -118,7 +125,7 @@ App.BlogRecentesRoute = Em.Route.extend({
     }
 });
 
-App.BlogPostRoute = Em.Route.extend({
+App.BlogPostRoute = App.UpacRoute.extend({
     model: function(param){
         return Ember.Object.create({post_id: param.post_id});
     },

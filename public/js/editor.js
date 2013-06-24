@@ -12,6 +12,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 	extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"},
 	autofocus: true
 });
+var is_uploading = false;
 var updatePreview = function() {
 	$("#preview").html(showdown.makeHtml(editor.getValue()+'\n'+$('#link-refs').val()));
 	$('#preview .image-upload').each(function(index){
@@ -46,7 +47,18 @@ var updatePreview = function() {
 				'image/x-windows-bmp',
 				'image/bmp'
 			],
+			dragOver: function(){
+				$this.addClass('hover');
+			},
+			dragLeave: function(){
+				$this.removeClass('hover');
+			},
+			uploadStarted: function(){
+				$this.addClass('uploading');
+				is_uploading = true;
+			},
 			uploadFinished: function(i, file, response, time) {
+				is_uploading = false;
 				console.log(response);
 				var occ = Number($this.data('match-num'));
 				console.log(occ);
@@ -91,6 +103,7 @@ var updatePreview = function() {
 	});*/
 }
 editor.on('change', function() {
+	if(is_uploading) return false;
 	closeHeader();
 	clearTimeout(delay);
 	delay = setTimeout(updatePreview, 300);

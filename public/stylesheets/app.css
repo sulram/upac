@@ -536,6 +536,7 @@ iframe {
 
 #wrapper.blog #content {
 	margin: 0 80px;
+	max-width: none;
 }
 
 #wrapper.blog h1 a,
@@ -566,7 +567,16 @@ iframe {
 	height: 200px;
 	background: #ccc;
 	display: block;
+	overflow: hidden;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
 }
+
+/*#wrapper.blog .grid_posts article .figure img {
+	height: 100%;
+	width: auto;
+}*/
 
 #wrapper.blog .grid_posts article .info {
 	padding: 20px;
@@ -625,6 +635,10 @@ iframe {
 
 .post_content p {
 	margin-bottom: 1em;
+}
+
+.post_content .image-upload {
+	display: none;
 }
 
 
@@ -780,7 +794,12 @@ body.editor {
 	height: 500px;
 	overflow: auto;
 	font-size: 16px;
+	padding-right: 20px;
 	/*background: #efefef;*/
+}
+
+.editor #preview img {
+	max-width: 100%;
 }
 
 .editor .editor_markdown,
@@ -829,6 +848,28 @@ body.editor {
 	margin: 20px 0;
 	padding: 20px;
 	background: #efefef;
+	cursor: pointer;
+}
+
+.editor .image-upload .aviso {
+	padding: 20px;
+	border: 1px dashed #ccc;
+	font-size: 14px;
+	text-align: center;
+}
+
+.editor .image-upload:hover,
+.editor .image-upload.hover  {
+	background: #ddd;
+}
+
+.editor .image-upload.uploading,
+.editor .image-upload.uploading:hover {
+	background: #efefef url('../img/ajax-loader-efefef.gif') no-repeat center center;
+}
+
+.editor .image-upload.uploading .aviso {
+	text-indent: -9999px;
 }
 
 .editor #datetimepicker .add-on {
@@ -916,6 +957,3 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 /* ---------------- TEMP ---------------- */
 
-#wrapper.agenda {
-	background: url(../img/temp/agenda_01.png) repeat-x 0 10px;
-}

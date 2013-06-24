@@ -53,6 +53,9 @@
                     return match;
                 } else {
                     return '<div data-match-num="'+(img_uploader_count++)+'" class="image-upload">'+
+                        '<div class="aviso">'+
+                            'Clique ou solte uma imagem aqui para fazer upload.'+
+                        '</div>'+
                         '<div class="fallback">'+
                             '<form action="/editor/upload" method="POST" enctype="multipart/form-data" data-match-num="'+(img_uploader_count++)+'">'+
                             '<input type="file" name="image"/>'+

@@ -6,6 +6,9 @@ block title
 block link
 	-var selected = 'avisos';
 
+block scripts
+	script(src='/js/admin/notices.js')
+
 block content
 	p
 		a(href='/admin/notice/new').btn Novo aviso
@@ -19,15 +22,16 @@ block content
 					th Link
 					th Criado em
 					th Opções
-		tbody
+		tbody#sortables
 			each notice in notices
-				tr
+				tr(id=notice.id)
 					td
-						a(href='/admin/notice/#{notice.id}')= notice.order
-					td!= md(notice.text)
+						a(href='/admin/notice/#{notice.id}').order= notice.order
+					td
+						a(href='/admin/notice/#{notice.id}')!= md(notice.text)
 					td
 						a(href=notice.url)= notice.url
-					td= notice.createdAt
+					td.moment-me= notice.createdAt
 					td
 						a(href="/admin/notice/#{notice.id}/remove",title="Excluir")
 							i.icon-remove
