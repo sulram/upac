@@ -8,14 +8,21 @@ block link
 
 block content
 	h2 Aviso: #{notice.id}
-	hr
-	form(action='/admin/notice/#{notice.id}',method='POST').form-horizontal
-		+field(notice.owner, 'owner', 'ID do usuário', 'text')
-		+field(notice.order, 'order', 'Ordem', 'number')
-		+textfield(notice.text, 'text', 'Texto')
-		+field(notice.url, 'url', 'URL do link', 'text')
-		.control-group
-			.controls
-				button(type='submit').btn.btn-primary Enviar
-				&nbsp; &nbsp; 
-				a(href='/admin/notice/#{notice.id}').btn Cancelar
+	form(action='/admin/notice/#{notice.id}',method='POST', enctype='multipart/form-data').form-horizontal
+		.row
+			.span6
+				+field(notice.owner, 'owner', 'ID do usuário', 'text')
+				+field(notice.order, 'order', 'Ordem', 'number')
+				+textfield(notice.text, 'text', 'Texto')
+				+field(notice.url, 'url', 'URL do link', 'text')
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/notice/#{notice.id}').btn Cancelar
+			.span6
+				.image-upload
+					.aviso
+						| Clique ou solte uma imagem aqui para fazer upload.
+					.fallback
+						input(type='file', name='image')
