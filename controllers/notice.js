@@ -66,7 +66,7 @@ module.exports = function(cdn, paginate) {
 				Notice.findById(req.param('id'), function(err, notice) {
 					if (err) return next(err);
 					if(req.files && req.files.image) {
-						Img.uploadAndReplace(cdn, req.image_config, req.user.id,
+						Img.uploadAndReplace(notice.image, cdn, req.image_config, req.user.id,
 							req.files.image.name,
 							req.files.image.path,
 							'notice-'+notice.id+'-image',

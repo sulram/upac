@@ -18,7 +18,7 @@ block content
 				td
 					strong Imagem
 				td
-					if notice.image.sizes
+					if notice.image.upload_complete
 						img(src=notice.image.getSize('normal').cdn_url)
 					else
 						img(src=notice.image.original_cdn_url)
