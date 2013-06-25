@@ -8,6 +8,7 @@ block link
 
 block content
 	h2 Aviso: #{notice.id}
+	hr
 	form(action='/admin/notice/#{notice.id}',method='POST', enctype='multipart/form-data').form-horizontal
 		.row
 			.span6
@@ -21,8 +22,6 @@ block content
 						&nbsp; &nbsp; 
 						a(href='/admin/notice/#{notice.id}').btn Cancelar
 			.span6
+				p Imagem
 				.image-upload
-					.aviso
-						| Clique ou solte uma imagem aqui para fazer upload.
-					.fallback
-						input(type='file', name='image')
+					input(type='file', name='image')
