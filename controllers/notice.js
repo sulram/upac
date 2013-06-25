@@ -1,8 +1,10 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Notice = mongoose.model('Notice')
+  , Img = mongoose.model('Img')
+  , _ = require('underscore')
 
-module.exports = function(paginate) {
+module.exports = function(cdn, paginate) {
 	return {
 		admin: {
 			index: function(req, res, next) {
@@ -22,14 +24,32 @@ module.exports = function(paginate) {
 				});
 			},
 			create: function(req, res, next) {
-				var notice = new Notice(req.body);
-				notice.save(function(err) {
-					if(err) return next(err);
-					res.redirect('/admin/notice/'+notice._id.toString());
-				});
+				var data = _.pick(req.body, 'owner', 'order', 'text', 'url')
+				var notice = new Notice(data);
+				if(req.files && req.files.image) {
+					Img.upload(cdn, req.image_config,
+						req.user.id,
+						req.files.image.name,
+						req.files.image.path,
+						'notice-'+notice.id+'-image',
+						'notice',
+						function(err, image) {
+							if(err) return next(err);
+							notice.image = image.id;
+							notice.save(function(err) {
+								if(err) return next(err);
+								res.redirect('/admin/notice/'+notice._id.toString());
+							});
+						});
+				} else {
+					notice.save(function(err) {
+						if(err) return next(err);
+						res.redirect('/admin/notice/'+notice._id.toString());
+					});
+				}
 			},
 			editnew: function(req, res, next) {
-				res.render('admin/notice/new', {title: "Novo aviso", user: req.user.id || '' });
+				res.render('admin/notice/new', {title: "Novo aviso", notice: new Notice(), user: req.user.id || '' });
 			},
 			show: function(req, res, next) {
 				Notice.findById(req.param('id'), function(err, notice) {
@@ -44,12 +64,34 @@ module.exports = function(paginate) {
 				})
 			},
 			update: function(req, res, next) {
-				Notice.findByIdAndUpdate(req.param('id'), {$set: req.body},
-					function(err, notice) {
-						if(err) return next(err);
-						res.redirect('/admin/notice/'+req.param('id'));
+				var data = _.pick(req.body, 'owner', 'order', 'text', 'url')
+				Notice.findById(req.param('id'), function(err, notice) {
+					if (err) return next(err);
+					if(req.files && req.files.image) {
+						Img.uploadAndReplace(cdn, req.image_config, req.user.id,
+							req.files.image.name,
+							req.files.image.path,
+							'notice-'+notice.id+'-image',
+							'notice',
+							function(err, image) {
+								if(err) return next(err);
+								notice.image = image.id;
+								notice.set(data);
+								notice.save(function(err) {
+										if(err) return next(err);
+										res.redirect('/admin/notice/'+req.param('id'));
+									}
+								);
+							});
+					} else {
+						notice.set(data);
+						notice.save(function(err) {
+								if(err) return next(err);
+								res.redirect('/admin/notice/'+req.param('id'));
+							}
+						);
 					}
-				);
+				});
 			},
 			remove: function(req, res, next) {
 				Notice.findByIdAndRemove(req.param('id'), function(err) {
