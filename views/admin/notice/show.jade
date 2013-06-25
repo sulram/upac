@@ -13,6 +13,15 @@ block content
 		+table_rec_row("Ordem", notice.order)
 		+table_rec_row_raw("Texto", md(notice.text))
 		+table_rec_row_link("Link", notice.url, notice.url)
+		if notice.image
+			tr
+				td
+					strong Imagem
+				td
+					if notice.image.sizes
+						img(src=notice.image.getSize('normal').cdn_url)
+					else
+						img(src=notice.image.original_cdn_url)
 		+table_rec_row_date("Data de criação", notice.createdAt)
 	hr
 	.btn-group

@@ -73,10 +73,11 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
-app.use(express.session({
+app.use(express.cookieSession({
 	secret:config.secret,
 	cookie: {
 		//secure: true,  // só quando habilitar HTTPS
+		maxAge: 60*60*1000,
 		httpOnly: true
 	}
 }))

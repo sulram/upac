@@ -20,6 +20,7 @@ block content
 					th Ordem
 					th Aviso
 					th Link
+					th Imagem
 					th Criado em
 					th Opções
 		tbody#sortables
@@ -31,6 +32,9 @@ block content
 						a(href='/admin/notice/#{notice.id}')!= md(notice.text)
 					td
 						a(href=notice.url)= notice.url
+					td
+						if notice.image && notice.image.sizes
+							img(src=notice.image.getSize("icon").cdn_url)
 					td.moment-me= notice.createdAt
 					td
 						a(href="/admin/notice/#{notice.id}/remove",title="Excluir")

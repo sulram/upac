@@ -160,7 +160,7 @@ ImgSchema.statics.uploadAndReplace = function(prev_id, cdn, image_config, user_i
 	})
 }
 ImgSchema.methods.getSize = function(variant) {
-	return this.sizes[variant];
+	return _.find(this.sizes, function(size){ return size.size == variant; });
 }
 ImgSchema.methods.replace = function(cdn, image_config, orig_name, file_name, base_name, variant, cb) {
 	var uploader = cdn.create();

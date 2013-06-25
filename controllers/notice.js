@@ -22,6 +22,7 @@ module.exports = function(cdn, paginate) {
 				var data = _.pick(req.body, 'owner', 'order', 'text', 'url')
 				var notice = new Notice(data);
 				if(req.files && req.files.image) {
+					console.info("oe "+req.files.image.name);
 					Img.upload(cdn, req.image_config,
 						req.user.id,
 						req.files.image.name,
@@ -30,6 +31,7 @@ module.exports = function(cdn, paginate) {
 						'notice',
 						function(err, image) {
 							if(err) return next(err);
+							console.info("oe "+image);
 							notice.image = image.id;
 							notice.save(function(err) {
 								if(err) return next(err);
@@ -37,6 +39,7 @@ module.exports = function(cdn, paginate) {
 							});
 						});
 				} else {
+					console.info("sem oe");
 					notice.save(function(err) {
 						if(err) return next(err);
 						res.redirect('/admin/notice/'+notice._id.toString());
@@ -47,7 +50,7 @@ module.exports = function(cdn, paginate) {
 				res.render('admin/notice/new', {title: "Novo aviso", user: req.user.id || '' });
 			},
 			show: function(req, res, next) {
-				Notice.findById(req.param('id'), function(err, notice) {
+				Notice.findOne({_id:req.param('id')}).populate('owner image').exec(function(err, notice) {
 					if(err) return next(err);
 					res.render('admin/notice/show', {notice:notice, title:"Aviso: "+notice.id});
 				})

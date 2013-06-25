@@ -8,7 +8,7 @@ block link
 block content
 	h2 Novo aviso
 	hr
-	form(action='/admin/notice',method='POST').form-horizontal
+	form(action='/admin/notice', method='POST', enctype="multipart/form-data").form-horizontal
 		.row
 			.span6
 				+field(user, 'owner', 'ID do usuário', 'text')
