@@ -5,7 +5,7 @@ module.exports = function(_){
 				from: 0,
 				limit: 10,
 				sort_by: '',
-				sortorder: 1
+				order: 1
 			}
 			var options = _.defaults(defaults, inner_defaults);
 			options = _.defaults(req.query, options)

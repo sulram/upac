@@ -23,7 +23,7 @@ block content
 					th Criado em
 					th Opções
 		tbody#sortables
-			each notice in notices
+			for notice in notices
 				tr(id=notice.id)
 					td
 						a(href='/admin/notice/#{notice.id}').order= notice.order
@@ -35,4 +35,3 @@ block content
 					td
 						a(href="/admin/notice/#{notice.id}/remove",title="Excluir")
 							i.icon-remove
-	+pagination("/admin/notices", pagination)

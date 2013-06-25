@@ -15,12 +15,7 @@ module.exports = function(cdn, paginate) {
 					populate:'owner image'
 				},req, function(err, notices, pagination) {
 					if(err) return next(err);
-					var total = 0;
-					Notice.count({}, function(err, count){
-						if (err) return next(err);
-						total = count;
-					});
-					res.render('admin/notice/index', {notices:notices, total:total, title:"Avisos", pagination:pagination});
+					res.render('admin/notice/index', {notices:notices, total:pagination.count, title:"Avisos", pagination:pagination});
 				});
 			},
 			create: function(req, res, next) {
@@ -49,7 +44,7 @@ module.exports = function(cdn, paginate) {
 				}
 			},
 			editnew: function(req, res, next) {
-				res.render('admin/notice/new', {title: "Novo aviso", notice: new Notice(), user: req.user.id || '' });
+				res.render('admin/notice/new', {title: "Novo aviso", user: req.user.id || '' });
 			},
 			show: function(req, res, next) {
 				Notice.findById(req.param('id'), function(err, notice) {
