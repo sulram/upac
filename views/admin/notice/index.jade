@@ -33,7 +33,7 @@ block content
 					td
 						a(href=notice.url)= notice.url
 					td
-						if notice.image && notice.image.sizes
+						if notice.image && notice.image.getSize("icon")
 							img(src=notice.image.getSize("icon").cdn_url)
 					td.moment-me= notice.createdAt
 					td

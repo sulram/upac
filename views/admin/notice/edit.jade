@@ -23,9 +23,10 @@ block content
 						a(href='/admin/notice/#{notice.id}').btn Cancelar
 			.span6
 				p Imagem
-				if notice.image.upload_complete
-					img(src=notice.image.getSize('normal').cdn_url)
-				else
-					img(src=notice.image.original_cdn_url)
+				if notice.image
+					if notice.image.upload_complete && notice.image.getSize('normal')
+						img(src=notice.image.getSize('normal').cdn_url)
+					else
+						img(src=notice.image.original_cdn_url)
 				.image-upload
 					input(type='file', name='image')
