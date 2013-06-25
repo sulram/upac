@@ -9,10 +9,16 @@ block content
 	h2 Novo aviso
 	hr
 	form(action='/admin/notice',method='POST').form-horizontal
-		+field(user, 'owner', 'ID do usuário', 'text')
-		+field("", 'order', 'Ordem', 'number')
-		+textfield("", 'text', 'Texto')
-		+field("", 'url', 'URL do link', 'text')
+		.row
+			.span6
+				+field(user, 'owner', 'ID do usuário', 'text')
+				+field("", 'order', 'Ordem', 'number')
+				+textfield("", 'text', 'Texto')
+				+field("", 'url', 'URL do link', 'text')
 
-		button(type='submit').btn.btn-primary Enviar
-		a(href='/admin/notices').btn Cancelar
+				button(type='submit').btn.btn-primary Enviar
+				a(href='/admin/notices').btn Cancelar
+			.span6
+				p Imagem
+				.image-upload
+					input(type='file', name='image')
