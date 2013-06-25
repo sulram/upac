@@ -10,7 +10,7 @@ module.exports = function(cdn, paginate) {
 			index: function(req, res, next) {
 				paginate.paginate(Notice,{},{
 					sort_by: 'order',
-					order: -1, 
+					order: 1, 
 					limit: -1, // no limit
 					populate:'owner image'
 				},req, function(err, notices, pagination) {
