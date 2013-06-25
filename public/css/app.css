@@ -333,7 +333,37 @@ iframe {
 	min-height: 300px;
 	margin-left: 50px;
 	margin-bottom: 10px;
+	overflow: hidden;
 }
+
+#wrapper.home .home_wrapper .destaque ul {
+	width: 10000px;
+	height: 300px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#wrapper.home .home_wrapper .destaque li {
+	margin: 0;
+	padding: 0;
+	float: left;
+	width: 720px;
+	height: 300px;
+}
+
+#wrapper.home .home_wrapper .destaque li a {
+	display: block;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+	width: 100%;
+	height: 100%;
+	/*background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;*/
+}
+
 
 #wrapper.home .home_wrapper .noticias {
 	width: 720px;

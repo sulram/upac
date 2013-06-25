@@ -3,7 +3,15 @@
 	<h1><span>Universidade</span> <span>Popular de Arte</span> <span>e Ciência</span></h1>
 	
 	<div class="destaque">
-		imagem em destaque que pode ser alterada pelo admin
+		<ul>
+		{{#each banner in banners}}
+			<li>
+				<a {{bindAttr href="banner.url" title="banner.text"}}>
+					<img {{bindAttr src="banner.img"}}/>
+				</a>
+			</li>
+		{{/each}}
+		</ul>
 	</div>
 
 	<div class="noticias">
@@ -18,7 +26,7 @@
 		</ul>
 	</div>
 
-	<a class="maisnoticias" {{action nextnews}}>&raquo;</a>
+	<a class="maisnoticias" {{action nextNotice}}>&raquo;</a>
 
 </div>
 

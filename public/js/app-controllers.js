@@ -22,24 +22,49 @@ App.ApplicationController = Ember.Controller.extend({
 
 App.HomeController = Ember.ObjectController.extend({
     notices: [],
-    current: 0,
-    nextnews: function(){
-        this.current = (this.current + 1) % (this.notices.length - 1);
-        $('.noticias').animate({
-            scrollLeft: this.current * 366
-        }, 500);
-    },
+    banners: [],
+    banner: -1,
+    notice: 0,
+    bannerRun: null,
     init: function(){
         console.log('INIT HOME');
         var _this = this;
         $.getJSON('/notices', function(data){
-            var notices = [];
+            var notices = [], banners = [];
             $.each(data.notices, function(i, child) {
                 var notice = Ember.Object.create(child);
-                notices.push(notice);
+                if(notice.image && notice.image.sizes.length){
+                    var img = _.findWhere(notice.image.sizes,{size:'normal'}).cdn_url;
+                    notice.set('bgimg','background-image: url(http:'+img+');');
+                    notice.set('img',img);
+                    banners.push(notice);
+                } else {
+                    notices.push(notice);
+                }
             });
             _this.set('notices', notices);
+            _this.set('banners', banners);
+            _this.nextBanner();
+            $('.destaque ul').width(banners.length * 720 + 50);
+            $('.destaque').mouseover(function(){
+                Ember.run.cancel(_this.bannerRun);
+            });
+            $('.destaque').mouseout(function(){
+                _this.bannerRun = Ember.run.later(_this, 'nextBanner', 3000);
+            });
         });
+    },
+    nextNotice: function(){
+        this.notice = (this.notice + 1) % (this.notices.length - 1);
+        $('.noticias').animate({
+            scrollLeft: this.notice * 366
+        }, 500);
+    },
+    nextBanner: function(){
+        this.banner = (this.banner + 1) % this.banners.length;
+        console.log('slideshow',this.banner);
+        $('.destaque').animate({scrollLeft: this.banner * 720},500)
+        this.bannerRun = Ember.run.later(this, 'nextBanner', 3000);
     }
 });
 
@@ -56,7 +81,7 @@ App.BlogRecentesController = Ember.ObjectController.extend({
             $.each(data.articles, function(i, _article) {
                 var article = Ember.Object.create(_article);
                 article.set('post_id', article.get('_id'));
-                if(_article.images[0]){
+                if(_article.images.length && _article.images[0].image.sizes.length){
                     var img = 'http:'+_.findWhere(_article.images[0].image.sizes,{size:'medium'}).cdn_url;
                     article.set('img', img);
                     article.set('bgimg', 'background-image: url('+img+');');
