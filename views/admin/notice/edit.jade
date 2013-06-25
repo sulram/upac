@@ -12,7 +12,7 @@ block content
 	form(action='/admin/notice/#{notice.id}',method='POST', enctype='multipart/form-data').form-horizontal
 		.row
 			.span6
-				+field(notice.owner, 'owner', 'ID do usuário', 'text')
+				+field(notice.owner._id, 'owner', 'ID do usuário', 'text')
 				+field(notice.order, 'order', 'Ordem', 'number')
 				+textfield(notice.text, 'text', 'Texto')
 				+field(notice.url, 'url', 'URL do link', 'text')
@@ -23,5 +23,9 @@ block content
 						a(href='/admin/notice/#{notice.id}').btn Cancelar
 			.span6
 				p Imagem
+				if notice.image.upload_complete
+					img(src=notice.image.getSize('normal').cdn_url)
+				else
+					img(src=notice.image.original_cdn_url)
 				.image-upload
 					input(type='file', name='image')

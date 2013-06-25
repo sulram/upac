@@ -21,3 +21,12 @@
 .image-upload.uploading .aviso {
 	text-indent: -9999px;
 }
+
+.table-condensed img {
+	max-height: 200px;
+	width: auto;
+}
+
+.table-condensed td {
+	vertical-align: top;
+}

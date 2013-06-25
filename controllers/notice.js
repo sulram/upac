@@ -56,7 +56,7 @@ module.exports = function(cdn, paginate) {
 				})
 			},
 			edit: function(req, res, next) {
-				Notice.findById(req.param('id'), function(err, notice) {
+				Notice.findOne({_id:req.param('id')}).populate('owner image').exec(function(err, notice) {
 					if(err) return next(err);
 					res.render('admin/notice/edit', {notice:notice, title:"Editar aviso: "+notice.id});
 				})
