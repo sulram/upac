@@ -12,9 +12,9 @@ block content
 		+table_rec_row_raw("ID", md('**' + page.slug + '** *(' + page.id + ')*'))
 		+table_rec_row("Título", page.title)
 		+table_rec_row("Imagens", '###')
-		+table_rec_row_raw("Texto", md(page.content))
 		+table_rec_row_date("Data de criação", page.createdAt)
 		+table_rec_row_date("Última atualização", page.updatedAt)
+		+table_rec_row_raw("Texto", page.content)
 	hr
 	.btn-group
 		a(href='/admin/pages').btn Voltar
