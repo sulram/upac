@@ -1,14 +1,17 @@
-$(document).ready(function(){
-    $('#content').redactor({
-        lang: 'pt_br',
-        buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'table', 'link'],
-        formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
-        minHeight: 300,
-        autoresize: false
-    });
-});
+// avoid auto dropzone detection, as it causes eventual errors because of double attachment.
+//Dropzone.autoDiscover = false;
+//Dropzone.dictDefaultMessage = "Arraste e solte imagens aqui para fazer upload (ou clique para escolher o arquivo)";
 
 var article_id = $('body').data('article-id');
+var delay, showdown = new Showdown.converter({extensions:["table", "ufm"]});
+var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+	mode: 'markdown',
+	lineNumbers: false,
+	lineWrapping: true,
+	theme: "default",
+	extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"},
+	autofocus: true
+});
 var is_uploading = false;
 var updatePreview = function() {
 	$("#preview").html(showdown.makeHtml(editor.getValue()+'\n'+$('#link-refs').val()));
@@ -99,7 +102,16 @@ var updatePreview = function() {
 		}
 	});*/
 }
-
+editor.on('change', function() {
+	if(is_uploading) return false;
+	closeHeader();
+	clearTimeout(delay);
+	delay = setTimeout(updatePreview, 300);
+});
+editor.on('focus',function(){
+	closeHeader();
+});
+updatePreview();
 
 // DATE PICKER
 
@@ -158,6 +170,37 @@ function resize(e){
 }
 
 resize();
+
+// MORE INFO
+
+$('#toggle').click(function(e){
+	e.preventDefault();
+	toggleHeader();
+});
+
+$('#title').on('click focus',function(e){
+	openHeader();
+});
+
+function toggleHeader(){
+	if(more_info){
+		$('.editor_header').addClass('less');
+	} else {
+		$('.editor_header').removeClass('less');
+	}
+	more_info = !more_info;
+	resize();
+}
+
+function openHeader(){
+	more_info = false;
+	toggleHeader();
+}
+
+function closeHeader(){
+	more_info = true;
+	toggleHeader();
+}
 
 // NOTIFY
 

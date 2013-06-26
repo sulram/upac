@@ -6,6 +6,9 @@ block title
 block link
 	-var selected = 'páginas';
 
+block scripts
+	script(src='/js/admin/page-edit.js')
+
 block content
 	h2 Página: #{page.slug}
 	hr
@@ -25,4 +28,4 @@ block content
 						&nbsp; &nbsp; 
 						a(href='/admin/page/#{page.id}').btn Cancelar
 			.span6
-				+textfield(page.content, 'content', 'Texto')
+				textarea(name="content")#content= page.content
