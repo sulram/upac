@@ -21,7 +21,7 @@ module.exports = function(cdn, paginate) {
 			create: function(req, res, next) {
 				var data = _.pick(req.body, 'owner', 'order', 'text', 'url')
 				var notice = new Notice(data);
-				if(req.files && req.files.image) {
+				if(req.files && req.files.image && req.files.image.size) {
 					console.info("oe "+req.files.image.name);
 					Img.upload(cdn, req.image_config,
 						req.user.id,
