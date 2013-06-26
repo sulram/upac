@@ -31,24 +31,27 @@ html
 						textarea(name="content")#content= article.content
 					.span3
 						label.input_label(for="excerpt")
-							| Resumo (140 caracteres)
+							| Resumo (
+							span#excerpt_count
+								| 140
+							|  caracteres)
 						.input_excerpt
-							textarea(name="excerpt", rows="5", placeholder="escreva aqui")#excerpt= article.excerpt
+							textarea(name="excerpt", rows="5", placeholder="escreva aqui")#excerpt.smallinput= article.excerpt
 						label.input_label(for="publicationDate")
 							| Data
 						#datetimepicker.input-prepend.date
 							span.add-on
 								i(data-time-icon="icon-time", data-date-icon="icon-calendar")
 							if article.publicationDate
-								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate
+								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate.smallinput
 							else
-								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate
+								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate.smallinput
 							
 						br
 						label.input_label(for="tags")
 							| Palavras-chave
 						.input_tags
-							textarea(name="tags", rows="5", placeholder="")#tags
+							textarea(name="tags", rows="5", placeholder="")#tags.smallinput
 			
 			.footer
 				.container
@@ -97,5 +100,5 @@ html
 		script(src='/js/libs/showdown/src/extensions/ufm.js')
 		script(src='/js/libs/datetimepicker/datetimepicker.js')
 		script(src='/js/libs/redactor/redactor.js')
-		script(src='/js/libs/redactor/pt_br.js')
+		//script(src='/js/libs/redactor/pt_br.js')
 		script(src='/js/editor.js')
