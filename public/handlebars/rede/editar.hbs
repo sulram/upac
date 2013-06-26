@@ -1,0 +1,42 @@
+<div class="pad">
+	{{#if User.auth.loggedIn}}
+	<h2>Editar perfil</h2>
+	<form id="editar_perfil">
+		<div class="control-group">
+			<label class="control-label" for="name">Nome e sobrenome</label>
+			<div class="controls">
+				<input type="text" id="name" name="name" placeholder="" {{bindAttr value="User.model.name"}} {{action "onFocus"}}>
+			</div>
+		</div>
+		<!--<div class="control-group">
+			<label class="control-label" for="email">E-mail</label>
+			<div class="controls">
+				<input type="text" id="email" name="email" placeholder="" {{bindAttr value="User.model.email"}} {{action "onFocus"}}>
+			</div>
+		</div>-->
+		<div class="control-group">
+			<label class="control-label" for="about">Sobre você</label>
+			<div class="controls">
+				{{view Ember.TextArea valueBinding="User.model.about" rows="5" id="about" name="about"}}  
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<p>
+					<button type="submit" class="btn btn-primary" {{bindAttr disabled="isPosting"}} {{action submit}}>Salvar</button>
+					{{#linkTo 'rede.perfil' User.model classNames="btn"}}Cancelar{{/linkTo}}
+				</p>
+				{{#if flashMsg}}
+				<div class="alert alert-error">
+				  {{flashMsg}}
+				</div>
+				{{/if}}
+			</div>
+		</div>
+	</form>
+	<hr/>
+	<p><small>Para alterar e-mail ou senha, {{#linkTo 'rede.perfil' User.model}}clique aqui{{/linkTo}}.</small></p>
+	{{else}}
+		{{partial "anonymous"}}
+	{{/if}}
+</div>

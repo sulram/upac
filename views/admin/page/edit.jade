@@ -1,0 +1,31 @@
+extends ../layout
+
+block title
+	| Editar página: #{page.slug}
+
+block link
+	-var selected = 'páginas';
+
+block scripts
+	script(src='/js/admin/page-edit.js')
+
+block content
+	h2 Página: #{page.slug}
+	hr
+	form(action='/admin/page/#{page.id}',method='POST', enctype='multipart/form-data').form-horizontal
+		.row
+			.span6
+				+field(page.title, 'title', 'Título', 'text')
+				+field(page.slug, 'slug', 'Slug', 'text')
+				.control-group
+					label.control-label
+						| Imagens
+					.controls
+						| aqui vem uploader
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/page/#{page.id}').btn Cancelar
+			.span6
+				textarea(name="content")#content= page.content

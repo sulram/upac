@@ -1,0 +1,41 @@
+extends ../layout
+
+block title
+	| Avisos
+
+block link
+	-var selected = 'avisos';
+
+block scripts
+	script(src='/js/admin/notices.js')
+
+block content
+	p
+		a(href='/admin/notice/new').btn Novo aviso
+
+	table.table.table-striped
+		thead
+			tr
+				tr
+					th Ordem
+					th Aviso
+					th Link
+					th Imagem
+					th Criado em
+					th Opções
+		tbody#sortables
+			for notice in notices
+				tr(id=notice.id)
+					td
+						a(href='/admin/notice/#{notice.id}').order= notice.order
+					td
+						a(href='/admin/notice/#{notice.id}')!= md(notice.text)
+					td
+						a(href=notice.url)= notice.url
+					td
+						if notice.image && notice.image.getSize("icon")
+							img(src=notice.image.getSize("icon").cdn_url)
+					td.moment-me= notice.createdAt
+					td
+						a(href="/admin/notice/#{notice.id}/remove",title="Excluir")
+							i.icon-remove

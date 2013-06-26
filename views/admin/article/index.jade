@@ -1,0 +1,40 @@
+extends ../layout
+
+block title
+	| Posts
+
+block link
+	-var selected = 'posts';
+
+block content
+	p
+		a(href='/admin/article/new').btn.btn-small Novo post
+
+	table.table.table-striped
+		thead
+			tr
+				th Título
+				th Slug
+				th Excerpt
+				th Mãe
+				th Status
+				th Data de publicação
+				th Data de criação
+				th Última atualização
+				th Opções
+		for article in articles
+			tr
+				td
+					a(href='/admin/article/'+article.id)= article.title
+				td= article.slug
+				td
+					p= article.excerpt
+				td= article.parent
+				td= article.publicationStatus
+				td.moment-me= article.publicationDate
+				td.moment-me= article.createdAt
+				td.moment-me= article.updatedAt
+				td
+					a(href="/admin/article/#{article.id}/remove",title="Excluir")
+						i.icon-remove
+	+pagination("/admin/articles", pagination)

@@ -1,0 +1,21 @@
+extends ../layout
+
+block title
+	| Imagem: #{image.id}
+
+block link
+	-var selected = 'images';
+	
+block content
+	h2 Imagem: #{image.id}
+	table.table.table-condensed
+		+table_rec_row("ID", image.id)
+		+table_rec_row("Nome original", image.filename)
+		tr
+			td Thumb
+			td
+				img(src="#{image.original_cdn_url}", style="max-height: 100px; width: auto;")
+	.btn-group
+		a(href='/admin/images').btn Voltar
+		a(href='/admin/image/'+image.id+'/remove').btn.btn-danger Remover imagem
+		

@@ -1,0 +1,32 @@
+.image-upload {
+	display: block;
+	margin: 20px 0;
+	padding: 20px;
+	background: #efefef;
+	cursor: pointer;
+}
+
+.image-upload .aviso {
+	padding: 20px;
+	border: 1px dashed #ccc;
+	font-size: 14px;
+	text-align: center;
+}
+
+.image-upload:hover,
+.image-upload.hover  {
+	background: #ddd;
+}
+
+.image-upload.uploading .aviso {
+	text-indent: -9999px;
+}
+
+.table-condensed img {
+	max-height: 200px;
+	width: auto;
+}
+
+.table-condensed td {
+	vertical-align: top;
+}

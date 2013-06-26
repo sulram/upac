@@ -1,0 +1,56 @@
+<div class="row">
+	
+	<div class="span4">
+		<h1 class="side_title">entre na rede UPAC</h1>
+	</div>
+
+	<div class="span1">
+		&nbsp;
+	</div>
+
+	<div class="span7">
+
+		<p>&nbsp;</p>
+
+{{#if User.auth.loggedIn}}
+	
+	<h2 class="upper">Olá, {{User.auth.username}}!</h2>
+
+	<p>você está conectado e pronto para participar:</p>
+	
+	<p>
+		<div class="btn-group">
+			{{#linkTo "rede.perfil" User.model classNames="btn btn-large"}}ver o meu perfil{{/linkTo}}
+		</div>
+	</p>
+	
+	<hr/>
+
+	<p>Quer saber tudo o que você pode fazer como participante?
+	<br/>Assista ao vídeo abaixo para ver como navegar e colaborar na nossa rede:</p>
+
+	<iframe width="560" height="315" src="http://www.youtube.com/embed/rZNMXflQRcE" frameborder="0" allowfullscreen></iframe>
+	
+	<hr/>
+
+	<p><small>Esta não é a sua conta? {{#linkTo "logout"}}Desconectar-se.{{/linkTo}}</small></p>
+
+{{else}}
+
+	<ul class="nav nav-pills">
+
+		{{#linkTo "user.index" tagName="li" href=false}}
+			<a {{bindAttr href="view.href"}}>Já tenho uma conta</a>
+		{{/linkTo}}
+
+		{{#linkTo "user.cadastrar" tagName="li" href=false}}
+			<a {{bindAttr href="view.href"}}>Quero me registrar</a>
+		{{/linkTo}}
+
+	</ul>
+	
+	{{outlet}}
+
+{{/if}}
+	</div>
+</div>

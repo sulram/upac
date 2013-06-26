@@ -1,0 +1,40 @@
+extends ../layout
+
+block title
+	| Usuários
+
+block link
+	-var selected = 'usuários';
+
+block content
+	p
+		a(href='/admin/user/new').btn Novo usuário
+		
+	table.table.table-striped
+		thead
+			tr
+				th ID
+				th Nome de usuário
+				th Nome completo
+				th Email
+				th Administrador
+				th Opções
+		tbody
+			each user in users
+				tr
+					td
+						a(href='/admin/user/'+user.id)= user.id
+					td
+						a(href='/admin/user/'+user.id)= user.username
+					td= user.name
+					td
+						a(href="mailto:"+user.email)= user.email
+					td
+						if user.admin == true
+							i.icon-ok
+						else
+							i.icon-remove
+					td
+						a(href="/admin/user/#{user.id}/remove",title="Excluir")
+							i.icon-remove
+	+pagination("/admin/users", pagination)

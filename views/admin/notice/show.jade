@@ -1,0 +1,31 @@
+extends ../layout
+
+block title
+	| Aviso: #{notice.id}
+block link
+	-var selected = 'avisos';
+
+block content
+	h2 Aviso: #{notice.id}
+	hr
+	table.table-condensed
+		+table_rec_row("ID", notice.id)
+		+table_rec_row("Ordem", notice.order)
+		+table_rec_row_raw("Texto", md(notice.text))
+		+table_rec_row_link("Link", notice.url, notice.url)
+		if notice.image
+			tr
+				td
+					strong Imagem
+				td
+					if notice.image.upload_complete
+						img(src=notice.image.getSize('normal').cdn_url)
+					else
+						img(src=notice.image.original_cdn_url)
+		+table_rec_row_date("Data de criação", notice.createdAt)
+	hr
+	.btn-group
+		a(href='/admin/notices').btn Voltar
+		a(href='/admin/notice/'+notice.id+'/edit').btn.btn-primary Editar aviso
+		a(href='/admin/notice/'+notice.id+'/remove').btn.btn-danger Remover aviso
+		
