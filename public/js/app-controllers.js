@@ -45,12 +45,12 @@ App.HomeController = Ember.ObjectController.extend({
             _this.set('notices', notices);
             _this.set('banners', banners);
             _this.nextBanner();
-            $('.destaque ul').width(banners.length * 720 + 50);
+            $('.destaque ul').width(banners.length * 720 * 2 + 50);
             $('.destaque').mouseover(function(){
                 Ember.run.cancel(_this.bannerRun);
             });
             $('.destaque').mouseout(function(){
-                _this.bannerRun = Ember.run.later(_this, 'nextBanner', 3000);
+                _this.bannerRun = Ember.run.later(_this, 'nextBanner', 1000);
             });
         });
     },
@@ -63,8 +63,8 @@ App.HomeController = Ember.ObjectController.extend({
     nextBanner: function(){
         this.banner = (this.banner + 1) % this.banners.length;
         console.log('slideshow',this.banner);
-        $('.destaque').animate({scrollLeft: this.banner * 720},500)
-        this.bannerRun = Ember.run.later(this, 'nextBanner', 3000);
+        $('.destaque').animate({scrollLeft: this.banner * 720 * 2},1000,'easeInOutQuart')
+        this.bannerRun = Ember.run.later(this, 'nextBanner', 4000);
     }
 });
 

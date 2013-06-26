@@ -328,7 +328,6 @@ iframe {
 }
 
 #wrapper.home .home_wrapper .destaque {
-	background: rgba(50,50,50,.8);
 	width: 720px;
 	min-height: 300px;
 	margin-left: 50px;
@@ -350,6 +349,7 @@ iframe {
 	float: left;
 	width: 720px;
 	height: 300px;
+	margin-right: 720px;
 }
 
 #wrapper.home .home_wrapper .destaque li a {
@@ -359,9 +359,16 @@ iframe {
 	line-height: 0;
 	width: 100%;
 	height: 100%;
-	/*background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-size: cover;*/
+	opacity: 0.8;
+	-webkit-transition: opacity 0.5s;
+	-moz-transition: opacity 0.5s;
+	-ms-transition: opacity 0.5s;
+	-o-transition: opacity 0.5s;
+	transition: opacity 0.5s;
+}
+
+#wrapper.home .home_wrapper .destaque li a:hover {
+	opacity: 1;
 }
 
 
