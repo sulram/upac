@@ -62,6 +62,7 @@ App.HomeController = Ember.ObjectController.extend({
         }, 500);
     },
     nextBanner: function(){
+        if(this.banners.length < 2) return false;
         this.banner = (this.banner + 1) % this.banners.length;
         console.log('slideshow',this.banner);
         $('.destaque').animate({scrollLeft: this.banner * 720 * 2},1000,'easeInOutQuart')
