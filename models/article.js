@@ -47,6 +47,21 @@ var ArticleSchema = new Schema({
 	updatedAt: Date,
 });
 
+var PageSchema = new Schema({
+	title: String,
+	slug: {
+		type: String,
+		index: {unique: true}
+	},
+	content: String,
+	images: [ImageRefSchema],
+	attachments: [{type:ObjectId, ref:'Attachment'}],
+	publicationStatus: String,
+	publicationDate: Date,
+	createdAt: Date,
+	updatedAt: Date,
+})
+
 var slugify = function(str) {
 	str = str.toLowerCase();
 	str = str.replace(/[àáâãä]/ig, 'a');
@@ -76,8 +91,24 @@ ArticleSchema.pre('save', function(next) {
 	next();
 });
 
+PageSchema.pre('save', function(next) {
+	if(this.isNew) {
+		this.createdAt = new Date();
+	}
+	if(!this.slug || '' == this.slug || this.id == this.slug) {
+		if(this.title && this.title.length > 0) {
+			this.slug = slugify(this.title);
+		} else {
+			this.slug = this.id;
+		}
+	}
+	this.updatedAt = new Date();
+	next();
+})
+
 ArticleSchema.statics.findByTagId = function(id, options, cb) {
 	this.find({tags: id}, null, options, cb);
 }
 mongoose.model('Attachment', AttachmentSchema);
 mongoose.model('Article', ArticleSchema);
+mongoose.model('Page', PageSchema)

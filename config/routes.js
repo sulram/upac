@@ -3,6 +3,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	
 	var user = require('../controllers/user')(cdn, paginate);
 	var article = require('../controllers/article')(cdn, paginate);
+	var page = require('../controllers/page')(cdn, paginate);
 	var _event = require('../controllers/event')(cdn, paginate);
 	var tag = require('../controllers/tag')(cdn, paginate);
 	var notice = require('../controllers/notice')(cdn, paginate);
@@ -41,6 +42,14 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/admin/article/:id/remove', auth.requiresAdminLogin, article.admin.remove)
 	app.all('/admin/articles', auth.requiresAdminLogin, article.admin.index);
 	app.post('/admin/article', auth.requiresAdminLogin, article.admin.create);
+
+	app.get('/admin/page/new', auth.requiresAdminLogin, page.admin.editnew);
+	app.post('/admin/page/:id', auth.requiresAdminLogin, page.admin.update);
+	app.get('/admin/page/:id', auth.requiresAdminLogin, page.admin.show);
+	app.get('/admin/page/:id/edit', auth.requiresAdminLogin, page.admin.edit);
+	app.get('/admin/page/:id/remove', auth.requiresAdminLogin, page.admin.remove)
+	app.all('/admin/pages', auth.requiresAdminLogin, page.admin.index);
+	app.post('/admin/page', auth.requiresAdminLogin, page.admin.create);
 
 	app.get('/admin/tag/new', auth.requiresAdminLogin, tag.admin.editnew);
 	app.post('/admin/tag/:id', auth.requiresAdminLogin, tag.admin.update);
@@ -91,6 +100,12 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/article/:id/images', article.getImages);
 	app.post('/article/:id/imageupload', auth.requiresLogin, article.uploadImage);
 	app.get('/article/:id/attachments', article.getAttachments);
+
+	app.get('/page/find/:slug', page.bySlug);
+	app.get('/page/:id', page.show);
+	app.get('/page/:id/images', page.getImages);
+	app.get('/page/:id/attachments', page.getAttachments);
+
 
 	// route for testing uploads to the CDN server
 
