@@ -44,10 +44,7 @@ module.exports = function(cdn, paginate){ return {
 			});
 		},
 		update: function(req, res, next) {
-			if(req.body.parent == '') {
-				delete req.body.parent;
-			}
-			Page.update({id:req.param('id')}, {$set: req.body},
+			Page.update({_id:req.param('id')}, {$set: req.body},
 				function(err, page) {
 					if (err) {
 						if (err.code === 11000) { // duplicate key
