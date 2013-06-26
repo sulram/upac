@@ -12,6 +12,8 @@ block content
 		+field('', 'name', 'Nome', 'text')
 		+field('', 'slug', 'Slug', 'text')
 		+field('', 'type', 'Tipo', 'text')
-		
-		button(type='submit').btn.btn-primary Enviar
-		a(href='/admin/notices').btn Cancelar
+		.control-group
+			.controls
+				button(type='submit').btn.btn-primary Enviar
+				&nbsp; &nbsp; 
+				a(href='/admin/notices').btn Cancelar

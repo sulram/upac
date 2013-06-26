@@ -1,0 +1,28 @@
+extends ../layout
+
+block title
+	| Nova página
+block link
+	-var selected = 'páginas';
+
+block content
+	h2 Nova página
+	hr
+	form(action='/admin/page', method='POST', enctype="multipart/form-data").form-horizontal
+		.row
+			.span6
+				+field("", 'title', 'Título', 'text')
+				+field("", 'slug', 'Slug', 'text')
+				.control-group
+					label.control-label
+						| Imagens
+					.controls
+						| aqui vem uploader
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/pages').btn Cancelar
+			.span6
+				+textfield("", 'content', 'Texto')
+				

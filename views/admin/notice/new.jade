@@ -15,9 +15,11 @@ block content
 				+field("", 'order', 'Ordem', 'number')
 				+textfield("", 'text', 'Texto')
 				+field("", 'url', 'URL do link', 'text')
-
-				button(type='submit').btn.btn-primary Enviar
-				a(href='/admin/notices').btn Cancelar
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/notices').btn Cancelar
 			.span6
 				p Imagem
 				.image-upload

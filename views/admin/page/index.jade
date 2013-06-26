@@ -1,0 +1,38 @@
+extends ../layout
+
+block title
+	| Páginas
+
+block link
+	-var selected = 'páginas';
+
+block content
+	p
+		a(href='/admin/page/new').btn Nova página
+
+	table.table.table-striped
+		thead
+			tr
+				tr
+					th id
+					th Título
+					th Imagens
+					th Criada em
+					th Atualizada em
+					th Opções
+		tbody
+			for page in pages
+				tr(id=page.id)
+					td
+						a(href='/admin/page/#{page.id}').order= page.slug
+					td
+						a(href='/admin/page/#{page.id}').order= page.title
+					td
+						| count images
+
+					td.moment-me= page.createdAt
+					td.moment-me= page.updatedAt
+
+					td
+						a(href="/admin/page/#{page.id}/remove",title="Excluir")
+							i.icon-remove

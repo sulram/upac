@@ -3,7 +3,7 @@ extends ../layout
 block title
 	| Novo usuário
 block link
-	-var selected = 'usuarios';
+	-var selected = 'usuários';
 
 block content
 	h2 Novo usuário
@@ -22,5 +22,8 @@ block content
 		+field("", 'gender', 'Gênero', 'text')
 		+textfield('', 'about', 'sobre')
 		
-		button(type='submit').btn.btn-primary Enviar
-		a(href='/admin/users').btn Cancelar
+		.control-group
+			.controls
+				button(type='submit').btn.btn-primary Enviar
+				&nbsp; &nbsp; 
+				a(href='/admin/users').btn Cancelar
