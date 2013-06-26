@@ -2,9 +2,13 @@ extends ../layout
 
 block title
 	| Nova página
+
 block link
 	-var selected = 'páginas';
 
+block scripts
+	script(src='/js/admin/page-edit.js')
+		
 block content
 	h2 Nova página
 	hr
@@ -24,5 +28,5 @@ block content
 						&nbsp; &nbsp; 
 						a(href='/admin/pages').btn Cancelar
 			.span6
-				+textfield("", 'content', 'Texto')
+				textarea(name="content")#content
 				
