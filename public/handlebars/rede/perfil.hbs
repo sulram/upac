@@ -1,0 +1,53 @@
+<div class="pad">
+	{{#if isLoaded}}
+
+		<div class="rede_perfil_foto">
+			{{#if isTheLoggedUser}}
+				{{#linkTo 'rede.avatar' classNames="btn rede_perfil_foto_editar"}}Mudar foto <span class="fui-new"></span>{{/linkTo}}
+			{{/if}}
+			<img src="/img/home02.jpg"/>
+		</div>
+
+		<h2>
+			{{nick}}
+		</h2>
+
+		<p>{{about}}</p>
+
+		<hr/>
+		
+		{{#if isTheLoggedUser}}
+			{{#if App.MapController.isMarking}}
+			
+				<div class="pad over">
+					<p>Navegue pelo mapa e clique no ponto em que você deseja marcar sua localização.</p>
+					<p>
+						<a {{action finishMarking App.MapController}} class="btn btn-primary">Salvar posição</a>
+						<a {{action cancelMarking App.MapController}} class="btn btn-danger">Cancelar</a>
+					</p>
+				</div>
+
+			{{else}}
+				
+				{{#if geo.length}}
+					<p><a {{action startMarking App.MapController}} class="btn"><span class="fui-location"></span> Editar localização</a></p>
+				{{else}}
+					<p><a {{action startMarking App.MapController}} class="btn"><span class="fui-location"></span> Marque sua localização</a></p>
+				{{/if}}
+
+				<p>{{#linkTo 'rede.editar' classNames="btn"}}<span class="fui-new"></span> Editar perfil{{/linkTo}}</p>
+
+				<p>{{#linkTo 'timeline' model classNames="btn-"}}Linha do tempo{{/linkTo}}</p>
+
+			{{/if}}
+
+		{{else}}
+
+			<p>{{#linkTo 'timeline' model classNames="btn-"}}Linha do tempo{{/linkTo}}</p>
+			
+		{{/if}}
+
+	{{else}}
+		<p>carregando perfil</p>
+	{{/if}}
+</div>

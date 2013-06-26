@@ -1,0 +1,19 @@
+extends ../layout
+
+block title
+	| Novo aviso
+block link
+	-var selected = 'tags';
+
+block content
+	h2 Nova tag
+	hr
+	form(action='/admin/tag',method='POST').form-horizontal
+		+field('', 'name', 'Nome', 'text')
+		+field('', 'slug', 'Slug', 'text')
+		+field('', 'type', 'Tipo', 'text')
+		.control-group
+			.controls
+				button(type='submit').btn.btn-primary Enviar
+				&nbsp; &nbsp; 
+				a(href='/admin/notices').btn Cancelar

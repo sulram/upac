@@ -1,0 +1,29 @@
+{
+  "name": "upac",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.1.1",
+    "jade": "*",
+    "mongoose": "3.6.4",
+    "passport": "0.1.16",
+    "passport-local": "0.1.6",
+    "pow-mongoose-fixtures": "0.2.0",
+    "underscore": "1.4.4",
+    "jpegtran": "0.0.4",
+    "optipng": "0.0.4",
+    "pkgcloud": "0.6.12",
+    "gm": "1.9.1",
+    "temp": "0.5.0",
+    "aws-sdk": "1.0.0",
+    "grunt": "~0.4.0",
+    "marked": "0.2.8"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-ember-templates": "0.4.4",
+    "grunt-contrib-uglify": "~0.1.2"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}

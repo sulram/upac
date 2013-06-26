@@ -1,0 +1,28 @@
+extends ../layout
+
+block title
+	|= user.username
+block link
+	-var selected = 'usuários'
+
+block content
+	h2= user.username
+	table.table
+		+table_rec_row("ID", user.id)
+		+table_rec_row("Nome", user.name)
+		+table_rec_row_check("Administrador", user.admin)
+		+table_rec_row_link("Email", user.email, "mailto:#{user.email}")
+		+table_rec_row("Geo", user.geo)
+		+table_rec_row("Acesso através de", user.provider)
+		+table_rec_row("Data de nascimento", user.dateOfBirth)
+		+table_rec_row("Cidade", user.city)
+		+table_rec_row("Estado", user.state)
+		+table_rec_row("País", user.country)
+		+table_rec_row("Gênero", user.gender)
+		+table_rec_row_raw("Sobre", md(user.about).replace(/\n/g, '\\n'))
+		
+	.btn-group
+		a(href='/admin/users').btn Voltar
+		a(href='/admin/user/#{user.id}/edit').btn.btn-primary Editar usuário
+		a(href='/admin/user/#{user.id}/remove').btn.btn-danger Remover usuário
+		

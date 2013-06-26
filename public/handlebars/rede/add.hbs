@@ -1,0 +1,11 @@
+<div class="pad">
+	{{#if User.auth.loggedIn}}
+		
+		<h3>O que gostaria de adicionar?</h3>
+
+		<input type="text"/>
+
+	{{else}}
+		{{partial "anonymous"}}
+	{{/if}}
+</div>

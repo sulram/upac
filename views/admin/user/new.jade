@@ -1,0 +1,29 @@
+extends ../layout
+
+block title
+	| Novo usuário
+block link
+	-var selected = 'usuários';
+
+block content
+	h2 Novo usuário
+	form(action='/admin/user',method='POST').form-horizontal
+		+field("", 'name', 'Nome', 'text')
+		+field("", 'username', 'Nome de usuário', 'text')
+		+field("", 'email', 'Email', 'text')
+		+field("", 'password', 'Senha', 'password')
+		+checkbox(false, 'admin', 'Administrador')
+		+field("", 'geo[]', 'Latitude', 'text')
+		+field("", 'geo[]', 'Longitude', 'text')
+		+field("", 'dateOfBirth', 'Data de nascimento', 'date')
+		+field("", 'city', 'Cidade', 'text')
+		+field("", 'state', 'Estado', 'text')
+		+field("", 'country', 'País', 'text')
+		+field("", 'gender', 'Gênero', 'text')
+		+textfield('', 'about', 'sobre')
+		
+		.control-group
+			.controls
+				button(type='submit').btn.btn-primary Enviar
+				&nbsp; &nbsp; 
+				a(href='/admin/users').btn Cancelar

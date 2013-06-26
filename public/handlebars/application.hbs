@@ -1,0 +1,16 @@
+{{view App.MenuView}}
+
+<div id="wrapper" {{bindAttr class="route_class"}}>
+
+	<section id="content">
+		
+		{{outlet}}
+
+	</section>
+	
+</div>
+
+{{#if contentModalVisible}}
+	{{view App.AddModalView}}
+{{/if}}
+

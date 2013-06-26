@@ -1,0 +1,127 @@
+doctype 5
+mixin table_rec_row(label, data)
+	tr
+		td
+			strong= label
+		td= data
+mixin table_rec_row_date(label, data)
+	tr
+		td
+			strong= label
+		td.moment-me= data
+mixin table_rec_row_raw(label, data)
+	tr
+		td
+			strong= label
+		td!= data
+mixin table_rec_row_link(label, data, url)
+	tr
+		td
+			strong= label
+		td
+			a(href=url)= data
+mixin table_rec_row_check(label, data)
+	tr
+		td
+			strong= label
+		td
+			if data == true
+				i.icon-ok
+			else
+				i.icon-remove
+mixin field(data,member,label,type)
+	.control-group
+		label(for=member).control-label #{label}
+		.controls
+			input(type=type, name=member, value=data)
+mixin textfield(data, member, label)
+	.control-group
+		label(for=member).control-label #{label}
+		.controls
+			textarea(name=member)= data
+mixin checkbox(data, member, label)
+	.control-group
+		.controls
+			label(for=member).checkbox
+				if data == true
+					input(name=member, type="checkbox", value="true", data-toggle="checkbox")
+				else
+					input(name=member, type="checkbox", data-toggle="checkbox")
+				| #{label}
+mixin pagination(url, pagination)
+	- var pages = pagination_helper(pagination);
+	span Total: #{pagination.count} itens.
+	.pagination
+		ul
+			if pagination.from > 0
+				li.previous
+					a.fui-arrow-left(href="#{url}?from=#{pagination.from-pagination.limit}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")
+			else
+				li.previous
+					a.fui-arrow-left
+			each page, i in pages
+				if page.from == pagination.from
+					li.active
+						a(href="#{url}?from=#{page.from}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")= i+1
+				else
+					li
+						a(href="#{url}?from=#{page.from}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")= i+1
+			if pagination.from < (pagination.count - pagination.limit)
+				li.next
+					a.fui-arrow-right(href="#{url}?from=#{pagination.from+pagination.limit}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")
+			else
+				li.next
+					a.fui-arrow-right
+html
+	head
+		title
+			block title
+				| UPAC ADMIN
+		link(rel='stylesheet', href='/flat-ui/bootstrap/css/bootstrap.css')
+		link(rel='stylesheet', href='/flat-ui/bootstrap/css/bootstrap-responsive.css')
+		link(rel='stylesheet', href='/flat-ui/css/flat-ui.css')
+		link(rel='stylesheet', href='/js/libs/redactor/redactor.css')	
+		link(rel='stylesheet', href='/css/admin.css')
+		//if lt ie 9
+			script(src='/flat-ui/js/html5shiv.js')
+	body
+		
+		-var menu = {'home': '/', 'admin': '/admin', 'avisos': '/admin/notices', 'páginas': '/admin/pages', 'posts': '/admin/articles', 'usuários': '/admin/users', 'tags': '/admin/tags', 'imagens': '/admin/images' };
+
+		block link
+			-var selected = 'admin'
+
+		.container
+			h1 UPAC ADMIN
+			.navbar.navbar-inverse
+				.navbar-inner
+					.container
+						ul.nav
+							each val, key in menu
+								if selected === key
+									li.active
+										a(href=val, title=key)= key
+								else
+									li
+										a(href=val, title=key)= key
+			block content
+		script(src='/js/libs/moment.min.js')
+		script(src='/js/libs/moment-lang/pt-br.js')
+		script(src='/js/libs/underscore-min.js')
+		script(src='/flat-ui/js/jquery-1.8.3.min.js')
+		script(src='/js/libs/jquery-ui/js/jquery-ui-1.10.3.custom.min.js')
+		script(src='/flat-ui/js/jquery.ui.touch-punch.min.js')
+		script(src='/js/libs/jquery.filedrop.js')
+		script(src='/flat-ui/js/bootstrap.min.js')
+		script(src='/flat-ui/js/bootstrap-select.js')
+		script(src='/flat-ui/js/bootstrap-switch.js')
+		script(src='/flat-ui/js/jquery.placeholder.js')
+		script(src='/flat-ui/js/jquery.tagsinput.js')
+		script(src='/flat-ui/js/jquery.stacktable.js')
+		script(src='/flat-ui/js/flatui-checkbox.js')
+		script(src='/flat-ui/js/flatui-radio.js')
+		script(src='/flat-ui/js/application.js')
+		script(src='/js/libs/redactor/redactor.js')
+		script(src='/js/libs/redactor/pt_br.js')
+		script(src='/js/admin/admin.js')
+		block scripts

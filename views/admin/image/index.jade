@@ -1,0 +1,31 @@
+extends ../layout
+
+block title
+	| Imagens
+
+block link
+	-var selected = 'images';
+
+block content
+	p
+		a(href='/admin/image/new').btn.btn-small Nova imagem
+
+	table.table.table-striped
+		thead
+			tr
+				th ID
+				th Uploader
+				th Imagem
+				th Opções
+		for image in images
+			tr
+				td
+					a(href='/admin/image/#{image.id}')= image.id
+				td
+					a(href='/admin/user/'+image.uploader.id)= image.uploader.username
+				td
+					img(src="#{image.original_cdn_url}", style="max-height: 100px; width: auto;")
+				td
+					a(href="/admin/image/#{image.id}/remove",title="Excluir")
+						i.icon-remove
+	+pagination("/admin/images", pagination)

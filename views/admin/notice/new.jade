@@ -1,0 +1,26 @@
+extends ../layout
+
+block title
+	| Novo aviso
+block link
+	-var selected = 'avisos';
+
+block content
+	h2 Novo aviso
+	hr
+	form(action='/admin/notice', method='POST', enctype="multipart/form-data").form-horizontal
+		.row
+			.span6
+				+field(user, 'owner', 'ID do usuário', 'text')
+				+field("", 'order', 'Ordem', 'number')
+				+textfield("", 'text', 'Texto')
+				+field("", 'url', 'URL do link', 'text')
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/notices').btn Cancelar
+			.span6
+				p Imagem
+				.image-upload
+					input(type='file', name='image')

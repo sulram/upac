@@ -1,0 +1,53 @@
+<div class="row">
+	<div class="span12">
+		<h1 class="upper">
+			{{nick}}
+		</h1>
+		<hr/>
+	</div>
+</div>
+
+<div class="row">
+
+	<div class="span3">
+		
+		<p><img src="./img/perfil_user.png"/></p>
+
+		<dl class="">
+		  <dt>login</dt>
+		  <dd>{{username}}</dd>
+		  <dt>e-mail</dt>
+		  <dd>{{email}}</dd>
+		  <dt>participa desde</dt>
+		  <dd>{{momentago createdAt}}</dd>
+		  {{#if lastLogin}}
+			  <dt>último login</dt>
+			  <dd>{{momentago lastLogin}}</dd>
+		  {{/if}}
+		</dl>
+
+	</div>
+
+	<div class="span1">
+		&nbsp;
+	</div>
+
+	<div class="span8">
+
+		
+
+		<p>{{about}}</p>
+
+		<p>
+
+			{{#if isTheLoggedUser}}
+				{{#linkTo timeline.editar model classNames="btn btn-large"}}Editar meu perfil{{/linkTo}}
+			{{/if}}
+
+			{{#linkTo rede.perfil model classNames="btn btn-large"}}Localizar no mapa{{/linkTo}}
+
+		</p>
+
+	</div>
+
+</div>

@@ -1,0 +1,19 @@
+extends ../layout
+
+block title
+	| Nova Imagem
+
+block link
+	-var selected = 'images';
+
+block content
+	h2 Novo post
+	hr
+	form(action='/admin/image',method='POST',enctype="multipart/").form-horizontal
+		.row
+			+field("",'image','Imagem', 'file')
+			.control-group
+				.controls
+					button(type='submit').btn.btn-primary Enviar
+					&nbsp; &nbsp; 
+					a(href='/admin/images').btn Cancelar

@@ -1,0 +1,22 @@
+extends ../layout
+
+block title
+	| Tag: #{tag.name}
+block link
+	-var selected = 'tags';
+
+block content
+	h2 Aviso: #{tag.name}
+	hr
+	table.table-condensed
+		+table_rec_row("ID", tag.id)
+		+table_rec_row("Nome", tag.name)
+		+table_rec_row("Slug", tag.slug)
+		+table_rec_row("Referências", tag.refcount)
+		+table_rec_row("Tipo", tag.type)
+	hr
+	.btn-group
+		a(href='/admin/tags').btn Voltar
+		a(href='/admin/tag/'+tag.id+'/edit').btn.btn-primary Editar tag
+		a(href='/admin/tag/'+tag.id+'/remove').btn.btn-danger Remover tag
+		
