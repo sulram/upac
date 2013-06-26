@@ -23,12 +23,13 @@ App.ApplicationController = Ember.Controller.extend({
 App.HomeController = Ember.ObjectController.extend({
     notices: [],
     banners: [],
-    banner: -1,
-    notice: 0,
+    banner: null,
+    notice: null,
     bannerRun: null,
-    init: function(){
-        console.log('INIT HOME');
+    enter: function(){
         var _this = this;
+        this.notices = 0;
+        this.banner = -1;
         $.getJSON('/notices', function(data){
             var notices = [], banners = [];
             $.each(data.notices, function(i, child) {
@@ -65,6 +66,9 @@ App.HomeController = Ember.ObjectController.extend({
         console.log('slideshow',this.banner);
         $('.destaque').animate({scrollLeft: this.banner * 720 * 2},1000,'easeInOutQuart')
         this.bannerRun = Ember.run.later(this, 'nextBanner', 4000);
+    },
+    exit: function(){
+        Ember.run.cancel(this.bannerRun);
     }
 });
 

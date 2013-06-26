@@ -36,6 +36,16 @@ App.IndexRoute = App.UpacRoute.extend({
     }
 });
 
+App.HomeRoute = App.UpacRoute.extend({
+    setupController: function (controller){
+        this._super(this, arguments);
+        this.controller.enter();
+    },
+    exit: function(){
+        this.controller.exit();
+    }
+});
+
 App.TimelineRoute = App.UpacRoute.extend({
     model: function (param){
         console.log('App.UserModel.find', param.user_username);
