@@ -7,13 +7,12 @@ html
 		link(rel='stylesheet', href='/flat-ui/css/flat-ui.css')
 		link(rel='stylesheet', href='/dropzone/css/dropzone.css')
 		link(rel='stylesheet', href='/js/libs/codemirror/lib/codemirror.css')
-		link(rel='stylesheet', href='/js/libs/redactor/redactor.css')
 		link(rel='stylesheet', href='/css/app.css')
-		link(rel='stylesheet', href='/css/editor.css')
+		link(rel='stylesheet', href='/css/editor-md.css')
 
 	body(data-article-id="#{article.id}").editor
 		form(action="/article/#{article.id}", method="POST")#editor_form
-			.editor_header
+			.editor_header.less
 				a#close(href="/#/blog")
 					| fechar
 				.container
@@ -23,32 +22,53 @@ html
 						if article.title
 							input(type="text", name="title", placeholder="título da publicação", value="#{article.title}")#title
 						else
-							input(type="text", name="title", placeholder="título da publicação")#title						
+							input(type="text", name="title", placeholder="título da publicação")#title
+					a#toggle(href="#")
+						| info
+				hr
+				.container
+					.row
+						.span6
+							label.input_label(for="excerpt")
+								| Resumo (140 caracteres)
+							.input_excerpt
+								textarea(name="excerpt", rows="5", placeholder="escreva aqui")#excerpt= article.excerpt
+						.span6
+							label.input_label(for="publicationDate")
+								| Data
+								//input(type="text", name="publicationDate", value="#{article.publicationDate}")#publicationDate
+							#datetimepicker.input-prepend.date
+								span.add-on
+									i(data-time-icon="icon-time", data-date-icon="icon-calendar")
+								if article.publicationDate
+									input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate
+								else
+									input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate
+								
+							br
+							label.input_label(for="tags")
+								| Palavras-chave
+							.input_tags
+								textarea(name="tags", rows="5", placeholder="")#tags
 
 			.container
-				.row
-					.span9
-						textarea(name="content")#content= article.content
-					.span3
-						label.input_label(for="excerpt")
-							| Resumo (140 caracteres)
-						.input_excerpt
-							textarea(name="excerpt", rows="5", placeholder="escreva aqui")#excerpt= article.excerpt
-						label.input_label(for="publicationDate")
-							| Data
-						#datetimepicker.input-prepend.date
-							span.add-on
-								i(data-time-icon="icon-time", data-date-icon="icon-calendar")
-							if article.publicationDate
-								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate
-							else
-								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate
-							
-						br
-						label.input_label(for="tags")
-							| Palavras-chave
-						.input_tags
-							textarea(name="tags", rows="5", placeholder="")#tags
+				.editor_panes.row
+					.editor_markdown.span6
+						span.editor-type
+							| Texto
+						textarea(name="content")#editor= article.content
+						textarea(disabled)#link-refs
+							each image in article.images
+								- var img = (image.image.sizes[image.size] === undefined)?image.image.original_cdn_url:image.image.sizes[image.size].cdn_url
+								| [#{image.image.id}]: #{img}
+						#image-refs
+							each image, i in article.images
+								input(type="hidden", name="images[#{i}][0]", value=image.image.id)
+								input(type="hidden", name="images[#{i}][1]", value=image.size)
+					.editor_preview.span6
+						span.editor-type
+							| Visualização
+						#preview.post_content
 			
 			.footer
 				.container
@@ -96,6 +116,4 @@ html
 		script(src='/js/libs/showdown/src/extensions/table.js')
 		script(src='/js/libs/showdown/src/extensions/ufm.js')
 		script(src='/js/libs/datetimepicker/datetimepicker.js')
-		script(src='/js/libs/redactor/redactor.js')
-		script(src='/js/libs/redactor/pt_br.js')
-		script(src='/js/editor.js')
+		script(src='/js/editor-md.js')
