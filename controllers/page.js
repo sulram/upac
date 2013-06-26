@@ -21,9 +21,6 @@ module.exports = function(cdn, paginate){ return {
 			);
 		},
 		create: function(req, res, next) {
-			if(req.body.parent == '') {
-				delete req.body.parent;
-			}
 			var page = new Page(req.body);
 			page.createdAt = new Date();
 			page.save(function(err) {
@@ -93,7 +90,7 @@ module.exports = function(cdn, paginate){ return {
 		var data = _.pick(req.body,
 			'title', 'content',
 			'publicationDate', 'publicationStatus',
-			'images', 'attachments',
+			'images', 'attachments'
 		);
 		data.updatedAt = new Date;
 		console.info(data.images);
