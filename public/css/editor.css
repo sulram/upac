@@ -172,6 +172,46 @@ body.editor {
     color: #999 !important;
 }
 
+/* ---------------- MEDIA LIBRARY ---------------- */
+
+#medialibrary {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(100,100,100,.5);
+	z-index: 9000;
+}
+
+#medialibrary.show {
+	display: block;
+}
+
+#medialibrary a.overlay {
+	display: block;
+	width: 100%;
+	height: 100%;
+	z-index: 9001;
+}
+
+#medialibrary .window {
+	position: absolute;
+	top: 10%;
+	left: 10%;
+	background: #fff;
+	width: 80%;
+	height: 80%;
+	z-index: 9002;
+}
+
+.redactor_toolbar li a.redactor_btn_medialibrary {
+	background-position: -200px;
+}
+
+/* ---------------- INFO ---------------- */
+
 #info {
     position: fixed;
     top: 30%;

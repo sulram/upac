@@ -101,7 +101,8 @@ $('#content').redactor({
     buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', '|', 'unorderedlist', 'orderedlist', 'table'],
     formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
     minHeight: 300,
-    autoresize: false
+    autoresize: false,
+    plugins: ['medialibrary']
 });
 
 $('#excerpt').on('keypress keyup paste',function(e){
