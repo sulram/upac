@@ -9,7 +9,7 @@
 module.exports = function(cdn, paginate){ return {
 	admin: {
 		index: function(req, res, next) {
-			paginate.paginate(Article,{},{}, req, function(err, articles, pagination) {
+			paginate.paginate(Article,{},{populate:'featuredImage'}, req, function(err, articles, pagination) {
 					if(err) return next(err);
 					var total = 0;
 					Article.count({}, function(err, count){
@@ -36,7 +36,7 @@ module.exports = function(cdn, paginate){ return {
 			res.render('admin/article/new', {title: 'Novo artigo'});
 		},
 		show: function(req, res, next) {
-			Article.findById(req.param('id'), function(err, article) {
+			Article.findOne({_id: req.param('id')}).populate('featuredImage').exec(function(err, article) {
 				if (err) return next(err);
 				res.render('admin/article/show', {article:article});
 			});
@@ -85,7 +85,7 @@ module.exports = function(cdn, paginate){ return {
 			query['owners'] = req.user.id;
 		}
 		Article.findOne(query)
-			.populate('images.image')
+			.populate('images.image featuredImage')
 			.exec(function(err, article) {
 				if(err) return next(err);
 				console.log(article);
@@ -98,7 +98,7 @@ module.exports = function(cdn, paginate){ return {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
 			'publicationDate', 'publicationStatus',
-			'images', 'attachments', 'owners'//, 'tags'
+			'images', 'attachments', 'owners', 'featuredImage' //, 'tags'
 		);
 		data.updatedAt = new Date;
 		console.info(data.images);
@@ -143,7 +143,7 @@ module.exports = function(cdn, paginate){ return {
 		*/
 	},
 	index: function(req, res) {
-		paginate.paginate(Article,{publicationStatus:'published'},{populate:'images.image owners'}, req, function(err, articles, pagination) {
+		paginate.paginate(Article,{publicationStatus:'published'},{populate:'owners featuredImage'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
 				res.jsonx({
 					msg:'ok',
@@ -169,7 +169,7 @@ module.exports = function(cdn, paginate){ return {
 	},
 	show: function(req, res, next) {
 		Article.findById(req.params.id)
-			.populate('images.image owners')
+			.populate('images.image owners featuredImage')
 			.exec(function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
@@ -194,7 +194,7 @@ module.exports = function(cdn, paginate){ return {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
 			'publicationDate', 'publicationStatus',
-			'images', 'tags', 'attachments', 'owners');
+			'images', 'tags', 'attachments', 'owners', 'featuredImage');
 		data.updatedAt = new Date;
 		console.info(data.images);
 		data.images = _.map(data.images, function(image) {

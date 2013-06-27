@@ -29,7 +29,7 @@ module.exports = function(cdn, paginate){ return {
 			});
 		},
 		editnew: function(req, res, next) {
-			res.render('admin/page/new', {title: 'Nova Página'});
+			res.render('admin/page/new', {title: 'Nova Página', page: new Page()});
 		},
 		show: function(req, res, next) {
 			Page.findById(req.param('id'), function(err, page) {
@@ -63,7 +63,47 @@ module.exports = function(cdn, paginate){ return {
 				if (err) return next(err);
 				res.redirect('/admin/pages');
 			})
-		}
+		},
+		uploadImage: function(req, res, next) {
+			var page_id = req.param('id');
+			Img.upload(cdn, req.image_config,
+				req.user.id,
+				req.files.image.name,
+				req.files.image.path,
+				'page-'+page_id+'-content',
+				'content',
+				function(err, image) {
+					if(err) return next(err);
+					res.jsonx({
+						msg:'ok',
+						image: image
+					});
+				});
+		},
+		uploadAttachment: function(req, res, next) {
+			Page.findById(req.param('id'), function(err, page){
+				if(err) return next(err);
+				if(!page) return res.jsonx(404, {msg: "page not found"});
+				var attachment = new Attachment();
+				var path = req.files.upload.name;
+				attachment.filename = path.split('/').slice(-2).join('/');
+				attachment.remote_name = 'page-'+page.id+'/attachments/'+attachment.filename;
+				cdn.create().upload({
+					container:cdn.container,
+					remote: attachment.remote_name,
+					local: req.files.attachment.path// <-- attachment = name do item no form de upload
+				}, function(err) {
+					if (err) return next(err);
+					attachment.save();
+					page.attachments.push(attachment.id);
+					page.save(function(err){
+						if (err) return res.jsonx(500, {msg: "error saving image"});
+						res.jsonx({msg:"ok", image:img});
+					});
+
+				});
+			});
+		},
 	},
 	neweditor: function(req, res, next) {
 		var page = new Page({
@@ -188,47 +228,6 @@ module.exports = function(cdn, paginate){ return {
 			res.jsonx({
 				msg:'ok',
 				page: page,
-			});
-		});
-	},
-	uploadImage: function(req, res, next) {
-		var page_id = req.param('id');
-		Img.upload(cdn, req.image_config,
-			req.user.id,
-			req.files.image.name,
-			req.files.image.path,
-			'page-'+page_id+'-content',
-			'content',
-			function(err, image) {
-				if(err) return next(err);
-				res.jsonx({
-					msg:'ok',
-					image: image
-				});
-			});
-		
-	},
-	uploadAttachment: function(req, res, next) {
-		Page.findById(req.param('id'), function(err, page){
-			if(err) return next(err);
-			if(!page) return res.jsonx(404, {msg: "page not found"});
-			var attachment = new Attachment();
-			var path = req.files.upload.name;
-			attachment.filename = path.split('/').slice(-2).join('/');
-			attachment.remote_name = 'page-'+page.id+'/attachments/'+attachment.filename;
-			cdn.create().upload({
-				container:cdn.container,
-				remote: attachment.remote_name,
-				local: req.files.attachment.path// <-- attachment = name do item no form de upload
-			}, function(err) {
-				if (err) return next(err);
-				attachment.save();
-				page.attachments.push(attachment.id);
-				page.save(function(err){
-					if (err) return res.jsonx(500, {msg: "error saving image"});
-					res.jsonx({msg:"ok", image:img});
-				});
-
 			});
 		});
 	},

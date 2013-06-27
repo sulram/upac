@@ -38,6 +38,7 @@ var ArticleSchema = new Schema({
 	}],
 	references: [String],
 	images: [ImageRefSchema],
+	featuredImage: {type: ObjectId, ref:'Img'},
 	attachments: [{type:ObjectId, ref:'Attachment'}],
 
 	tags: [{type:ObjectId, ref:'Tag'}],

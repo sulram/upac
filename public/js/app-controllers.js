@@ -86,8 +86,8 @@ App.BlogRecentesController = Ember.ObjectController.extend({
             $.each(data.articles, function(i, _article) {
                 var article = Ember.Object.create(_article);
                 article.set('post_id', article.get('_id'));
-                if(_article.images.length && _article.images[0].image.sizes.length){
-                    var img = 'http:'+_.findWhere(_article.images[0].image.sizes,{size:'medium'}).cdn_url;
+                if(_article.featuredImage && _article.featuredImage.sizes.length){
+                    var img = ''+_.findWhere(_article.featuredImage.sizes,{size:'medium'}).cdn_url; // não utilizar http: permite usar imagens dentro do site em https:
                     article.set('img', img);
                     article.set('bgimg', 'background-image: url('+img+');');
                     console.log(img);

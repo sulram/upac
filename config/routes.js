@@ -106,7 +106,6 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/page/:id/images', page.getImages);
 	app.get('/page/:id/attachments', page.getAttachments);
 
-
 	// route for testing uploads to the CDN server
 
 	app.post('/tag/new', auth.requiresLogin, tag.create);
