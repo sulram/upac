@@ -777,5 +777,15 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	background-color: #6fb7ac;
 }
 
-/* ---------------- TEMP ---------------- */
+/* ---------------- DROPZONE ---------------- */
+
+.dropzone .dz-default.dz-message {
+	background-image: none;
+}
+
+.dropzone .dz-default.dz-message span {
+	text-align: center;
+	font-size: 18px;
+	display: block;
+}
 

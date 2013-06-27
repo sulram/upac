@@ -129,6 +129,7 @@ $(document).ready(function(){
 	// IMAGE GALLERY
 
 	$("#image-gallery").dropzone({
+		dictDefaultMessage: 'Clique ou solte uma imagem aqui para fazer upload.<br/><small>Tamanho máximo: 2mb</small>',
 		paramName:"image",
 		url: "/article/"+article_id+"/imageupload",
 		maxFilesize: 5,

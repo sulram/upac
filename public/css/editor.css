@@ -212,13 +212,43 @@ body.editor {
 	z-index: 9002;
 }
 
-#medialibrary .window .panel {
+#medialibrary .panel {
 	display: none;
+	height: 90%;
 }
 
-#medialibrary .window .panel.show {
+#medialibrary .panel.show {
 	display: block;
 }
+
+#medialibrary .panel .dropzone {
+	height: 100%;
+}
+
+#medialibrary .gallery ul.images {
+	margin: 0 0 30px -4px;
+	padding: 0;
+	list-style-type: none;
+	overflow: hidden;
+}
+
+#medialibrary .gallery ul.images li {
+	margin: 4px;
+	padding: 0;
+	float: left;
+	padding: 10px;
+	border: 1px solid #eee;
+}
+
+#medialibrary .gallery ul.images li .radio .title {
+	display: inline-block;
+	text-indent: -9999px;
+}
+
+#medialibrary .gallery ul.images li .radio.checked .title {
+	text-indent: 0;
+}
+
 
 /* ---------------- INFO ---------------- */
 

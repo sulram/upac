@@ -105,14 +105,22 @@ html
 							input(type="file", name="image")
 							button(value="submit") Enviar
 				.panel.gallery
-					a.btn(href='#')
+					ul.images
+						- for (var i = 0; i < 10; ++i) {
+						li
+							img(src="holder.js/100x100")
+						- }
+
+					a(href='#')#img_add.btn
 						| adicionar imagem
+					&nbsp; &nbsp;
+					a(href='#')#img_cover.btn
+						| definir como capa
 
 
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')
 		script(src='/flat-ui/js/bootstrap.min.js')
 		script(src='/js/libs/underscore-min.js')
-		script(src='/js/libs/jquery.filedrop.js')
 		script(src='/js/libs/codemirror/lib/codemirror.js')
 		script(src='/js/libs/codemirror/mode/markdown/markdown.js')
 		script(src='/js/libs/codemirror/mode/gfm/gfm.js')
@@ -121,8 +129,9 @@ html
 		script(src='/js/libs/showdown/src/extensions/table.js')
 		script(src='/js/libs/showdown/src/extensions/ufm.js')
 		script(src='/js/libs/datetimepicker/datetimepicker.js')
-		script(src='/js/libs/redactor/redactor.js')
+		script(src='/js/libs/holder.js')
 		script(src='/dropzone/dropzone.js')
+		script(src='/js/libs/redactor/redactor.js')
 		//script(src='/js/libs/redactor/pt_br.js')
 		script(src='/js/medialibrary.js')
 		script(src='/js/editor.js')

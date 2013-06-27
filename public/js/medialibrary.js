@@ -8,7 +8,7 @@ RedactorPlugins.medialibrary = {
         this.tabs = $('#medialibrary ul.nav.nav-pills li');
         this.panels = $('#medialibrary .panel');
 
-        $('#medialibrary .window .btn').bind('click',function(){
+        $('#medialibrary #img_add').bind('click',function(){
             _this.restoreSelection();
             _this.execCommand('inserthtml', '<p class="img">[IMAGEM AQUI]</p>');
             _this.closeModal();
