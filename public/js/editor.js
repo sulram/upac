@@ -98,7 +98,7 @@ $('#title').val($('#title').val());
 
 $('#content').redactor({
     lang: 'pt_br',
-    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', '|', 'unorderedlist', 'orderedlist', 'table'],
+    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', 'video', '|', 'unorderedlist', 'orderedlist', 'table'],
     formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
     minHeight: 300,
     autoresize: false,
