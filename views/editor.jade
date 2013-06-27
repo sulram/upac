@@ -105,8 +105,19 @@ html
 							input(type="file", name="image")
 							button(value="submit") Enviar
 				.panel.gallery
-					a.btn(href='#')
-						| adicionar imagem
+					#images-gallery
+						.dz-preview.dz-filepreview.gallery-image.image-template
+							.dz-details
+								.dz-filename
+								img
+						each image in article.images
+							div(data-image-id=image.id).dz-preview.dz-filepreview.gallery-image
+								.dz-details
+									.dz-filename= image.filename
+									if image.upload_complete
+										img(src=image.getSize("icon").cdn_url)
+									else
+										img(src=image.original_cdn_url)
 
 
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')

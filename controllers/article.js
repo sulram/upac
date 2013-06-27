@@ -103,7 +103,7 @@ module.exports = function(cdn, paginate){ return {
 		data.updatedAt = new Date;
 		console.info(data.images);
 		data.images = _.map(data.images, function(image) {
-			return {image:image[0], size:image[1]}
+			return {image:image, size:'normal'}
 		})
 		console.info(data.images);
 		// TODO: pegar tags e transformar em ObjectIDs
@@ -198,7 +198,7 @@ module.exports = function(cdn, paginate){ return {
 		data.updatedAt = new Date;
 		console.info(data.images);
 		data.images = _.map(data.images, function(image) {
-			return {image:image[0], size:image[1]}
+			return {image:image, size:"normal"}
 		})
 		console.info(data.images);
 		req.article.set(data);
