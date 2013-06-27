@@ -45,6 +45,7 @@ $(document).ready(function(){
 
 	var more_info = false;
 
+
 	$(window).resize(resize);
 
 	function resize(e){

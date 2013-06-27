@@ -91,11 +91,12 @@ html
 		#medialibrary
 			a.overlay(href='#')
 			.window
+				a.btn(href='#')
+					| adicionar imagem
 				form(action="/article/#{article.id}/imageupload", method="post", enctype="multipart/formdata").dropzone#image-gallery
 					.fallback
 						input(type="file", name="image")
 						button(value="submit") Enviar
-
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')
 		script(src='/flat-ui/js/bootstrap.min.js')
 		script(src='/js/libs/underscore-min.js')
