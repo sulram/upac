@@ -135,10 +135,25 @@ $(document).ready(function(){
 		maxFilesize: 5,
 		acceptedMimeTypes:'image/gif,image/jpeg,image/pjpeg,image/png,image/x-windows-bmp,image/bmp',
 		init: function() {
-			this.on("success", function(file, xhr) {
-				console.log(xhr);
-				$img = $('<input name="images[]" type="hidden">').attr('value', xhr.image._id);
-				$("#images-hidden").append($img);
+			this.on("success", function(file, xhr, elem) {
+				var image = xhr.image;
+				console.log(image);
+				var $input = $('<input name="images[]" type="hidden">').attr('value', image._id);
+				$("#images-hidden").append($input);
+				var $img = $('#image-gallery .image-template').clone().removeClass('image-template');
+				$img.data('image-id', image._id);
+				var try_loading_image;
+				try_loading_image = function() {
+					$.getJSON('/image/'+image._id,{},function(data, status, xhr) {
+						if(data && data.image && data.image.upload_complete) {
+							$img.find('img').attr('src', _.find(data.image.sizes, function(size) { return size.size == 'icon'; }).cdn_url);
+						} else {
+							setTimeout(try_loading_image, 3000);
+						}
+					});
+				}
+				setTimeout(try_loading_image, 3000);
+				$("#images-gallery").append($img);
 			});
 		}
 	});

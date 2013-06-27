@@ -105,12 +105,19 @@ html
 							input(type="file", name="image")
 							button(value="submit") Enviar
 				.panel.gallery
-					ul.images
-						- for (var i = 0; i < 10; ++i) {
-						li
-							img(src="holder.js/100x100")
-						- }
-
+					#images-gallery
+						.dz-preview.dz-filepreview.gallery-image.image-template
+							.dz-details
+								.dz-filename
+								img
+						each image in article.images
+							div(data-image-id=image.id).dz-preview.dz-filepreview.gallery-image
+								.dz-details
+									.dz-filename= image.filename
+									if image.upload_complete
+										img(src=image.getSize("icon").cdn_url)
+									else
+										img(src=image.original_cdn_url)
 					a(href='#')#img_add.btn
 						| adicionar imagem
 					&nbsp; &nbsp;
