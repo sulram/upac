@@ -75,14 +75,14 @@ html
 								- draft = ('draft'==article.publicationStatus) ? 'selected' : null; 
 								- published = ('published'==article.publicationStatus) ? 'selected' : null;
 							select(name="publicationStatus")#status
-								option(name="published", value="published", selected=published) postar no blog
+								option(name="published", value="published", selected=published) publicar no blog
 								option(name="draft",value="draft", selected=draft) salvar como rascunho
 						.span3
 							input(type='submit')#submit.hide
 							a(href="#")#submit_anchor.btn.btn-primary.btn-w-icon
 								i.fui-check
 								&nbsp;
-								| Salvar publicação
+								| Publicar
 							img(src='/img/ajax-loader.gif')#loading
 
 			#info

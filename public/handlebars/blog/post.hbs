@@ -7,7 +7,17 @@
 				
 			</div>
 			<div class="span8">
-				<h3 class="title">{{article.title}}</h3>
+				<h3 class="title">
+					{{#if article.title}}
+						{{article.title}}
+					{{else}}
+						{{#if isOwner}}
+							<a {{bindAttr href="edit_link"}}>Sem título</a>
+						{{else}}
+							Sem título
+						{{/if}}	
+					{{/if}}
+				</h3>
 				<p class="date">{{momentdate article.publicationDate}} ({{momentago article.publicationDate}})</p>
 				<p class="excerpt">{{article.excerpt}}</p>
 			</div>
@@ -22,12 +32,21 @@
 		<div class="row-fluid">
 			<div class="span4">
 				<p>Postado por {{#each owner in article.owners}}{{owner.name}}{{/each}}</p>
-				<p><a class="btn" {{bindAttr href="edit_link"}}>Editar</a></p>
+				{{#if isOwner}}
+					<p><a class="btn" {{bindAttr href="edit_link"}}>Editar</a></p>
+				{{/if}}	
+				
 			</div>
 			<div class="span8 post_content">
 				{{#if article.content}}
 					{{{article.content}}}
 				{{/if}}
+
+				<hr/>
+
+				<h3>Comentários</h3>
+
+
 			</div>
 		</div>
 

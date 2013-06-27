@@ -93,9 +93,12 @@ var updatePreview = function() {
 
 // REDACTOR
 
+$('#title').focus();
+$('#title').val($('#title').val());
+
 $('#content').redactor({
     lang: 'pt_br',
-    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'table', 'link'],
+    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', '|', 'unorderedlist', 'orderedlist', 'table'],
     formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
     minHeight: 300,
     autoresize: false
@@ -179,9 +182,9 @@ function notify(msg,log) {
 		.addClass('notification')
 		.text(msg)
 		.appendTo('#info')
-		.fadeIn(1000)
+		.fadeIn(500)
 		.delay(4000)
-		.slideUp(500,function(){$(this).remove();});
+		.slideUp(250,function(){$(this).remove();});
 
 	console.log(msg,log);
 }

@@ -78,6 +78,10 @@ body.editor {
 	resize:none;
 }
 
+.editor #content {
+	display: none;
+}
+
 .editor .smallinput {
 	font-size: 12px;
 }
@@ -181,8 +185,8 @@ body.editor {
     padding: 30px;
     margin-bottom: 12px;
     color: white;
-    background: #252525;
+    background: #444;
     display: none;
-    opacity: 0.8;
+    opacity: 0.9;
     font-weight: bold;
 }
