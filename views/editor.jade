@@ -31,24 +31,28 @@ html
 						textarea(name="content")#content= article.content
 					.span3
 						label.input_label(for="excerpt")
-							| Resumo (140 caracteres)
+							| Resumo (
+							span#excerpt_count
+								| 140
+							|  caracteres)
 						.input_excerpt
-							textarea(name="excerpt", rows="5", placeholder="escreva aqui")#excerpt= article.excerpt
+							textarea(name="excerpt", rows="5", placeholder="escreva aqui")#excerpt.smallinput= article.excerpt
 						label.input_label(for="publicationDate")
 							| Data
 						#datetimepicker.input-prepend.date
 							span.add-on
 								i(data-time-icon="icon-time", data-date-icon="icon-calendar")
 							if article.publicationDate
-								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate
+								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{article.publicationDate}")#publicationDate.smallinput
 							else
-								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate
+								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate.smallinput
 							
 						br
 						label.input_label(for="tags")
 							| Palavras-chave
 						.input_tags
-							textarea(name="tags", rows="5", placeholder="")#tags
+							textarea(name="tags", rows="5", placeholder="")#tags.smallinput
+			
 			.footer
 				.container
 					.row
@@ -71,23 +75,26 @@ html
 								- draft = ('draft'==article.publicationStatus) ? 'selected' : null; 
 								- published = ('published'==article.publicationStatus) ? 'selected' : null;
 							select(name="publicationStatus")#status
-								option(name="published", value="published", selected=published) postar no blog
+								option(name="published", value="published", selected=published) publicar no blog
 								option(name="draft",value="draft", selected=draft) salvar como rascunho
 						.span3
 							input(type='submit')#submit.hide
 							a(href="#")#submit_anchor.btn.btn-primary.btn-w-icon
 								i.fui-check
 								&nbsp;
-								| Salvar publicação
+								| Publicar
 							img(src='/img/ajax-loader.gif')#loading
 			#images-hidden
 				each image in article.images
 					input(type="hidden", name="images[]", value=image.id)
 			#info
-		form(action="/article/#{article.id}/imageupload", method="post", enctype="multipart/formdata").dropzone#image-gallery
-			.fallback
-				input(type="file", name="image")
-				button(value="submit") Enviar
+		#medialibrary
+			a.overlay(href='#')
+			.window
+				form(action="/article/#{article.id}/imageupload", method="post", enctype="multipart/formdata").dropzone#image-gallery
+					.fallback
+						input(type="file", name="image")
+						button(value="submit") Enviar
 
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')
 		script(src='/flat-ui/js/bootstrap.min.js')
@@ -102,6 +109,7 @@ html
 		script(src='/js/libs/showdown/src/extensions/ufm.js')
 		script(src='/js/libs/datetimepicker/datetimepicker.js')
 		script(src='/js/libs/redactor/redactor.js')
-		script(src='/js/libs/redactor/pt_br.js')
 		script(src='/dropzone/dropzone.js')
+		//script(src='/js/libs/redactor/pt_br.js')
+		script(src='/js/medialibrary.js')
 		script(src='/js/editor.js')

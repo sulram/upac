@@ -223,6 +223,7 @@ iframe {
 #sec_menu .menu_it.profile a .ico { background-position: -128px -64px; }
 #sec_menu .menu_it.busca a .ico { background-position: -192px -64px; }
 #sec_menu .menu_it.add a .ico { background-position: -256px -64px; }
+#sec_menu .menu_it.marker a .ico { background-position: -320px -64px; }
 
 .menu_it.profile a:hover, .menu_it.profile a.active { background-color: #6fb7ac; }
 
@@ -635,11 +636,32 @@ iframe {
 	min-width: 780px;
 	max-width: 940px;
 	font-size: 16px;
-	line-height: 1.5em;
+	line-height: 1.75em;
 }
 
 #wrapper.blog .thepost p {
-	margin-bottom: 1em;
+	margin-bottom: 2em;
+	line-height: 1.75em;
+}
+
+#wrapper.blog .thepost blockquote {
+	font-style: oblique;
+	font-family: Georgia, Times, serif;
+	font-size: 18px;
+	color: #666;
+	padding-left: 30px;
+	padding-right: 60px;
+	margin: 30px 0;
+	line-height: 1.75em;
+}
+
+#wrapper.blog .thepost ul {
+	margin: 30px 0;
+	list-style-position: inside;
+}
+
+#wrapper.blog .thepost li {
+	line-height: 1.75em;
 }
 
 #wrapper.blog .thepost .title {

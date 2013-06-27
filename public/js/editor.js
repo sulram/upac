@@ -39,7 +39,6 @@ $(document).ready(function(){
 		}
 
 		return this;
-
 	}();
 
 	// RESIZE
@@ -71,11 +70,11 @@ $(document).ready(function(){
 			.fadeIn(1000)
 			.delay(4000)
 			.slideUp(500,function(){$(this).remove();});
-
 		console.log(msg,log);
 	}
 
 	// FORM SUBMIT
+
 
 	var form = $('#editor_form');
 	var submit = $('#submit_anchor');
@@ -111,13 +110,35 @@ $(document).ready(function(){
 		});
 	});
 
-    $('#content').redactor({
-        lang: 'pt_br',
-        buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'table', 'link'],
-        formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
-        minHeight: 300,
-        autoresize: false
-    });
+	$('#title').focus();
+	$('#title').val($('#title').val());
+
+	$('#content').redactor({
+	    lang: 'pt_br',
+	    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', '|', 'unorderedlist', 'orderedlist', 'table'],
+	    formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
+	    minHeight: 300,
+	    autoresize: false,
+	    plugins: ['medialibrary']
+	});
+
+
+	$('#excerpt').on('keypress keyup paste',function(e){
+
+		var limit = 140;
+		var text = $(this).val();
+		var chars = text.length;
+		if(chars > limit){
+			text.substring(0, limit);
+			chars = limit;
+			$('#excerpt').val(text);
+			return false;
+		}
+		if(e.keyCode && e.keyCode==13){
+			return false;
+		}
+		$('#excerpt_count').text(limit-chars);
+	});
 
 	$("#image-gallery").dropzone({
 		paramName:"image",

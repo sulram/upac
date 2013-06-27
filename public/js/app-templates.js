@@ -91,15 +91,16 @@ function program1(depth0,data) {
 Ember.TEMPLATES["blog/post"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', stack1, hashTypes, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = '', stack1, hashTypes, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
-  data.buffer.push("\r\n		\r\n		<div class=\"row-fluid\">\r\n			<div class=\"span4\">\r\n				\r\n			</div>\r\n			<div class=\"span8\">\r\n				<h3 class=\"title\">");
+  data.buffer.push("\r\n		\r\n		<div class=\"row-fluid\">\r\n			<div class=\"span4\">\r\n				\r\n			</div>\r\n			<div class=\"span8\">\r\n				<h3 class=\"title\">\r\n					");
   hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.title", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</h3>\r\n				<p class=\"date\">");
+  stack1 = helpers['if'].call(depth0, "article.title", {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n				</h3>\r\n				<p class=\"date\">");
   hashTypes = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.momentdate),stack1 ? stack1.call(depth0, "article.publicationDate", options) : helperMissing.call(depth0, "momentdate", "article.publicationDate", options))));
@@ -112,39 +113,90 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.excerpt", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push("</p>\r\n			</div>\r\n		</div>\r\n\r\n		<!--<div class=\"row-fluid\">\r\n			<div class=\"span12 firstimage\">\r\n				<img src=\"/img/home02.jpg\"/>\r\n			</div>\r\n		</div>-->\r\n		\r\n		<div class=\"row-fluid\">\r\n			<div class=\"span4\">\r\n				<p>Postado por ");
   hashTypes = {};
-  stack2 = helpers.each.call(depth0, "owner", "in", "article.owners", {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
+  stack2 = helpers.each.call(depth0, "owner", "in", "article.owners", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("</p>\r\n				<p><a class=\"btn\" ");
+  data.buffer.push("</p>\r\n				");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("	\r\n				\r\n			</div>\r\n			<div class=\"span8 post_content\">\r\n				");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "article.content", {hash:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\r\n\r\n				<hr/>\r\n\r\n				<h3>Comentários</h3>\r\n\r\n\r\n			</div>\r\n		</div>\r\n\r\n	");
+  return buffer;
+  }
+function program2(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\r\n						");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.title", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\r\n					");
+  return buffer;
+  }
+
+function program4(depth0,data) {
+  
+  var buffer = '', stack1, hashTypes;
+  data.buffer.push("\r\n						");
+  hashTypes = {};
+  stack1 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("	\r\n					");
+  return buffer;
+  }
+function program5(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\r\n							<a ");
   hashTypes = {'href': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'href': ("edit_link")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">Editar</a></p>\r\n			</div>\r\n			<div class=\"span8 post_content\">\r\n				");
-  hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "article.content", {hash:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n			</div>\r\n		</div>\r\n\r\n	");
+  data.buffer.push(">Sem título</a>\r\n						");
   return buffer;
   }
-function program2(depth0,data) {
+
+function program7(depth0,data) {
+  
+  
+  data.buffer.push("\r\n							Sem título\r\n						");
+  }
+
+function program9(depth0,data) {
   
   var hashTypes;
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "owner.name", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   }
 
-function program4(depth0,data) {
+function program11(depth0,data) {
   
-  var buffer = '', stack1, hashTypes, options;
+  var buffer = '', hashTypes;
+  data.buffer.push("\r\n					<p><a class=\"btn\" ");
+  hashTypes = {'href': "STRING"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'href': ("edit_link")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">Editar</a></p>\r\n				");
+  return buffer;
+  }
+
+function program13(depth0,data) {
+  
+  var buffer = '', stack1, hashTypes;
   data.buffer.push("\r\n					");
-  hashTypes = {};
-  options = {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.ufm),stack1 ? stack1.call(depth0, "article.content", options) : helperMissing.call(depth0, "ufm", "article.content", options))));
+  hashTypes = {'unescaped': "STRING"};
+  stack1 = helpers._triageMustache.call(depth0, "article.content", {hash:{
+    'unescaped': ("true")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n				");
   return buffer;
   }
 
-function program6(depth0,data) {
+function program15(depth0,data) {
   
   
   data.buffer.push("\r\n\r\n		<img src=\"/img/ajax-loader.gif\"/>\r\n\r\n	");
@@ -152,7 +204,7 @@ function program6(depth0,data) {
 
   data.buffer.push("<div class=\"thepost\">\r\n\r\n	");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(6, program6, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(15, program15, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n</div>");
   return buffer;
@@ -469,7 +521,10 @@ function program19(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(20, program20, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.perfil", "User.model", options) : helperMissing.call(depth0, "linkTo", "rede.perfil", "User.model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\r\n		</li>\r\n\r\n		<li class=\"menu_it add\">\r\n			<a ");
+  data.buffer.push("\r\n		</li>\r\n		\r\n		<li class=\"menu_it marker rede\">\r\n			<a ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "showContentModal", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\r\n				<span class=\"ico\"></span>\r\n				<span class=\"caption\"><span>Criar ponto no mapa</span></span>\r\n			</a>\r\n		</li>\r\n\r\n		<li class=\"menu_it add\">\r\n			<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "showContentModal", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(">\r\n				<span class=\"ico\"></span>\r\n				<span class=\"caption\"><span>Criar conteúdo</span></span>\r\n			</a>\r\n		</li>\r\n\r\n	");
@@ -543,7 +598,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   data.buffer.push("<div class=\"overlay\">\r\n	<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "hideContentModal", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"overlay-bg\"></a>\r\n	<div class=\"overlay-modal\">\r\n		<ul>\r\n			<li><a class=\"btn\" href=\"/editor\">Criar post</a></li>\r\n			<li><a class=\"btn\" href=\"/editor\">Criar evento</a></li>\r\n			<li><a class=\"btn\" href=\"#/rede\">Adicionar ponto no mapa</a></li>\r\n		</ul>\r\n	</div>\r\n</div>");
+  data.buffer.push(" class=\"overlay-bg\"></a>\r\n	<div class=\"overlay-modal\">\r\n		<ul>\r\n			<li><a class=\"btn\" href=\"/editor\">Criar publicação</a></li>\r\n			<li><a class=\"btn\" href=\"/editor\">Criar evento</a></li>\r\n		</ul>\r\n	</div>\r\n</div>");
   return buffer;
   
 });
