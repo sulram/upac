@@ -137,7 +137,7 @@ App.BlogPostController = Ember.ObjectController.extend({
             _this.set('isOwner', data.article.owners[0]._id == data.auth.id);
             _this.set('isLoaded', true);
             Ember.run.next(function(){
-                $('.post_content table').addClass('table');
+                $('.post_content table').addClass('table table-condensed');
             });
         });
     }

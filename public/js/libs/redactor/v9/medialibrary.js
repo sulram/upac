@@ -9,7 +9,7 @@ RedactorPlugins.medialibrary = {
         this.panels = $('#medialibrary .panel');
 
         $('#medialibrary #img_add').bind('click',function(){
-            _this.restoreSelection();
+            _this.selectionRestore();
             _this.execCommand('inserthtml', '<p class="img">[IMAGEM AQUI]</p>');
             _this.closeModal();
         });
@@ -21,7 +21,7 @@ RedactorPlugins.medialibrary = {
 
         var callback = $.proxy(function(){
 
-            this.saveSelection();
+            this.selectionSave();
             this.openModal();
 
         }, this);
@@ -31,7 +31,7 @@ RedactorPlugins.medialibrary = {
             _this.closeModal();
         });
 
-        this.addBtnAfter('link', 'medialibrary', 'Media Library', callback);
+        this.buttonAddAfter('link', 'medialibrary', 'Imagens', callback);
     },
     openModal: function(){
         $('#medialibrary').addClass('show');
