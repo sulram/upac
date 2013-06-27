@@ -1,8 +1,10 @@
 Dropzone.autoDiscover = false;
 
 $(document).ready(function(){
+	
 	var article_id = $('body').data('article-id');
 	var is_uploading = false;
+
 	// DATE PICKER
 
 	var Picker = function(){
@@ -41,26 +43,6 @@ $(document).ready(function(){
 		return this;
 	}();
 
-	// RESIZE
-
-	var more_info = false;
-
-
-	$(window).resize(resize);
-
-	function resize(e){
-		var win = $(window);
-		if(!more_info){
-			$('.CodeMirror').height(win.height() - 206);
-			$('#preview').height(win.height() - 206);
-		} else {
-			$('.CodeMirror').height(win.height() - 476);
-			$('#preview').height(win.height() - 476);
-		}
-	}
-
-	resize();
-
 	// NOTIFY
 
 	function notify(msg,log) {
@@ -68,14 +50,13 @@ $(document).ready(function(){
 			.addClass('notification')
 			.text(msg)
 			.appendTo('#info')
-			.fadeIn(1000)
+			.fadeIn(500)
 			.delay(4000)
-			.slideUp(500,function(){$(this).remove();});
+			.slideUp(250,function(){$(this).remove();});
 		console.log(msg,log);
 	}
 
 	// FORM SUBMIT
-
 
 	var form = $('#editor_form');
 	var submit = $('#submit_anchor');
@@ -111,21 +92,25 @@ $(document).ready(function(){
 		});
 	});
 
+	// TITLE
+
 	$('#title').focus();
 	$('#title').val($('#title').val());
 
+	// REDACTOR
+
 	$('#content').redactor({
 	    lang: 'pt_br',
-	    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', '|', 'unorderedlist', 'orderedlist', 'table'],
+	    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', 'video', '|', 'unorderedlist', 'orderedlist', 'table'],
 	    formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
 	    minHeight: 300,
 	    autoresize: false,
 	    plugins: ['medialibrary']
 	});
 
+	// EXCERPT
 
 	$('#excerpt').on('keypress keyup paste',function(e){
-
 		var limit = 140;
 		var text = $(this).val();
 		var chars = text.length;
@@ -141,6 +126,8 @@ $(document).ready(function(){
 		$('#excerpt_count').text(limit-chars);
 	});
 
+	// IMAGE GALLERY
+
 	$("#image-gallery").dropzone({
 		paramName:"image",
 		url: "/article/"+article_id+"/imageupload",
@@ -155,6 +142,16 @@ $(document).ready(function(){
 		}
 	});
 
+	// RESIZE
+
+	$(window).resize(resize);
+
+	function resize(e){
+		var win = $(window);
+		$('.redactor_editor').height(win.height() - 240);
+	}
+
+	resize();
 });
 
 
