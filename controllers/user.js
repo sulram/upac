@@ -60,10 +60,12 @@ module.exports = function (cdn, paginate) { return {
 		}
 	},
 	logout: function(req, res) {
+		req.session.cookie.expires = new Date(Date.now()+48*60*60*1000);
 		req.logout();
 		res.jsonx({msg:'ok'});
 	},
 	login: function(req, res) {
+		req.session.cookie.expires = false;
 		res.jsonx({
 			msg:'ok',
 			user: {

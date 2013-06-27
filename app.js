@@ -77,7 +77,7 @@ app.use(express.cookieSession({
 	secret:config.secret,
 	cookie: {
 		//secure: true,  // só quando habilitar HTTPS
-		maxAge: 60*60*1000,
+		maxAge: 48*60*60*1000, // 48 horas
 		httpOnly: true
 	}
 }))

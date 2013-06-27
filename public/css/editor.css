@@ -98,7 +98,7 @@ body.editor {
 	margin: 0;
 }
 
-.editor .image-upload {
+.editor .image-gallery {
 	display: block;
 	margin: 20px 0;
 	padding: 20px;
@@ -106,24 +106,24 @@ body.editor {
 	cursor: pointer;
 }
 
-.editor .image-upload .aviso {
+.editor .image-gallery .aviso {
 	padding: 20px;
 	border: 1px dashed #ccc;
 	font-size: 14px;
 	text-align: center;
 }
 
-.editor .image-upload:hover,
-.editor .image-upload.hover  {
+.editor .image-gallery:hover,
+.editor .image-gallery.hover  {
 	background: #ddd;
 }
 
-.editor .image-upload.uploading,
-.editor .image-upload.uploading:hover {
+.editor .image-gallery.uploading,
+.editor .image-gallery.uploading:hover {
 	background: #efefef url('../img/ajax-loader-efefef.gif') no-repeat center center;
 }
 
-.editor .image-upload.uploading .aviso {
+.editor .image-gallery.uploading .aviso {
 	text-indent: -9999px;
 }
 
