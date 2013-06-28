@@ -101,11 +101,9 @@ module.exports = function(cdn, paginate){ return {
 			'images', 'attachments', 'owners', 'featuredImage' //, 'tags'
 		);
 		data.updatedAt = new Date;
-		console.info(data.images);
 		data.images = _.map(data.images, function(image) {
 			return {image:image, size:'normal'}
 		})
-		console.info(data.images);
 		// TODO: pegar tags e transformar em ObjectIDs
 		var query = {_id: req.param('id')}
 		if(!req.isAdmin()) {

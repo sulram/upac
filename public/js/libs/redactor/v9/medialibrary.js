@@ -8,19 +8,23 @@ RedactorPlugins.medialibrary = {
         this.tabs = $('#medialibrary ul.nav.nav-pills li');
         this.panels = $('#medialibrary .panel');
 
-        $('#medialibrary #images-gallery .gallery-image').bind('click', function() {
-            $img = $(this);
-            _this.selectionRestore();
-            _this.execCommand('inserthtml','<p class="img"><img src="'+$img.data('image-url')+'"></p>')
-            _this.closeModal();
-        })
-        /*
-        $('#medialibrary #img_add').bind('click',function(){
-            _this.selectionRestore();
-            _this.execCommand('inserthtml', '<p class="img">[IMAGEM AQUI]</p>');
-            _this.closeModal();
+        var $btn = $('#medialibrary #img_add');
+        var $imgs = $('#medialibrary #images-gallery .gallery-image');
+        $imgs.bind('click', function() {
+            $btn.data('selected-src', $(this).data('image-src'));
+            $imgs.removeClass('selected');
+            $(this).addClass('selected');
         });
-        */
+
+        $btn.bind('click',function(){
+            var selected = $(this).data('selected-src');
+            if (selected) {
+                _this.selectionRestore();
+                _this.execCommand('inserthtml', '<p class="img"><img src="'+selected+'"></p>');
+                _this.closeModal();
+            }
+        });
+
         $('a', this.tabs).click(function(e){
             e.preventDefault();
             _this.selectTab($(this).attr('href').substring(1));

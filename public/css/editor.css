@@ -139,6 +139,125 @@ body.editor {
 	display: none;
 }
 
+
+
+
+/* ------------------------------------------ */
+
+#images-gallery,
+#images-gallery * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#images-gallery {
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(0,0,0,0.02);
+  padding: 1em;
+}
+#images-gallery.dz-clickable {
+  cursor: pointer;
+}
+#images-gallery.dz-clickable .dz-message,
+#images-gallery.dz-clickable .dz-message span {
+  cursor: pointer;
+}
+#images-gallery.dz-clickable * {
+  cursor: default;
+}
+#images-gallery .dz-message {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+#images-gallery.dz-drag-hover {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.04);
+}
+#images-gallery.dz-started .dz-message {
+  display: none;
+}
+#images-gallery .dz-preview {
+  background: rgba(255,255,255,0.8);
+  position: relative;
+  display: inline-block;
+  margin: 17px;
+  vertical-align: top;
+  border: 1px solid #acacac;
+  padding: 6px 6px 6px 6px;
+}
+#images-gallery .selected {
+	border: 1px solid #2f3;
+}
+#images-gallery .dz-preview.dz-file-preview [data-dz-thumbnail] {
+  display: none;
+}
+#images-gallery .dz-preview .dz-details {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  background: #ebebeb;
+  padding: 5px;
+  margin-bottom: 22px;
+}
+#images-gallery .dz-preview .dz-details .dz-filename {
+  overflow: hidden;
+  height: 100%;
+}
+#images-gallery .dz-preview .dz-details img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+}
+#images-gallery .dz-preview .dz-details .dz-size {
+  position: absolute;
+  bottom: -28px;
+  left: 3px;
+  height: 28px;
+  line-height: 28px;
+}
+#images-gallery .dz-preview.dz-error .dz-error-mark {
+  display: block;
+}
+#images-gallery .dz-preview.dz-success .dz-success-mark {
+  display: block;
+}
+#images-gallery .dz-preview:hover .dz-details img {
+  display: none;
+}
+#images-gallery .dz-preview .dz-success-mark,
+#images-gallery .dz-preview .dz-error-mark {
+  display: none;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  text-align: center;
+  right: -10px;
+  top: -10px;
+}
+#images-gallery .dz-preview .dz-success-mark {
+  color: #8cc657;
+}
+#images-gallery .dz-preview .dz-error-mark {
+  color: #ee162d;
+}
+
+#images-gallery {
+  border: 1px solid rgba(0,0,0,0.03);
+  min-height: 360px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.03);
+  padding: 23px;
+}
+
+
+/* ------------------------------------------ */
+
 .editor #datetimepicker .add-on {
 	border-radius: 0;
 }
@@ -225,7 +344,7 @@ body.editor {
 	display: block;
 }
 
-#medialibrary .panel .dropzone {
+#medialibrary .panel #images-gallery {
 	height: 100%;
 }
 
