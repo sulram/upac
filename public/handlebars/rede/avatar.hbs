@@ -1,14 +1,10 @@
 <div class="pad">
 	{{#if User.auth.loggedIn}}
 		<h2>
-			{{User.auth.username}}
+			Foto de perfil
 		</h2>
 
 		{{view App.UserPhoto}}
-		
-		{{#linkTo "rede.perfil" User.model classNames="btn"}}salvar{{/linkTo}}
-		{{#linkTo "rede.perfil" User.model classNames="btn"}}cancelar{{/linkTo}}
-		
 
 	{{else}}
 		{{partial "anonymous"}}

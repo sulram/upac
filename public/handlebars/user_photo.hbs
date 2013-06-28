@@ -1,4 +1,7 @@
-<input id="fileupload" type="file" name="image"/>
-<div class="progress progress-striped active">
-  <div class="bar" style="width: 0%;"></div>
-</div>
+<form action="/file-upload"
+      class="dropzone"
+      id="avatar-dropzone"></form>
+
+{{#if landed}}
+{{#linkTo "rede.perfil" User.model classNames="btn"}}Voltar{{/linkTo}}
+{{/if}}

@@ -13,25 +13,26 @@ App.AddModalView = Em.View.extend({
 App.UserPhoto = Ember.View.extend({
     templateName: 'user_photo',
     didInsertElement: function(){
-        this.$('#fileupload').fileupload({
+        var controller = this.get('controller');
+        controller.set('landed',true);
+        var myDropzone = this.$("#avatar-dropzone").dropzone({
             url: '/user/'+User.auth.id+'/updateimage',
-            dataType: 'json',
-            done: function (e, data) {
-                console.log(data);
-                $.each(data.result.files, function (index, file) {
-                    $('<p/>').text(file.name).appendTo('#files');
+            paramName: 'image',
+            dictDefaultMessage: 'Clique aqui ou arraste uma <br/>imagem para fazer upload.<br/><small>Tamanho máximo: 2mb</small>',
+            parallelUploads: 1,
+            init: function(){
+                var _this = this;
+                this.on('selectedfiles', function(){
+                    controller.set('landed',false);
+                    Ember.run.next(function(){
+                        _this.removeAllFiles();
+                    });
                 });
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                console.log(progress);
-                $('#progress .bar').css(
-                    'width',
-                    progress + '%'
-                );
+                this.on('complete', function(){
+                    window.location.hash = '/rede/perfil/' + User.auth.username;
+                });
             }
         });
-        console.log('view!', this.get('controller').get('content._id'));
     }
 });
 

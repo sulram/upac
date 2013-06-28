@@ -17,6 +17,17 @@ App.UserModel.reopen({
             user.setProperties(data.user);
             user.set('isLoaded', true);
             user.set('nick',user.get('name') || user.get('username'));
+            user.set('avatarUrl', function(){
+                if(user.get('avatar.upload_complete')){
+                    return _.findWhere(user.get('avatar.sizes'),{size:'medium'}).cdn_url
+                } else if (user.get('avatar.original_cdn_url')) {
+                    return user.get('avatar.original_cdn_url');
+                } else {
+                    return '/img/perfil_user.png';
+                }
+            }(user));
+        
+        
             //console.log('loaded profile',user);
         });
 

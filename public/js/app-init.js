@@ -8,8 +8,9 @@ if (typeof console == "undefined" || typeof console.log == "undefined") {
 
 //// INIT
 
+Dropzone.autoDiscover = false;
 moment.lang('pt-br');
-var showdown = new Showdown.converter({extensions:["table", "ufm"]});
+//var showdown = new Showdown.converter({extensions:["table", "ufm"]});
 
 //// EMBER APP
 
@@ -35,5 +36,5 @@ Ember.Handlebars.registerBoundHelper('momentdate', function(value, options) {
 Ember.Handlebars.registerBoundHelper('ufm', function(value, options) {
   //var escaped = Handlebars.Utils.escapeExpression(value);
   //return new Handlebars.SafeString(showdown.makeHtml(escaped));
-  if(value) return new Handlebars.SafeString(showdown.makeHtml(value));
+  if(showdown && value) return new Handlebars.SafeString(showdown.makeHtml(value));
 });
