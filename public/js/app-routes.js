@@ -144,6 +144,7 @@ App.BlogPostRoute = App.UpacRoute.extend({
     },
     setupController: function (controller, model){
         controller.set('model', model);
+        controller.set('isLoaded', false);
         controller.getcontent();
         this._super(this, arguments);
     }
