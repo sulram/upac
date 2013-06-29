@@ -142,7 +142,7 @@ module.exports = function(cdn, paginate){ return {
 		*/
 	},
 	index: function(req, res) {
-		paginate.paginate(Article,{publicationStatus:'published'},{populate:'owners featuredImage'}, req, function(err, articles, pagination) {
+		paginate.paginate(Article,{publicationStatus:'published', parent:null},{populate:'owners featuredImage'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
 				res.jsonx({
 					msg:'ok',
@@ -179,7 +179,9 @@ module.exports = function(cdn, paginate){ return {
 				size = nsize||size;
 				article.content+=("\n["+image.image.id+"]: "+size.cdn_url);				
 			}) // */
-			res.jsonx({article:article});
+			Img.populate(article, {path:'owners.avatar'},function(err, _article) {
+				res.jsonx({article:_article});
+			});
 		});
 	},
 	preloadById: function(req, res, next) {
