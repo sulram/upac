@@ -128,7 +128,8 @@ App.MapController = Em.Object.create({
                 current.marker.setShape(App.MapStyles.pin.user_select[1]);
                 current.selected = true;
                 App.map.panTo(current.marker.getPosition());
-                App.map.setZoom(11);
+                var zoom = App.map.getZoom();
+                App.map.setZoom( zoom < 11 ? 11 : zoom);
             }
         }
     },
