@@ -86,7 +86,7 @@ html
 							img(src='/img/ajax-loader.gif')#loading
 			#images-hidden
 				each image in article.images
-					input(type="hidden", name="images[]", value=image.id)
+					input(type="hidden", name="images[]", value=image.image._id)
 			#info
 		#medialibrary
 			a.overlay(href='#')

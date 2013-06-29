@@ -10,9 +10,9 @@ RedactorPlugins.medialibrary = {
 
         var $btn = $('#medialibrary #img_add');
         var $imgs = $('#medialibrary #images-gallery .gallery-image');
-        $imgs.bind('click', function() {
+        $(document).on('click', '#medialibrary #images-gallery .gallery-image', function() {
             $btn.data('selected-src', $(this).data('image-src'));
-            $imgs.removeClass('selected');
+            $('#medialibrary #images-gallery .gallery-image').removeClass('selected');
             $(this).addClass('selected');
         });
 
