@@ -23,11 +23,11 @@
 
 			<div class="span3 post_info">
 				<div>
-					<div class="post_avatar">
+					<a class="post_avatar" {{action openProfile profile}}>
 						<img {{bindAttr src=profile.avatar_small}}/>
-					</div>
+					</a>
 
-					<p>Postado por {{#each owner in article.owners}}<a {{action openProfile owner}}>{{owner.name}}</a>{{/each}}</p>
+					<p>Postado por <a {{action openProfile profile}}>{{profile.nick}}</a></p>
 				</div>
 			</div>
 		</div>
@@ -61,8 +61,6 @@
 			</div>
 
 		</div>
-
-		
 
 	{{else}}
 

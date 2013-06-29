@@ -111,24 +111,29 @@ function program1(depth0,data) {
   data.buffer.push(")</p>\n				<p class=\"excerpt\">");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.excerpt", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</p>\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3 post_info\">\n				<div>\n					<div class=\"post_avatar\">\n						<img ");
+  data.buffer.push("</p>\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3 post_info\">\n				<div>\n					<a class=\"post_avatar\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\n						<img ");
   hashTypes = {'src': "ID"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'src': ("profile.avatar_small")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
-  data.buffer.push("/>\n					</div>\n\n					<p>Postado por ");
+  data.buffer.push("/>\n					</a>\n\n					<p>Postado por <a ");
   hashTypes = {};
-  stack2 = helpers.each.call(depth0, "owner", "in", "article.owners", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("</p>\n				</div>\n			</div>\n		</div>\n\n		<!--<div class=\"row-fluid\">\n			<div class=\"span12 firstimage\">\n				<img src=\"/img/home02.jpg\"/>\n			</div>\n		</div>-->\n		\n		<div class=\"row-fluid\">\n			\n			<div class=\"span8 post_content\">\n				");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">");
   hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "article.content", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "profile.nick", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("</a></p>\n				</div>\n			</div>\n		</div>\n\n		<!--<div class=\"row-fluid\">\n			<div class=\"span12 firstimage\">\n				<img src=\"/img/home02.jpg\"/>\n			</div>\n		</div>-->\n		\n		<div class=\"row-fluid\">\n			\n			<div class=\"span8 post_content\">\n				");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "article.content", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n\n				<hr/>\n\n				<h3>Comentários</h3>\n\n\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3\">\n				");
   hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("	\n			</div>\n\n		</div>\n\n		\n\n	");
+  data.buffer.push("	\n			</div>\n\n		</div>\n\n	");
   return buffer;
   }
 function program2(depth0,data) {
@@ -171,19 +176,6 @@ function program7(depth0,data) {
 
 function program9(depth0,data) {
   
-  var buffer = '', hashTypes;
-  data.buffer.push("<a ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "owner", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "owner.name", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</a>");
-  return buffer;
-  }
-
-function program11(depth0,data) {
-  
   var buffer = '', stack1, hashTypes;
   data.buffer.push("\n					");
   hashTypes = {'unescaped': "STRING"};
@@ -195,7 +187,7 @@ function program11(depth0,data) {
   return buffer;
   }
 
-function program13(depth0,data) {
+function program11(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n					<p><a class=\"btn btn-w-icon\" ");
@@ -207,7 +199,7 @@ function program13(depth0,data) {
   return buffer;
   }
 
-function program15(depth0,data) {
+function program13(depth0,data) {
   
   
   data.buffer.push("\n\n		<p class=\"def_loading\">carregando publicação</p>\n\n	");
@@ -215,7 +207,7 @@ function program15(depth0,data) {
 
   data.buffer.push("<div class=\"thepost\">\n\n	");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(15, program15, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(13, program13, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n</div>");
   return buffer;
