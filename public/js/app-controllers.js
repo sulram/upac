@@ -135,11 +135,15 @@ App.BlogPostController = Ember.ObjectController.extend({
         $.getJSON('/article/'+id, function(data){
             _this.set('article', data.article);
             _this.set('isOwner', data.article.owners[0]._id == data.auth.id);
+            _this.set('profile', App.UserModel.find(data.article.owners[0].username));
             _this.set('isLoaded', true);
             Ember.run.next(function(){
                 $('.post_content table').addClass('table table-condensed');
             });
         });
+    },
+    openProfile: function(owner){
+        window.location.hash = '/rede/perfil/' + owner.username;
     }
 });
 

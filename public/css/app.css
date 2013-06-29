@@ -641,6 +641,7 @@ iframe {
 #wrapper.blog .thepost {
 	min-width: 780px;
 	max-width: 940px;
+	margin: 100px auto;
 	font-size: 16px;
 	line-height: 1.75em;
 }
@@ -682,7 +683,7 @@ iframe {
 }
 
 #wrapper.blog .thepost .excerpt {
-	font-size: 0.8em;
+	font-size: 0.9em;
 	text-transform: uppercase;
 	margin-bottom: 2em;
 	line-height: 1.5em;
@@ -704,6 +705,38 @@ iframe {
 
 .post_content .image-upload {
 	display: none;
+}
+
+.post_header {
+	position: relative;
+}
+
+.post_info {
+	font-size: 0.8em;
+
+}
+
+.post_info > div {
+	position: absolute;
+	bottom: 0;
+}
+
+.post_info .post_avatar {
+	display: block;
+	width: 64px;
+	height: 64px;
+	overflow: hidden;
+	border-radius: 32px;
+	margin-bottom: 10px;
+}
+
+.post_info .post_avatar img {
+	height: 64px;
+	width: auto;
+}
+
+.post_info .post_info a {
+	text-decoration: none;
 }
 
 
