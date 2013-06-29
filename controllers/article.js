@@ -291,6 +291,19 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+	getComments: function(req, res, next) {
+		paginate.paginate(Article,{publicationStatus:'published', parent:req.param('id')},{populate:'owners featuredImage'}, req, function(err, articles, pagination) {
+			if(err) return next(err);
+			res.jsonx({
+				msg:'ok',
+				articles: articles,
+				from: pagination.from,
+				sort_by: pagination.sort_by,
+				order: pagination.order,
+				count: pagination.count
+			});
+		});
+	},
 	getImages: function(req, res, next) {
 		Article.findById(req.param('id')), function(err, article) {
 			if (err) return next(err);

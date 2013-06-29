@@ -100,6 +100,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 	app.get('/article/:id/images', article.getImages);
 	app.post('/article/:id/imageupload', auth.requiresLogin, article.uploadImage);
 	app.get('/article/:id/attachments', article.getAttachments);
+	app.get('/article/:id/comments', article.getComments);
 
 	app.get('/page/find/:slug', page.bySlug);
 	app.get('/page/:id', page.show);
