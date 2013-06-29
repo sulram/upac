@@ -90,6 +90,9 @@ App.BlogRecentesController = Ember.ObjectController.extend({
     getcontent: function(){
 
         var _this = this;
+
+        this.set('isLoaded', false);
+
         var page = this.get('model.page_num');
         //var palette = ['palette-turquoise','palette-green-sea','palette-emerland','palette-nephritis','palette-peter-river', 'palette-belize-hole', 'palette-amethyst', 'palette-wisteria', 'palette-wet-asphalt', 'palette-midnight-blue', 'palette-sun-flower', 'palette-orange', 'palette-carrot', 'palette-pumpkin', 'palette-alizarin', 'palette-pomegranate'];
         var palette = ['palette-turquoise','palette-peter-river', 'palette-wisteria', 'palette-pomegranate', 'palette-carrot', 'palette-sun-flower'];
