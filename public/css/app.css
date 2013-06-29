@@ -601,7 +601,6 @@ iframe {
 #wrapper.blog .grid_posts article {
 	width: 250px;
 	height: 300px;
-	background: #efefef;
 	float: left;
 	margin: 2px;
 }
@@ -624,6 +623,14 @@ iframe {
 
 #wrapper.blog .grid_posts article .info {
 	padding: 20px;
+	height: 60px;
+	background: #efefef;
+}
+
+#wrapper.blog .grid_posts article :hover .info {
+	color: #efefef;
+	padding: 20px;
+	background: #333;
 }
 
 #wrapper.blog .grid_posts article .title {
