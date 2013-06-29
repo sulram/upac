@@ -583,13 +583,13 @@ iframe {
 	max-width: none;
 }
 
-#wrapper.blog h1 a,
 #wrapper.blog .grid_posts a {
 	color: #fff;
 	text-decoration: none;
 }
 
 #wrapper.blog h1 a {
+	text-decoration: none;
 	text-transform: uppercase;
 }
 
@@ -688,8 +688,7 @@ iframe {
 /* featured */
 
 #wrapper.blog .grid_posts article.featured .info {
-	height: 60px;
-	/*background-color: #f0f0f0;*/
+	height: 80px;
 	position: absolute;
 	bottom: 0;
 }
@@ -709,7 +708,7 @@ iframe {
 }
 
 #wrapper.blog .grid_posts article.featured a:hover .info {
-	height: 120px;
+	height: 160px;
 }
 
 
