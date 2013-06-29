@@ -41,6 +41,12 @@ iframe {
 	margin: 0 -10px -10px;
 }
 
+.def_loading {
+	padding-left: 30px;
+	background: url(../img/ajax-loader.gif) no-repeat left center;
+	line-height: 30px;
+}
+
 /* ---------------- MENUS ---------------- */
 
 #main_menu {

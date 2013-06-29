@@ -1000,7 +1000,7 @@ function program17(depth0,data) {
 function program19(depth0,data) {
   
   
-  data.buffer.push("\n		<p>carregando perfil</p>\n	");
+  data.buffer.push("\n		<p class=\"def_loading\">carregando perfil</p>\n	");
   }
 
   data.buffer.push("<div class=\"pad\">\n	");
