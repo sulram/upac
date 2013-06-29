@@ -199,7 +199,7 @@ function program13(depth0,data) {
 function program15(depth0,data) {
   
   
-  data.buffer.push("\n\n		<img src=\"/img/ajax-loader.gif\"/>\n\n	");
+  data.buffer.push("\n\n		<p class=\"def_loading\">carregando publicação</p>\n\n	");
   }
 
   data.buffer.push("<div class=\"thepost\">\n\n	");
@@ -362,7 +362,7 @@ function program16(depth0,data) {
 function program18(depth0,data) {
   
   
-  data.buffer.push("\n\n	<img src=\"/img/ajax-loader.gif\"/>\n\n");
+  data.buffer.push("\n\n	<p class=\"def_loading\">carregando publicações</p>\n\n");
   }
 
   hashTypes = {};
