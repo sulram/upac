@@ -140,7 +140,7 @@ $(document).ready(function(){
 				console.log(image);
 				var $input = $('<input name="images[]" type="hidden">').attr('value', image._id);
 				$("#images-hidden").append($input);
-				var $img = $('#image-gallery .image-template').clone().removeClass('image-template');
+				var $img = $('#images-gallery .image-template').clone().removeClass('image-template');
 				$img.data('image-id', image._id);
 				var try_loading_image;
 				try_loading_image = function() {

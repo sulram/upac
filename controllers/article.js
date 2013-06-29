@@ -100,6 +100,7 @@ module.exports = function(cdn, paginate){ return {
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'owners', 'featuredImage' //, 'tags'
 		);
+		console.info(data);
 		data.updatedAt = new Date;
 		data.images = _.map(data.images, function(image) {
 			return {image:image, size:'normal'}
@@ -171,12 +172,13 @@ module.exports = function(cdn, paginate){ return {
 			.exec(function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
+			/* // referencias das imagens no final, p/ markdown
 			_.each(article.images, function(image){
 				var size = {cdn_url:image.image.original_cdn_url};
 				var nsize = _.detect(image.image.sizes,function(img){ return img.size == image.size; });
 				size = nsize||size;
 				article.content+=("\n["+image.image.id+"]: "+size.cdn_url);				
-			})
+			}) // */
 			res.jsonx({article:article});
 		});
 	},
