@@ -150,14 +150,23 @@ module.exports = function(cdn, paginate){ return {
 	index: function(req, res) {
 		paginate.paginate(Article,{publicationStatus:'published', parent:null},{populate:'owners featuredImage'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
-				res.jsonx({
-					msg:'ok',
-					articles: articles,
-					from: pagination.from,
-					sort_by: pagination.sort_by,
-					order: pagination.order,
-					count: pagination.count
+				articles = _.map(articles, function(article) {
+					if(!article.featuredImage && (article.images.length > 0)) {
+						article.featuredImage = article.images[0].image;
+					}
+					return article;
 				});
+				Img.populate(articles, 'featuredImage owners.avatar', function(err, _articles) {
+					res.jsonx({
+						msg:'ok',
+						articles: _articles,
+						from: pagination.from,
+						sort_by: pagination.sort_by,
+						order: pagination.order,
+						count: pagination.count
+					});
+
+				})
 			}
 		);
 	},
