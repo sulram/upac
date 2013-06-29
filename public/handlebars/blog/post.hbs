@@ -24,7 +24,7 @@
 			<div class="span3 post_info">
 				<div>
 					<a class="post_avatar" {{action openProfile profile}}>
-						<img {{bindAttr src=profile.avatar_small}}/>
+						<img {{bindAttr src=profile.avatar_icon}}/>
 					</a>
 
 					<p>Postado por <a {{action openProfile profile}}>{{profile.nick}}</a></p>
@@ -60,7 +60,7 @@
 										<div class="row">
 											<div class="span2" style="text-align: right;">
 												<a class="post_avatar" {{action openProfile comment.profile}}>
-													<img {{bindAttr src=comment.profile.avatar_small}}/>
+													<img {{bindAttr src=comment.profile.avatar_icon}}/>
 												</a>
 											</div>
 											<div class="span9 comment_content">

@@ -26,7 +26,7 @@ App.UserModel.reopen({
         user.set('isLoaded', true);
         user.set('nick',user.get('name') || user.get('username'));
         user.set('avatar_medium', _this.buildAvatar(user,'medium'));
-        user.set('avatar_small', _this.buildAvatar(user,'small'));
+        user.set('avatar_icon', _this.buildAvatar(user,'icon'));
 
         return user;
 
@@ -43,7 +43,7 @@ App.UserModel.reopen({
             user.set('isLoaded', true);
             user.set('nick',user.get('name') || user.get('username'));
             user.set('avatar_medium', _this.buildAvatar(user,'medium'));
-            user.set('avatar_small', _this.buildAvatar(user,'small'));
+            user.set('avatar_icon', _this.buildAvatar(user,'icon'));
         });
 
         return user;

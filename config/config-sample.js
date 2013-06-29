@@ -22,7 +22,7 @@ module.exports = {
 					large: {w: 640, h: 480, ops: ['resize-crop']},
 					medium: {w: 320, h: 240, ops: ['resize-crop']},
 					small: {w: 160, h: 120, ops: ['resize-crop']},
-					icon: {w: 80, h: 60, ops: ['resize-crop']},
+					icon: {w: 64, h: 64, ops: ['resize-crop']},
 				},
 				content:{
 					large: {w: 640, h: 480, ops: ['resize-crop']},

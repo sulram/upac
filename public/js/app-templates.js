@@ -117,7 +117,7 @@ function program1(depth0,data) {
   data.buffer.push(">\n						<img ");
   hashTypes = {'src': "ID"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
-    'src': ("profile.avatar_small")
+    'src': ("profile.avatar_icon")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
   data.buffer.push("/>\n					</a>\n\n					<p>Postado por <a ");
   hashTypes = {};
@@ -227,7 +227,7 @@ function program13(depth0,data) {
   data.buffer.push(">\n													<img ");
   hashTypes = {'src': "ID"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
-    'src': ("comment.profile.avatar_small")
+    'src': ("comment.profile.avatar_icon")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
   data.buffer.push("/>\n												</a>\n											</div>\n											<div class=\"span9 comment_content\">\n												<p><a ");
   hashTypes = {};
