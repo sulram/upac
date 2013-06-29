@@ -284,7 +284,7 @@ function program20(depth0,data) {
 function program22(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
-  data.buffer.push("\n						\n						<hr/>\n\n						<p>Quer comentar essa publicação?</p>\n						<p>");
+  data.buffer.push("\n						\n						<hr/>\n\n						<p>Quer fazer um comentário?</p>\n						<p>");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn")
