@@ -28,7 +28,7 @@ RedactorPlugins.medialibrary = {
             var selected = $('#images-gallery figure.selected');
             if (selected) {
                 _this.selectionRestore();
-                _this.execCommand('inserthtml', '<p class="img"><img src="'+selected.attr('data-src')+'"></p>');
+                _this.execCommand('inserthtml', '<p class="img" rel="'+selected.attr('data-id')+'"><img src="'+selected.attr('data-src')+'"></p>');
                 _this.closeModal();
             }
         });
