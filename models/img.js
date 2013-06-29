@@ -44,7 +44,7 @@ var make_thumbs =  function(file, base_name, image_config, variant, file_cb, all
 			//console.log("imagem: %s tamanho: %s -> %j", base_name, sizename, size);
 			var endfilename = base_name + '_' + sizename + '.' + image_config.format;
 			var endfilepath = temp.path({suffix:"."+image_config.format});
-			gm(file).gravity("Center").geometry(size.w, size.h,"^").crop(size.w, size.h).write(endfilepath, function(err){
+			gm(file).gravity("Center").geometry(size.w, size.h,"^").crop(size.w, size.h).quality(image_config.quality).write(endfilepath, function(err){
 				if(err) return file_cb(err, {size: sizename, filename: endfilename, path:endfilepath});
 				console.log("resize na imagem %s para o formato %s feito.", file, sizename);
 				files.push( {size: sizename, filename: endfilename, path:endfilepath} );
