@@ -74,7 +74,7 @@ RedactorPlugins.medialibrary = {
                                 $img.addClass('loaded')
                                 $img.attr('data-id', image._id);
                                 $img.attr('data-src', _.find(data.image.sizes, function(size) { return size.size == 'large'; }).cdn_url);
-                                $img.find('img').attr('src', _.find(data.image.sizes, function(size) { return size.size == 'small'; }).cdn_url);
+                                $img.find('img').attr('src', _.find(data.image.sizes, function(size) { return size.size == 'icon'; }).cdn_url);
                                 $('#images-gallery figure.loaded:last').click();
                             } else {
                                 setTimeout(try_loading_image, 3000);

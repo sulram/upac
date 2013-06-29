@@ -344,6 +344,10 @@ body.editor {
 	display: block;
 }
 
+#medialibrary .panel #dropzone {
+	height: 90%;
+}
+
 #medialibrary .panel #images-gallery {
 	height: 90%;
 	overflow: auto;
@@ -351,8 +355,8 @@ body.editor {
 
 #medialibrary .panel #images-gallery figure {
 	display: block;
-	width: 100px;
-	height: 100px;
+	width: 80px;
+	height: 80px;
 	float: left;
 	margin: 10px;
 	border: 5px solid #fff;
@@ -365,33 +369,9 @@ body.editor {
 }
 
 #medialibrary .panel #images-gallery figure img {
-	height: 100px;
+	height: 70px;
 	width: auto;
 	max-width: none;
-}
-
-#medialibrary .gallery ul.images {
-	margin: 0 0 30px -4px;
-	padding: 0;
-	list-style-type: none;
-	overflow: hidden;
-}
-
-#medialibrary .gallery ul.images li {
-	margin: 4px;
-	padding: 0;
-	float: left;
-	padding: 10px;
-	border: 1px solid #eee;
-}
-
-#medialibrary .gallery ul.images li .radio .title {
-	display: inline-block;
-	text-indent: -9999px;
-}
-
-#medialibrary .gallery ul.images li .radio.checked .title {
-	text-indent: 0;
 }
 
 

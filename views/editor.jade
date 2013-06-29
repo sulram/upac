@@ -109,7 +109,7 @@ html
 						each image in article.images
 							if image.image.upload_complete
 								figure(data-id=image.image._id,data-src=image.image.getSize("large").cdn_url).loaded
-									img(src=image.image.getSize("small").cdn_url)
+									img(src=image.image.getSize("icon").cdn_url)
 							else
 								figure(data-id=image.image._id,data-src=image.image.original_cdn_url)
 									img(src=image.image.original_cdn_url)

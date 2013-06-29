@@ -28,7 +28,7 @@ module.exports = {
 					large: {w: 640, h: 480, ops: ['resize-crop']},
 					medium: {w: 320, h: 240, ops: ['resize-crop']},
 					small: {w: 160, h: 120, ops: ['resize-crop']},
-					icon: {w: 80, h: 60, ops: ['resize-crop']},
+					icon: {w: 80, h: 80, ops: ['resize-crop']},
 				},
 				notice: {
 					normal: {w: 720, h: 360, ops: ['resize-crop']},
