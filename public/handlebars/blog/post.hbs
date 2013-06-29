@@ -59,13 +59,16 @@
 									<li class="comment">
 										<div class="row">
 											<div class="span2" style="text-align: right;">
-												<a class="post_avatar" {{action openProfile comment.profile}}>
-													<img {{bindAttr src=comment.profile.avatar_icon}}/>
-												</a>
+												<p>
+													<a class="post_avatar" {{action openProfile comment.profile}}>
+														<img {{bindAttr src=comment.profile.avatar_icon}}/>
+													</a>
+												</p>
 											</div>
 											<div class="span9 comment_content">
-												<p><a {{action openProfile comment.profile}}>{{comment.profile.nick}}</a>: {{{comment.content}}}</p>
-												<p class="comment_info">{{momentago comment.createdAt}}</p>
+												<p><span class="comment_info"><a {{action openProfile comment.profile}}>{{comment.profile.nick}}</a> • {{momentago comment.createdAt}}</span></p>
+												<p>{{{comment.content}}}</p>
+												
 											</div>
 										</div>
 									</li>	

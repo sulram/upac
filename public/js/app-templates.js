@@ -220,32 +220,32 @@ function program12(depth0,data) {
   }
 function program13(depth0,data) {
   
-  var buffer = '', stack1, hashTypes, options;
-  data.buffer.push("\n									<li class=\"comment\">\n										<div class=\"row\">\n											<div class=\"span2\" style=\"text-align: right;\">\n												<a class=\"post_avatar\" ");
+  var buffer = '', stack1, stack2, hashTypes, options;
+  data.buffer.push("\n									<li class=\"comment\">\n										<div class=\"row\">\n											<div class=\"span2\" style=\"text-align: right;\">\n												<p>\n													<a class=\"post_avatar\" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "comment.profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">\n													<img ");
+  data.buffer.push(">\n														<img ");
   hashTypes = {'src': "ID"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'src': ("comment.profile.avatar_icon")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
-  data.buffer.push("/>\n												</a>\n											</div>\n											<div class=\"span9 comment_content\">\n												<p><a ");
+  data.buffer.push("/>\n													</a>\n												</p>\n											</div>\n											<div class=\"span9 comment_content\">\n												<p><span class=\"comment_info\"><a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "comment.profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(">");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "comment.profile.nick", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</a>: ");
-  hashTypes = {'unescaped': "STRING"};
-  stack1 = helpers._triageMustache.call(depth0, "comment.content", {hash:{
-    'unescaped': ("true")
-  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</p>\n												<p class=\"comment_info\">");
+  data.buffer.push("</a> • ");
   hashTypes = {};
   options = {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data};
   data.buffer.push(escapeExpression(((stack1 = helpers.momentago),stack1 ? stack1.call(depth0, "comment.createdAt", options) : helperMissing.call(depth0, "momentago", "comment.createdAt", options))));
-  data.buffer.push("</p>\n											</div>\n										</div>\n									</li>	\n								");
+  data.buffer.push("</span></p>\n												<p>");
+  hashTypes = {'unescaped': "STRING"};
+  stack2 = helpers._triageMustache.call(depth0, "comment.content", {hash:{
+    'unescaped': ("true")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("</p>\n												\n											</div>\n										</div>\n									</li>	\n								");
   return buffer;
   }
 
