@@ -10,24 +10,34 @@ RedactorPlugins.medialibrary = {
         this.tabs = $('#medialibrary ul.nav.nav-pills li');
         this.panels = $('#medialibrary .panel');
 
-        var $btn = $('#medialibrary #img_add');
+        var $btn_add = $('#medialibrary #img_add');
+        var $btn_cover = $('#medialibrary #img_cover');
         var $imgs = $('#medialibrary #images-gallery .gallery-image');
 
         $(document).on('click', '#images-gallery figure.loaded', function() {
-            //$btn.data('selected-src', $(this).data('image-src'));
             $('#images-gallery figure').removeClass('selected');
             $(this).addClass('selected');
         });
 
         // adicionar imagem
 
-        $btn.bind('click',function(){
+        $btn_add.bind('click',function(){
             var selected = $('#images-gallery figure.selected');
             if (selected) {
                 _this.selectionRestore();
                 _this.execCommand('inserthtml', '<p class="img"><img src="'+selected.attr('data-src')+'"></p>');
                 _this.closeModal();
             }
+        });
+
+        // definir como capa
+
+        $btn_cover.bind('click',function(){
+            $('#images-gallery figure').removeClass('cover');
+            var selected = $('#images-gallery figure.selected');
+            selected.addClass('cover');
+            //alert('cover is image ' + selected.attr('data-id'));
+            $('#featuredImage').val(selected.attr('data-id').split('"').join(''));
         });
 
         // click na aba
@@ -39,7 +49,7 @@ RedactorPlugins.medialibrary = {
 
         // clique no overlay, sai do media library
 
-        $('#medialibrary a.overlay').click(function(e){
+        $('#medialibrary a.overlay, #medialibrary #close_modal').click(function(e){
             e.preventDefault();
             _this.closeModal();
         });
@@ -59,7 +69,7 @@ RedactorPlugins.medialibrary = {
                     var $input = $('<input name="images[]" type="hidden">').attr('value', image._id);
                     $("#images-hidden").append($input);
 
-                    var $img = $('<figure><img/></figure>');
+                    var $img = $('<figure><img/><span class="icon fui-heart"></span></figure>');
                     $img.data('image-id', image._id);
 
                     // verificar se a imagem já tem miniaturas criadas

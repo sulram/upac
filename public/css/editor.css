@@ -335,6 +335,12 @@ body.editor {
 	z-index: 9002;
 }
 
+#medialibrary #close_modal {
+	position: absolute;
+	right: 30px;
+	top: 30px;
+}
+
 #medialibrary .panel {
 	display: none;
 	height: 90%;
@@ -362,10 +368,12 @@ body.editor {
 	border: 5px solid #fff;
 	background: #fff url(../img/ajax-loader.gif) no-repeat 50% 50%;
 	overflow: hidden;
+	position: relative;
+	border-radius: 2px;
 }
 
 #medialibrary .panel #images-gallery figure.selected {
-	border: 5px solid #000;
+	border: 5px solid #bbb;
 }
 
 #medialibrary .panel #images-gallery figure img {
@@ -374,6 +382,22 @@ body.editor {
 	max-width: none;
 }
 
+#medialibrary .panel #images-gallery figure .icon {
+	font-size: 20px;
+	position: absolute;
+	width: 30px;
+	height: 32px;
+	bottom: 0;
+	right: 0;
+	display: none;
+	color: #f00;
+	padding: 5px;
+	text-shadow: 1px 1px 5px rgba(0,0,0,.5);
+}
+
+#medialibrary .panel #images-gallery figure.cover .icon {
+	display: block;
+}
 
 /* ---------------- INFO ---------------- */
 

@@ -85,6 +85,8 @@ html
 								| Publicar
 							img(src='/img/ajax-loader.gif')#loading
 			#images-hidden
+				- featuredImageID = article.featuredImage ? article.featuredImage._id : ''
+				input(type="hidden", name="featuredImage", value=featuredImageID)#featuredImage
 				each image in article.images
 					input(type="hidden", name="images[]", value=image.image._id)
 			#info
@@ -98,6 +100,8 @@ html
 					li
 						a(href='#gallery')
 							| Escolher da galeria
+				a(href='#')#close_modal
+					span.fui-cross
 
 				.panel.upload
 					form(action="/article/#{article.id}/imageupload", method="post", enctype="multipart/formdata").dropzone#dropzone
@@ -107,17 +111,22 @@ html
 				.panel.gallery
 					#images-gallery
 						each image in article.images
+							- isCover = (article.featuredImage && article.featuredImage._id == String(image.image._id)) ? 'loaded cover' : 'loaded'; 
 							if image.image.upload_complete
-								figure(data-id=image.image._id,data-src=image.image.getSize("large").cdn_url).loaded
+								figure(data-id=String(image.image._id), data-src=image.image.getSize("large").cdn_url, class=isCover)
+									span.icon.fui-heart
 									img(src=image.image.getSize("icon").cdn_url)
 							else
-								figure(data-id=image.image._id,data-src=image.image.original_cdn_url)
+								figure(data-id=String(image.image._id), data-src=image.image.original_cdn_url, class=isCover)
+									span.icon.fui-heart
 									img(src=image.image.original_cdn_url)
-					a(href='#')#img_add.btn
-						| adicionar imagem
+					a(href='#')#img_add.btn.btn-w-icon
+						span.fui-plus
+						|  adicionar imagem
 					&nbsp; &nbsp;
-					a(href='#')#img_cover.btn
-						| definir como capa
+					a(href='#')#img_cover.btn.btn-w-icon
+						span.fui-heart
+						|  definir como capa
 
 
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')
