@@ -12,7 +12,7 @@ block content
 		+table_rec_row("ID", article.id)
 		+table_rec_row("Slug", article.slug)
 		+table_rec_row("Excerpt", article.excerpt)
-		+table_rec_row_raw("Conteúdo", md(article.content))
+		+table_rec_row_raw("Conteúdo", article.content)
 		+table_rec_row_link("Artigo mãe", article.parent,'/admin/article/'+article.parent)
 		+table_rec_row("Status da publicação", article.publicationStatus)
 		+table_rec_row_date("Data da publicação", article.publicationDate)

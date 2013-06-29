@@ -9,7 +9,7 @@
 module.exports = function(cdn, paginate){ return {
 	admin: {
 		index: function(req, res, next) {
-			paginate.paginate(Article,{},{populate:'featuredImage'}, req, function(err, articles, pagination) {
+			paginate.paginate(Article,{},{populate:'featuredImage owners', sort_by: 'createdAt', order: -1}, req, function(err, articles, pagination) {
 					if(err) return next(err);
 					var total = 0;
 					Article.count({}, function(err, count){
