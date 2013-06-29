@@ -85,11 +85,12 @@ module.exports = function(cdn, paginate){ return {
 			query['owners'] = req.user.id;
 		}
 		Article.findOne(query)
-			.populate('images.image featuredImage')
+			.populate('featuredImage')
+			.populate({path:'images.image',model:Img})
 			.exec(function(err, article) {
 				if(err) return next(err);
-				console.log(article);
 				if(!article) return next(null, article);
+				console.log(article);
 				res.render('editor',{title:"Editor", article:article, is_new:false});
 			}
 		);
@@ -100,13 +101,18 @@ module.exports = function(cdn, paginate){ return {
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'owners', 'featuredImage' //, 'tags'
 		);
-		console.info(data);
+		if(!data.featuredImage || (data.featuredImage.length == 0)) {
+			data.featuredImage = null;
+		}
 		data.updatedAt = new Date;
 		data.images = _.map(data.images, function(image) {
 			return {image:image, size:'normal'}
 		})
 		// TODO: pegar tags e transformar em ObjectIDs
 		var query = {_id: req.param('id')}
+		
+		console.info(data);
+		
 		if(!req.isAdmin()) {
 			query['owners'] = req.user.id;
 		}
@@ -144,14 +150,23 @@ module.exports = function(cdn, paginate){ return {
 	index: function(req, res) {
 		paginate.paginate(Article,{publicationStatus:'published', parent:null},{populate:'owners featuredImage'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
-				res.jsonx({
-					msg:'ok',
-					articles: articles,
-					from: pagination.from,
-					sort_by: pagination.sort_by,
-					order: pagination.order,
-					count: pagination.count
+				articles = _.map(articles, function(article) {
+					if(!article.featuredImage && (article.images.length > 0)) {
+						article.featuredImage = article.images[0].image;
+					}
+					return article;
 				});
+				Img.populate(articles, 'featuredImage owners.avatar', function(err, _articles) {
+					res.jsonx({
+						msg:'ok',
+						articles: _articles,
+						from: pagination.from,
+						sort_by: pagination.sort_by,
+						order: pagination.order,
+						count: pagination.count
+					});
+
+				})
 			}
 		);
 	},

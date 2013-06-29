@@ -50,12 +50,14 @@ mixin checkbox(data, member, label)
 				| #{label}
 mixin pagination(url, pagination)
 	- var pages = pagination_helper(pagination);
+	- console.log(pagination);
+	- var pag_prev = Number(pagination.from)-Number(pagination.limit), pag_next = Number(pagination.from)+Number(pagination.limit)
 	span Total: #{pagination.count} itens.
 	.pagination
 		ul
 			if pagination.from > 0
 				li.previous
-					a.fui-arrow-left(href="#{url}?from=#{pagination.from-pagination.limit}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")
+					a.fui-arrow-left(href="#{url}?from=#{pag_prev}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")
 			else
 				li.previous
 					a.fui-arrow-left
@@ -68,7 +70,7 @@ mixin pagination(url, pagination)
 						a(href="#{url}?from=#{page.from}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")= i+1
 			if pagination.from < (pagination.count - pagination.limit)
 				li.next
-					a.fui-arrow-right(href="#{url}?from=#{pagination.from+pagination.limit}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")
+					a.fui-arrow-right(href="#{url}?from=#{pag_next}&limit=#{pagination.limit}&sort_by=#{pagination.sort_by}&order=#{pagination.order}")
 			else
 				li.next
 					a.fui-arrow-right

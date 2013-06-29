@@ -97,7 +97,7 @@ app.locals.md = function(text) {// helpers for the jade view engine
 app.locals.pagination_helper = function(pagination) {
 	var pages = [];
 	if(pagination.limit > 0) {
-		for(var i = 0; i <= pagination.count; i+= pagination.limit) {
+		for(var i = 0; i <= Number(pagination.count); i+= Number(pagination.limit)) {
 			pages.push({from:i, limit:pagination.limit, sort_by:pagination.sort_by, order:pagination.order});
 		}		
 	}
