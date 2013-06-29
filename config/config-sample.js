@@ -35,7 +35,8 @@ module.exports = {
 					icon: {w: 72, h: 36, ops: ['resize-crop']},
 				},
 			},
-			format: "jpg"
+			format: "jpg",
+			quality: 90
 		}
 	},
 	test: {
