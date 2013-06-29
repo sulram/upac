@@ -100,24 +100,19 @@ html
 							| Escolher da galeria
 
 				.panel.upload
-					form(action="/article/#{article.id}/imageupload", method="post", enctype="multipart/formdata").dropzone#image-gallery
+					form(action="/article/#{article.id}/imageupload", method="post", enctype="multipart/formdata").dropzone#dropzone
 						.fallback
 							input(type="file", name="image")
 							button(value="submit") Enviar
 				.panel.gallery
 					#images-gallery
-						.dz-preview.dz-filepreview.gallery-image.image-template
-							.dz-details
-								.dz-filename
-								img
 						each image in article.images
-							div(data-image-id=image.image._id,data-image-src=image.image.original_cdn_url).dz-preview.dz-filepreview.gallery-image
-								.dz-details
-									.dz-filename= image.image.filename
-									if image.image.upload_complete
-										img(src=image.image.getSize("icon").cdn_url)
-									else
-										img(src=image.image.original_cdn_url)
+							if image.image.upload_complete
+								figure(data-id=image.image._id,data-src=image.image.getSize("large").cdn_url).loaded
+									img(src=image.image.getSize("small").cdn_url)
+							else
+								figure(data-id=image.image._id,data-src=image.image.original_cdn_url)
+									img(src=image.image.original_cdn_url)
 					a(href='#')#img_add.btn
 						| adicionar imagem
 					&nbsp; &nbsp;

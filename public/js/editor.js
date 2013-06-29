@@ -126,38 +126,6 @@ $(document).ready(function(){
 		$('#excerpt_count').text(limit-chars);
 	});
 
-	// IMAGE GALLERY
-
-	$("#image-gallery").dropzone({
-		dictDefaultMessage: 'Clique ou solte uma imagem aqui para fazer upload.<br/><small>Tamanho máximo: 2mb</small>',
-		paramName:"image",
-		url: "/article/"+article_id+"/imageupload",
-		maxFilesize: 5,
-		acceptedMimeTypes:'image/gif,image/jpeg,image/pjpeg,image/png,image/x-windows-bmp,image/bmp',
-		init: function() {
-			this.on("success", function(file, xhr, elem) {
-				var image = xhr.image;
-				console.log(image);
-				var $input = $('<input name="images[]" type="hidden">').attr('value', image._id);
-				$("#images-hidden").append($input);
-				var $img = $('#images-gallery .image-template').clone().removeClass('image-template');
-				$img.data('image-id', image._id);
-				var try_loading_image;
-				try_loading_image = function() {
-					$.getJSON('/image/'+image._id,{},function(data, status, xhr) {
-						if(data && data.image && data.image.upload_complete) {
-							$img.find('img').attr('src', _.find(data.image.sizes, function(size) { return size.size == 'icon'; }).cdn_url);
-						} else {
-							setTimeout(try_loading_image, 3000);
-						}
-					});
-				}
-				setTimeout(try_loading_image, 3000);
-				$("#images-gallery").append($img);
-			});
-		}
-	});
-
 	// RESIZE
 
 	$(window).resize(resize);

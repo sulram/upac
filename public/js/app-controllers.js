@@ -150,6 +150,7 @@ App.BlogPostController = Ember.ObjectController.extend({
         this.set('model.edit_link','/editor/'+id);
 
         $.getJSON('/article/'+id, function(data){
+            console.log('OWNERS: ',data.article.owners[0]._id, data.auth.id);
             _this.set('article', data.article);
             _this.set('isOwner', data.article.owners[0] ? data.article.owners[0]._id == data.auth.id : null);
             _this.set('profile', data.article.owners[0] ? App.UserModel.build(data.article.owners[0]) : null);

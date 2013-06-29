@@ -345,7 +345,30 @@ body.editor {
 }
 
 #medialibrary .panel #images-gallery {
-	height: 100%;
+	height: 90%;
+	overflow: auto;
+}
+
+#medialibrary .panel #images-gallery figure {
+	display: block;
+	width: 100px;
+	height: 100px;
+	float: left;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	border: 5px solid #fff;
+	background: #fff url(../img/ajax-loader.gif) no-repeat 50% 50%;
+	overflow: hidden;
+}
+
+#medialibrary .panel #images-gallery figure.selected {
+	border: 5px solid #000;
+}
+
+#medialibrary .panel #images-gallery figure img {
+	height: 100px;
+	width: auto;
+	max-width: none;
 }
 
 #medialibrary .gallery ul.images {
