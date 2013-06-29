@@ -747,6 +747,10 @@ iframe {
 }
 
 
+.post_comments {
+	margin-bottom: 60px;
+}
+
 /* ---------------- MODAL ADD ---------------- */
 
 .overlay {

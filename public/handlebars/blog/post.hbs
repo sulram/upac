@@ -46,9 +46,51 @@
 				{{/if}}
 
 				<hr/>
+				
+				{{#if commentsLoaded}}
 
-				<h3>Comentários</h3>
+					<div class="post_comments">
+						
+						{{#if commentCount}}
+							<h3>Comentários ({{commentCount}})</h3>
 
+							<ul>
+								{{#each comment in comments}}
+									<li>{{{comment.content}}}</li>	
+								{{/each}}
+							</ul>
+
+						{{else}}
+							<h3>Nenhum comentário até agora</h3>
+						{{/if}}
+
+					</div>
+					
+					{{#if User.auth.loggedIn}}
+							
+						<h4>Enviar Comentário</h4>
+
+						<textarea id="new_comment" rows="5"></textarea>
+						<a class="btn btn-w-icon palette-pomegranate" {{action postComment}}><span class="fui-chat"></span> Comentar</a>
+
+						{{#if isPostingComment}}
+							<p class="def_loading">Enviando comentário</p>
+						{{/if}}
+
+					{{else}}
+						
+						<hr/>
+
+						<p>Quer comentar essa publicação?</p>
+						<p>{{#linkTo 'user' classNames="btn"}}Crie uma conta{{/linkTo}}</p>
+
+					{{/if}}
+
+				{{else}}
+					
+					<p class="def_loading">Carregando comentários</p>
+
+				{{/if}}
 
 			</div>
 			

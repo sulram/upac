@@ -7,29 +7,43 @@ App.UserModel = Ember.Object.create({
     username: null
 });
 App.UserModel.reopen({
+    buildAvatar: function(user,size){
+        if(user.get('avatar.upload_complete')){
+            return _.findWhere(user.get('avatar.sizes'),{size: size}).cdn_url
+        } else if (user.get('avatar.original_cdn_url')) {
+            return user.get('avatar.original_cdn_url');
+        } else {
+            return '/img/perfil_user.png';
+        }
+    },
+    build: function(obj){
+
+        var _this = this;
+
+        var user = Ember.Object.create({});
+
+        user.setProperties(obj);
+        user.set('isLoaded', true);
+        user.set('nick',user.get('name') || user.get('username'));
+        user.set('avatar_medium', _this.buildAvatar(user,'medium'));
+        user.set('avatar_small', _this.buildAvatar(user,'small'));
+
+        return user;
+
+    },
     find: function(username) {
-        // Set some default properties here.
+        var _this = this;
+
         var user = Ember.Object.create({
             isLoaded: false
         });
-
-        function getAvatar(user,size){
-            if(user.get('avatar.upload_complete')){
-                return _.findWhere(user.get('avatar.sizes'),{size: size}).cdn_url
-            } else if (user.get('avatar.original_cdn_url')) {
-                return user.get('avatar.original_cdn_url');
-            } else {
-                return '/img/perfil_user.png';
-            }
-        }
 
         $.getJSON('/user/' + username, function(data) {
             user.setProperties(data.user);
             user.set('isLoaded', true);
             user.set('nick',user.get('name') || user.get('username'));
-            user.set('avatar_medium', getAvatar(user,'medium'));
-            user.set('avatar_small', getAvatar(user,'small'));
-            //console.log('loaded profile',user);
+            user.set('avatar_medium', _this.buildAvatar(user,'medium'));
+            user.set('avatar_small', _this.buildAvatar(user,'small'));
         });
 
         return user;

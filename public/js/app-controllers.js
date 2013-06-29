@@ -1,3 +1,6 @@
+
+// APPLICATION
+
 App.ApplicationController = Ember.Controller.extend({
     route_class: null,
     //needs: ['rede'],
@@ -19,6 +22,9 @@ App.ApplicationController = Ember.Controller.extend({
         console.log('hide modal content');
     }
 });
+
+
+// HOME
 
 App.HomeController = Ember.ObjectController.extend({
     notices: [],
@@ -73,6 +79,9 @@ App.HomeController = Ember.ObjectController.extend({
     }
 });
 
+
+// BLOG
+
 App.BlogRecentesController = Ember.ObjectController.extend({
     articles: [],
     isLoaded: false,
@@ -125,8 +134,15 @@ App.BlogRecentesController = Ember.ObjectController.extend({
 });
 
 App.BlogPostController = Ember.ObjectController.extend({
+    comments: Ember.A([]),
+    commentCount: function(){
+        return this.comments.length;
+    }.property('comments.@each'),
     isLoaded: false,
+    commentsLoaded: false,
+    isPostingComment: false,
     getcontent: function(){
+
         var _this = this;
         var id = this.get('model.post_id');
         
@@ -135,17 +151,74 @@ App.BlogPostController = Ember.ObjectController.extend({
         $.getJSON('/article/'+id, function(data){
             _this.set('article', data.article);
             _this.set('isOwner', data.article.owners[0] ? data.article.owners[0]._id == data.auth.id : null);
-            _this.set('profile', data.article.owners[0] ? App.UserModel.find(data.article.owners[0].username) : null);
+            _this.set('profile', data.article.owners[0] ? App.UserModel.build(data.article.owners[0]) : null);
             _this.set('isLoaded', true);
+            _this.getComments();
             Ember.run.next(function(){
                 $('.post_content table').addClass('table table-condensed');
             });
         });
+
+    },
+    getComments: function(){
+        
+        var _this = this;
+        var id = this.get('model.post_id');
+
+        $.getJSON('/article/'+id+'/comments', {
+                from: 0,
+                limit: -1,
+                sort_by: 'createdAt',
+                order: 1
+            },
+            function(data){
+                $.each(data.articles, function(i, _article) {
+                    var article = Ember.Object.create(_article);
+                    _this.comments.pushObject(article);
+            });
+            //console.log(articles[0]);
+            _this.set('commentsLoaded', true);
+        });
     },
     openProfile: function(owner){
         window.location.hash = '/rede/perfil/' + owner.username;
+    },
+    postComment: function(){
+
+        var _this = this;
+        var id = this.get('model.post_id');
+        var textarea = $('#new_comment');
+        var comment = textarea.val();
+
+        this.set('isPostingComment', true);
+
+        $.ajax({
+            type: 'POST',
+            url: '/article/new',
+            data: {
+                parent: String(id),
+                publicationStatus: 'published',
+                content: comment
+            },
+            success: function(data, status, jqXHR){
+
+                var article = Ember.Object.create(data.article);
+                _this.comments.pushObject(article);
+
+                _this.set('isPostingComment', false);
+            },
+            error: function(jqXHR,status,error){
+                console.log('!!!comment error', params);
+                textarea.val(comment);
+                _this.set('isPostingComment', false);
+            }
+        });
+
     }
 });
+
+
+// TIMELINE
 
 App.TimelineIndexController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
@@ -180,6 +253,8 @@ App.RedePerfilController = Ember.ObjectController.extend({
     }.observes('content.isLoaded')
 });
 
+// REDE
+
 App.RedeEditarController = Ember.ObjectController.extend({
     isPosting: false,
     flashMsg: null,
@@ -208,6 +283,9 @@ App.RedeEditarController = Ember.ObjectController.extend({
         });
     }
 });
+
+
+// USER
 
 App.UserIndexController = Ember.Controller.extend({
     isPosting: false,
