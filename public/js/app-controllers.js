@@ -224,10 +224,8 @@ App.BlogPostController = Ember.ObjectController.extend({
             success: function(data, status, jqXHR){
                 var article = Ember.Object.create(data.article);
                 article.set('profile', App.UserModel.build(User.model));
-                Ember.run.later(function(){
-                    _this.comments.pushObject(article);
-                    _this.set('isPostingComment', false);
-                },1000);
+                _this.comments.pushObject(article);
+                _this.set('isPostingComment', false);
             },
             error: function(jqXHR,status,error){
                 console.log('!!!comment error', params);
