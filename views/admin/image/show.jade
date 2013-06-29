@@ -12,9 +12,20 @@ block content
 		+table_rec_row("ID", image.id)
 		+table_rec_row("Nome original", image.filename)
 		tr
-			td Thumb
+			td Original
 			td
 				img(src="#{image.original_cdn_url}", style="max-height: 100px; width: auto;")
+		if image.upload_complete
+			td Thumbs
+			td
+				table
+					each size in image.sizes
+						tr
+							td
+								strong= size.size
+							td
+								img(src=size.cdn_url, style="max-height: 100px; width: auto;")
+
 	.btn-group
 		a(href='/admin/images').btn Voltar
 		a(href='/admin/image/'+image.id+'/remove').btn.btn-danger Remover imagem

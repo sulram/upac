@@ -110,16 +110,13 @@ html
 							button(value="submit") Enviar
 				.panel.gallery
 					#images-gallery
-						each image in article.images
-							- isCover = (article.featuredImage && article.featuredImage._id == String(image.image._id)) ? 'loaded cover' : 'loaded'; 
-							if image.image.upload_complete
-								figure(data-id=String(image.image._id), data-src=image.image.getSize("large").cdn_url, class=isCover)
-									span.icon.fui-heart
-									img(src=image.image.getSize("icon").cdn_url)
-							else
-								figure(data-id=String(image.image._id), data-src=image.image.original_cdn_url, class=isCover)
-									span.icon.fui-heart
-									img(src=image.image.original_cdn_url)
+						each img in article.images
+							- var image = img.image;
+							- var cdn_url = image.upload_complete ? image.getSize('icon').cdn_url : image.original_cdn_url;
+							- var isCover = (article.featuredImage && article.featuredImage._id == String(img.image._id)) ? 'loaded cover' : 'loaded'; 
+							figure(data-id=String(image._id), data-src=image.getSize("large").cdn_url, class=isCover)
+								span.icon.fui-heart
+								img(src=cdn_url)
 					a(href='#')#img_add.btn.btn-w-icon
 						span.fui-plus
 						|  adicionar imagem

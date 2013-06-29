@@ -85,11 +85,12 @@ module.exports = function(cdn, paginate){ return {
 			query['owners'] = req.user.id;
 		}
 		Article.findOne(query)
-			.populate('images.image featuredImage')
+			.populate('featuredImage')
+			.populate({path:'images.image',model:Img})
 			.exec(function(err, article) {
 				if(err) return next(err);
-				console.log(article);
 				if(!article) return next(null, article);
+				console.log(article);
 				res.render('editor',{title:"Editor", article:article, is_new:false});
 			}
 		);
@@ -100,13 +101,18 @@ module.exports = function(cdn, paginate){ return {
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'owners', 'featuredImage' //, 'tags'
 		);
-		console.info(data);
+		if(!data.featuredImage || (data.featuredImage.length == 0)) {
+			data.featuredImage = null;
+		}
 		data.updatedAt = new Date;
 		data.images = _.map(data.images, function(image) {
 			return {image:image, size:'normal'}
 		})
 		// TODO: pegar tags e transformar em ObjectIDs
 		var query = {_id: req.param('id')}
+		
+		console.info(data);
+		
 		if(!req.isAdmin()) {
 			query['owners'] = req.user.id;
 		}

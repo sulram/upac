@@ -44,7 +44,24 @@ var make_thumbs =  function(file, base_name, image_config, variant, file_cb, all
 			//console.log("imagem: %s tamanho: %s -> %j", base_name, sizename, size);
 			var endfilename = base_name + '_' + sizename + '.' + image_config.format;
 			var endfilepath = temp.path({suffix:"."+image_config.format});
-			gm(file).gravity("Center").geometry(size.w, size.h,"^").crop(size.w, size.h).quality(image_config.quality).write(endfilepath, function(err){
+			var gm_oper = gm(file).gravity("Center");
+			_.each(size.ops,function(op) {
+				switch(op) {
+					case 'crop':
+						gm_oper = gm_oper.crop(size.w, size.h);
+						break;
+					case 'resize-crop':
+						gm_oper = gm_oper.geometry(size.w, size.h,"^").crop(size.w, size.h);
+						break;
+					case 'resize-inner':
+						gm_oper = gm_oper.resize(size.w, size.h);
+						break;
+					case 'resize-outer':
+						gm_oper = gm_oper.geometry(size.w, size.h,"^")
+						break;
+				}
+			})
+			gm_oper.quality(image_config.quality).write(endfilepath, function(err){
 				if(err) return file_cb(err, {size: sizename, filename: endfilename, path:endfilepath});
 				console.log("resize na imagem %s para o formato %s feito.", file, sizename);
 				files.push( {size: sizename, filename: endfilename, path:endfilepath} );
@@ -56,13 +73,16 @@ var make_thumbs =  function(file, base_name, image_config, variant, file_cb, all
 };
 ImgSchema.statics.upload = function(cdn, image_config, user_id, orig_name, file_name, base_name, variant, cb) {
 	var uploader = cdn.create();
-	var sizes = [];
 	var errors = [];
+	var _user_id = user_id;
+	var _base_name = base_name;
+	var _variant = variant;
+	var _file_name = file_name;
 	var callb = cb;
 	var file_pieces = orig_name.split('/');
 	file_pieces = file_pieces[file_pieces.length - 1].split('\\');
 
-	var original_url = base_name+'-original-'+file_pieces[file_pieces.length-1];
+	var original_url = _base_name+'-original-'+file_pieces[file_pieces.length-1];
 
 	console.log(original_url);
 	uploader.upload({
@@ -77,20 +97,20 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, orig_name, file_
 				data: data
 			});
 		}
-		var img = create_img();
-		img.set({
-			uploader: user_id,
-			filename: base_name,
+		var img = new Img({
+			uploader: _user_id,
+			filename: _base_name,
 			original_cdn_id: original_url,
 			original_cdn_url: cdn.server_url + original_url,
 			variant: variant,
 			upload_complete: false,
+			sizes:[],
 			createdAt: new Date(),
 		});
 		img.save(function(err) {
 			if(err) {return cb(err);}
 			cb(null, img); // callback com infos temporárias - upload é feito em seguida
-			var images = make_thumbs(file_name, base_name, image_config, variant, function(err, image, complete_) {
+			make_thumbs(_file_name, _base_name, image_config, _variant, function(err, image, complete_) {
 				if(err) return cb(err);
 				var complete_cb = complete_;
 				console.log("fazendo upload de %s", image.filename);
@@ -101,7 +121,7 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, orig_name, file_
 				}, function(err) {
 					if(err) { errors.push({error: err, file: image.path}); return; }
 					console.info("arquivo final: " + cdn.server_url + image.filename);
-					sizes.push( {
+					img.sizes.push( {
 						size: image.size,
 						cdn_id: image.filename,
 						cdn_url: cdn.server_url + image.filename
@@ -115,10 +135,7 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, orig_name, file_
 					return callb(err);	
 				}
 				console.info("arquivos subidos.");
-				img.set({
-					sizes: sizes,
-					upload_complete:true
-				});
+				img.upload_complete = true;
 				img.save(function(err2) {
 					if (err2) return callb(err2);
 					console.info("imagem salva no banco de dados.");

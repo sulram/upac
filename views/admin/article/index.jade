@@ -16,7 +16,7 @@ block content
 				th Tipo
 				th Título
 				th Excerpt
-				th Autor
+				th Autores
 				th Status
 				th Data de publicação
 				th Data de criação
@@ -40,7 +40,10 @@ block content
 				td
 					p= article.parent ? article.content : article.excerpt
 				td
-					a(href='/admin/user/#{article.owners[0].id}')= article.owners[0].username
+					ul
+						each owner in article.owners
+							li
+								a(href='/admin/user/#{owner.id}')= owner.username
 				td= article.publicationStatus
 				td.moment-me= article.publicationDate
 				td.moment-me= article.createdAt
