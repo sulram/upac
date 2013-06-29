@@ -146,6 +146,7 @@ App.BlogPostController = Ember.ObjectController.extend({
         var _this = this;
         var id = this.get('model.post_id');
         
+        this.set('comments', Ember.A([]));
         this.set('model.edit_link','/editor/'+id);
 
         $.getJSON('/article/'+id, function(data){
