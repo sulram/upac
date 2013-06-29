@@ -131,11 +131,11 @@ function program1(depth0,data) {
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n\n				<hr/>\n				\n				");
   hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "commentsLoaded", {hash:{},inverse:self.program(23, program23, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "commentsLoaded", {hash:{},inverse:self.program(25, program25, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3\">\n				");
   hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(25, program25, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(27, program27, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("	\n			</div>\n\n		</div>\n\n	");
   return buffer;
@@ -200,7 +200,7 @@ function program11(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n					</div>\n					\n					");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(20, program20, data),fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(22, program22, data),fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n				");
   return buffer;
@@ -220,14 +220,32 @@ function program12(depth0,data) {
   }
 function program13(depth0,data) {
   
-  var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n									<li>");
+  var buffer = '', stack1, hashTypes, options;
+  data.buffer.push("\n									<li class=\"comment\">\n										<div class=\"row\">\n											<div class=\"span2\" style=\"text-align: right;\">\n												<a class=\"post_avatar\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "comment.profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">\n													<img ");
+  hashTypes = {'src': "ID"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'src': ("comment.profile.avatar_small")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push("/>\n												</a>\n											</div>\n											<div class=\"span9 comment_content\">\n												<p><a ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "comment.profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "comment.profile.nick", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("</a>: ");
   hashTypes = {'unescaped': "STRING"};
   stack1 = helpers._triageMustache.call(depth0, "comment.content", {hash:{
     'unescaped': ("true")
   },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</li>	\n								");
+  data.buffer.push("</p>\n												<p class=\"comment_info\">");
+  hashTypes = {};
+  options = {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data};
+  data.buffer.push(escapeExpression(((stack1 = helpers.momentago),stack1 ? stack1.call(depth0, "comment.createdAt", options) : helperMissing.call(depth0, "momentago", "comment.createdAt", options))));
+  data.buffer.push("</p>\n											</div>\n										</div>\n									</li>	\n								");
   return buffer;
   }
 
@@ -240,12 +258,9 @@ function program15(depth0,data) {
 function program17(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n							\n						<h4>Enviar Comentário</h4>\n\n						<textarea id=\"new_comment\" rows=\"5\"></textarea>\n						<a class=\"btn btn-w-icon palette-pomegranate\" ");
+  data.buffer.push("\n						\n						");
   hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "postComment", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("><span class=\"fui-chat\"></span> Comentar</a>\n\n						");
-  hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isPostingComment", {hash:{},inverse:self.noop,fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isPostingComment", {hash:{},inverse:self.program(20, program20, data),fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n					");
   return buffer;
@@ -253,35 +268,45 @@ function program17(depth0,data) {
 function program18(depth0,data) {
   
   
-  data.buffer.push("\n							<p class=\"def_loading\">Enviando comentário</p>\n						");
+  data.buffer.push("\n\n							<p class=\"def_loading\">Enviando comentário</p>\n\n						");
   }
 
 function program20(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n							\n							<h4>Enviar Comentário</h4>\n\n							<textarea id=\"new_comment\" rows=\"5\"></textarea>\n							<a class=\"btn btn-w-icon palette-pomegranate\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "postComment", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("><span class=\"fui-chat\"></span> Comentar</a>\n\n						");
+  return buffer;
+  }
+
+function program22(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
   data.buffer.push("\n						\n						<hr/>\n\n						<p>Quer comentar essa publicação?</p>\n						<p>");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn")
-  },inverse:self.noop,fn:self.program(21, program21, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(23, program23, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "user", options) : helperMissing.call(depth0, "linkTo", "user", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("</p>\n\n					");
   return buffer;
   }
-function program21(depth0,data) {
+function program23(depth0,data) {
   
   
   data.buffer.push("Crie uma conta");
   }
 
-function program23(depth0,data) {
+function program25(depth0,data) {
   
   
   data.buffer.push("\n					\n					<p class=\"def_loading\">Carregando comentários</p>\n\n				");
   }
 
-function program25(depth0,data) {
+function program27(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n					<p><a class=\"btn btn-w-icon\" ");
@@ -293,7 +318,7 @@ function program25(depth0,data) {
   return buffer;
   }
 
-function program27(depth0,data) {
+function program29(depth0,data) {
   
   
   data.buffer.push("\n\n		<p class=\"def_loading\">carregando publicação</p>\n\n	");
@@ -301,7 +326,7 @@ function program27(depth0,data) {
 
   data.buffer.push("<div class=\"thepost\">\n\n	");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(27, program27, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(29, program29, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n</div>");
   return buffer;

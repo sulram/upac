@@ -728,7 +728,7 @@ iframe {
 	bottom: 0;
 }
 
-.post_info .post_avatar {
+.post_avatar {
 	display: block;
 	width: 64px;
 	height: 64px;
@@ -737,18 +737,46 @@ iframe {
 	margin-bottom: 10px;
 }
 
-.post_info .post_avatar img {
+.post_avatar img {
 	height: 64px;
 	width: auto;
+	max-width: none;
 }
 
-.post_info .post_info a {
+.post_info a {
 	text-decoration: none;
 }
 
 
 .post_comments {
 	margin-bottom: 60px;
+}
+
+.post_comments ul {
+	list-style-type: none;
+}
+
+#wrapper.blog .thepost .post_comments .comment p {
+	line-height: 1.5em;
+	margin-bottom: 10px;
+}
+
+.post_comments .comment .post_avatar {
+	margin-left: 15px;
+}
+
+.post_comments .comment .comment_info {
+	font-size: 0.8em;
+}
+
+.post_comments .comment a {
+	text-decoration: none;
+}
+
+.post_comments .comment {
+	background: #f9f9f9;
+	padding: 30px;
+	margin-bottom: 10px;
 }
 
 /* ---------------- MODAL ADD ---------------- */

@@ -56,7 +56,19 @@
 
 							<ul>
 								{{#each comment in comments}}
-									<li>{{{comment.content}}}</li>	
+									<li class="comment">
+										<div class="row">
+											<div class="span2" style="text-align: right;">
+												<a class="post_avatar" {{action openProfile comment.profile}}>
+													<img {{bindAttr src=comment.profile.avatar_small}}/>
+												</a>
+											</div>
+											<div class="span9 comment_content">
+												<p><a {{action openProfile comment.profile}}>{{comment.profile.nick}}</a>: {{{comment.content}}}</p>
+												<p class="comment_info">{{momentago comment.createdAt}}</p>
+											</div>
+										</div>
+									</li>	
 								{{/each}}
 							</ul>
 
@@ -67,14 +79,18 @@
 					</div>
 					
 					{{#if User.auth.loggedIn}}
-							
-						<h4>Enviar Comentário</h4>
-
-						<textarea id="new_comment" rows="5"></textarea>
-						<a class="btn btn-w-icon palette-pomegranate" {{action postComment}}><span class="fui-chat"></span> Comentar</a>
-
+						
 						{{#if isPostingComment}}
+
 							<p class="def_loading">Enviando comentário</p>
+
+						{{else}}
+							
+							<h4>Enviar Comentário</h4>
+
+							<textarea id="new_comment" rows="5"></textarea>
+							<a class="btn btn-w-icon palette-pomegranate" {{action postComment}}><span class="fui-chat"></span> Comentar</a>
+
 						{{/if}}
 
 					{{else}}

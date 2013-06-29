@@ -174,6 +174,7 @@ App.BlogPostController = Ember.ObjectController.extend({
             function(data){
                 $.each(data.articles, function(i, _article) {
                     var article = Ember.Object.create(_article);
+                    article.set('profile', App.UserModel.build(article.owners[0]));
                     _this.comments.pushObject(article);
             });
             //console.log(articles[0]);
@@ -190,6 +191,8 @@ App.BlogPostController = Ember.ObjectController.extend({
         var textarea = $('#new_comment');
         var comment = textarea.val();
 
+        if(comment == '') return;
+
         this.set('isPostingComment', true);
 
         $.ajax({
@@ -201,11 +204,12 @@ App.BlogPostController = Ember.ObjectController.extend({
                 content: comment
             },
             success: function(data, status, jqXHR){
-
                 var article = Ember.Object.create(data.article);
-                _this.comments.pushObject(article);
-
-                _this.set('isPostingComment', false);
+                article.set('profile', App.UserModel.build(User.model));
+                Ember.run.later(function(){
+                    _this.comments.pushObject(article);
+                    _this.set('isPostingComment', false);
+                },1000);
             },
             error: function(jqXHR,status,error){
                 console.log('!!!comment error', params);
