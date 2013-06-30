@@ -5,6 +5,83 @@ $(document).ready(function(){
 	var article_id = $('body').data('article-id');
 	var is_uploading = false;
 
+	// TAGS
+
+	var tags = $('#tags').select2({
+		tags: true,
+		//minimumInputLength: 1,
+		multiple: true,
+		id: function(e) {
+			return e._id + ":" + e.name;
+		},
+		/*initSelection: function(element, callback) {
+			var data = [];
+			$(element.val().split(",")).each(function(i) {
+				var item = this.split(':');
+				data.push({
+					id: item[0],
+					title: item[1]
+				});
+			});
+			callback(data);
+		},*/
+		ajax: { 
+			url: "/tags/query",
+			dataType: 'json',
+			data: function (term, page) {
+				return {
+					start: term,
+				};
+			},
+			results: function (data, page) {
+				return {results: data.tags};
+			}
+		},
+		formatResult: function(item) {
+			return item.name;
+		},
+		formatSelection: function(item) {
+			return item.name;
+		},
+		createSearchChoice: function(term, data) {
+			var _this = this;
+			if ($(data).filter(function() {
+				return this.name.localeCompare(term) === 0;
+			}).length === 0) {
+				return {
+					_id: null,//_this.val().length,
+					name: term
+				};
+			}
+		},
+	});
+
+
+	// no primeiro load, criar tags
+
+	var $tags_hidden = $('#tags-hidden');
+	var select2_data = tags.select2('data');
+
+	$('input[type=hidden]', $tags_hidden).each(function(i,el){
+		select2_data[i] = {_id: $(el).attr('value'), name: $(el).attr('rel')};
+	});
+
+	tags.select2('data', select2_data);
+
+	// onChange cria inputs
+
+	tags.on('change',function(e){
+		var data = tags.select2('data');
+		$tags_hidden.html('');
+		for(var i in data){
+			var item = data[i];
+			var input = $('<input type="hidden" name="tags[]" value="'+(item._id != null ? item._id : item.name)+'"/>');
+			$tags_hidden.append(input);
+		}
+		console.log(e.val, data);
+	});
+		
+
 	// DATE PICKER
 
 	var Picker = function(){
@@ -143,12 +220,12 @@ $(document).ready(function(){
 	// REDACTOR
 
 	$('#content').redactor({
-	    lang: 'pt_br',
-	    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', 'video', '|', 'unorderedlist', 'orderedlist', 'table'],
-	    formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
-	    minHeight: 300,
-	    autoresize: false,
-	    plugins: ['medialibrary']
+		lang: 'pt_br',
+		buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', 'video', '|', 'unorderedlist', 'orderedlist', 'table'],
+		formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
+		minHeight: 300,
+		autoresize: false,
+		plugins: ['medialibrary']
 	});
 
 	// EXCERPT

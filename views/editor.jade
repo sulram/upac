@@ -8,6 +8,7 @@ html
 		link(rel='stylesheet', href='/dropzone/css/dropzone.css')
 		link(rel='stylesheet', href='/js/libs/codemirror/lib/codemirror.css')
 		link(rel='stylesheet', href='/js/libs/redactor/v9/redactor.css')
+		link(rel='stylesheet', href='/js/libs/select2/select2.css')
 		link(rel='stylesheet', href='/css/app.css')
 		link(rel='stylesheet', href='/css/editor.css')
 
@@ -51,7 +52,11 @@ html
 						label.input_label(for="tags")
 							| Palavras-chave
 						.input_tags
-							textarea(name="tags", rows="5", placeholder="")#tags.smallinput
+							input(type="text", name="tags-input")#tags
+							#tags-hidden
+								// TODO: AQUI VEM O EACH TAG
+								input(type="hidden", name="tags[]", value="51c0bfab88464fb55000000a", rel="Educação")
+								input(type="hidden", name="tags[]", value="null", rel="segunda")
 			
 			.footer
 				.container
@@ -149,4 +154,6 @@ html
 		script(src='/js/libs/redactor/v9/redactor.min.js')
 		script(src='/js/libs/redactor/v9/pt_br.js')
 		script(src='/js/libs/redactor/v9/medialibrary.js')
+		script(src='/js/libs/select2/select2.js')
+		script(src='/js/libs/select2/select2_locale_pt-BR.js')
 		script(src='/js/editor.js')

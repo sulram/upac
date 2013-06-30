@@ -954,3 +954,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	display: block;
 }
 
+/* ---------------- SELECT2 ---------------- */
+
+.select2-container {
+	width: 100%;
+}
