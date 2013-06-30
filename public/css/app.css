@@ -583,13 +583,14 @@ iframe {
 	max-width: none;
 }
 
-#wrapper.blog h1 a,
 #wrapper.blog .grid_posts a {
-	color: #444;
+	color: #fff;
 	text-decoration: none;
 }
 
 #wrapper.blog h1 a {
+	color: #333;
+	text-decoration: none;
 	text-transform: uppercase;
 }
 
@@ -603,6 +604,7 @@ iframe {
 	height: 300px;
 	float: left;
 	margin: 2px;
+	position: relative;
 }
 
 #wrapper.blog .grid_posts article .figure {
@@ -623,9 +625,93 @@ iframe {
 
 #wrapper.blog .grid_posts article .info {
 	padding: 20px;
-	height: 60px;
-	background: #efefef;
+	height: 260px;
+	width: 210px;
+	position: relative;
+	overflow: hidden;
+	background: inherit;
 }
+
+#wrapper.blog .grid_posts article .title {
+	display: block;
+	font-size: 1.6em;
+	line-height: 1.2em;
+	margin-bottom: 0.2em;
+}
+
+#wrapper.blog .grid_posts article .date,
+#wrapper.blog .grid_posts article .excerpt {
+	font-size: 0.9em;
+	color: #eee;
+	display: block;
+}
+
+#wrapper.blog .grid_posts article .excerpt {
+	position: absolute;
+	bottom: 20px;
+	width: 210px;
+}
+
+#wrapper.blog .grid_posts article a:hover .excerpt {
+	bottom: 80px;
+	opacity: 0;
+}
+
+#wrapper.blog .grid_posts article .author {
+	font-size: 0.9em;
+	overflow: hidden;
+	position: absolute;
+	width: 200px;
+	bottom: -70px;
+}
+
+#wrapper.blog .grid_posts article a:hover .author {
+	bottom: 10px;
+}
+
+#wrapper.blog .grid_posts article .author .post_avatar {
+	display: block;
+	width: 48px;
+	height: 48px;
+	overflow: hidden;
+	border-radius: 24px;
+	margin-bottom: 10px;
+	float: left;
+	margin-right: 10px;
+}
+
+#wrapper.blog .grid_posts article .author .post_avatar img {
+	height: 48px;
+	width: auto;
+	max-width: none;
+}
+
+/* featured */
+
+#wrapper.blog .grid_posts article.featured .info {
+	height: 80px;
+	position: absolute;
+	bottom: 0;
+}
+
+#wrapper.blog .grid_posts article.featured .title {
+	font-size: 1.2em;
+	/*color: #333;*/
+}
+
+#wrapper.blog .grid_posts article.featured .date {
+	/*color: #666;*/
+}
+
+#wrapper.blog .grid_posts article.featured a:hover .title,
+#wrapper.blog .grid_posts article.featured a:hover .date {
+	/*color: #fff;*/
+}
+
+#wrapper.blog .grid_posts article.featured a:hover .info {
+	height: 160px;
+}
+
 
 #wrapper.blog .grid_posts article :hover .info {
 	color: #efefef;
@@ -633,16 +719,17 @@ iframe {
 	background: #333;
 }
 
-#wrapper.blog .grid_posts article .title {
-	display: block;
-	font-size: 1.2em;
-	line-height: 1.2em;
-	margin-bottom: 0.2em;
-}
+/* anim */
 
-#wrapper.blog .grid_posts article .date {
-	font-size: 0.9em;
-	color: #666;
+#wrapper.blog .grid_posts article .info,
+#wrapper.blog .grid_posts article .author,
+#wrapper.blog .grid_posts article .excerpt {
+
+	-webkit-transition: all 0.3s cubic-bezier(0.680, 0, 0.265, 1);
+	-moz-transition: all 0.3s cubic-bezier(0.680, 0, 0.265, 1);
+	-ms-transition: all 0.3s cubic-bezier(0.680, 0, 0.265, 1);
+	-o-transition: all 0.3s cubic-bezier(0.680, 0, 0.265, 1);
+	transition: all 0.3s cubic-bezier(0.680, 0, 0.265, 1);
 }
 
 #wrapper.blog .thepost {
