@@ -54,9 +54,8 @@ html
 						.input_tags
 							input(type="text", name="tags-input")#tags
 							#tags-hidden
-								// TODO: AQUI VEM O EACH TAG
-								input(type="hidden", name="tags[]", value="51c0bfab88464fb55000000a", rel="Educação")
-								input(type="hidden", name="tags[]", value="null", rel="segunda")
+								each tag in article.tags
+									input(type="hidden", name="tags[]", value=tag._id, rel=tag.name)
 			
 			.footer
 				.container

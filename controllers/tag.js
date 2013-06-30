@@ -155,14 +155,21 @@ module.exports = function (cdn, paginate) { return {
 			});
 		})
 	},
-	findStartingWith: function(req, res) {
+	findStartingWith: function(req, res, next) {
 		Tag.find({$or:[{name: {$regex:req.param('start')}},{slug:{$regex:req.param('start')}}]}).limit(20).exec(function(err, tags){
-			if(err) {
-				return res.jsonxf(500,
-					[{error: 'database error'}],
-					{msg: 'database error', error: err});
-			}
+			if(err) { return next(err);	}
 			return res.jsonx({msg:'ok', tags:tags});
+		});
+	},
+	everything2d: function(req, res, next) {
+		//var query = {geo: {$near: req.param('center').split(','), $maxDistance:req.param('distance')}};
+		var query = {geo: {$geoWithin: {$box: [req.param('ll').split(','), req.param('ur').split(',')]}}};
+		paginate.paginate(User, query, {}, req, function(err, users) {
+			if(err) return next(err);
+			paginate.paginate(Article, query, {}, req, function(err, articles) {
+				if(err) return next(err);
+				return res.jsonx({msg: 'ok', articles: articles, users:users});
+			})
 		});
 	}
 }};

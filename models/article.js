@@ -30,7 +30,7 @@ var ArticleSchema = new Schema({
 	},
 	excerpt: String,
 	content: String,
-	geo: {type: [Number], index: "2d"},
+	geo: {type: [Number], index: "2dsphere"},
 	parent: {type:ObjectId, ref:'Article'}, // Article
 	tags: [{
 		type: ObjectId,

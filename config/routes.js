@@ -118,6 +118,8 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.get('/tags/startwith/:start', tag.findStartingWith);
 	app.get('/tags/query', tag.findStartingWith);
 
+	app.get('/everything2d', tag.everything2d);
+
 	app.get('/event/new', auth.requiresLogin, _event.create);
 	app.get('/event/:id', _event.show);
 	app.get('/event/:id/remove', auth.requiresLogin, _event.preloadById, auth.event.hasAuthorization, _event.remove);
