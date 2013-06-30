@@ -16,7 +16,7 @@ module.exports = function(config) {
 					subject: data.subject || opts.subject,
 					body: body
 				};
-				transport.send_mail(maildata, function(err, success) {
+				transport.sendMail(maildata, function(err, success) {
 					if(err) {
 						console.warn(err);
 					} else if(success) {

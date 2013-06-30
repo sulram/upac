@@ -4,6 +4,7 @@ var mongoose = require('mongoose')
   , Tag = mongoose.model('Tag')
   , Img = mongoose.model('Img')
   , _ = require('underscore')
+  , crypto = require('crypto')
 
 module.exports = function (cdn, paginate, mailer) { return {
 	admin: { 
@@ -78,6 +79,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 	create: function(req, res) {
 		req.body.admin = false; // não serão criados admins por signup
 		var user = new User(req.body);
+		user.verificationToken = crypto.randomBytes(20).toString('hex');
 		user.provider = 'local';
 		user.save(function(err){
 			if(err) {
@@ -93,6 +95,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 					});
 				}
 				req.session.unverified = true;
+				mailer.send(user.email, 'verify', {user: user});
 				res.jsonx({
 					msg:'ok',
 					user: {
@@ -169,7 +172,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 	},
 	verify: function(req, res, next) {
 		var user = User
-					.findOne({verificationToken:req.params.token})
+					.findOne({verificationToken:req.param('token')})
 					.exec(function(err, user) {
 						if(err) return next(err);
 						if(!user) return res.jsonx(401, {msg: 'token not found'});
@@ -177,7 +180,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 							if (err) {
 								return res.jsonx(500, {msg:'session error'});
 							}
-							user.verificationToken = '';
+							user.verificationToken = null;
 							user.save(function(err){
 								if (err) {
 									return res.jsonx(500, {msg:'database error'});
@@ -188,6 +191,41 @@ module.exports = function (cdn, paginate, mailer) { return {
 						});						
 						// TODO: avisar usuário no primeiro login
 					});
+	},
+	requestPasswordReset: function(req, res, next) {
+		User.findOne({email: req.param('email')},function(err, user) {
+			if(err) return next(err);
+			if(!user) return res.jsonx(401, {msg: 'email not found'});
+			user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+			user.resetPasswordRequest = new Date();
+			user.save(function(err) {
+				mailer.send(user.email, 'password', {user:user});
+				res.jsonx({msg:'ok'});
+			});
+		})
+	},
+	resetPassword: function(req, res, next) {
+		var date_match = new Date();
+		date_match.setDate(-1); // 1 dia de limite
+		User.findOne({resetPasswordToken: req.param('token'), resetPasswordRequest: {$gte: date_match}}, function(err, user) {
+			if(err) return next(err);
+			if(!user) return res.redirect('/#user');
+			res.render('user/resetpassword', {user:user});
+		});
+	},
+	setPassword: function(req, res, next) {
+		if(!req.isAdmin() && (req.param('id') != req.user.id)) {
+			return next(null, null);
+		}
+		User.findById(req.param('id'), function(err, user) {
+			if(err) return next(err);
+			if(!user) return next(null, user);
+			user.password = req.param('password');
+			user.save(function(err) {
+				if(err) return next(err);
+				res.redirect('/#user');
+			})
+		})
 	},
 	index: function(req, res, next) {
 		var _from = req.param('from') || 0;
@@ -235,7 +273,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 		});
 	},
 	remove: function(req, res, next) {
-		User.remove({_id: req.params.id}, function(err) {
+		User.remove({_id: req.param('id')}, function(err) {
 			if(err) return next(err);
 			res.jsonx({msg:'ok'});
 		});

@@ -73,6 +73,8 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.get('/logout', user.logout);
 
 	app.get('/verify/:token', user.verify);
+	app.get('/requestpasswordreset/:email', user.requestPasswordReset);
+	app.get('/resetpassword/:token', user.resetPassword);
 
 	app.all('/users', user.index);
 	app.all('/users/startingwith/:term', user.searchStartingWith);
