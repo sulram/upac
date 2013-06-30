@@ -1,7 +1,7 @@
-module.exports = function(app, passport, auth, cdn, paginate) {
+module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 
 	
-	var user = require('../controllers/user')(cdn, paginate);
+	var user = require('../controllers/user')(cdn, paginate, mailer);
 	var article = require('../controllers/article')(cdn, paginate);
 	var page = require('../controllers/page')(cdn, paginate);
 	var _event = require('../controllers/event')(cdn, paginate);

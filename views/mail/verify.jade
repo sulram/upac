@@ -1,0 +1,11 @@
+html
+	body
+		h1 Confirme seu e-mail
+		p 
+			| Você se cadastrou no site UPAC com o nome de usuário 
+			strong #{user.name}
+			| , e para completar seu cadastro você deve entrar no link a seguir:
+		p
+			a(href="http://upac.ultraleve.me/verify/#{user.verifyToken}") http://upac.ultraleve.me/verify/#{user.verifyToken}
+		p Caso o link não esteja disponível para clique, copie o endereço acima e cole na barra de endereços do seu navegador para validar seu cadastro.
+		p Se não foi você quem se cadastrou no site, você pode ignorar essa mensagem - o usuário cadastrado será apagado automaticamente em 3 dias.

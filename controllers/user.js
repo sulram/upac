@@ -5,7 +5,7 @@ var mongoose = require('mongoose')
   , Img = mongoose.model('Img')
   , _ = require('underscore')
 
-module.exports = function (cdn, paginate) { return {
+module.exports = function (cdn, paginate, mailer) { return {
 	admin: { 
 		index: function (req, res, next) {
 			paginate.paginate(User,{},{},req,function(err, users, pagination){
