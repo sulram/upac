@@ -56,6 +56,49 @@ $(document).ready(function(){
 		console.log(msg,log);
 	}
 
+	// EXCLUIR POST
+
+	var isRemoving = false;
+
+	$('#post_remove').click(function(e){
+		e.preventDefault();
+		$('#post_remove').hide();
+		$('#post_remove_confirm').show();
+	}).mouseover(function(e){
+		e.preventDefault();
+		$('#post_remove').addClass('btn-danger');
+	}).mouseout(function(e){
+		e.preventDefault();
+		$('#post_remove').removeClass('btn-danger');
+	});
+
+	$('#post_remove_no').click(function(e){
+		e.preventDefault();
+		$('#post_remove').show();
+		$('#post_remove_confirm').hide();
+	});
+
+	$('#post_remove_yes').click(function(e){
+		e.preventDefault();
+		if(isRemoving) return;
+		isRemoving = true;
+		e.preventDefault();
+		$.ajax({
+			type: 'DEL',
+			url: '/article/'+article_id,
+			success: function(data, status, jqXHR){
+				notify('A publicação foi excluída com sucesso! Você será redirecionado para o blog em 2s.', null);
+				setTimeout(function(){
+					window.location = '/#/blog';
+				},2000);
+			},
+			error: function(jqXHR,status,error){
+				isRemoving = false;
+				notify('Erro ao excluir publicação, tente novamente.', arguments);
+			}
+		});
+	});
+
 	// FORM SUBMIT
 
 	var form = $('#editor_form');
@@ -85,7 +128,7 @@ $(document).ready(function(){
 				loading.removeClass('show');
 			},
 			error: function(jqXHR,status,error){
-				notify('Erro ao salvar, tente novamente.', params);
+				notify('Erro ao salvar, tente novamente.', arguments);
 				Picker.convertToView();
 				loading.removeClass('show');
 			}

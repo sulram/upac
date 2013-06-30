@@ -228,7 +228,7 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	remove: function(req, res, next) {
-		var query = {_id: id};
+		var query = {_id: req.param('id')};
 		if(!req.isAdmin()) {
 			query['owners'] = req.user.id;
 		}

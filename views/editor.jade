@@ -62,7 +62,14 @@ html
 							a(href="#",class="#{post_remove}")#post_remove
 								i.fui-cross
 								&nbsp;
-								| Remover
+								| Deletar
+							span(style="vertical-align: bottom;")#post_remove_confirm.btn-group.hide
+								a(href="#")#post_remove_yes.btn.btn-danger.btn-w-icon
+									i.fui-check
+									&nbsp;
+									| Quero deletar
+								a(href="#")#post_remove_no.btn.btn-danger
+									i.fui-cross
 							&nbsp;
 							a(href="/#/blog/post/#{article.id}",class="#{post_view}")#post_view
 								i.fui-eye

@@ -245,7 +245,7 @@ form.submit(function(e){
 			loading.removeClass('show');
 		},
 		error: function(jqXHR,status,error){
-			notify('Erro ao salvar, tente novamente.', params);
+			notify('Erro ao salvar, tente novamente.', arguments);
 			Picker.convertToView();
 			loading.removeClass('show');
 		}
