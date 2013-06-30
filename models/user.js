@@ -32,6 +32,8 @@ var UserSchema = new Schema({
 	hashed_password: String,
 	salt: String,
 	verifyToken: String,
+	resetPasswordToken: String,
+	resetPasswordRequestTime: Date,
 	provider: String,
 	createdAt: Date,
 	lastLogin: Date,
@@ -85,7 +87,6 @@ UserSchema.pre('save', function(next) {
 		return next();
 	} else {
 		this.createdAt = new Date();
-		// enviar email para o usuário com token de validação
 	}
 	if(!validatePresenceOf(this.password)) {
 		next(new Error('Invalid Password'));

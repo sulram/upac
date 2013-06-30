@@ -17,6 +17,7 @@ var express = require('express')
   , auth = require('./helpers/auth')(_)
   , crypto = require('crypto')
   , paginate = require('./helpers/paginate')(_)
+  , mailer = require('./helpers/mailer')(config.mailer_config)
   , marked = require('marked');
 
 var app = express();
@@ -161,7 +162,7 @@ var cdn = require('./helpers/cdn.js')(config);
 	}
 }*/
 
-require('./config/routes')(app, passport, auth, cdn, paginate);
+require('./config/routes')(app, passport, auth, cdn, paginate, mailer);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

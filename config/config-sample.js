@@ -37,6 +37,20 @@ module.exports = {
 			},
 			format: "jpg",
 			quality: 90
+		},
+		mailer_config: {
+			transport: "sendmail", // or "SMTP", or "SES", or ...
+			// options are the same as nodemailer's, with our own extras
+			nodemailer_config: {
+				// for sendmail
+				path: '/usr/local/bin/sendmail',
+				args: ['-t', '-f from@e.mail'],
+			},
+			default_options: {
+				from: "from@e.mail",
+				subject: "Mensagem do site UPAC"
+			},
+			template_path: 'views/mail/'
 		}
 	},
 	test: {
