@@ -90,6 +90,9 @@ module.exports = function(cdn, paginate){ return {
 			.exec(function(err, article) {
 				if(err) return next(err);
 				if(!article) return next(null, article);
+				if(!article.featuredImage && (article.images.length > 0)) {
+					article.featuredImage = article.images[0].image;
+				}
 				console.log(article);
 				res.render('editor',{title:"Editor", article:article, is_new:false});
 			}
@@ -187,6 +190,9 @@ module.exports = function(cdn, paginate){ return {
 			.exec(function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
+			if(!article.featuredImage && (article.images.length > 0)) {
+				article.featuredImage = article.images[0];
+			}
 			/* // referencias das imagens no final, p/ markdown
 			_.each(article.images, function(image){
 				var size = {cdn_url:image.image.original_cdn_url};

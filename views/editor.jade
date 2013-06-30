@@ -92,7 +92,7 @@ html
 								| Publicar
 							img(src='/img/ajax-loader.gif')#loading
 			#images-hidden
-				- featuredImageID = article.featuredImage ? article.featuredImage._id : ''
+				- featuredImageID = article.featuredImage ? article.featuredImage._id ? article.featuredImage._id : article.featuredImage : ''
 				input(type="hidden", name="featuredImage", value=featuredImageID)#featuredImage
 				each image in article.images
 					input(type="hidden", name="images[]", value=image.image._id)
@@ -121,7 +121,7 @@ html
 							- var image = img.image;
 							- var cdn_url = image.upload_complete ? image.getSize('icon').cdn_url : image.original_cdn_url;
 							- var large_url = image.upload_complete ? image.getSize('large').cdn_url : image.original_cdn_url;
-							- var isCover = (article.featuredImage && article.featuredImage._id == String(img.image._id)) ? 'loaded cover' : 'loaded'; 
+							- var isCover = (featuredImageID == String(img.image._id)) ? 'loaded cover' : 'loaded'; 
 							figure(data-id=String(image._id), data-src=large_url, class=isCover)
 								span.icon.fui-heart
 								img(src=cdn_url)
