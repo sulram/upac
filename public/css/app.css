@@ -959,3 +959,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .select2-container {
 	width: 100%;
 }
+
+.select2-container-multi .select2-choices .select2-search-choice {
+	margin-top: 6px;
+}

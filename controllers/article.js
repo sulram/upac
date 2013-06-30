@@ -272,16 +272,39 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
-	byUser: function(req, res, next) {
+	postsByUser: function(req, res, next) {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.jsonx(404, {msg: "user not found"});
-			Article.find({owners:user.id}).populate('images.image').exec(function(err, articles) {
+			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent:null},{populate:'featuredImage'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
-				if(!articles) return res.jsonx(404, {msg: "no articles found"});
+				Img.populate(articles, 'featuredImage', function(err, _articles){
+					res.jsonx({
+						msg:'ok',
+						articles: _articles,
+						from: pagination.from,
+						sort_by: pagination.sort_by,
+						order: pagination.order,
+						count: pagination.count
+					});
+				});
+			});
+		});
+	},
+	commentsByUser: function(req, res, next) {
+		User.findOne({username:req.param('username')},function(err, user) {
+			if(err) return next(err);
+			if(!user) return res.jsonx(404, {msg: "user not found"});
+			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent: {$not: null}},{populate: [{path: 'parent', select: 'title _id'}]}, req, function(err, articles, pagination) {
+			//Article.find({owners:user.id}).populate('images.image').exec(function(err, articles) {
+				if(err) return next(err);
 				res.jsonx({
 					msg:'ok',
-					articles: articles
+					articles: articles,
+					from: pagination.from,
+					sort_by: pagination.sort_by,
+					order: pagination.order,
+					count: pagination.count
 				});
 			});
 
