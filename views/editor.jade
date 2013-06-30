@@ -8,6 +8,7 @@ html
 		link(rel='stylesheet', href='/dropzone/css/dropzone.css')
 		link(rel='stylesheet', href='/js/libs/codemirror/lib/codemirror.css')
 		link(rel='stylesheet', href='/js/libs/redactor/v9/redactor.css')
+		link(rel='stylesheet', href='/js/libs/select2/select2.css')
 		link(rel='stylesheet', href='/css/app.css')
 		link(rel='stylesheet', href='/css/editor.css')
 
@@ -51,7 +52,11 @@ html
 						label.input_label(for="tags")
 							| Palavras-chave
 						.input_tags
-							textarea(name="tags", rows="5", placeholder="")#tags.smallinput
+							input(type="text", name="tags-input")#tags
+							#tags-hidden
+								// TODO: AQUI VEM O EACH TAG
+								input(type="hidden", name="tags[]", value="51c0bfab88464fb55000000a", rel="Educação")
+								input(type="hidden", name="tags[]", value="null", rel="segunda")
 			
 			.footer
 				.container
@@ -62,7 +67,14 @@ html
 							a(href="#",class="#{post_remove}")#post_remove
 								i.fui-cross
 								&nbsp;
-								| Remover
+								| Deletar
+							span#post_remove_confirm.btn-group.hide
+								a(href="#")#post_remove_yes.btn.btn-danger.btn-w-icon
+									i.fui-check
+									&nbsp;
+									| Quero deletar
+								a(href="#")#post_remove_no.btn.btn-danger
+									i.fui-cross
 							&nbsp;
 							a(href="/#/blog/post/#{article.id}",class="#{post_view}")#post_view
 								i.fui-eye
@@ -85,7 +97,7 @@ html
 								| Publicar
 							img(src='/img/ajax-loader.gif')#loading
 			#images-hidden
-				- featuredImageID = article.featuredImage ? article.featuredImage._id : ''
+				- featuredImageID = article.featuredImage ? article.featuredImage._id ? article.featuredImage._id : article.featuredImage : ''
 				input(type="hidden", name="featuredImage", value=featuredImageID)#featuredImage
 				each image in article.images
 					input(type="hidden", name="images[]", value=image.image._id)
@@ -114,7 +126,7 @@ html
 							- var image = img.image;
 							- var cdn_url = image.upload_complete ? image.getSize('icon').cdn_url : image.original_cdn_url;
 							- var large_url = image.upload_complete ? image.getSize('large').cdn_url : image.original_cdn_url;
-							- var isCover = (article.featuredImage && article.featuredImage._id == String(img.image._id)) ? 'loaded cover' : 'loaded'; 
+							- var isCover = (featuredImageID == String(img.image._id)) ? 'loaded cover' : 'loaded'; 
 							figure(data-id=String(image._id), data-src=large_url, class=isCover)
 								span.icon.fui-heart
 								img(src=cdn_url)
@@ -142,4 +154,6 @@ html
 		script(src='/js/libs/redactor/v9/redactor.min.js')
 		script(src='/js/libs/redactor/v9/pt_br.js')
 		script(src='/js/libs/redactor/v9/medialibrary.js')
+		script(src='/js/libs/select2/select2.js')
+		script(src='/js/libs/select2/select2_locale_pt-BR.js')
 		script(src='/js/editor.js')

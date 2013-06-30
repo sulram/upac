@@ -5,6 +5,83 @@ $(document).ready(function(){
 	var article_id = $('body').data('article-id');
 	var is_uploading = false;
 
+	// TAGS
+
+	var tags = $('#tags').select2({
+		tags: true,
+		//minimumInputLength: 1,
+		multiple: true,
+		id: function(e) {
+			return e._id + ":" + e.name;
+		},
+		/*initSelection: function(element, callback) {
+			var data = [];
+			$(element.val().split(",")).each(function(i) {
+				var item = this.split(':');
+				data.push({
+					id: item[0],
+					title: item[1]
+				});
+			});
+			callback(data);
+		},*/
+		ajax: { 
+			url: "/tags/query",
+			dataType: 'json',
+			data: function (term, page) {
+				return {
+					start: term,
+				};
+			},
+			results: function (data, page) {
+				return {results: data.tags};
+			}
+		},
+		formatResult: function(item) {
+			return item.name;
+		},
+		formatSelection: function(item) {
+			return item.name;
+		},
+		createSearchChoice: function(term, data) {
+			var _this = this;
+			if ($(data).filter(function() {
+				return this.name.localeCompare(term) === 0;
+			}).length === 0) {
+				return {
+					_id: null,//_this.val().length,
+					name: term
+				};
+			}
+		},
+	});
+
+
+	// no primeiro load, criar tags
+
+	var $tags_hidden = $('#tags-hidden');
+	var select2_data = tags.select2('data');
+
+	$('input[type=hidden]', $tags_hidden).each(function(i,el){
+		select2_data[i] = {_id: $(el).attr('value'), name: $(el).attr('rel')};
+	});
+
+	tags.select2('data', select2_data);
+
+	// onChange cria inputs
+
+	tags.on('change',function(e){
+		var data = tags.select2('data');
+		$tags_hidden.html('');
+		for(var i in data){
+			var item = data[i];
+			var input = $('<input type="hidden" name="tags[]" value="'+(item._id != null ? item._id : item.name)+'"/>');
+			$tags_hidden.append(input);
+		}
+		console.log(e.val, data);
+	});
+		
+
 	// DATE PICKER
 
 	var Picker = function(){
@@ -48,13 +125,56 @@ $(document).ready(function(){
 	function notify(msg,log) {
 		$('<div></div>')
 			.addClass('notification')
-			.text(msg)
+			.html(msg)
 			.appendTo('#info')
 			.fadeIn(500)
 			.delay(4000)
 			.slideUp(250,function(){$(this).remove();});
 		console.log(msg,log);
 	}
+
+	// EXCLUIR POST
+
+	var isRemoving = false;
+
+	$('#post_remove').click(function(e){
+		e.preventDefault();
+		$('#post_remove').hide();
+		$('#post_remove_confirm').show();
+	}).mouseover(function(e){
+		e.preventDefault();
+		$('#post_remove').addClass('btn-danger');
+	}).mouseout(function(e){
+		e.preventDefault();
+		$('#post_remove').removeClass('btn-danger');
+	});
+
+	$('#post_remove_no').click(function(e){
+		e.preventDefault();
+		$('#post_remove').show();
+		$('#post_remove_confirm').hide();
+	});
+
+	$('#post_remove_yes').click(function(e){
+		e.preventDefault();
+		if(isRemoving) return;
+		isRemoving = true;
+		e.preventDefault();
+		$.ajax({
+			type: 'GET',
+			url: '/article/'+article_id+'/remove',
+			success: function(data, status, jqXHR){
+				notify('A publicação foi excluída.<br/>Você será redirecionado para o blog em 2s.', null);
+				setTimeout(function(){
+					window.location = '/#/blog';
+				},2000);
+			},
+			error: function(jqXHR,status,error){
+				isRemoving = false;
+				notify('Erro ao excluir publicação, tente novamente.', arguments);
+			}
+		});
+	});
 
 	// FORM SUBMIT
 
@@ -85,7 +205,7 @@ $(document).ready(function(){
 				loading.removeClass('show');
 			},
 			error: function(jqXHR,status,error){
-				notify('Erro ao salvar, tente novamente.', params);
+				notify('Erro ao salvar, tente novamente.', arguments);
 				Picker.convertToView();
 				loading.removeClass('show');
 			}
@@ -100,12 +220,12 @@ $(document).ready(function(){
 	// REDACTOR
 
 	$('#content').redactor({
-	    lang: 'pt_br',
-	    buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', 'video', '|', 'unorderedlist', 'orderedlist', 'table'],
-	    formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
-	    minHeight: 300,
-	    autoresize: false,
-	    plugins: ['medialibrary']
+		lang: 'pt_br',
+		buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'link', 'video', '|', 'unorderedlist', 'orderedlist', 'table'],
+		formattingTags: ['p', 'blockquote', 'pre', 'h3', 'h4'],
+		minHeight: 300,
+		autoresize: false,
+		plugins: ['medialibrary']
 	});
 
 	// EXCERPT

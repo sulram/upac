@@ -1,7 +1,7 @@
 extends ../layout
 
 block title
-	|= user.username
+	| Usuário: #{user.username}
 block link
 	-var selected = 'usuários'
 
@@ -9,6 +9,7 @@ block content
 	h2= user.username
 	table.table
 		+table_rec_row("ID", user.id)
+		+table_rec_row("login", user.username)
 		+table_rec_row("Nome", user.name)
 		+table_rec_row_check("Administrador", user.admin)
 		+table_rec_row_link("Email", user.email, "mailto:#{user.email}")

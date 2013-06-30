@@ -91,8 +91,6 @@ App.BlogRecentesController = Ember.ObjectController.extend({
 
         var _this = this;
 
-        this.set('isLoaded', false);
-
         var page = this.get('model.page_num');
         //var palette = ['palette-turquoise','palette-green-sea','palette-emerland','palette-nephritis','palette-peter-river', 'palette-belize-hole', 'palette-amethyst', 'palette-wisteria', 'palette-wet-asphalt', 'palette-midnight-blue', 'palette-sun-flower', 'palette-orange', 'palette-carrot', 'palette-pumpkin', 'palette-alizarin', 'palette-pomegranate'];
         var palette = ['palette-turquoise','palette-peter-river', 'palette-wisteria', 'palette-pomegranate', 'palette-carrot', 'palette-sun-flower'];
@@ -228,7 +226,7 @@ App.BlogPostController = Ember.ObjectController.extend({
                 _this.set('isPostingComment', false);
             },
             error: function(jqXHR,status,error){
-                console.log('!!!comment error', params);
+                console.log('!!!comment error', arguments);
                 textarea.val(comment);
                 _this.set('isPostingComment', false);
             }

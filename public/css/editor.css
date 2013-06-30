@@ -399,6 +399,14 @@ body.editor {
 	display: block;
 }
 
+
+/* ---------------- FOOTER ---------------- */
+
+#post_remove_confirm {
+	vertical-align: bottom;
+}
+
+
 /* ---------------- INFO ---------------- */
 
 #info {
