@@ -3,6 +3,7 @@
   , Article = mongoose.model('Article')
   , Img = mongoose.model('Img')
   , Attachment = mongoose.model('Attachment')
+  , Tag = mongoose.model('Tag')
   , fs = require('fs')
   , _ = require('underscore')
 
@@ -75,7 +76,7 @@ module.exports = function(cdn, paginate){ return {
 	neweditor: function(req, res, next) {
 		var article = new Article({
 			owners:[req.user.id],
-			publicationStatus:""
+			publicationStatus:"draft"
 		});
 		res.render('editor',{title:"Editor", article:article, is_new:true});
 	},
@@ -85,7 +86,7 @@ module.exports = function(cdn, paginate){ return {
 			query['owners'] = req.user.id;
 		}
 		Article.findOne(query)
-			.populate('featuredImage')
+			.populate('featuredImage tags')
 			.populate({path:'images.image',model:Img})
 			.exec(function(err, article) {
 				if(err) return next(err);
@@ -102,7 +103,7 @@ module.exports = function(cdn, paginate){ return {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
 			'publicationDate', 'publicationStatus',
-			'images', 'attachments', 'owners', 'featuredImage' //, 'tags'
+			'images', 'attachments', 'owners', 'featuredImage', 'tags'
 		);
 		if(!data.featuredImage || (data.featuredImage.length == 0)) {
 			data.featuredImage = null;
@@ -113,7 +114,20 @@ module.exports = function(cdn, paginate){ return {
 		})
 		// TODO: pegar tags e transformar em ObjectIDs
 		var query = {_id: req.param('id')}
-		
+		if (data.tags) {
+			data.tags = _.map(data.tags, function(tag) {
+				var m = tag.match(/^[0-9a-fA-F]{24}$/);
+				if (m && m.length == 1) {
+					return tag;
+				} else {
+					var ntag = new Tag({name:tag});
+					ntag.save(function(err){
+						console.info("Salvando tag %j", ntag);
+					})
+					return ntag._id;
+				}
+			});
+		}
 		console.info(data);
 		
 		if(!req.isAdmin()) {

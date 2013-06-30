@@ -19,7 +19,7 @@ var EventSchema = new Schema({
 	owners: [{type: ObjectId, ref:'User'}],
 	startDate: Date,
 	endDate: Date,
-	geo: {type:[Number], index:"2d"},
+	geo: {type:[Number], index:"2dSphere"},
 	questions: [QuestionSchema],
 	resposnes: [RSVPSchema]
 });
