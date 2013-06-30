@@ -48,7 +48,7 @@ $(document).ready(function(){
 	function notify(msg,log) {
 		$('<div></div>')
 			.addClass('notification')
-			.text(msg)
+			.html(msg)
 			.appendTo('#info')
 			.fadeIn(500)
 			.delay(4000)
@@ -84,10 +84,10 @@ $(document).ready(function(){
 		isRemoving = true;
 		e.preventDefault();
 		$.ajax({
-			type: 'DEL',
-			url: '/article/'+article_id,
+			type: 'GET',
+			url: '/article/'+article_id+'/remove',
 			success: function(data, status, jqXHR){
-				notify('A publicação foi excluída com sucesso! Você será redirecionado para o blog em 2s.', null);
+				notify('A publicação foi excluída.<br/>Você será redirecionado para o blog em 2s.', null);
 				setTimeout(function(){
 					window.location = '/#/blog';
 				},2000);
