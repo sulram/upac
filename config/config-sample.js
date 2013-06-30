@@ -45,7 +45,7 @@ module.exports = {
 				// for sendmail
 				path: '/usr/local/bin/sendmail',
 				args: ['-t', '-f from@e.mail'],
-			}
+			},
 			default_options: {
 				from: "from@e.mail",
 				subject: "Mensagem do site UPAC"

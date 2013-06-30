@@ -199,7 +199,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 			user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
 			user.resetPasswordRequest = new Date();
 			user.save(function(err) {
-				mailer.send(user.email, 'password', {user:user});
+				mailer.send(user.email, 'password', {user:user, subject:"[UPAC] Pedido de link para recadastramento de senha"});
 				res.jsonx({msg:'ok'});
 			});
 		})

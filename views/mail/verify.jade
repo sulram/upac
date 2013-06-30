@@ -3,7 +3,7 @@ html
 		h1 Confirme seu e-mail
 		p 
 			| Você se cadastrou no site UPAC com o nome de usuário 
-			strong #{user.name}
+			strong #{user.username}
 			| , e para completar seu cadastro você deve entrar no link a seguir:
 		p
 			a(href="http://upac.ultraleve.me/verify/#{user.verifyToken}") http://upac.ultraleve.me/verify/#{user.verifyToken}

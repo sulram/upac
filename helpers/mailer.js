@@ -3,24 +3,26 @@ var nodemailer = require('nodemailer')
   , _ = require('underscore')
 
 module.exports = function(config) {
-	var transport = nodemailer.createTransport(config.transport, config.nodemailer_options);
+	var transport = nodemailer.createTransport(config.transport, config.nodemailer_config);
 	return {
 		send: function(to, view, data, options) {
 			var opts = _.defaults(config.default_options, options);
-			jade.renderFile(opts.path+view, {locals: data}, function(err, body) {
+			jade.renderFile(config.template_path+view+".jade", data, function(err, body) {
 				if(err) console.error(err);
 				var maildata = {
-					to: opts.to,
+					to: to,
 					sender: opts.sender,
 					reply_to: opts.reply_to || opts.sender,
 					subject: data.subject || opts.subject,
-					body: body
+					html: body
 				};
-				transport.sendMail(maildata, function(err, success) {
+				transport.sendMail(maildata, function(err, response) {
 					if(err) {
+						console.warn("Error!")
 						console.warn(err);
-					} else if(success) {
-						console.info('Email sent to %s', opts.to);
+					} else {
+						console.info('Email sent to %s:', to);
+						console.info(response);
 					}
 				})
 			})
