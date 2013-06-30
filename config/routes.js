@@ -117,7 +117,7 @@ module.exports = function(app, passport, auth, cdn, paginate) {
 
 	app.get('/event/new', auth.requiresLogin, _event.create);
 	app.get('/event/:id', _event.show);
-	app.del('/event/:id', auth.requiresLogin, _event.preloadById, auth.event.hasAuthorization, _event.remove);
+	app.get('/event/:id/remove', auth.requiresLogin, _event.preloadById, auth.event.hasAuthorization, _event.remove);
 
 	app.get('/events/near', _event.near);
 
