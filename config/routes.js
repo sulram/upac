@@ -83,7 +83,8 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 
 	app.put('/user/:id', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.update);
 	app.get('/user/:username', user.show);
-	app.get('/user/:username/articles', article.byUser);
+	app.get('/user/:username/articles', article.postsByUser);
+	app.get('/user/:username/comments', article.commentsByUser);
 	app.post('/user/:id/updateimage', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.setImage);
 	//app.post('/uploadimagetest', user.uploadImageTest);
 	
