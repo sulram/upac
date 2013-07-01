@@ -109,7 +109,7 @@ PageSchema.pre('save', function(next) {
 	var thisart = this;
 	mongoose.model('Article').findOne({slug: this.slug}, function(err, article){
 		if(err) return next(err);
-		if(article) this.slug += '-'+crypto.crypto.randomBytes(5).toString('hex'); // se der conflito vai ser muita cagada
+		if(article) this.slug += '-'+crypto.randomBytes(5).toString('hex'); // se der conflito vai ser muita cagada
 		next();
 	})
 })
