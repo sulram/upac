@@ -44,7 +44,7 @@ passport.deserializeUser(function(email, done) {
 
 passport.use(new LocalStrategy(
 	function(username, password, done) {
-		User.findOne({$or:[{username: username}, {email:username}]}, function(err, user) {
+		User.findOne({$or:[{username: username.toLowerCase()}, {email:username.toLowerCase()}]}, function(err, user) {
 			if (err) {
 				return done(err);
 			}

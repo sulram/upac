@@ -99,6 +99,8 @@ UserSchema.pre('save', function(next) {
 	if(!validatePresenceOf(this.password)) {
 		next(new Error('Invalid Password'));
 	} else {
+		this.username = this.username.toLowerCase(); // manter as coisas arrumadas
+		this.email = this.email.toLowerCase();
 		this.lastUpdate = new Date();
 		next();
 	}
