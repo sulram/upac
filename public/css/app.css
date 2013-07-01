@@ -557,6 +557,15 @@ iframe {
 	max-width: 320px;
 }
 
+#rede_sidebar .tags {
+	font-size: 0.9em;
+}
+
+#rede_sidebar .tags a {
+	display: inline-block;
+	margin-right: 2px;
+}
+
 .rede_perfil_foto {
 	position: relative;
 	max-width: 320px;

@@ -112,10 +112,9 @@ App.RedeEditarRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         this._super(this, arguments);
         controller.set('tags',[]);
-        controller.focusUser();
-    },
-    deactivate: function(){
-         App.MapController.unFocusAll();
+        if(User.model && User.model.username){
+            App.MapController.focusUser(User.model.username);
+        }
     }
 });
 

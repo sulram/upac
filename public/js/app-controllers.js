@@ -335,12 +335,7 @@ App.RedeEditarController = Ember.ObjectController.extend({
                 _controller.set('isPosting',false);
             }
         });
-    },
-    focusUser: function(){
-        if(User.model && User.model.username){
-            App.MapController.focusUser(User.model.username);
-        }
-    }.observes('User.model.isLoaded')
+    }
 });
 
 

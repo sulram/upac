@@ -14,6 +14,13 @@
 
 		<p>{{about}}</p>
 
+		<p class="tags">
+			Palavras-chave: 
+			{{#each tags}}
+				<a {{action openTag this}}>{{this.name}}</a>
+			{{/each}}
+		</p>
+
 		<hr/>
 		
 		{{#if isTheLoggedUser}}
