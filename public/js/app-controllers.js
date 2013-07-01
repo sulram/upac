@@ -275,6 +275,8 @@ App.TimelineEditarController = Ember.ObjectController.extend({
     }.property('model.username','User.auth.username')
 });
 
+// REDE
+
 App.RedePerfilController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
         return this.get('model.username') == User.auth.username;
@@ -296,12 +298,19 @@ App.RedePerfilController = Ember.ObjectController.extend({
     }.observes('content.isLoaded')
 });
 
-// REDE
-
 App.RedeEditarController = Ember.ObjectController.extend({
     isPosting: false,
     flashMsg: null,
     tags: [],
+    startMarking: function(){
+        App.MapController.startMarking();
+    },
+    finishMarking: function(){
+        App.MapController.finishMarking(true);
+    },
+    cancelMarking: function(){
+        App.MapController.finishMarking();
+    },
     onFocus: function(){
         this.set('flashMsg',null);
     },
@@ -326,7 +335,12 @@ App.RedeEditarController = Ember.ObjectController.extend({
                 _controller.set('isPosting',false);
             }
         });
-    }
+    },
+    focusUser: function(){
+        if(User.model && User.model.username){
+            App.MapController.focusUser(User.model.username);
+        }
+    }.observes('User.model.isLoaded')
 });
 
 

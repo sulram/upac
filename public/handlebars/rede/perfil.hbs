@@ -17,30 +17,9 @@
 		<hr/>
 		
 		{{#if isTheLoggedUser}}
-			{{#if App.MapController.isMarking}}
-			
-				<div class="pad over">
-					<p>Navegue pelo mapa e clique no ponto em que você deseja marcar sua localização.</p>
-					<p>
-						<a {{action finishMarking App.MapController}} class="btn btn-primary">Salvar posição</a>
-						<a {{action cancelMarking App.MapController}} class="btn btn-danger">Cancelar</a>
-					</p>
-				</div>
 
-			{{else}}
-				
-				<p>
-					<a {{action startMarking App.MapController}} class="btn btn-w-icon">
-						<span class="fui-location"></span> 
-						{{#if geo.length}}Editar localização{{else}}Marque sua localização{{/if}}
-					</a>
-				</p>			
 
-				<p>{{#linkTo 'rede.editar' classNames="btn btn-w-icon"}}<span class="fui-new"></span> Editar perfil{{/linkTo}}</p>
-
-				<p>{{#linkTo 'timeline' model classNames="btn-"}}Linha do tempo{{/linkTo}}</p>
-
-			{{/if}}
+			<p>{{#linkTo 'rede.editar' classNames="btn btn-w-icon"}}<span class="fui-new"></span> Editar perfil{{/linkTo}}</p>
 
 		{{else}}
 

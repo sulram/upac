@@ -971,6 +971,10 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	width: 100%;
 }
 
+#rede_sidebar .select2-container-multi .select2-choices {
+	border: 2px solid #bdc3c7;
+}
+
 .select2-container-multi .select2-choices .select2-search-choice {
 	margin-top: 6px;
 }
