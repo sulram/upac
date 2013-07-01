@@ -70,21 +70,32 @@ UserSchema.virtual('password').set(function(password){
 
 UserSchema.path('username').validate(function(username) {
 	return /[a-z0-9]{3,}/.test(username);
-}, 'invalid')/*.validate(function(username, cb) {
-	mongoose.model('User').find({username: username.toLowerCase()}, function(err, users) {
-		cb(err||users.length===0);
-	})
-}, 'inuse');*/
+}, 'invalid').validate(function(username, cb) {
+	var thisuser = this;
+	mongoose.model('User').findOne({username: username.toLowerCase()}, function(err, user) {
+		if(err) return cb(err);
+		console.log("comparando %j e %j em username", user._id, thisuser._id);
+		if(user && (String(user._id) != String(thisuser._id))) {
+			return cb(false);	
+		}
+		cb(true);
+	});
+}, 'inuse');//*/
 
 var emailregex = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
 
 UserSchema.path('email').validate(function(email){
 	return emailregex.test(email);
-}, 'invalid')/*.validate(function(email, cb) {
-	mongoose.model('User').find({email: email.toLowerCase()}, function(err, users) {
-		cb(err||users.length===0);
+}, 'invalid').validate(function(email, cb) {
+	var thisuser = this;
+	mongoose.model('User').findOne({email: email.toLowerCase()}, function(err, user) {
+		if(err) return cb(err);
+		if(user && (String(user._id) != String(thisuser._id))) {
+			return cb(false);	
+		}
+		cb(true);
 	})
-}, 'inuse');*/
+}, 'inuse');//*/
 
 var validatePresenceOf = function(value) {
 	return value && value.length;
@@ -99,29 +110,8 @@ UserSchema.pre('save', function(next) {
 	if(!validatePresenceOf(this.password)) {
 		next(new Error('Invalid Password'));
 	} else {
-		var checkfor = {};
-		if(this.isModified('username')){
-			this.username = this.username.toLowerCase(); // manter as coisas arrumadas
-			checkfor['username'] = this.username;
-		}
-		if(this.isModified('email')) {
-		 	this.email = this.email.toLowerCase();
-		 	checkfor['email'] = this.email;	
-		}
-		var thisuser = this;
 		this.lastUpdate = new Date();
-		mongoose.model('user').findOne({$or: checkfor}, function(err, user) {
-			if (err) next(err);
-			if (user) {
-				if (user._id != thisuser._id) {
-					_.each(['username', 'email'], function(field) {
-						if(thisuser[field] == user[field]) thisuser.invalidate(field, 'inuse');
-					})
-					return next()
-				}
-			}
-			next();
-		})
+		next();
 	}
 });
 
