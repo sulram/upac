@@ -39,7 +39,7 @@ module.exports = function(cdn) { return {
 		});
 	},
 	near: function(req, res, next) {
-		_Event.findInRadius(req.param.center, req.param.radius, 
+		Article.findOne({geo: {$nearSphere: req.param.center, $maxDistance: req.param.radius}}, 
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({

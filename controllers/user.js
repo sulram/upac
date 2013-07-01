@@ -83,9 +83,25 @@ module.exports = function (cdn, paginate, mailer) { return {
 		user.provider = 'local';
 		user.save(function(err){
 			if(err) {
-				res.addJFlash('error', 'database error');
-				return res.jsonx(500, {msg:'database error',
-									  error:err});
+				var fields = {
+					name: "Nome",
+					email: "E-mail",
+					password: "Senha",
+					username: "Nome de Usuário"
+				}
+				if(typeof err === "ValidationError") {
+					return res.jsonx(500, {msg: 'error', error: 'erro de validação',
+						fields:	_.map(err.errors, function(error, field) {
+							return {field: field, validation_error: error.type};
+						})
+					})
+				} else if ((typeof err === 'object') && err.code && (err.code == 11000 || err.code == 11001)) {
+
+				} else {
+					console.log(err);
+					res.addJFlash('error', 'database error');
+					return res.jsonx(500, {msg:'database error', error:err});
+				}
 			}
 			req.login(user, function(err) {
 				if (err) {
@@ -222,7 +238,10 @@ module.exports = function (cdn, paginate, mailer) { return {
 		User.findOne({resetPasswordToken: req.param('token'), resetPasswordRequest: {$gte: date_match}}, function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.redirect('/#user');
-			res.render('user/resetpassword', {user:user});
+			req.login(user, function(err) {
+				if(err) return next(err);
+				res.render('user/resetpassword', {user:user});
+			})
 		});
 	},
 	setPassword: function(req, res, next) {
@@ -272,16 +291,11 @@ module.exports = function (cdn, paginate, mailer) { return {
 		});
 	},
 	show: function(req, res, next) {
-		var query = User.findOne({username: req.params.username}).populate('avatar');
+		var query = User.findOne({username: req.params.username}).populate('avatar tags');
 		query.exec(function(err, user) {
 			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
 			if(!user) return res.jsonx(401, {msg: 'user not found'});
-			var userdata = user.toJSON();
-			Tag.find({id:user.tags||[]}, function(err, tags) {
-				if(err) return res.jsonx(401, {msg: 'error', error: err});
-				userdata.tags = tags;
-				res.jsonx({user:userdata});
-			})
+			res.jsonx({user:user});
 		});
 	},
 	remove: function(req, res, next) {
