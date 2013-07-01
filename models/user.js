@@ -74,7 +74,7 @@ UserSchema.path('username').validate(function(username) {
 	var thisuser = this;
 	mongoose.model('User').findOne({username: username.toLowerCase()}, function(err, user) {
 		if(err) return cb(err);
-		console.log("comparando %j e %j em username", user._id, thisuser._id);
+		//console.log("comparando %j e %j em username", user._id, thisuser._id);
 		if(user && (String(user._id) != String(thisuser._id))) {
 			return cb(false);	
 		}
