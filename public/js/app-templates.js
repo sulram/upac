@@ -1030,7 +1030,14 @@ function program1(depth0,data) {
     'id': ("about"),
     'name': ("about")
   },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("  \n			</div>\n		</div>\n		<div class=\"control-group\">\n			<div class=\"controls\">\n				<p>\n					<button type=\"submit\" class=\"btn btn-primary\" ");
+  data.buffer.push("  \n			</div>\n		</div>\n			");
+  hashTypes = {};
+  stack1 = helpers.each.call(depth0, "tags", {hash:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n	</form>\n\n	");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.TagsView", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n	\n	<div class=\"control-group\">\n		<div class=\"controls\">\n			<p>\n				<button type=\"submit\" class=\"btn btn-primary\" ");
   hashTypes = {'disabled': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'disabled': ("isPosting")
@@ -1038,20 +1045,20 @@ function program1(depth0,data) {
   data.buffer.push(" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">Salvar</button>\n					");
+  data.buffer.push(">Salvar</button>\n				");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn")
-  },inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.perfil", "User.model", options) : helperMissing.call(depth0, "linkTo", "rede.perfil", "User.model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n				</p>\n				");
+  data.buffer.push("\n			</p>\n			");
   hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "flashMsg", {hash:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "flashMsg", {hash:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n			</div>\n		</div>\n	</form>\n	<hr/>\n	<p><small>Para alterar e-mail ou senha, ");
+  data.buffer.push("\n		</div>\n	</div>\n	<hr/>\n	<p><small>Para alterar e-mail ou senha, ");
   hashTypes = {};
-  options = {hash:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0,depth0],types:["STRING","ID"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.perfil", "User.model", options) : helperMissing.call(depth0, "linkTo", "rede.perfil", "User.model", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push(".</small></p>\n	");
@@ -1059,27 +1066,39 @@ function program1(depth0,data) {
   }
 function program2(depth0,data) {
   
-  
-  data.buffer.push("Cancelar");
+  var buffer = '', hashTypes;
+  data.buffer.push("\n				<input type=\"hidden\" name=\"tags[]\" ");
+  hashTypes = {'value': "ID"};
+  data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
+    'value': ("")
+  },contexts:[],types:[],hashTypes:hashTypes,data:data})));
+  data.buffer.push("/>\n			");
+  return buffer;
   }
 
 function program4(depth0,data) {
   
-  var buffer = '', hashTypes;
-  data.buffer.push("\n				<div class=\"alert alert-error\">\n				  ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "flashMsg", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n				</div>\n				");
-  return buffer;
+  
+  data.buffer.push("Cancelar");
   }
 
 function program6(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n			<div class=\"alert alert-error\">\n			  ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "flashMsg", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("\n			</div>\n			");
+  return buffer;
+  }
+
+function program8(depth0,data) {
   
   
   data.buffer.push("clique aqui");
   }
 
-function program8(depth0,data) {
+function program10(depth0,data) {
   
   var buffer = '', stack1, hashTypes, options;
   data.buffer.push("\n		");
@@ -1092,7 +1111,7 @@ function program8(depth0,data) {
 
   data.buffer.push("<div class=\"pad\">\n	");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(8, program8, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(10, program10, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>");
   return buffer;
@@ -1755,5 +1774,15 @@ function program2(depth0,data) {
   stack1 = helpers['if'].call(depth0, "landed", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   return buffer;
+  
+});
+
+Ember.TEMPLATES["view_tags"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  
+
+
+  data.buffer.push("<div class=\"control-group\">\n	<label class=\"control-label\" for=\"select2\">Palavras-chave</label>\n	<div class=\"controls\">\n		<input type=\"text\" id=\"select2\" name=\"select2\"/>\n	</div>\n</div>");
   
 });

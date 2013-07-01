@@ -301,11 +301,13 @@ App.RedePerfilController = Ember.ObjectController.extend({
 App.RedeEditarController = Ember.ObjectController.extend({
     isPosting: false,
     flashMsg: null,
+    tags: [],
     onFocus: function(){
         this.set('flashMsg',null);
     },
     submit: function(){
         var data = $('form').serialize();
+        console.log(data);
         this.set('isPosting',true);
         this.set('flashMsg',null);
         var _controller = this;

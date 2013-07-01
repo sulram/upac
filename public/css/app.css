@@ -38,7 +38,6 @@ iframe {
 
 .pad .pad.over {
 	background: rgba(0,0,0,.1);
-	margin: 0 -10px -10px;
 }
 
 .def_loading {
@@ -552,6 +551,10 @@ iframe {
 
 #rede_sidebar a {
 	/*color: #444;*/
+}
+
+#rede_sidebar .pad {
+	max-width: 320px;
 }
 
 .rede_perfil_foto {

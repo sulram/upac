@@ -111,6 +111,7 @@ App.RedePerfilRoute = App.UpacRoute.extend({
 App.RedeEditarRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         this._super(this, arguments);
+        controller.set('tags',[]);
     }
 });
 
