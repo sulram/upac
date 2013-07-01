@@ -291,16 +291,11 @@ module.exports = function (cdn, paginate, mailer) { return {
 		});
 	},
 	show: function(req, res, next) {
-		var query = User.findOne({username: req.params.username}).populate('avatar');
+		var query = User.findOne({username: req.params.username}).populate('avatar tags');
 		query.exec(function(err, user) {
 			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
 			if(!user) return res.jsonx(401, {msg: 'user not found'});
-			var userdata = user.toJSON();
-			Tag.find({id:user.tags||[]}, function(err, tags) {
-				if(err) return res.jsonx(401, {msg: 'error', error: err});
-				userdata.tags = tags;
-				res.jsonx({user:userdata});
-			})
+			res.jsonx({user:user});
 		});
 	},
 	remove: function(req, res, next) {

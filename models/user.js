@@ -70,21 +70,21 @@ UserSchema.virtual('password').set(function(password){
 
 UserSchema.path('username').validate(function(username) {
 	return /[a-z0-9]{3,}/.test(username);
-}, 'invalid').validate(function(username, cb) {
+}, 'invalid')/*.validate(function(username, cb) {
 	mongoose.model('User').find({username: username.toLowerCase()}, function(err, users) {
 		cb(err||users.length===0);
 	})
-}, 'inuse');;
+}, 'inuse');*/
 
 var emailregex = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
 
 UserSchema.path('email').validate(function(email){
 	return emailregex.test(email);
-}, 'invalid').validate(function(email, cb) {
+}, 'invalid')/*.validate(function(email, cb) {
 	mongoose.model('User').find({email: email.toLowerCase()}, function(err, users) {
 		cb(err||users.length===0);
 	})
-}, 'inuse');
+}, 'inuse');*/
 
 var validatePresenceOf = function(value) {
 	return value && value.length;
@@ -99,10 +99,29 @@ UserSchema.pre('save', function(next) {
 	if(!validatePresenceOf(this.password)) {
 		next(new Error('Invalid Password'));
 	} else {
-		this.username = this.username.toLowerCase(); // manter as coisas arrumadas
-		this.email = this.email.toLowerCase();
+		var checkfor = {};
+		if(this.isModified('username')){
+			this.username = this.username.toLowerCase(); // manter as coisas arrumadas
+			checkfor['username'] = this.username;
+		}
+		if(this.isModified('email')) {
+		 	this.email = this.email.toLowerCase();
+		 	checkfor['email'] = this.email;	
+		}
+		var thisuser = this;
 		this.lastUpdate = new Date();
-		next();
+		mongoose.model('user').findOne({$or: checkfor}, function(err, user) {
+			if (err) next(err);
+			if (user) {
+				if (user._id != thisuser._id) {
+					_.each(['username', 'email'], function(field) {
+						if(thisuser[field] == user[field]) thisuser.invalidate(field, 'inuse');
+					})
+					return next()
+				}
+			}
+			next();
+		})
 	}
 });
 
