@@ -20,20 +20,26 @@
 				{{view Ember.TextArea valueBinding="User.model.about" rows="5" id="about" name="about"}}  
 			</div>
 		</div>
-		<div class="control-group">
-			<div class="controls">
-				<p>
-					<button type="submit" class="btn btn-primary" {{bindAttr disabled="isPosting"}} {{action submit}}>Salvar</button>
-					{{#linkTo 'rede.perfil' User.model classNames="btn"}}Cancelar{{/linkTo}}
-				</p>
-				{{#if flashMsg}}
-				<div class="alert alert-error">
-				  {{flashMsg}}
-				</div>
-				{{/if}}
-			</div>
-		</div>
+			{{#each tags}}
+				<input type="hidden" name="tags[]" {{bindAttr value=this}}/>
+			{{/each}}
 	</form>
+
+	{{view App.TagsView}}
+	
+	<div class="control-group">
+		<div class="controls">
+			<p>
+				<button type="submit" class="btn btn-primary" {{bindAttr disabled="isPosting"}} {{action submit}}>Salvar</button>
+				{{#linkTo 'rede.perfil' User.model classNames="btn"}}Cancelar{{/linkTo}}
+			</p>
+			{{#if flashMsg}}
+			<div class="alert alert-error">
+			  {{flashMsg}}
+			</div>
+			{{/if}}
+		</div>
+	</div>
 	<hr/>
 	<p><small>Para alterar e-mail ou senha, {{#linkTo 'rede.perfil' User.model}}clique aqui{{/linkTo}}.</small></p>
 	{{else}}

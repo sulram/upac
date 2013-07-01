@@ -144,11 +144,23 @@ module.exports = function (cdn, paginate, mailer) { return {
 	update: function(req, res) {
 		var user = req.profile;
 		var body = _.pick(req.body, 
-			'name', 'geo', 'about'
+			'name', 'geo', 'about', 'tags'
 		);
-
-		console.log(body.geo);
-		
+		console.log(body, body.geo);
+		if (body.tags) {
+			body.tags = _.map(body.tags, function(tag) {
+				var m = tag.match(/^[0-9a-fA-F]{24}$/);
+				if (m && m.length == 1) {
+					return tag;
+				} else {
+					var ntag = new Tag({name:tag});
+					ntag.save(function(err){
+						console.info("Salvando tag %j", ntag);
+					})
+					return ntag._id;
+				}
+			});
+		}
 		if(body.geo && (body.geo.length == 0)) delete body.geo;
 		user.set(body);
 		user.save(function(err) {

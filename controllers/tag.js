@@ -42,7 +42,7 @@ module.exports = function (cdn, paginate) { return {
 		remove: function(req, res, next) {
 			Tag.findByIdAndRemove(req.param('id'), function(err, tag) {
 				if(err) return next(err);
-				res.redirect('/admin/tag')
+				res.redirect('/admin/tags')
 			})
 		},
 		search: function(req, res, next) {

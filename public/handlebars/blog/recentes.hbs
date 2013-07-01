@@ -1,93 +1,21 @@
-{{#if isLoaded}}
-	<div class="grid_posts">
-		{{#if articles.length}}
-			{{#each article in articles}}
-				{{#if article.img}}
-					<article {{bindAttr id="article._id"}} class="featured">
-						{{#linkTo blog.post article  classNameBindings="article.palette"}}
-							<div class="figure" {{bindAttr style='article.bgimg'}}/>
-							</div>
-							<div class="info">
-								<span class="title">
-									{{article.title}}
-								</span>
-								<span class="date">
-									{{#if article.publicationDate}}
-										{{momentago article.publicationDate}}
-									{{else}}
-										sem data
-									{{/if}}
-								</span>
-								<span class="author">
-									<span class="post_avatar">
-										<img {{bindAttr src=article.profile.avatar_icon}}/>
-									</span>
-									<span class="authorname">
-										publicado por<br/>
-										<strong>{{article.profile.nick}}</strong>
-									</span>
-								</span>
-							</div>
-						{{/linkTo}}
-					</article>
+{{partial "blogposts"}}
+
+{{#if needPagination}}
+	<div class="pagination">
+		<ul>
+			<li class="previous">
+				{{linkTo blog.recentes prevPage class="fui-arrow-left"}}
+			</li>
+			{{#each page in pages}}
+				{{#if page.is_current}}
+					<li class="active">{{#linkTo blog.recentes page}}{{page.page_num}}{{/linkTo}}</li>
 				{{else}}
-					<article {{bindAttr id="article._id"}}>
-						{{#linkTo blog.post article classNameBindings="article.palette"}}
-							<div class="info">
-								<span class="title">
-									{{article.title}}
-								</span>
-								<span class="date">
-									{{#if article.publicationDate}}
-										{{momentago article.publicationDate}}
-									{{else}}
-										sem data
-									{{/if}}
-								</span>
-								<span class="excerpt">
-									{{article.excerpt}}
-								</span>
-								<span class="author">
-									<span class="post_avatar">
-										<img {{bindAttr src=article.profile.avatar_icon}}/>
-									</span>
-									<span class="authorname">
-										publicado por<br/>
-										<strong>{{article.profile.nick}}</strong>
-									</span>
-								</span>
-							</div>
-						{{/linkTo}}
-					</article>
+					<li>{{#linkTo blog.recentes page}}{{page.page_num}}{{/linkTo}}</li>
 				{{/if}}
 			{{/each}}
-		{{else}}
-			Não há mais postagens
-		{{/if}}
+			<li class="next">
+				{{linkTo blog.recentes nextPage class="fui-arrow-right"}}
+			</li>
+		</ul>
 	</div>
-	
-	{{#if needPagination}}
-		<div class="pagination">
-			<ul>
-				<li class="previous">
-					{{linkTo blog.recentes prevPage class="fui-arrow-left"}}
-				</li>
-				{{#each page in pages}}
-					{{#if page.is_current}}
-						<li class="active">{{#linkTo blog.recentes page}}{{page.page_num}}{{/linkTo}}</li>
-					{{else}}
-						<li>{{#linkTo blog.recentes page}}{{page.page_num}}{{/linkTo}}</li>
-					{{/if}}
-				{{/each}}
-				<li class="next">
-					{{linkTo blog.recentes nextPage class="fui-arrow-right"}}
-				</li>
-			</ul>
-		</div>
-	{{/if}}
-
-{{else}}
-
-	<p class="def_loading">carregando publicações</p>
-
 {{/if}}

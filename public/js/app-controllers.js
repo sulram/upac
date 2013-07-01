@@ -88,40 +88,44 @@ App.BlogRecentesController = Ember.ObjectController.extend({
     postsCount: 0,
     postsLimit: 8,
     getcontent: function(){
-
         var _this = this;
-
         var page = this.get('model.page_num');
+        $.getJSON( '/article', {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
+            _this.buildFromData(data);
+        });
+    },
+    buildFromData: function(data){
+        var articles = [];
+        var k = 0;
         //var palette = ['palette-turquoise','palette-green-sea','palette-emerland','palette-nephritis','palette-peter-river', 'palette-belize-hole', 'palette-amethyst', 'palette-wisteria', 'palette-wet-asphalt', 'palette-midnight-blue', 'palette-sun-flower', 'palette-orange', 'palette-carrot', 'palette-pumpkin', 'palette-alizarin', 'palette-pomegranate'];
         var palette = ['palette-turquoise','palette-peter-river', 'palette-wisteria', 'palette-pomegranate', 'palette-carrot', 'palette-sun-flower'];
 
-        $.getJSON('/article', {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
-            var articles = [];
-            var k = 0;
-            $.each(data.articles, function(i, _article) {
+        $.each(data.articles, function(i, _article) {
 
-                var article = Ember.Object.create(_article);
+            var article = Ember.Object.create(_article);
 
-                article.set('post_id', article.get('_id'));
-                article.set('profile', App.UserModel.build(_article.owners[0]));
-                article.set('palette', 'palette-asbestos');
+            article.set('post_id', article.get('_id'));
+            article.set('profile', App.UserModel.build(_article.owners[0]));
+            article.set('palette', 'palette-asbestos');
 
-                if(_article.featuredImage && _article.featuredImage.sizes.length){
-                    var img = ''+_.findWhere(_article.featuredImage.sizes,{size:'medium'}).cdn_url; // não utilizar http: permite usar imagens dentro do site em https:
-                    article.set('img', img);
-                    article.set('bgimg', 'background-image: url('+img+');');
-                    console.log(img);
-                } else {
-                    article.set('palette', palette[k]);
-                    k = (k + 1) % palette.length;
-                }
-                articles.push(article);
-            });
-            //console.log(articles[0]);
-            _this.set('postsCount', data.count);
-            _this.set('articles', articles);
-            _this.set('isLoaded', true);
+            if(_article.featuredImage && _article.featuredImage.sizes.length){
+                var img = ''+_.findWhere(_article.featuredImage.sizes,{size:'medium'}).cdn_url; // não utilizar http: permite usar imagens dentro do site em https:
+                article.set('img', img);
+                article.set('bgimg', 'background-image: url('+img+');');
+                console.log(img);
+            } else {
+                article.set('palette', palette[k]);
+                k = (k + 1) % palette.length;
+            }
+            articles.push(article);
         });
+        //console.log(articles[0]);
+        this.set('postsCount', data.count);
+        this.set('articles', articles);
+        this.set('isLoaded', true);
+    },
+    createModel: function(data){
+        return Ember.Object.create(data);
     },
     needPagination: function(){
         return this.get('numPages') > 1;
@@ -131,20 +135,38 @@ App.BlogRecentesController = Ember.ObjectController.extend({
     }.property('postsCount','model.page_num'),
     prevPage: function(){
         var n = this.get('model.page_num');
-        return Ember.Object.create({page_num: n > 1 ? n - 1 : 1});
+        return this.createModel({page_num: n > 1 ? n - 1 : 1});
     }.property('model.page_num'),
     nextPage: function(){
         var n = this.get('model.page_num');
         var total = this.get('numPages');
-        return Ember.Object.create({page_num: n < total ? Number(n) + 1 : total});
+        return this.createModel({page_num: n < total ? Number(n) + 1 : total});
     }.property('numPages','model.page_num'),
     pages: function(){
         var p = [];
         for(var i = 1; i <= this.get('numPages'); i++){
-            p.push(Ember.Object.create({page_num: i, is_current: i == this.get('model.page_num')}));
+            p.push(this.createModel({page_num: i, is_current: i == this.get('model.page_num')}));
         }
         return p;
     }.property('numPages','model.page_num')
+});
+
+App.BlogTagController = App.BlogRecentesController.extend({
+    tagName: null,
+    postsLimit: 8,
+    getcontent: function(){
+        var _this = this;
+        var tag = this.get('model.tag_slug');
+        var page = this.get('model.page_num');
+        $.getJSON( '/articles/bytag/'+tag , {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
+            _this.buildFromData(data);
+            _this.set('tagName',data.tag.name);
+        });
+    },
+    createModel: function(data){
+        data.tag_slug = this.get('model.tag_slug');
+        return Ember.Object.create(data);
+    }
 });
 
 App.BlogPostController = Ember.ObjectController.extend({
@@ -155,6 +177,9 @@ App.BlogPostController = Ember.ObjectController.extend({
     isLoaded: false,
     commentsLoaded: false,
     isPostingComment: false,
+    openTag: function(tag){
+        window.location = '/#/blog/tag/'+tag.slug+'/1';
+    },
     getcontent: function(){
 
         var _this = this;
@@ -276,11 +301,13 @@ App.RedePerfilController = Ember.ObjectController.extend({
 App.RedeEditarController = Ember.ObjectController.extend({
     isPosting: false,
     flashMsg: null,
+    tags: [],
     onFocus: function(){
         this.set('flashMsg',null);
     },
     submit: function(){
         var data = $('form').serialize();
+        console.log(data);
         this.set('isPosting',true);
         this.set('flashMsg',null);
         var _controller = this;

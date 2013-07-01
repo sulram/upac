@@ -73,6 +73,67 @@ App.HomeSlidesView = Ember.View.extend({
     
 });
 
+// VIEW TAGS
+
+App.TagsView = Ember.View.extend({
+    templateName: 'view_tags',
+    didInsertElement: function(){
+
+        var _controller = this.get('controller');
+
+        var tags = $('#select2').select2({
+            tags: true,
+            //minimumInputLength: 1,
+            multiple: true,
+            id: function(e) {
+                return e._id + ":" + e.name;
+            },
+            ajax: { 
+                url: "/tags/query",
+                dataType: 'json',
+                data: function (term, page) {
+                    return {
+                        start: term,
+                    };
+                },
+                results: function (data, page) {
+                    return {results: data.tags};
+                }
+            },
+            formatResult: function(item) {
+                return item.name;
+            },
+            formatSelection: function(item) {
+                return item.name;
+            },
+            createSearchChoice: function(term, data) {
+                var _this = this;
+                if ($(data).filter(function() {
+                    return this.name.localeCompare(term) === 0;
+                }).length === 0) {
+                    return {
+                        _id: 'new',
+                        name: term
+                    };
+                }
+            },
+        });
+
+        tags.on('change',function(e){
+            var data = tags.select2('data');
+            var _tags = [];
+            for(var i in data){
+                var item = data[i];
+                if(item && item._id){
+                    var val = (item._id != 'new' ? item._id : item.name);
+                    _tags.push(val);
+                }
+            }
+            _controller.set('tags',_tags);
+        });
+    }
+});
+
 // UTIL
 
 App.AutoFocusTextField = Ember.TextField.extend({

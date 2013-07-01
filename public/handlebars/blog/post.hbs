@@ -44,7 +44,12 @@
 				{{#if article.content}}
 					{{{article.content}}}
 				{{/if}}
-
+				<p class="tags">
+					Palavras-chave: 
+					{{#each article.tags}}
+						<a {{action openTag this}}>{{name}}</a>
+					{{/each}}
+				</p>
 				<hr/>
 				
 				{{#if commentsLoaded}}
@@ -67,6 +72,7 @@
 											</div>
 											<div class="span9 comment_content">
 												<p><span class="comment_info"><a {{action openProfile comment.profile}}>{{comment.profile.nick}}</a> • {{momentago comment.createdAt}}</span></p>
+
 												<p>{{{comment.content}}}</p>
 												
 											</div>
@@ -76,7 +82,7 @@
 							</ul>
 
 						{{else}}
-							<h3>Nenhum comentário até agora</h3>
+							<!--<h3>Nenhum comentário até agora</h3>-->
 						{{/if}}
 
 					</div>

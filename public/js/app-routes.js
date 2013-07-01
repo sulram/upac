@@ -13,6 +13,7 @@ App.Router.map(function() {
     this.resource("blog",function(){
         this.route("post", { path: '/post/:post_id' });
         this.route("recentes", { path: '/recentes/:page_num' });
+        this.route("tag", { path: '/tag/:tag_slug/:page_num' });
     });
     this.resource("upac");
     this.resource("user",function(){
@@ -110,6 +111,7 @@ App.RedePerfilRoute = App.UpacRoute.extend({
 App.RedeEditarRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         this._super(this, arguments);
+        controller.set('tags',[]);
     }
 });
 
@@ -130,6 +132,21 @@ App.BlogRecentesRoute = App.UpacRoute.extend({
     },
     setupController: function (controller, model){
         controller.set('model', model);
+        controller.getcontent();
+        this._super(this, arguments);
+    }
+});
+
+App.BlogTagRoute = App.UpacRoute.extend({
+    model: function(param){
+        return Ember.Object.create({tag_slug: param.tag_slug, page_num: param.page_num});
+    },
+    serialize: function(model) {
+        if(model) return { tag_slug: model.tag_slug, page_num: model.page_num };
+    },
+    setupController: function (controller, model){
+        controller.set('model', model);
+        controller.set('tagName', null);
         controller.getcontent();
         this._super(this, arguments);
     }
