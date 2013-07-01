@@ -70,13 +70,21 @@ UserSchema.virtual('password').set(function(password){
 
 UserSchema.path('username').validate(function(username) {
 	return /[a-z0-9]{3,}/.test(username);
-}, 'Invalid Username');
+}, 'invalid').validate(function(username, cb) {
+	mongoose.model('User').find({username: username.toLowerCase()}, function(err, users) {
+		cb(err||users.length===0);
+	})
+}, 'inuse');;
 
 var emailregex = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
 
 UserSchema.path('email').validate(function(email){
 	return emailregex.test(email);
-}, 'Invalid E-mail');
+}, 'invalid').validate(function(email, cb) {
+	mongoose.model('User').find({email: email.toLowerCase()}, function(err, users) {
+		cb(err||users.length===0);
+	})
+}, 'inuse');
 
 var validatePresenceOf = function(value) {
 	return value && value.length;
