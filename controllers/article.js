@@ -295,7 +295,9 @@ module.exports = function(cdn, paginate){ return {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.jsonx(404, {msg: "user not found"});
-			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent: {$not: null}},{populate: [{path: 'parent', select: 'title _id'}]}, req, function(err, articles, pagination) {
+			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent: {$ne: null}},
+				{populate: {path:"parent", select:"title"}},
+				req, function(err, articles, pagination) {
 			//Article.find({owners:user.id}).populate('images.image').exec(function(err, articles) {
 				if(err) return next(err);
 				res.jsonx({

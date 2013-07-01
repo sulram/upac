@@ -8,17 +8,17 @@ module.exports = function(cdn) { return {
 		
 	},
 	show: function(req, res, next) {
-		_Event.findById(req.param.id, function(err, _event) {
+		Article.findOne({_id:req.param.id}, function(err, article) {
 			if (err) return next(err);
-			if (!_event) return res.json(404, {error: "Event not found"});
+			if (!article) return res.json(404, {error: "Event not found"});
 			res.jsonx({
 				msg: "ok",
-				event: _event
+				event: article
 			});
 		});
 	},
 	preloadById: function(req, res, next) {
-		_Event.findById(req.param.id, function(err, _event) {
+		Article.findById(req.param.id, function(err, _event) {
 			if (err) return next(err);
 			if (!_event) return res.json(404, {error: "Event not found"});
 			res._event = _event;
@@ -51,7 +51,7 @@ module.exports = function(cdn) { return {
 	},
 	happening: function(req, res, next) {
 		var now = new Date();
-		_Event.find(
+		Article.find(
 			{startDate: {"$lte": now}, endDate: {"$gt": now}},
 			function(err, events) {
 				if (err) return err;
@@ -64,7 +64,7 @@ module.exports = function(cdn) { return {
 	},
 	past: function(req, res, next) {
 		var now = new Date();
-		_Event.find(
+		Article.find(
 			{endDate: {"$lt": now}},
 			function(err, events) {
 				if (err) return err;
@@ -77,7 +77,7 @@ module.exports = function(cdn) { return {
 	},
 	future: function(req, res, next) {
 		var now = new Date();
-		_Event.find(
+		Article.find(
 			{startDate: {"$gt": now}},
 			function(err, events) {
 				if (err) return err;
