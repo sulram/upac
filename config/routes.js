@@ -93,6 +93,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 
 
 	app.all('/article', article.index);
+	app.all('/articles/bytag/:slug', article.byTag);
 	app.all('/articles/byuser', auth.requiresLogin, article.listByLoggedInUser);
 	app.post('/article/new', auth.requiresLogin, article.create);
 	app.get('/article/find/:slug', article.bySlug);

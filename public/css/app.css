@@ -788,6 +788,14 @@ iframe {
 	text-align: right;
 }
 
+.thepost .tags {
+	font-size: 0.8em;
+}
+
+.thepost .tags a {
+	margin-left: 4px;
+}
+
 .post_content {
 	font-size: 16px;
 	line-height: 1.5em;

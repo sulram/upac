@@ -200,7 +200,7 @@ module.exports = function(cdn, paginate){ return {
 	},
 	show: function(req, res, next) {
 		Article.findById(req.params.id)
-			.populate('images.image owners featuredImage')
+			.populate('images.image owners featuredImage tags')
 			.exec(function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
@@ -272,6 +272,37 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+    byTag: function(req, res) {
+        Tag.findOne({slug:req.param('slug')}, function(err, tag) {
+            if(err) {
+                return res.jsonxf(500,
+                    [{error: 'database error'}],
+                    {msg: 'database error', error: err});               
+            }
+            if(!tag) {
+                return res.jsonxf(404,
+                    [{error: 'tag not found'}],
+                    {
+                        msg: 'tag not found',
+                        tag_slug: req.param('slug')
+                    });             
+            }
+            paginate.paginate(Article,{tags: tag._id, publicationStatus:'published', parent:null},{populate:'featuredImage'}, req, function(err, articles, pagination) {
+                if(err) return next(err);
+                Img.populate(articles, 'featuredImage', function(err, _articles){
+                    res.jsonx({
+                        msg:'ok',
+                        tag: tag,
+                        articles: _articles,
+                        from: pagination.from,
+                        sort_by: pagination.sort_by,
+                        order: pagination.order,
+                        count: pagination.count
+                    });
+                });
+            });
+        });
+    },
 	postsByUser: function(req, res, next) {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);

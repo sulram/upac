@@ -1,0 +1,29 @@
+<h3>
+{{#if tagName}}
+	{{tagName}}
+{{else}}
+	&nbsp;
+{{/if}}
+</h3>
+
+{{partial "blogposts"}}
+
+{{#if needPagination}}
+	<div class="pagination">
+		<ul>
+			<li class="previous">
+				{{linkTo blog.tag prevPage class="fui-arrow-left"}}
+			</li>
+			{{#each page in pages}}
+				{{#if page.is_current}}
+					<li class="active">{{#linkTo blog.tag page}}{{page.page_num}}{{/linkTo}}</li>
+				{{else}}
+					<li>{{#linkTo blog.tag page}}{{page.page_num}}{{/linkTo}}</li>
+				{{/if}}
+			{{/each}}
+			<li class="next">
+				{{linkTo blog.tag nextPage class="fui-arrow-right"}}
+			</li>
+		</ul>
+	</div>
+{{/if}}
