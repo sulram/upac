@@ -4,109 +4,30 @@
 App.RedeMapaView = Ember.View.extend({
     templateName: 'rede_mapa',
     handleZoom: function() {
-        if (App.map.getZoom() < 2){
-            App.map.setZoom(2);
-        }
-        console.log('zoom factor',App.map.getZoom());
+        //if (App.map.getZoom() < 2){
+        //    App.map.setZoom(2);
+        //}
+        //console.log('zoom factor',App.map.getZoom());
     },
     didInsertElement: function(){
-
-        var MY_MAPTYPE_ID = "UPAC";
-
-        var myOptions = {
-            center: new google.maps.LatLng(0, 0),
-            zoom: 3,
-            mapTypeId: MY_MAPTYPE_ID,
-            mapTypeControlOptions: {
-                mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
-            },
-            mapTypeControl: false,
-            streetViewControl: false,
-            panControl: false,
-            zoomControl: true,
-            zoomControlOptions: {
-                style: google.maps.ZoomControlStyle.MEDIUM,
-                position: google.maps.ControlPosition.LEFT_BOTTOM
-            }
-        };
-        
-        // cria mapa
-        App.map = new google.maps.Map($("#map_canvas").get(0),myOptions);
-        // cria estilo
-        var styledMapOptions = { name: 'UPAC Map' };
-        var customMapType = new google.maps.StyledMapType(mapstyles.lightblue, styledMapOptions);
-        // aplica estilo
-        App.map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
-        // eventos
-        google.maps.event.addListener(App.map, 'click', function(e){
-            App.MapController.onMapClick(e);
-        });
-        google.maps.event.addListener(App.map, 'zoom_changed', this.handleZoom);
-
-        //// INFOBOX
-
-        var InfoBoxOptions = {
-             content: null
-            ,disableAutoPan: true
-            ,maxWidth: 0
-            ,pixelOffset: new google.maps.Size(-104, 0)
-            ,zIndex: null
-            ,boxStyle: { 
-              width: "207px"
-             }
-            ,closeBoxURL: ""
-            ,infoBoxClearance: new google.maps.Size(1, 1)
-            ,isHidden: false
-            ,pane: "floatPane"
-            ,enableEventPropagation: false
-        };
-
-        App.map_infobox = new InfoBox(InfoBoxOptions);
-
-        App.map_cluster = null;
+        App.map = L.map('map_canvas');
+        App.map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: 'Powered by Leaflet & OpenStreetMap'});
+        App.map.addLayer(App.map_tiles).setView(new L.LatLng(0,0), 2);
     }
 });
 
-//// OBJECTS
 
-App.MapStyles = Em.Object.create({
-    info_box: '<div class="tooltip bottom fade in" style="top: 0px; left: 0px; display: block;"><div class="tooltip-arrow" style=""></div><div class="tooltip-inner">{{content}}</div></div>',
-    cursor: {
-        hand: 'url(http://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default'
-    },
-    pin: {
-        user: [
-            new google.maps.MarkerImage(
-                './img/pin_user1.png',
-                new google.maps.Size(32, 32),
-                new google.maps.Point(0,0),
-                new google.maps.Point(16, 32)
-            ),
-            {
-                coord: [1, 1, 1, 32, 32, 32, 32 , 1],
-                type: 'poly'
-            }
-        ],
-        user_select: [
-            new google.maps.MarkerImage(
-                './img/pin_user_select.png',
-                new google.maps.Size(64, 64),
-                new google.maps.Point(0,0),
-                new google.maps.Point(32, 64)
-            ),
-            {
-                coord: [1, 1, 1, 64, 64, 64, 64 , 1],
-                type: 'poly'
-            }
-        ]
-    }
+var userIcon = L.icon({
+    iconUrl: 'img/pin_user_25x41.png'
 });
+
 
 App.MapController = Em.Object.create({
     isMarking: false,
     isFetching: true,
     markers: [],
     rawmarkers: [],
+    geojson: {},
     focus: null,
     findTheUser: function(){
         return _.findWhere(App.MapController.markers,{username: User.auth.username});
@@ -115,6 +36,7 @@ App.MapController = Em.Object.create({
         return _.findWhere(App.MapController.markers,{username: username});
     },
     focusUser: function(username){
+        return false;
         if(this.get('isFetching')){
             console.log('saved focus', username);
             this.set('saveFocus', username);
@@ -142,10 +64,16 @@ App.MapController = Em.Object.create({
         }
     },
     getMarkers: function(){  
+        
         var that = this;
+        var geojson;
+        var geodata = {type: "FeatureCollection", features: []};
+
         this.markers = [];
         this.rawmarkers = [];
+
         that.set('isFetching',true);
+
         $.ajax({
             type: 'GET',
             url: '/users',
@@ -154,31 +82,53 @@ App.MapController = Em.Object.create({
                 console.log('map: loaded users');
                 User.authenticate(data.auth);
                 $.each(data.users, function(i,user){
-                    var marker = user.geo && user.geo.length
-                                ? App.MapController.createMarker(user.username, new google.maps.LatLng(user.geo[0],user.geo[1]))
-                                : null;
-
+                    var marker = user.geo && user.geo.length;
                     if(marker){
-                        that.rawmarkers.push(marker);
-                        that.markers.push({
-                            selected: false,
-                            name: user.name,
-                            username: user.username,
-                            geo: user.geo && user.geo.length ? user.geo : [],
-                            marker: marker
-                        });
+                        marker = {
+                            type: "Feature",
+                            geometry: {
+                                type: "Point",
+                                coordinates: [
+                                    user.geo[1],
+                                    user.geo[0]
+                                    ]
+                                },
+                            properties: {
+                                type: "user",
+                                name: user.name,
+                                username: user.username
+                            }
+                        };
+                        geodata.features.push(marker);
                     }
                 });
-                
-                App.map_cluster = new MarkerClusterer(App.map, that.rawmarkers);
 
                 that.set('isFetching',false);
 
-                if(that.get('saveFocus') != null){
+                geojson = L.geoJson(geodata,{
+                    pointToLayer: function(feature, latlng){
+                        if(feature.properties && feature.properties.type == "user"){
+                            return L.marker(latlng, {icon: userIcon});    
+                        }
+                        return L.marker(latlng);
+                    },
+                    onEachFeature: function(feature, layer){
+                        if (feature.properties && feature.properties.type == "user") {
+                            var username = feature.properties.username
+                            var name = feature.properties.name || username;
+                            layer.bindPopup('<strong>' + name + '</strong><br/><a href="#/rede/perfil/'+username+'">Ver perfil</a>', {/*closeButton: false*/});
+                        }
+                        console.log('feat',feature);
+                    }
+                });
+
+                App.map.addLayer(geojson);
+
+                /*if(that.get('saveFocus') != null){
                     console.log('delayed focus');
                     that.focusUser(that.get('saveFocus'));
                     that.set('saveFocus',null);
-                }
+                }*/
             },
             error: function(jqXHR,status,error){
                 console.log(jqXHR);
