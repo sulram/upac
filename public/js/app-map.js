@@ -62,6 +62,8 @@ App.RedeMapaView = Ember.View.extend({
         };
 
         App.map_infobox = new InfoBox(InfoBoxOptions);
+
+        App.map_cluster = null;
     }
 });
 
@@ -104,6 +106,7 @@ App.MapController = Em.Object.create({
     isMarking: false,
     isFetching: true,
     markers: [],
+    rawmarkers: [],
     focus: null,
     findTheUser: function(){
         return _.findWhere(App.MapController.markers,{username: User.auth.username});
@@ -117,11 +120,8 @@ App.MapController = Em.Object.create({
             this.set('saveFocus', username);
         }else{
             console.log("focus " + username);
-
             var current = _.findWhere(App.MapController.markers,{username: username});
-            
             this.unFocusAll();
-
             if(current.marker){
                 google.maps.event.trigger(current.marker, 'mouseover');
                 current.marker.setIcon(App.MapStyles.pin.user_select[0]);
@@ -129,7 +129,7 @@ App.MapController = Em.Object.create({
                 current.selected = true;
                 App.map.panTo(current.marker.getPosition());
                 var zoom = App.map.getZoom();
-                App.map.setZoom( zoom < 11 ? 11 : zoom);
+                App.map.setZoom( zoom < 5 ? 11 : zoom);
             }
         }
     },
@@ -140,13 +140,11 @@ App.MapController = Em.Object.create({
             last.marker.setShape(App.MapStyles.pin.user[1]);
             last.selected = false;
         }
-        if(App.map_infobox){
-            App.map_infobox.close();
-        }
     },
     getMarkers: function(){  
         var that = this;
         this.markers = [];
+        this.rawmarkers = [];
         that.set('isFetching',true);
         $.ajax({
             type: 'GET',
@@ -156,16 +154,24 @@ App.MapController = Em.Object.create({
                 console.log('map: loaded users');
                 User.authenticate(data.auth);
                 $.each(data.users, function(i,user){
-                    that.markers.push({
-                        selected: false,
-                        name: user.name,
-                        username: user.username,
-                        geo: user.geo && user.geo.length ? user.geo : [],
-                        marker: user.geo && user.geo.length
+                    var marker = user.geo && user.geo.length
                                 ? App.MapController.createMarker(user.username, new google.maps.LatLng(user.geo[0],user.geo[1]))
-                                : null
-                    });
+                                : null;
+
+                    if(marker){
+                        that.rawmarkers.push(marker);
+                        that.markers.push({
+                            selected: false,
+                            name: user.name,
+                            username: user.username,
+                            geo: user.geo && user.geo.length ? user.geo : [],
+                            marker: marker
+                        });
+                    }
                 });
+                
+                App.map_cluster = new MarkerClusterer(App.map, that.rawmarkers);
+
                 that.set('isFetching',false);
 
                 if(that.get('saveFocus') != null){
@@ -227,6 +233,7 @@ App.MapController = Em.Object.create({
         
     },
     createMarker: function(username, latLng, select){
+        var _this = this;
         var pin_type = select ? App.MapStyles.pin.user_select : App.MapStyles.pin.user;
         var marker = new google.maps.Marker({
             position: latLng,
@@ -234,6 +241,14 @@ App.MapController = Em.Object.create({
             icon: pin_type[0],
             shadow: null,
             shape: pin_type[1]
+        });
+        google.maps.event.addListener(marker, 'map_changed', function() {
+            var user = App.MapController.findUser(username);
+            if(user.selected){
+                //_this.unFocusAll();
+                //console.log(App.map_infobox)
+                App.map_infobox.close();
+            }
         });
         google.maps.event.addListener(marker, 'click', function() {
             if(App.MapController.isMarking) return false;
