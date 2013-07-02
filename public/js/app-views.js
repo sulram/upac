@@ -76,12 +76,11 @@ App.HomeSlidesView = Ember.View.extend({
 // VIEW TAGS
 
 App.TagsView = Ember.View.extend({
+    input: null,
     templateName: 'view_tags',
     didInsertElement: function(){
-
         var _controller = this.get('controller');
-
-        var tags = $('#select2').select2({
+        var input = $('#select2').select2({
             tags: true,
             //minimumInputLength: 1,
             multiple: true,
@@ -119,8 +118,8 @@ App.TagsView = Ember.View.extend({
             },
         });
 
-        tags.on('change',function(e){
-            var data = tags.select2('data');
+        input.on('change',function(e){
+            var data = input.select2('data');
             var _tags = [];
             for(var i in data){
                 var item = data[i];
@@ -131,6 +130,17 @@ App.TagsView = Ember.View.extend({
             }
             _controller.set('tags',_tags);
         });
+
+        this.set('input',input);
+
+        var data = input.select2('data');
+
+        _.each(User.model.tags, function(tag,i){
+            data[i] = {_id: tag._id, name: tag.name};
+        });
+
+        input.select2('data', data);
+
     }
 });
 

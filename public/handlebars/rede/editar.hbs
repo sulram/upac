@@ -1,5 +1,5 @@
 <div class="pad">
-	{{#if User.auth.loggedIn}}
+	{{#if User.model.isLoaded}}
 	<h2>Editar perfil</h2>
 	<form id="editar_perfil">
 		<div class="control-group">
@@ -26,11 +26,34 @@
 	</form>
 
 	{{view App.TagsView}}
+
+
+	{{#if App.MapController.isMarking}}
 	
+		<div class="pad over">
+			<p>Navegue pelo mapa e clique no ponto em que você deseja marcar sua localização.</p>
+			<p>
+				<a {{action finishMarking App.MapController}} class="btn btn-primary">Salvar posição</a>
+				<a {{action cancelMarking App.MapController}} class="btn btn-danger">Cancelar</a>
+			</p>
+		</div>
+
+	{{else}}
+		
+		<p>
+			<a {{action startMarking App.MapController}} class="btn btn-w-icon">
+				<span class="fui-location"></span> 
+				{{#if User.model.geo.length}}Editar localização{{else}}Marque sua localização{{/if}}
+			</a>
+		</p>			
+
+	
+	<hr/>
+
 	<div class="control-group">
 		<div class="controls">
 			<p>
-				<button type="submit" class="btn btn-primary" {{bindAttr disabled="isPosting"}} {{action submit}}>Salvar</button>
+				<button type="submit" class="btn btn-primary" {{bindAttr disabled="isPosting"}} {{action submit}}>Salvar perfil</button>
 				{{#linkTo 'rede.perfil' User.model classNames="btn"}}Cancelar{{/linkTo}}
 			</p>
 			{{#if flashMsg}}
@@ -40,8 +63,11 @@
 			{{/if}}
 		</div>
 	</div>
-	<hr/>
+
 	<p><small>Para alterar e-mail ou senha, {{#linkTo 'rede.perfil' User.model}}clique aqui{{/linkTo}}.</small></p>
+
+	{{/if}}
+
 	{{else}}
 		{{partial "anonymous"}}
 	{{/if}}

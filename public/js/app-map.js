@@ -113,8 +113,8 @@ App.MapController = Em.Object.create({
     },
     focusUser: function(username){
         if(this.get('isFetching')){
-            console.log('saved focus');
-            this.set('saveFocus',username);
+            console.log('saved focus', username);
+            this.set('saveFocus', username);
         }else{
             console.log("focus " + username);
 

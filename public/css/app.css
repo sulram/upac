@@ -557,6 +557,15 @@ iframe {
 	max-width: 320px;
 }
 
+#rede_sidebar .tags {
+	font-size: 0.9em;
+}
+
+#rede_sidebar .tags a {
+	display: inline-block;
+	margin-right: 2px;
+}
+
 .rede_perfil_foto {
 	position: relative;
 	max-width: 320px;
@@ -969,6 +978,10 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 .select2-container {
 	width: 100%;
+}
+
+#rede_sidebar .select2-container-multi .select2-choices {
+	border: 2px solid #bdc3c7;
 }
 
 .select2-container-multi .select2-choices .select2-search-choice {
