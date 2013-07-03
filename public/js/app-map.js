@@ -10,23 +10,32 @@ App.RedeMapaView = Ember.View.extend({
         //console.log('zoom factor',App.map.getZoom());
     },
     didInsertElement: function(){
-        App.map = L.map('map_canvas');
+        App.map = L.map('map_canvas',{minZoom: 3});
         App.map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: 'Powered by Leaflet & OpenStreetMap'});
         App.map.addLayer(App.map_tiles).setView(new L.LatLng(0,0), 2);
     }
 });
 
 
-var userIcon = L.icon({
-    iconUrl: 'img/pin_user_25x41.png'
+var UIcon = L.Icon.extend({
+    options: {
+        iconUrl: 'img/pin_action.png',
+        shadowUrl: 'img/pin_shadow.png',
+        iconSize: [44, 56],
+        iconAnchor: [22, 56],
+        popupAnchor: [0, -50],
+        shadowSize: [50, 30],
+        shadowAnchor: [15, 30]
+    }
 });
+
+var userIcon = new UIcon({iconUrl: 'img/pin_user.png'});
+var calIcon = new UIcon({iconUrl: 'img/pin_cal.png'});
 
 
 App.MapController = Em.Object.create({
     isMarking: false,
     isFetching: true,
-    markers: [],
-    rawmarkers: [],
     geojson: {},
     focus: null,
     findTheUser: function(){
@@ -36,23 +45,18 @@ App.MapController = Em.Object.create({
         return _.findWhere(App.MapController.markers,{username: username});
     },
     focusUser: function(username){
-        return false;
         if(this.get('isFetching')){
-            console.log('saved focus', username);
+            //console.log('saved focus', username);
             this.set('saveFocus', username);
         }else{
-            console.log("focus " + username);
-            var current = _.findWhere(App.MapController.markers,{username: username});
-            this.unFocusAll();
-            if(current.marker){
-                google.maps.event.trigger(current.marker, 'mouseover');
-                current.marker.setIcon(App.MapStyles.pin.user_select[0]);
-                current.marker.setShape(App.MapStyles.pin.user_select[1]);
-                current.selected = true;
-                App.map.panTo(current.marker.getPosition());
-                var zoom = App.map.getZoom();
-                App.map.setZoom( zoom < 5 ? 11 : zoom);
-            }
+            //console.log("focus " + username);
+            _.each(App.MapController.geojson._layers,function(el,i){
+                //console.log(i,el, el.feature.properties.username)
+                if(el.feature.properties.username && el.feature.properties.username == username){
+                    App.map.panTo(el._latlng);
+                    el.openPopup();
+                }
+            });
         }
     },
     unFocusAll: function(){
@@ -66,7 +70,6 @@ App.MapController = Em.Object.create({
     getMarkers: function(){  
         
         var that = this;
-        var geojson;
         var geodata = {type: "FeatureCollection", features: []};
 
         this.markers = [];
@@ -105,7 +108,7 @@ App.MapController = Em.Object.create({
 
                 that.set('isFetching',false);
 
-                geojson = L.geoJson(geodata,{
+                that.geojson = L.geoJson(geodata,{
                     pointToLayer: function(feature, latlng){
                         if(feature.properties && feature.properties.type == "user"){
                             return L.marker(latlng, {icon: userIcon});    
@@ -116,19 +119,19 @@ App.MapController = Em.Object.create({
                         if (feature.properties && feature.properties.type == "user") {
                             var username = feature.properties.username
                             var name = feature.properties.name || username;
-                            layer.bindPopup('<strong>' + name + '</strong><br/><a href="#/rede/perfil/'+username+'">Ver perfil</a>', {/*closeButton: false*/});
+                            layer.bindPopup('<strong>' + name + '</strong><br/><a href="#/rede/perfil/'+username+'">Ver perfil</a>', {closeButton: false});
                         }
-                        console.log('feat',feature);
+                        //console.log('feat',feature);
                     }
                 });
 
-                App.map.addLayer(geojson);
+                App.map.addLayer(that.geojson);
 
-                /*if(that.get('saveFocus') != null){
+                if(that.get('saveFocus') != null){
                     console.log('delayed focus');
                     that.focusUser(that.get('saveFocus'));
                     that.set('saveFocus',null);
-                }*/
+                }
             },
             error: function(jqXHR,status,error){
                 console.log(jqXHR);
@@ -183,48 +186,13 @@ App.MapController = Em.Object.create({
         
     },
     createMarker: function(username, latLng, select){
-        var _this = this;
-        var pin_type = select ? App.MapStyles.pin.user_select : App.MapStyles.pin.user;
-        var marker = new google.maps.Marker({
-            position: latLng,
-            map: App.map,
-            icon: pin_type[0],
-            shadow: null,
-            shape: pin_type[1]
-        });
-        google.maps.event.addListener(marker, 'map_changed', function() {
-            var user = App.MapController.findUser(username);
-            if(user.selected){
-                //_this.unFocusAll();
-                //console.log(App.map_infobox)
-                App.map_infobox.close();
-            }
-        });
-        google.maps.event.addListener(marker, 'click', function() {
-            if(App.MapController.isMarking) return false;
-            //App.map.panTo(marker.getPosition());
-            //App.MapController.focusUser(username);
-            window.location.hash = '/rede/perfil/'+username;
-        });
-        google.maps.event.addListener(marker, 'mouseover', function() {
-            var user = App.MapController.findUser(username);
-            App.map_infobox.setContent(App.MapStyles.info_box.split('{{content}}').join(user.name || user.username));
-            App.map_infobox.open(App.map, this);
-        });
-        google.maps.event.addListener(marker, 'mouseout', function() {
-            //App.map_infobox.close();
-            var last = _.findWhere(App.MapController.markers,{selected: true});
-            if(last && last.marker != this){
-                google.maps.event.trigger(last.marker, 'mouseover');
-            }
-        });
-        return marker;
+        
     },
     onMapClick: function(e){
 
         if(!App.MapController.isMarking){
             
-            App.MapController.unFocusAll();
+            //App.MapController.unFocusAll();
             window.location.hash = '/rede';
             //console.log( 'get position!', e.latLng );
 
@@ -235,9 +203,9 @@ App.MapController = Em.Object.create({
             console.log( 'mark!', e.latLng.kb, user, user.marker );
 
             if(user.marker === null){
-                user.marker = App.MapController.createMarker(user.username, e.latLng, true);
+                //user.marker = App.MapController.createMarker(user.username, e.latLng, true);
             } else {
-                user.marker.setPosition(e.latLng);
+                //user.marker.setPosition(e.latLng);
             }
         }
     }
