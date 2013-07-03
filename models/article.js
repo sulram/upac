@@ -17,7 +17,7 @@ var ImageRefSchema = new Schema({
 	size: String
 });
 
-var ArticleSchema = new Schema({
+var fields = {
 	owners: [{
 		type:ObjectId,
 		ref: 'User'
@@ -43,26 +43,29 @@ var ArticleSchema = new Schema({
 	attachments: [{type:ObjectId, ref:'Attachment'}],
 
 	tags: [{type:ObjectId, ref:'Tag'}],
-	publicationStatus: String,
-	publicationDate: Date,
-	createdAt: Date,
-	updatedAt: Date,
-});
 
-var PageSchema = new Schema({
-	title: String,
-	slug: {
+	publicationType: {
 		type: String,
-		index: {unique: true}
+		'enum': ['post','event','page','comment'],
+		'default': 'article'
 	},
-	content: String,
-	images: [ImageRefSchema],
-	attachments: [{type:ObjectId, ref:'Attachment'}],
-	publicationStatus: String,
+	publicationStatus: {
+		type: String,
+		'enum':['draft','published']
+	},
 	publicationDate: Date,
+
+	// campos dos eventos
+	startDate: Date,
+	endDate: Date,
+
 	createdAt: Date,
 	updatedAt: Date,
-})
+};
+
+var ArticleSchema = new Schema(fields);
+var PageSchema = new Schema(fields);
+var EventSchema = new Schema(fields);
 
 var slugify = function(str) {
 	str = str.toLowerCase();
@@ -117,6 +120,12 @@ PageSchema.pre('save', function(next) {
 ArticleSchema.statics.findByTagId = function(id, options, cb) {
 	this.find({tags: id}, null, options, cb);
 }
+ArticleSchema.statics.findInRadius = function(place, radius, cb) {
+	return this.model('Article').find({geo: {
+		$nearSphere: place,
+		$maxDistance: radius
+	}}, cb);
+};
 mongoose.model('Attachment', AttachmentSchema);
 mongoose.model('Article', ArticleSchema);
 mongoose.model('Page', PageSchema)

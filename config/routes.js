@@ -122,12 +122,14 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 
 	app.get('/everything2d', tag.everything2d);
 
+	app.get('/agenda/editor', auth.requiresLogin, _event.neweditor);
+	app.get('/agenda/editor/:id', auth.requiresLogin, _event.editor);
+
 	app.get('/event/new', auth.requiresLogin, _event.create);
 	app.get('/event/:id', _event.show);
 	app.get('/event/:id/remove', auth.requiresLogin, _event.preloadById, auth.event.hasAuthorization, _event.remove);
-
+	
 	app.get('/events/near', _event.near);
-
 	app.get('/events/happening', _event.happening);
 	app.get('/events/past', _event.past);
 	app.get('/events/future', _event.future);

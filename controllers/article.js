@@ -10,7 +10,7 @@
 module.exports = function(cdn, paginate){ return {
 	admin: {
 		index: function(req, res, next) {
-			paginate.paginate(Article,{},{populate:'featuredImage owners', sort_by: 'createdAt', order: -1}, req, function(err, articles, pagination) {
+			paginate.paginate(Article,{type: {$or: ['post', null]}},{populate:'featuredImage owners', sort_by: 'createdAt', order: -1}, req, function(err, articles, pagination) {
 					if(err) return next(err);
 					var total = 0;
 					Article.count({}, function(err, count){
@@ -112,7 +112,7 @@ module.exports = function(cdn, paginate){ return {
 		data.images = _.map(data.images, function(image) {
 			return {image:image, size:'normal'}
 		})
-		// TODO: pegar tags e transformar em ObjectIDs
+		// pegar tags e transformar em ObjectIDs
 		var query = {_id: req.param('id')}
 		if (data.tags) {
 			data.tags = _.map(data.tags, function(tag) {
@@ -140,6 +140,7 @@ module.exports = function(cdn, paginate){ return {
 				data.owners = req.param('owners')||[req.user.id];
 				article = new Article(data);
 				article._id = mongoose.Types.ObjectId(req.body.id);
+				article.type = 'post'
 			} else {
 				article.set(data);
 			}
@@ -151,21 +152,17 @@ module.exports = function(cdn, paginate){ return {
 				});
 			});
 		});
-		/*
-		Article.update({'id':req.param('id')},
-			{$set: data},
-			{upsert: true},
-			function(err, article) {
-				if (err) return res.jsonx(500, {error: err});
-				res.jsonx({
-					msg: 'ok',
-					article: article,
-				});
-			});
-		*/
 	},
 	index: function(req, res) {
-		paginate.paginate(Article,{publicationStatus:'published', parent:null},{populate:'owners featuredImage'}, req, function(err, articles, pagination) {
+		paginate.paginate(Article,
+			{
+				publicationStatus:'published',
+				parent:null,
+				type: {$or: ['post', null]}
+			},
+			{populate:'owners featuredImage'},
+			req,
+			function(err, articles, pagination) {
 				if(err) return next(err);
 				articles = _.map(articles, function(article) {
 					if(!article.featuredImage && (article.images.length > 0)) {
@@ -207,13 +204,6 @@ module.exports = function(cdn, paginate){ return {
 			if(!article.featuredImage && (article.images.length > 0)) {
 				article.featuredImage = article.images[0];
 			}
-			/* // referencias das imagens no final, p/ markdown
-			_.each(article.images, function(image){
-				var size = {cdn_url:image.image.original_cdn_url};
-				var nsize = _.detect(image.image.sizes,function(img){ return img.size == image.size; });
-				size = nsize||size;
-				article.content+=("\n["+image.image.id+"]: "+size.cdn_url);				
-			}) // */
 			Img.populate(article, {path:'owners.avatar'},function(err, _article) {
 				res.jsonx({article:_article});
 			});
@@ -285,9 +275,16 @@ module.exports = function(cdn, paginate){ return {
                     {
                         msg: 'tag not found',
                         tag_slug: req.param('slug')
-                    });             
+                    });
             }
-            paginate.paginate(Article,{tags: tag._id, publicationStatus:'published', parent:null},{populate:'featuredImage'}, req, function(err, articles, pagination) {
+            paginate.paginate(Article,
+            	{
+            		tags: tag._id,
+            		publicationStatus:'published',
+            		parent: null,
+            		startDate: null,
+            		endDate: null,
+            	},{populate:'featuredImage'}, req, function(err, articles, pagination) {
                 if(err) return next(err);
                 Img.populate(articles, 'featuredImage', function(err, _articles){
                     res.jsonx({

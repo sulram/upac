@@ -1,0 +1,54 @@
+extends ../layout
+
+block title
+	| Posts
+
+block link
+	-var selected = 'posts';
+
+block content
+	p
+		a(href='/admin/article/new').btn.btn-small Novo post
+
+	table.table.table-striped
+		thead
+			tr
+				th Tipo
+				th Título
+				th Excerpt
+				th Autores
+				th Status
+				th Data de publicação
+				th Data de criação
+				th Última atualização
+				th Opções
+		for article in articles
+			tr
+				td
+					a(href='/admin/article/'+article.id)
+						if article.parent
+							span.fui-chat
+						else
+							span.fui-list
+				td
+					a(href='/admin/article/'+article.id)
+						if article.title
+							= article.title
+						else
+							= article.slug
+					
+				td
+					p= article.parent ? article.content : article.excerpt
+				td
+					ul
+						each owner in article.owners
+							li
+								a(href='/admin/user/#{owner.id}')= owner.username
+				td= article.publicationStatus
+				td.moment-me= article.publicationDate
+				td.moment-me= article.createdAt
+				td.moment-me= article.updatedAt
+				td
+					a(href="/admin/article/#{article.id}/remove",title="Excluir")
+						i.icon-remove
+	+pagination("/admin/articles", pagination)
