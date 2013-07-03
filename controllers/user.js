@@ -95,8 +95,6 @@ module.exports = function (cdn, paginate, mailer) { return {
 							return {field: field, validation_error: error.type};
 						})
 					})
-				} else if ((typeof err === 'object') && err.code && (err.code == 11000 || err.code == 11001)) {
-
 				} else {
 					console.log(err);
 					res.addJFlash('error', 'database error');

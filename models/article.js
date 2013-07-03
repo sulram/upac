@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
   , ObjectId = mongoose.Schema.ObjectId
-  , Schema = mongoose.Schema;
+  , Schema = mongoose.Schema
+  , crypto = require('crypto');
 
 var AttachmentSchema = new Schema({
 	owner: {type:ObjectId, ref:'Article'},
@@ -88,6 +89,7 @@ ArticleSchema.pre('save', function(next) {
 			this.slug = this.id;
 		}
 	}
+	mongoose.model('Article').find({slug: {}})
 	this.updatedAt = new Date();
 	next();
 });
@@ -104,7 +106,12 @@ PageSchema.pre('save', function(next) {
 		}
 	}
 	this.updatedAt = new Date();
-	next();
+	var thisart = this;
+	mongoose.model('Article').findOne({slug: this.slug}, function(err, article){
+		if(err) return next(err);
+		if(article) this.slug += '-'+crypto.randomBytes(5).toString('hex'); // se der conflito vai ser muita cagada
+		next();
+	})
 })
 
 ArticleSchema.statics.findByTagId = function(id, options, cb) {
