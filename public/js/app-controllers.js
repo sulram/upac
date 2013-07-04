@@ -378,10 +378,31 @@ App.UserCadastrarController = Ember.Controller.extend({
         this.set('flashMsg',null);
     },
     submit: function(){
+
+        var _controller = this;
         var data = $('form').serialize();
+        var dataArray = $('form').serializeArray();
+        var empty = false;
+
+        _.each(dataArray, function(e,i){
+            //console.log(e);
+            if(e.value == ""){
+                empty = true;
+            }
+        });
+
+        if(empty) return _controller.set('flashMsg', "por favor, preencha todos os campos");
+
+        var pass1 = _.findWhere(dataArray,{name: 'password'}).value;
+        var pass2 = _.findWhere(dataArray,{name: 'valpassword'}).value;
+
+        if(pass1 != pass2) return _controller.set('flashMsg', "senhas não conferem, preencha novamente");
+
         this.set('isPosting',true);
         this.set('flashMsg',null);
-        var _controller = this;
+
+        console.log(dataArray);
+        
         $.ajax({
             type: 'POST',
             url: '/user',
@@ -391,9 +412,18 @@ App.UserCadastrarController = Ember.Controller.extend({
                 User.authenticate(data.auth);
             },
             error: function(jqXHR,status,error){
+                var responseText = jQuery.parseJSON(jqXHR.responseText);
+
                 console.log(arguments);
                 _controller.set('isPosting',false);
-                _controller.set('flashMsg','verifique nome de usuário e senha');
+
+                if(responseText.error.errors.email && responseText.error.errors.email.type == 'inuse'){
+                    _controller.set('flashMsg','este e-mail já está cadastrado no site, use o painel de login');
+                } else if(responseText.error.errors.email && responseText.error.errors.email.type == 'invalid') {
+                    _controller.set('flashMsg','verifique o e-mail informado');
+                }else{
+                    _controller.set('flashMsg','verifique se os campos estão preenchidos corretamente');
+                }
             }
         });
     }
