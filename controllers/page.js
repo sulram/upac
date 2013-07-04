@@ -9,7 +9,11 @@
 module.exports = function(cdn, paginate){ return {
 	admin: {
 		index: function(req, res, next) {
-			paginate.paginate(Page,{},{}, req, function(err, pages, pagination) {
+			paginate.paginate(Page,
+				{
+					geo:null
+				},
+				{}, req, function(err, pages, pagination) {
 					if(err) return next(err);
 					var total = 0;
 					Page.count({}, function(err, count){

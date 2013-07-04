@@ -10,7 +10,12 @@
 module.exports = function(cdn, paginate){ return {
 	admin: {
 		index: function(req, res, next) {
-			paginate.paginate(Article,{type: {$or: ['post', null]}},{populate:'featuredImage owners', sort_by: 'createdAt', order: -1}, req, function(err, articles, pagination) {
+			paginate.paginate(Article,
+				{
+					startDate:null,
+					endDate:null,
+					parent:null,
+				},{populate:'featuredImage owners', sort_by: 'createdAt', order: -1}, req, function(err, articles, pagination) {
 					if(err) return next(err);
 					var total = 0;
 					Article.count({}, function(err, count){
@@ -140,7 +145,6 @@ module.exports = function(cdn, paginate){ return {
 				data.owners = req.param('owners')||[req.user.id];
 				article = new Article(data);
 				article._id = mongoose.Types.ObjectId(req.body.id);
-				article.type = 'post'
 			} else {
 				article.set(data);
 			}
@@ -158,7 +162,8 @@ module.exports = function(cdn, paginate){ return {
 			{
 				publicationStatus:'published',
 				parent:null,
-				type: {$or: ['post', null]}
+				startDate:null,
+				endDate:null
 			},
 			{populate:'owners featuredImage'},
 			req,

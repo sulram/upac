@@ -6,7 +6,15 @@ var mongoose = require('mongoose'),
 module.exports = function(cdn, paginate) { return {
 	admin: {
 		index: function(req, res, next) {
-			paginate.paginate(Article,{type: "event"},{populate:'featuredImage owners', sort_by: 'createdAt', order: -1}, req, function(err, articles, pagination) {
+			paginate.paginate(Article,
+				{
+					$or: [{startDate:{$ne: null}}, {endDate:{$ne: null}}]
+				},
+				{
+					populate:'featuredImage owners',
+					sort_by: 'createdAt',
+					order: -1
+				}, req, function(err, articles, pagination) {
 					if(err) return next(err);
 					var total = 0;
 					Article.count({}, function(err, count){
@@ -23,6 +31,8 @@ module.exports = function(cdn, paginate) { return {
 			}
 			var article = new Article(req.body);
 			article.createdAt = new Date();
+			if(!article.startDate) article.startDate = new Date();
+			if(!article.endDate) article.endDate = new Date();
 			article.save(function(err) {
 				if(err) return next(err);
 				res.redirect('/admin/event/'+article.id);
@@ -194,10 +204,25 @@ module.exports = function(cdn, paginate) { return {
 			}
 		);
 	},
+	index: function(req, res, next) {
+		Article.find(
+			{
+				startDate: {$ne: null},
+				endDate: {$ne: null},
+			},
+			function(err, events) {
+				if(err) return err;
+				res.jsonx({
+					msg:"ok",
+					events: events
+				});
+			}
+		);
+	},
 	happening: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{startDate: {"$lte": now}, endDate: {"$gt": now}},
+			{startDate: {$lte: now}, endDate: {$gt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
@@ -210,7 +235,7 @@ module.exports = function(cdn, paginate) { return {
 	past: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{endDate: {"$lt": now}},
+			{endDate: {$lt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
@@ -223,7 +248,7 @@ module.exports = function(cdn, paginate) { return {
 	future: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{startDate: {"$gt": now}},
+			{startDate: {$gt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
