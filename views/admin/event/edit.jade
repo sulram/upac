@@ -1,0 +1,30 @@
+extends ../layout
+
+block title
+	| Editar evento: #{event.title}
+
+block link
+	-var selected = 'events';
+
+block content
+	h2 Evento: #{event.title}
+	hr
+	form(action='/admin/event/#{event.id}',method='POST').form-horizontal
+		.row
+			.span6
+				+field(event.title,'title','Título', 'text')
+				+field(event.slug, 'slug', 'Slug', 'text')
+				+textfield(event.excerpt,'excerpt','Excerpt')
+				+textfield(event.content,'content','Conteúdo')
+
+			.span6
+				+field(event.parent, 'parent', 'Artigo mãe', 'text')
+				+field(event.publicationStatus, 'publicationStatus', 'Status da publicação', 'text')
+				+field(event.publicationDate, 'publicationDate', 'Data da publicação', 'date')
+				+field(event.startDate, 'startDate', 'Data de início do evento', 'date')
+				+field(event.endDate, 'endDate', 'Data de término do evento', 'date')
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/events').btn Cancelar

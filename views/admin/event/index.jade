@@ -1,0 +1,54 @@
+extends ../layout
+
+block title
+	| Events
+
+block link
+	-var selected = 'events';
+
+block content
+	p
+		a(href='/admin/event/new').btn.btn-small Novo post
+
+	table.table.table-striped
+		thead
+			tr
+				th Tipo
+				th Título
+				th Excerpt
+				th Autores
+				th Status
+				th Data de publicação
+				th Data de início
+				th Data de término
+				th Data de criação
+				th Última atualização
+				th Opções
+		for event in events
+			tr
+				td
+					= event.type
+				td
+					a(href='/admin/event/'+event.id)
+						if event.title
+							= event.title
+						else
+							= event.slug
+					
+				td
+					p= event.parent ? event.content : event.excerpt
+				td
+					ul
+						each owner in event.owners
+							li
+								a(href='/admin/user/#{owner.id}')= owner.username
+				td= event.publicationStatus
+				td.moment-me= event.publicationDate
+				td.moment-me= event.startDate
+				td.moment-me= event.endDate
+				td.moment-me= event.createdAt
+				td.moment-me= event.updatedAt
+				td
+					a(href="/admin/event/#{event.id}/remove",title="Excluir")
+						i.icon-remove
+	+pagination("/admin/events", pagination)

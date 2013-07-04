@@ -1,0 +1,29 @@
+extends ../layout
+
+block title
+	| Novo evento
+
+block link
+	-var selected = 'events';
+
+block content
+	h2 Novo evento
+	hr
+	form(action='/admin/event',method='POST').form-horizontal
+		.row
+			.span6
+				+field("",'title','Título', 'text')
+				+field("", 'slug', 'Slug', 'text')
+				+textfield("",'excerpt','Excerpt')
+				+textfield("",'content','Conteúdo')
+			.span6
+				+field("", 'parent', 'Artigo mãe', 'text')
+				+field("", 'publicationStatus', 'Status da publicação', 'text')
+				+field("", 'publicationDate', 'Data da publicação', 'date')
+				+field("", 'startDate', 'Data da início', 'date')
+				+field("", 'endDate', 'Data da término', 'date')
+				.control-group
+					.controls
+						button(type='submit').btn.btn-primary Enviar
+						&nbsp; &nbsp; 
+						a(href='/admin/events').btn Cancelar
