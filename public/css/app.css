@@ -992,3 +992,16 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .select2-container-multi .select2-choices .select2-search-choice {
 	margin-top: 6px;
 }
+
+/* ---------------- LEAFLET ---------------- */
+
+.upac_cluster {
+	width: 64px;
+	height: 64px;
+	background-color: #1f7174;
+	color: #fff;
+	text-align: center;
+	font-size: 16px;
+	line-height: 40px;
+	border-radius: 32px;
+}

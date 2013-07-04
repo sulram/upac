@@ -37,6 +37,63 @@ function createUserPin(user){
     };
 };
 
+var UpacMarker = L.Marker.extend({
+    bindPopup: function(htmlContent, options) {        
+        if (options && options.showOnMouseOver) {
+            // call the super method
+            L.Marker.prototype.bindPopup.apply(this, [htmlContent, options]);
+            // unbind the click event
+            this.off("click", this.openPopup, this);
+            // bind to mouse over
+            this.on("mouseover", function(e) {
+                // get the element that the mouse hovered onto
+                var target = e.originalEvent.fromElement || e.originalEvent.relatedTarget;
+                var parent = this._getParent(target, "leaflet-popup");
+                // check to see if the element is a popup, and if it is this marker's popup
+                if (parent == this._popup._container)
+                    return true;
+                // show the popup
+                this.openPopup();
+            }, this);
+            // and mouse out
+            this.on("mouseout", function(e) {
+                // get the element that the mouse hovered onto
+                var target = e.originalEvent.toElement || e.originalEvent.relatedTarget;
+                // check to see if the element is a popup
+                if (this._getParent(target, "leaflet-popup")) {
+                    L.DomEvent.on(this._popup._container, "mouseout", this._popupMouseOut, this);
+                    return true;
+                }
+                // hide the popup
+                this.closePopup();
+            }, this);
+        }
+    },
+    _popupMouseOut: function(e) {
+        // detach the event
+        L.DomEvent.off(this._popup, "mouseout", this._popupMouseOut, this);
+        // get the element that the mouse hovered onto
+        var target = e.toElement || e.relatedTarget;
+        // check to see if the element is a popup
+        if (this._getParent(target, "leaflet-popup"))
+            return true;
+        // check to see if the marker was hovered back onto
+        if (target == this._icon)
+            return true;
+        // hide the popup
+        this.closePopup();
+    },
+    _getParent: function(element, className) {
+        var parent = element.parentNode;
+        while (parent != null) {
+            if (parent.className && L.DomUtil.hasClass(parent, className))
+                return parent;
+            parent = parent.parentNode;
+        }
+        return false;
+    }
+});
+
 
 //// VIEW
 
@@ -60,6 +117,7 @@ App.MapController = Em.Object.create({
     isFetching: true,
     geojson: {},
     users: [],
+    cluster: null,
     focus: null,
     findTheUser: function(){
         return _.findWhere(App.MapController.users,{username: User.auth.username});
@@ -127,23 +185,29 @@ App.MapController = Em.Object.create({
                 that.geojson = L.geoJson(geodata,{
                     pointToLayer: function(feature, latlng){
                         if(feature.properties && feature.properties.type == "user"){
-                            return L.marker(latlng, {icon: userIcon});    
+                            return new UpacMarker(latlng, {icon: userIcon});    
                         }
-                        return L.marker(latlng);
+                        return new UpacMarker(latlng);
                     },
                     onEachFeature: function(feature, layer){
                         if (feature.properties && feature.properties.type == "user") {
                             var username = feature.properties.username
                             var name = feature.properties.name || username;
-                            layer.bindPopup(userPopup({username: username, name: name}), {closeButton: false});
+                            layer.bindPopup(userPopup({username: username, name: name}), {showOnMouseOver: true, closeButton: false});
                         }
                         //console.log('feat',feature);
                     }
                 });
 
                 // adiciona geojson no mapa
-
-                App.map.addLayer(that.geojson);
+                that.cluster = L.markerClusterGroup({
+                    maxClusterRadius: 40,
+                    iconCreateFunction: function (cluster) {
+                        return L.divIcon({ html: cluster.getChildCount(), className: 'upac_cluster', iconSize: L.point(40, 40) });
+                    },
+                });
+                that.cluster.addLayer(that.geojson);
+                App.map.addLayer(that.cluster);
 
                 // foca usuario se o foco estava salvo
 
@@ -160,9 +224,20 @@ App.MapController = Em.Object.create({
             }
         });
     },
+    clusterClear: function(){
+        this.cluster.clearLayers();
+        App.map.removeLayer(this.cluster);
+        App.map.addLayer(this.geojson);
+    },
+    clusterAgain: function(){
+        App.map.removeLayer(this.geojson);
+        this.cluster.addLayer(this.geojson);
+        App.map.addLayer(this.cluster);
+    },
     startMarking: function(){
         this.set('isMarking',true);
         App.map.on('click', this.onMapClick);
+        this.clusterClear();
     },
     finishMarking: function(save){
         var that = this;
@@ -205,7 +280,7 @@ App.MapController = Em.Object.create({
             }
             that.set('isMarking',false);
         }
-        
+        this.clusterAgain();
     },
     createMarker: function(username, latLng, select){
         
