@@ -1,15 +1,15 @@
 <form id="register" class="form-horizontal">
 	<div class="control-group">
-		<label class="control-label" for="name">Nome e sobrenome</label>
+		<label class="control-label" for="name">Nome completo</label>
 		<div class="controls">
 			{{view App.AutoFocusTextField id="name" name="name" placeholder="" }}
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="username">Nome de usuário</label>
+		<label class="control-label" for="username">login</label>
 		<div class="controls">
-			<input type="text" id="username" name="username" placeholder="" {{action "onFocus"}}>
-			<span class="help-block">sem espaços ou acentos, seu login no site</span>
+			{{view App.TextFieldUsername id="username" name="username"}}
+			<span class="help-block"><small>sem espaços ou acentos</small></span>
 		</div>
 	</div>
 	<div class="control-group">
@@ -27,7 +27,7 @@
 	<div class="control-group">
 		<label class="control-label" for="valpassword">Repita a senha</label>
 		<div class="controls">
-			<input type="password" id="valpassword" placeholder="" {{action "onFocus"}}>
+			<input type="password" id="valpassword" name="valpassword" placeholder="" {{action "onFocus"}}>
 		</div>
 	</div>
 	<div class="control-group">

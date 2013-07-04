@@ -13,14 +13,16 @@
 		</h2>
 
 		<p>{{about}}</p>
-
+		
+		{{#if tags.length}}
 		<p class="tags">
 			Palavras-chave: 
 			{{#each tags}}
 				<a {{action openTag this}}>{{this.name}}</a>
 			{{/each}}
 		</p>
-
+		{{/if}}
+		
 		<hr/>
 		
 		{{#if isTheLoggedUser}}
