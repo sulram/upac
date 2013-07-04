@@ -289,9 +289,9 @@ module.exports = function(cdn, paginate){ return {
             		parent: null,
             		startDate: null,
             		endDate: null,
-            	},{populate:'featuredImage'}, req, function(err, articles, pagination) {
+            	},{populate:'featuredImage owners'}, req, function(err, articles, pagination) {
                 if(err) return next(err);
-                Img.populate(articles, 'featuredImage', function(err, _articles){
+                Img.populate(articles, 'owners.avatar', function(err, _articles){
                     res.jsonx({
                         msg:'ok',
                         tag: tag,
