@@ -110,7 +110,8 @@ module.exports = function(cdn, paginate) { return {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
 			'publicationDate', 'publicationStatus',
-			'images', 'attachments', 'owners', 'featuredImage', 'tags', 'startDate', 'endDate'
+			'images', 'attachments', 'owners', 'featuredImage', 'tags',
+			'startDate', 'endDate', 'address', 'geo'
 		);
 		if(!data.featuredImage || (data.featuredImage.length == 0)) {
 			data.featuredImage = null;

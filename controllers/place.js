@@ -105,9 +105,17 @@ module.exports = function(cdn, paginate) { return {
 		},
 	},
 	index: function(req, res, next) {
-		Page.find({geo: {$ne: null}}, function(err, places) {
+		Page.find({geo: {$ne: null}})
+			.populate("featuredImage owners tags")
+			.exec(function(err, places) {
 			if(err) return next(err);
 			res.jsonx({msg: 'ok', places:places});
 		});
+	},
+	show: function(req, res, next) {
+		Page.findById(req.param('id')).populate('featuredImage owners tags').exec(function(err, place) {
+			if(err) return next(err);
+			res.jsonx({msg: 'ok', place:place});
+		})
 	}
 }}

@@ -49,6 +49,20 @@ html
 								input(type="text", name="endDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{event.endDate}")#endDate.smallinput
 							else
 								input(type="text", name="endDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#endDate.smallinput
+						label.input_label(for="address") Endereço
+						.input_text
+							if event.address
+								input(type="text", name="address", value=event.address)#address.smallinput
+							else
+								input(type="text", name="address", value="")#address.smallinput
+						label.input_label(for="geo[]") Localização
+						.input_text
+							if event.geo
+								input(type="text", name="geo[]", value=event.geo[0])#geo.smallinput
+								input(type="text", name="geo[]", value=event.geo[1])#geo.smallinput
+							else
+								input(type="text", name="geo[]", value="")#geo.smallinput
+								input(type="text", name="geo[]", value="")#geo.smallinput
 						label.input_label(for="excerpt")
 							| Resumo (
 							span#excerpt_count
