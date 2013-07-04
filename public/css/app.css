@@ -891,6 +891,16 @@ iframe {
 	margin-bottom: 10px;
 }
 
+/* ---------------- AGENDA ---------------- */
+
+#wrapper.agenda h1 {
+	color: #333;
+	text-decoration: none;
+	text-transform: uppercase;
+	line-height: 1em;
+	margin: 0;
+}
+
 /* ---------------- MODAL ADD ---------------- */
 
 .overlay {

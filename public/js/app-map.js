@@ -98,7 +98,7 @@ var UpacMarker = L.Marker.extend({
 //// VIEW
 
 App.RedeMapaView = Ember.View.extend({
-    templateName: 'rede_mapa',
+    templateName: 'view_mapa',
     handleZoom: function() {
         //if (App.map.getZoom() < 2){
         //    App.map.setZoom(2);

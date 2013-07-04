@@ -73,6 +73,30 @@ App.HomeSlidesView = Ember.View.extend({
     
 });
 
+// VIEW CALENDAR
+
+App.CalendarView = Ember.View.extend({
+    templateName: 'view_calendar',
+    didInsertElement: function(){
+        var _controller = this.get('controller');
+        $('#calendar').fullCalendar({
+            events: null,
+            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+            buttonText: {
+                today: 'hoje',
+                month: 'mês',
+                week: 'semana',
+                day: 'dia'
+            },
+            eventDrop: function(event, delta) {
+                alert(event.title + ' was moved ' + delta + ' days\n' +
+                    '(should probably update your database)');
+            },
+        });
+    }
+});
+
 // VIEW TAGS
 
 App.TagsView = Ember.View.extend({
