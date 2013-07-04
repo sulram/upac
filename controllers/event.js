@@ -147,7 +147,6 @@ module.exports = function(cdn, paginate) { return {
 				data.owners = req.param('owners')||[req.user.id];
 				article = new Article(data);
 				article._id = mongoose.Types.ObjectId(req.body.id);
-				article.type = 'event';
 			} else {
 				article.set(data);
 			}
@@ -181,7 +180,7 @@ module.exports = function(cdn, paginate) { return {
 	},
 	create: function(req, res, next) {
 
-		var _event = new Article(_.extend(req.body, {type: "event"}));
+		var _event = new Article(_.extend(req.body));
 		_event.save(function(err) {
 			if(err) return next(err);
 			res.jsonx({msg: "ok"});

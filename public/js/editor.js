@@ -84,12 +84,12 @@ $(document).ready(function(){
 
 	// DATE PICKER
 
-	var Picker = function(){
+	var Picker = function(picker_sel, input_sel){
 			
 		var _that = this;
 
-		this.target = $('#datetimepicker');
-		this.input = $('#publicationDate');
+		this.target = $(picker_sel);
+		this.input = $(input_sel);
 		
 		this.target.datetimepicker({
 			language: 'pt-BR'
@@ -118,7 +118,10 @@ $(document).ready(function(){
 		}
 
 		return this;
-	}();
+	};
+	var pubdate = Picker('#datetimepicker', '#publicationDate');
+	var startdate = Picker('#startdtpicker', '#startDate');
+	var enddate = Picker('#enddtpicker', '#endDate');
 
 	// NOTIFY
 
@@ -187,7 +190,9 @@ $(document).ready(function(){
 	form.submit(function(e){
 		var data, action, loading = $('#loading');
 		e.preventDefault();
-		Picker.convertToSubmit();
+		pubdate.convertToSubmit();
+		startdate.convertToSubmit();
+		enddate.convertToSubmit();
 		data = form.serialize();
 		action = form.attr('action');
 		console.log('saving... ', action, data);
@@ -201,12 +206,16 @@ $(document).ready(function(){
 				$('#post_remove').removeClass('hide');
 				$('#post_view').attr('href',url).removeClass('hide');
 				notify('A publicação foi salva com sucesso!', data);
-				Picker.convertToView();
+				pubdate.convertToView();
+				startdate.convertToView();
+				enddate.convertToView();
 				loading.removeClass('show');
 			},
 			error: function(jqXHR,status,error){
 				notify('Erro ao salvar, tente novamente.', arguments);
-				Picker.convertToView();
+				pubdate.convertToView();
+				startdate.convertToView();
+				enddate.convertToView();
 				loading.removeClass('show');
 			}
 		});

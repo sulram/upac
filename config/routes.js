@@ -4,6 +4,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	var user = require('../controllers/user')(cdn, paginate, mailer);
 	var article = require('../controllers/article')(cdn, paginate);
 	var page = require('../controllers/page')(cdn, paginate);
+	var place = require('../controllers/place')(cdn, paginate);
 	var _event = require('../controllers/event')(cdn, paginate);
 	var tag = require('../controllers/tag')(cdn, paginate);
 	var notice = require('../controllers/notice')(cdn, paginate);
@@ -136,7 +137,9 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.get('/event/new', auth.requiresLogin, _event.create);
 	app.get('/event/:id', _event.show);
 	app.get('/event/:id/remove', auth.requiresLogin, _event.preloadById, auth.event.hasAuthorization, _event.remove);
+	app.post('/event/:id', auth.requiresLogin, _event.editorsave);
 	
+	app.get('/events', _event.index);
 	app.get('/events/near', _event.near);
 	app.get('/events/happening', _event.happening);
 	app.get('/events/past', _event.past);

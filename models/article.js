@@ -44,11 +44,6 @@ var fields = {
 
 	tags: [{type:ObjectId, ref:'Tag'}],
 
-	publicationType: {
-		type: String,
-		'enum': ['post','event','page','comment'],
-		'default': 'article'
-	},
 	publicationStatus: {
 		type: String,
 		'enum':['draft','published']

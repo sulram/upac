@@ -289,9 +289,9 @@ module.exports = function(cdn, paginate){ return {
             		parent: null,
             		startDate: null,
             		endDate: null,
-            	},{populate:'featuredImage'}, req, function(err, articles, pagination) {
+            	},{populate:'featuredImage owners'}, req, function(err, articles, pagination) {
                 if(err) return next(err);
-                Img.populate(articles, 'featuredImage', function(err, _articles){
+                Img.populate(articles, 'owners.avatar', function(err, _articles){
                     res.jsonx({
                         msg:'ok',
                         tag: tag,
@@ -309,9 +309,9 @@ module.exports = function(cdn, paginate){ return {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.jsonx(404, {msg: "user not found"});
-			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent:null},{populate:'featuredImage'}, req, function(err, articles, pagination) {
+			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent:null},{populate:'featuredImage owners'}, req, function(err, articles, pagination) {
 				if(err) return next(err);
-				Img.populate(articles, 'featuredImage', function(err, _articles){
+				Img.populate(articles, 'owners.avatar', function(err, _articles){
 					res.jsonx({
 						msg:'ok',
 						articles: _articles,
