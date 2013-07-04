@@ -373,7 +373,7 @@ body.editor {
 }
 
 #medialibrary .panel #images-gallery figure.selected {
-	border: 5px solid #1f7174;
+	border: 5px solid #1abc9c;
 }
 
 #medialibrary .panel #images-gallery figure img {
@@ -390,7 +390,7 @@ body.editor {
 	bottom: 0;
 	right: 0;
 	display: none;
-	color: #f00;
+	color: #f1c40f;
 	padding: 5px;
 	text-shadow: 1px 1px 5px rgba(0,0,0,.5);
 }

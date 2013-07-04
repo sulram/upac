@@ -44,12 +44,14 @@
 				{{#if article.content}}
 					{{{article.content}}}
 				{{/if}}
-				<p class="tags">
-					Palavras-chave: 
-					{{#each article.tags}}
-						<a {{action openTag this}}>{{name}}</a>
-					{{/each}}
-				</p>
+				{{#if article.tags.length}}
+					<p class="tags">
+						Palavras-chave: 
+						{{#each article.tags}}
+							<a {{action openTag this}}>{{name}}</a>
+						{{/each}}
+					</p>
+				{{/if}}
 				<hr/>
 				
 				{{#if commentsLoaded}}
