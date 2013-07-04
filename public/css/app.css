@@ -891,6 +891,16 @@ iframe {
 	margin-bottom: 10px;
 }
 
+/* ---------------- AGENDA ---------------- */
+
+#wrapper.agenda h1 {
+	color: #333;
+	text-decoration: none;
+	text-transform: uppercase;
+	line-height: 1em;
+	margin: 0;
+}
+
 /* ---------------- MODAL ADD ---------------- */
 
 .overlay {
@@ -927,10 +937,15 @@ iframe {
 }
 
 .overlay .overlay-modal .btn {
+	background: #666;
 	padding: 30px 0;
 	margin-bottom: 1px;
 	width: 100%;
 	font-size: 24px;
+}
+
+.overlay .overlay-modal .btn:hover {
+	background: #333;
 }
 
 /* ---------------- BOOTSTRAP REPLACE ---------------- */
@@ -998,7 +1013,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .upac_cluster {
 	width: 64px;
 	height: 64px;
-	background-color: #1f7174;
+	background-color: rgba(15,81,84,.8)/*rgba(31,113,116,.8)#1f7174*/;
 	color: #fff;
 	text-align: center;
 	font-size: 16px;

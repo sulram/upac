@@ -182,10 +182,13 @@ function program15(depth0,data) {
 Ember.TEMPLATES["agenda"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  
+  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<h1>Seus eventos na rede</h1>\n<p>Em breve você poderá anunciar seus eventos na rede UPAC! Aguarde!</p>\n\n<p><img src=\"/img/temp/agenda_01.png\"></p>");
+  data.buffer.push("<div class=\"row-fluid\">\n	<div class=\"span6\">\n		<h1>Agenda</h1>\n	</div>\n	<div class=\"span6\" style=\"text-align: right;\">\n		<a href=\"/editor\" class=\"btn\">Criar evento</a>\n	</div>\n</div>\n<hr/>\n");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.CalendarView", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  return buffer;
   
 });
 
@@ -1363,16 +1366,6 @@ function program14(depth0,data) {
   
 });
 
-Ember.TEMPLATES["rede_mapa"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  
-
-
-  data.buffer.push("<div id=\"map_canvas\"></div>");
-  
-});
-
 Ember.TEMPLATES["timeline"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
@@ -1796,6 +1789,26 @@ function program2(depth0,data) {
   stack1 = helpers['if'].call(depth0, "landed", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   return buffer;
+  
+});
+
+Ember.TEMPLATES["view_calendar"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  
+
+
+  data.buffer.push("<div id=\"calendar\"></div>");
+  
+});
+
+Ember.TEMPLATES["view_mapa"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+  
+
+
+  data.buffer.push("<div id=\"map_canvas\"></div>");
   
 });
 
