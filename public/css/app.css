@@ -606,6 +606,11 @@ iframe {
 	text-transform: uppercase;
 }
 
+#wrapper.blog h3 {
+	line-height: 1.2em;
+	margin-bottom: 30px;
+}
+
 #wrapper.blog .grid_posts {
 	margin-right: -50px;
 	overflow: hidden;

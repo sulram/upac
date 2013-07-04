@@ -13,7 +13,11 @@
 	</div>
 	<div class="control-group">
 		<div class="controls">
-			<p><button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Entrar</button></p>
+			<p>
+				<button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Entrar</button>
+				<hr/>
+				<small><a href="/resetpassword">esqueci minha senha</a></small>
+			</p>
 			{{#if flashMsg}}
 			<div class="alert alert-error">
 			  {{flashMsg}}
