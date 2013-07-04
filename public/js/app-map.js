@@ -109,6 +109,7 @@ App.RedeMapaView = Ember.View.extend({
         App.map = L.map('map_canvas',{minZoom: 3});
         App.map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: 'Powered by Leaflet & OpenStreetMap'});
         App.map.addLayer(App.map_tiles).setView(new L.LatLng(0,0), 2);
+        App.map.zoomControl.setPosition('bottomleft');
     }
 });
 
