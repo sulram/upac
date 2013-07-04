@@ -19,18 +19,50 @@ html
 					| fechar
 				.container
 					label.input_label(for="title")
-						| Título
+						| Nome do evento
 					.input_title
 						if event.title
-							input(type="text", name="title", placeholder="título da publicação", value="#{event.title}")#title
+							input(type="text", name="title", placeholder="nome do evento", value="#{event.title}")#title
 						else
-							input(type="text", name="title", placeholder="título da publicação")#title						
+							input(type="text", name="title", placeholder="nome do evento")#title						
 
 			.container
 				.row
 					.span9
 						textarea(name="content")#content= event.content
 					.span3
+						label.input_label(for="startDate")
+							| Data de início
+						#startdtpicker.input-prepend.date
+							span.add-on
+								i(data-time-icon="icon-time", data-date-icon="icon-calendar")
+							if event.startDate
+								input(type="text", name="startDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{event.startDate}")#startDate.smallinput
+							else
+								input(type="text", name="startDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#startDate.smallinput
+						label.input_label(for="endDate")
+							| Data de término
+						#enddtpicker.input-prepend.date
+							span.add-on
+								i(data-time-icon="icon-time", data-date-icon="icon-calendar")
+							if event.endDate
+								input(type="text", name="endDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{event.endDate}")#endDate.smallinput
+							else
+								input(type="text", name="endDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#endDate.smallinput
+						label.input_label(for="address") Endereço
+						.input_text
+							if event.address
+								input(type="text", name="address", value=event.address)#address.smallinput
+							else
+								input(type="text", name="address", value="")#address.smallinput
+						label.input_label(for="geo[]") Localização
+						.input_text
+							if event.geo
+								input(type="text", name="geo[]", value=event.geo[0])#geo.smallinput
+								input(type="text", name="geo[]", value=event.geo[1])#geo.smallinput
+							else
+								input(type="text", name="geo[]", value="")#geo.smallinput
+								input(type="text", name="geo[]", value="")#geo.smallinput
 						label.input_label(for="excerpt")
 							| Resumo (
 							span#excerpt_count

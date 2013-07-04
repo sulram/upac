@@ -32,6 +32,7 @@ var fields = {
 	excerpt: String,
 	content: String,
 	geo: {type: [Number], index: "2dsphere"},
+	address: String,
 	parent: {type:ObjectId, ref:'Article'}, // Article
 	tags: [{
 		type: ObjectId,
@@ -44,11 +45,6 @@ var fields = {
 
 	tags: [{type:ObjectId, ref:'Tag'}],
 
-	publicationType: {
-		type: String,
-		'enum': ['post','event','page','comment'],
-		'default': 'article'
-	},
 	publicationStatus: {
 		type: String,
 		'enum':['draft','published']

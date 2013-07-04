@@ -266,7 +266,9 @@ body.editor {
 	background-position: -191px -119px;
 }
 
-.editor #datetimepicker #publicationDate {
+.editor #datetimepicker #publicationDate,
+.editor #startdtpicker #startDate,
+.editor #enddtpicker #endDate {
 	padding: 0;
 	border: 1px solid rgba(0,0,0,.2);
 	line-height: 28px;

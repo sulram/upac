@@ -110,7 +110,8 @@ module.exports = function(cdn, paginate) { return {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
 			'publicationDate', 'publicationStatus',
-			'images', 'attachments', 'owners', 'featuredImage', 'tags', 'startDate', 'endDate'
+			'images', 'attachments', 'owners', 'featuredImage', 'tags',
+			'startDate', 'endDate', 'address', 'geo'
 		);
 		if(!data.featuredImage || (data.featuredImage.length == 0)) {
 			data.featuredImage = null;
@@ -147,7 +148,6 @@ module.exports = function(cdn, paginate) { return {
 				data.owners = req.param('owners')||[req.user.id];
 				article = new Article(data);
 				article._id = mongoose.Types.ObjectId(req.body.id);
-				article.type = 'event';
 			} else {
 				article.set(data);
 			}
@@ -181,7 +181,7 @@ module.exports = function(cdn, paginate) { return {
 	},
 	create: function(req, res, next) {
 
-		var _event = new Article(_.extend(req.body, {type: "event"}));
+		var _event = new Article(_.extend(req.body));
 		_event.save(function(err) {
 			if(err) return next(err);
 			res.jsonx({msg: "ok"});
