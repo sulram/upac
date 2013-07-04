@@ -1,14 +1,14 @@
 extends ../layout
 
 block title
-	| Posts
+	| Events
 
 block link
-	-var selected = 'posts';
+	-var selected = 'events';
 
 block content
 	p
-		a(href='/admin/article/new').btn.btn-small Novo post
+		a(href='/admin/event/new').btn.btn-small Novo post
 
 	table.table.table-striped
 		thead
@@ -19,36 +19,36 @@ block content
 				th Autores
 				th Status
 				th Data de publicação
+				th Data de início
+				th Data de término
 				th Data de criação
 				th Última atualização
 				th Opções
-		for article in articles
+		for event in events
 			tr
 				td
-					a(href='/admin/article/'+article.id)
-						if article.parent
-							span.fui-chat
-						else
-							span.fui-list
+					= event.type
 				td
-					a(href='/admin/article/'+article.id)
-						if article.title
-							= article.title
+					a(href='/admin/event/'+event.id)
+						if event.title
+							= event.title
 						else
-							= article.slug
+							= event.slug
 					
 				td
-					p= article.parent ? article.content : article.excerpt
+					p= event.parent ? event.content : event.excerpt
 				td
 					ul
-						each owner in article.owners
+						each owner in event.owners
 							li
 								a(href='/admin/user/#{owner.id}')= owner.username
-				td= article.publicationStatus
-				td.moment-me= article.publicationDate
-				td.moment-me= article.createdAt
-				td.moment-me= article.updatedAt
+				td= event.publicationStatus
+				td.moment-me= event.publicationDate
+				td.moment-me= event.startDate
+				td.moment-me= event.endDate
+				td.moment-me= event.createdAt
+				td.moment-me= event.updatedAt
 				td
-					a(href="/admin/article/#{article.id}/remove",title="Excluir")
+					a(href="/admin/event/#{event.id}/remove",title="Excluir")
 						i.icon-remove
-	+pagination("/admin/articles", pagination)
+	+pagination("/admin/events", pagination)

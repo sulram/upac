@@ -1,15 +1,15 @@
 extends ../layout
 
 block title
-	| Novo post
+	| Novo evento
 
 block link
-	-var selected = 'posts';
+	-var selected = 'events';
 
 block content
-	h2 Novo post
+	h2 Novo evento
 	hr
-	form(action='/admin/article',method='POST').form-horizontal
+	form(action='/admin/event',method='POST').form-horizontal
 		.row
 			.span6
 				+field("",'title','Título', 'text')
@@ -20,8 +20,10 @@ block content
 				+field("", 'parent', 'Artigo mãe', 'text')
 				+field("", 'publicationStatus', 'Status da publicação', 'text')
 				+field("", 'publicationDate', 'Data da publicação', 'date')
+				+field("", 'startDate', 'Data da início', 'date')
+				+field("", 'endDate', 'Data da término', 'date')
 				.control-group
 					.controls
 						button(type='submit').btn.btn-primary Enviar
 						&nbsp; &nbsp; 
-						a(href='/admin/articles').btn Cancelar
+						a(href='/admin/events').btn Cancelar

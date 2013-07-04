@@ -1,25 +1,27 @@
 extends ../layout
 
 block title
-	| Post: #{article.title}
+	| Post: #{event.title}
 
 block link
 	-var selected = 'posts';
 	
 block content
-	h2= article.title
+	h2= event.title
 	table.table.table-condensed
-		+table_rec_row("ID", article.id)
-		+table_rec_row("Slug", article.slug)
-		+table_rec_row("Excerpt", article.excerpt)
-		+table_rec_row_raw("Conteúdo", article.content)
-		+table_rec_row_link("Artigo mãe", article.parent,'/admin/article/'+article.parent)
-		+table_rec_row("Status da publicação", article.publicationStatus)
-		+table_rec_row_date("Data da publicação", article.publicationDate)
-		+table_rec_row_date("Data de criação", article.createdAt)
-		+table_rec_row_date("Última Atualização", article.updatedAt)
+		+table_rec_row("ID", event.id)
+		+table_rec_row("Slug", event.slug)
+		+table_rec_row("Excerpt", event.excerpt)
+		+table_rec_row_raw("Conteúdo", event.content)
+		+table_rec_row_link("Artigo mãe", event.parent,'/admin/event/'+event.parent)
+		+table_rec_row("Status da publicação", event.publicationStatus)
+		+table_rec_row_date("Data da publicação", event.publicationDate)
+		+table_rec_row_date("Data da início", event.startDate)
+		+table_rec_row_date("Data da término", event.endDate)
+		+table_rec_row_date("Data de criação", event.createdAt)
+		+table_rec_row_date("Última Atualização", event.updatedAt)
 	.btn-group
-		a(href='/admin/articles').btn Voltar
-		a(href='/admin/article/'+article.id+'/edit').btn.btn-primary Editar post
-		a(href='/admin/article/'+article.id+'/remove').btn.btn-danger Remover post
+		a(href='/admin/events').btn Voltar
+		a(href='/admin/event/'+event.id+'/edit').btn.btn-primary Editar evento
+		a(href='/admin/event/'+event.id+'/remove').btn.btn-danger Remover evento
 		

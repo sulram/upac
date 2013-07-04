@@ -43,6 +43,14 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.all('/admin/articles', auth.requiresAdminLogin, article.admin.index);
 	app.post('/admin/article', auth.requiresAdminLogin, article.admin.create);
 
+	app.get('/admin/event/new', auth.requiresAdminLogin, _event.admin.editnew);
+	app.post('/admin/event/:id', auth.requiresAdminLogin, _event.admin.update);
+	app.get('/admin/event/:id', auth.requiresAdminLogin, _event.admin.show);
+	app.get('/admin/event/:id/edit', auth.requiresAdminLogin, _event.admin.edit);
+	app.get('/admin/event/:id/remove', auth.requiresAdminLogin, _event.admin.remove)
+	app.all('/admin/events', auth.requiresAdminLogin, _event.admin.index);
+	app.post('/admin/event', auth.requiresAdminLogin, _event.admin.create);
+
 	app.get('/admin/page/new', auth.requiresAdminLogin, page.admin.editnew);
 	app.post('/admin/page/:id', auth.requiresAdminLogin, page.admin.update);
 	app.get('/admin/page/:id', auth.requiresAdminLogin, page.admin.show);

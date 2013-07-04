@@ -3,9 +3,9 @@ var mongoose = require('mongoose'),
 	Article = mongoose.model('Article'),
 	_ = require('underscore');
 
-module.exports = function(cdn) { return {
+module.exports = function(cdn, paginate) { return {
 	admin: {
-index: function(req, res, next) {
+		index: function(req, res, next) {
 			paginate.paginate(Article,{type: "event"},{populate:'featuredImage owners', sort_by: 'createdAt', order: -1}, req, function(err, articles, pagination) {
 					if(err) return next(err);
 					var total = 0;
@@ -13,7 +13,7 @@ index: function(req, res, next) {
 						if(err) return next(err);
 						total = count;
 					});
-					res.render('admin/event/index', {articles:articles, total:total, pagination:pagination});
+					res.render('admin/event/index', {events:articles, total:total, pagination:pagination});
 				}
 			);
 		},
