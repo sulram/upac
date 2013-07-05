@@ -89,44 +89,85 @@ $(document).ready(function(){
 		var _that = this;
 
 		this.target = $(picker_sel);
-		if(this.target.length > 0) {
-			this.input = $(input_sel);
-			
-			this.target.datetimepicker({
-				language: 'pt-BR'
-			});
-			
-			this.picker = this.target.data('datetimepicker');
-			
-			this.input.click(function(){
-				$('span', _that.target).click();
-			});
+		this.input = $(input_sel);
+	
+		this.target.datetimepicker({
+			language: 'pt-BR'
+		});
+	
+		this.picker = this.target.data('datetimepicker');
 
-			this.convertToView = function(){
-				console.log(moment(this.input.val()));
-				this.picker.setLocalDate(moment(this.input.val()).toDate());
-			};
+		this.input.click(function(){
+			$('span', _that.target).click();
+		});
 
-			this.convertToSubmit = function(){
-				this.input.val(moment(this.picker.getLocalDate()).format());	
-			};
-			//console.log(this.input.val());
-			if(this.input.val() === ""){
-				//console.log(0);
-				this.picker.setLocalDate(new Date());
-			}else{
-				//console.log(1);
-				this.convertToView();
-			}
-		} else {
-			this.convertToView = function(){}
-			this.convertToSubmit = function(){}
+		this.convertToView = function(){
+			console.log(moment(this.input.val()));
+			this.picker.setLocalDate(moment(this.input.val()).toDate());
+		};
+
+		this.convertToSubmit = function(){
+			this.input.val(moment(this.picker.getLocalDate()).format());	
+		};
+		//console.log(this.input.val());
+		if(this.input.val() === ""){
+			//console.log(0);
+			this.picker.setLocalDate(new Date());
+		}else{
+			//console.log(1);
+			this.convertToView();
 		}
 		return this;
 	};
-	var pubdate = Picker('#datetimepicker', '#publicationDate');
-	var startdate = Picker('#startdtpicker', '#startDate');
-	var enddate = Picker('#enddtpicker', '#endDate');
+	var pubdate = new Picker('#datetimepicker', '#publicationDate');
+	var startdate, enddate;
+
+	if($('body.editor.agenda').length){
+		startdate = new Picker('#startdtpicker', '#startDate');
+		enddate = new Picker('#enddtpicker', '#endDate');
+	}
+
+	function convertToSubmit(){
+		if(pubdate) pubdate.convertToSubmit();
+		if(startdate) startdate.convertToSubmit();
+		if(enddate) enddate.convertToSubmit();
+	}
+
+	function convertToView(){
+		if(pubdate) pubdate.convertToView();
+		if(startdate) startdate.convertToView();
+		if(enddate) enddate.convertToView();
+	}
+
+	// MAP
+
+	if($('#map').length){
+		var map = L.map('map',{minZoom: 3})
+		var map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png');
+		map.addLayer(map_tiles).setView(new L.LatLng(-22.9,-43.3), 4);
+		map.zoomControl.setPosition('bottomleft');
+		function getURLParameter(name) {
+			return decodeURI(
+				(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,])[1]
+			);
+		}
+		var regionParameter = getURLParameter('region');
+		var region = (regionParameter === 'undefined') ? '' : regionParameter;
+
+		new L.Control.GeoSearch({
+			provider: new L.GeoSearch.Provider.Google({
+				region: region
+			}),
+			searchLabel: 'buscar endereço...'
+		}).addTo(map);
+
+		map.on('geosearch_showlocation', function(result) {
+			console.log('zoom to: ' + result.Location.Label, result.Location.X);
+			$('#address').val(result.Location.Label);
+			$('#geoX').val(result.Location.X);
+			$('#geoY').val(result.Location.Y);
+		});
+	}
 
 	// NOTIFY
 
@@ -172,10 +213,16 @@ $(document).ready(function(){
 			type: 'GET',
 			url: '/article/'+article_id+'/remove',
 			success: function(data, status, jqXHR){
-				notify('A publicação foi excluída.<br/>Você será redirecionado para o blog em 2s.', null);
+				notify('A publicação foi excluída.', null);
+
+				setTimeout(function(){
+					notify('Você será redirecionado para o blog em 2s.', null);
+				},2000);
+				
 				setTimeout(function(){
 					window.location = '/#/blog';
-				},2000);
+				},4000);
+
 			},
 			error: function(jqXHR,status,error){
 				isRemoving = false;
@@ -195,9 +242,7 @@ $(document).ready(function(){
 	form.submit(function(e){
 		var data, action, loading = $('#loading');
 		e.preventDefault();
-		pubdate.convertToSubmit();
-		startdate.convertToSubmit();
-		enddate.convertToSubmit();
+		convertToSubmit();
 		data = form.serialize();
 		action = form.attr('action');
 		console.log('saving... ', action, data);
@@ -211,16 +256,12 @@ $(document).ready(function(){
 				$('#post_remove').removeClass('hide');
 				$('#post_view').attr('href',url).removeClass('hide');
 				notify('A publicação foi salva com sucesso!', data);
-				pubdate.convertToView();
-				startdate.convertToView();
-				enddate.convertToView();
+				convertToView();
 				loading.removeClass('show');
 			},
 			error: function(jqXHR,status,error){
 				notify('Erro ao salvar, tente novamente.', arguments);
-				pubdate.convertToView();
-				startdate.convertToView();
-				enddate.convertToView();
+				convertToView();
 				loading.removeClass('show');
 			}
 		});
@@ -266,13 +307,9 @@ $(document).ready(function(){
 
 	function resize(e){
 		var win = $(window);
-		$('.redactor_editor').height(win.height() - 240);
+		$('.redactor_editor').height(win.height() - 224);
+		$('.scrollable').height(win.height() - 200);
 	}
 
 	resize();
 });
-
-
-
-
-
