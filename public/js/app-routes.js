@@ -20,6 +20,29 @@ App.Router.map(function() {
     this.route('logout');
 });
 
+App.UpacRoute = Em.Route.extend({
+    setupController:function(controller,model){
+        window.scrollTo(0, 0);
+        this._super(this, arguments);
+    }
+});
+
+App.IndexRoute = App.UpacRoute.extend({
+    redirect: function() {
+        this.transitionTo('home');   
+    }
+});
+
+App.HomeRoute = App.UpacRoute.extend({
+    setupController: function (controller){
+        this._super(this, arguments);
+        this.controller.enter();
+    },
+    exit: function(){
+        this.controller.exit();
+    }
+});
+
 // REDE
 
 App.RedeRoute = App.UpacRoute.extend({
