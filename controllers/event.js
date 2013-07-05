@@ -46,13 +46,13 @@ module.exports = function(cdn, paginate) { return {
 		show: function(req, res, next) {
 			Article.findOne({_id: req.param('id')}).populate('featuredImage').exec(function(err, article) {
 				if (err) return next(err);
-				res.render('admin/event/show', {article:article});
+				res.render('admin/event/show', {event:article});
 			});
 		},
 		edit: function(req, res, next) {
 			Article.findById(req.param('id'), function(err, article) {
 				if (err) return next(err);
-				res.render('admin/event/edit', {article:article});
+				res.render('admin/event/edit', {event:article});
 			});
 		},
 		update: function(req, res, next) {

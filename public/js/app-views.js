@@ -93,6 +93,16 @@ App.CalendarView = Ember.View.extend({
                 alert(event.title + ' was moved ' + delta + ' days\n' +
                     '(should probably update your database)');
             },
+            viewDisplay: function (element) {
+                var d = $('#calendar').fullCalendar('getDate');
+                console.log(element, d.getMonth(), d.getFullYear())
+                $.getJSON( '/events/bymonth/'+d.getFullYear ()+'/'+(d.getMonth()+1), function(data){
+                    console.log(data);
+                    //TODO
+                    //.fullCalendar( 'renderEvent', event [, stick ] )
+                    //http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/
+                });
+            }
         });
     }
 });

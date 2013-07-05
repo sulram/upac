@@ -258,6 +258,7 @@ body.editor {
 
 .input_tags {
 	max-width: 221px;
+	margin-bottom: 15px;
 }
 
 #address {
