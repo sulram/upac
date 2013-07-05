@@ -2,6 +2,8 @@ var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Article = mongoose.model('Article')
   , Tag = mongoose.model('Tag')
+  , Img = mongoose.model('Img')
+  , Page = mongoose.model('Page')
 
 module.exports = function (cdn, paginate) { return {
 	admin: {
@@ -163,17 +165,14 @@ module.exports = function (cdn, paginate) { return {
 	},
 	everything2d: function(req, res, next) {
 		//var query = {geo: {$near: req.param('center').split(','), $maxDistance:req.param('distance')}};
-		var query = {geo: {$ne: null}};
+		var query = {$nor: [{geo: null}, {geo: []}]};
 		User.find(query).populate('avatar tags').exec(function(err, users) {
 			if(err) return next(err);
+			query['publicationStatus'] = 'published';
 			Article.find(query).populate('owners featuredImage tags').exec(function(err, articles) {
 				if(err) return next(err);
-				Img.populate(articles, 'owners.avatar', function(err, _articles) {
-					Page.find(query).populate('owners featuredImage tags').exec(function(err, pages) {
-						Img.populate(pages, 'owners.avatar', function(err, _pages) {
-							return res.jsonx({msg: 'ok', articles:_articles, pages:_pages, users:users});
-						});
-					});
+				Page.find(query).populate('owners featuredImage tags').exec(function(err, pages) {
+					return res.jsonx({msg: 'ok', articles:articles, pages:pages, users:users});
 				});
 			});
 		});
