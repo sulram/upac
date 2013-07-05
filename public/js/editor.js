@@ -89,18 +89,17 @@ $(document).ready(function(){
 		var _that = this;
 
 		this.target = $(picker_sel);
-		if(this.target.length > 0) {
-			this.input = $(input_sel);
-			
-			this.target.datetimepicker({
-				language: 'pt-BR'
-			});
-			
-			this.picker = this.target.data('datetimepicker');
-			
-			this.input.click(function(){
-				$('span', _that.target).click();
-			});
+		this.input = $(input_sel);
+		
+		this.target.datetimepicker({
+			language: 'pt-BR'
+		});
+		
+		this.picker = this.target.data('datetimepicker');
+		
+		this.input.click(function(){
+			$('span', _that.target).click();
+		});
 
 		this.convertToView = function(){
 			var date = new Date(this.input.val());
@@ -119,6 +118,7 @@ $(document).ready(function(){
 			//console.log(1);
 			this.convertToView();
 		}
+
 		return this;
 	};
 	var pubdate = new Picker('#datetimepicker', '#publicationDate');
@@ -147,7 +147,7 @@ $(document).ready(function(){
 
 	if(map){
 		var map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png');
-		map.addLayer(map_tiles).setView(new L.LatLng(0,0), 2);
+		map.addLayer(map_tiles).setView(new L.LatLng(-22.9,-43.3), 4);
 		map.zoomControl.setPosition('bottomleft');
 		function getURLParameter(name) {
 			return decodeURI(
@@ -165,8 +165,10 @@ $(document).ready(function(){
 		}).addTo(map);
 
 		map.on('geosearch_showlocation', function(result) {
-			console.log('zoom to: ' + result.Location.Label);
+			console.log('zoom to: ' + result.Location.Label, result);
 			$('#address').val(result.Location.Label);
+			$('#geoX').val(result.Location.X);
+			$('#geoY').val(result.Location.Y);
 		});
 	}
 
@@ -307,8 +309,3 @@ $(document).ready(function(){
 
 	resize();
 });
-
-
-
-
-

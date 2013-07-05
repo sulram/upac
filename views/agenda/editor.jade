@@ -66,15 +66,15 @@ html
 							else
 								textarea(name="address", rows="2")#address.smallinput
 						
-						.o50				
+						.hide				
 							label.input_label(for="geo[]") Localização
 							.input_text
 								if event.geo
-									input(type="text", name="geo[]", value=event.geo[0])#geo.smallinput
-									input(type="text", name="geo[]", value=event.geo[1])#geo.smallinput
+									input(type="text", name="geo[]", value=event.geo[0])#geoX.smallinput
+									input(type="text", name="geo[]", value=event.geo[1])#geoY.smallinput
 								else
-									input(type="text", name="geo[]", value="")#geo.smallinput
-									input(type="text", name="geo[]", value="")#geo.smallinput
+									input(type="text", name="geo[]", value="")#geoX.smallinput
+									input(type="text", name="geo[]", value="")#geoY.smallinput
 
 						.hide
 							label.input_label(for="publicationDate")

@@ -183,32 +183,7 @@ App.MapController = Em.Object.create({
 
                 // cria geojson
 
-                that.geojson = L.geoJson(geodata,{
-                    pointToLayer: function(feature, latlng){
-                        if(feature.properties && feature.properties.type == "user"){
-                            return new UpacMarker(latlng, {icon: userIcon});    
-                        }
-                        return new UpacMarker(latlng);
-                    },
-                    onEachFeature: function(feature, layer){
-                        if (feature.properties && feature.properties.type == "user") {
-                            var username = feature.properties.username
-                            var name = feature.properties.name || username;
-                            layer.bindPopup(userPopup({username: username, name: name}), {showOnMouseOver: true, closeButton: false});
-                        }
-                        //console.log('feat',feature);
-                    }
-                });
-
-                // adiciona geojson no mapa
-                that.cluster = L.markerClusterGroup({
-                    maxClusterRadius: 40,
-                    iconCreateFunction: function (cluster) {
-                        return L.divIcon({ html: cluster.getChildCount(), className: 'upac_cluster', iconSize: L.point(40, 40) });
-                    },
-                });
-                that.cluster.addLayer(that.geojson);
-                App.map.addLayer(that.cluster);
+                that.afterLoaded(geodata);
 
                 // foca usuario se o foco estava salvo
 
@@ -224,6 +199,37 @@ App.MapController = Em.Object.create({
                 that.set('isFetching',false);
             }
         });
+    },
+    afterLoaded: function(geodata){
+        var that = this;
+        that.geojson = L.geoJson(geodata,{
+            pointToLayer: function(feature, latlng){
+                if(feature.properties && feature.properties.type == "user"){
+                    return new UpacMarker(latlng, {icon: userIcon});    
+                }
+                return new UpacMarker(latlng);
+            },
+            onEachFeature: function(feature, layer){
+                if (feature.properties && feature.properties.type == "user") {
+                    var username = feature.properties.username
+                    var name = feature.properties.name || username;
+                    layer.bindPopup(userPopup({username: username, name: name}), {showOnMouseOver: true, closeButton: false});
+                } else {
+                    layer.bindPopup("evento", {showOnMouseOver: true, closeButton: false});
+                }
+                //console.log('feat',feature);
+            }
+        });
+
+        // adiciona geojson no mapa
+        that.cluster = L.markerClusterGroup({
+            maxClusterRadius: 40,
+            iconCreateFunction: function (cluster) {
+                return L.divIcon({ html: cluster.getChildCount(), className: 'upac_cluster', iconSize: L.point(40, 40) });
+            },
+        });
+        that.cluster.addLayer(that.geojson);
+        App.map.addLayer(that.cluster);
     },
     clusterClear: function(){
         this.cluster.clearLayers();
