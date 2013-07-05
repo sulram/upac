@@ -583,6 +583,31 @@ iframe {
 	display: block;
 }
 
+#rede_sidebar .user_articles {
+	list-style-type: none;
+	margin: 0 0 10px;
+	padding: 0;
+}
+
+#rede_sidebar .user_articles li {
+	margin: 1px 0 0;
+	padding: 0;
+}
+
+#rede_sidebar .user_articles li a {
+	padding: 10px;
+	background: #efefef;
+	display: block;
+	text-decoration: none;
+	color: #666;
+	font-size: 12px;
+}
+
+#rede_sidebar .user_articles li a:hover {
+	background: #666;
+	color: #fff;
+}
+
 /* ---------------- BLOG ---------------- */
 
 #wrapper.blog {

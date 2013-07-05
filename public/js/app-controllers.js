@@ -158,13 +158,31 @@ App.BlogTagController = App.BlogRecentesController.extend({
         var _this = this;
         var tag = this.get('model.tag_slug');
         var page = this.get('model.page_num');
-        $.getJSON( '/articles/bytag/'+tag , {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
+        $.getJSON( '/user/bytag/'+tag , {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
             _this.buildFromData(data);
             _this.set('tagName',data.tag.name);
         });
     },
     createModel: function(data){
         data.tag_slug = this.get('model.tag_slug');
+        return Ember.Object.create(data);
+    }
+});
+
+App.BlogUserController = App.BlogRecentesController.extend({
+    tagName: null,
+    postsLimit: 8,
+    getcontent: function(){
+        var _this = this;
+        var username = this.get('model.user_username');
+        var page = this.get('model.page_num');
+        $.getJSON( '/user/'+username+'/articles', {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
+            _this.buildFromData(data);
+            _this.set('user',data.articles[0].owners[0]);
+        });
+    },
+    createModel: function(data){
+        data.user_username = this.get('model.user_username');
         return Ember.Object.create(data);
     }
 });
@@ -225,6 +243,9 @@ App.BlogPostController = Ember.ObjectController.extend({
     openProfile: function(owner){
         window.location.hash = '/rede/perfil/' + owner.username;
     },
+    openUserArchive: function(owner){
+        window.location = '/#/blog/user/'+owner.username+'/1';
+    },
     postComment: function(){
 
         var _this = this;
@@ -261,20 +282,6 @@ App.BlogPostController = Ember.ObjectController.extend({
 });
 
 
-// TIMELINE
-
-App.TimelineIndexController = Ember.ObjectController.extend({
-    isTheLoggedUser: function(){
-        return this.get('model.username') == User.auth.username;
-    }.property('model.username','User.auth.username')
-});
-
-App.TimelineEditarController = Ember.ObjectController.extend({
-    isTheLoggedUser: function(){
-        return this.get('model.username') == User.auth.username;
-    }.property('model.username','User.auth.username')
-});
-
 // REDE
 
 App.RedePerfilController = Ember.ObjectController.extend({
@@ -295,7 +302,13 @@ App.RedePerfilController = Ember.ObjectController.extend({
         if(this.get('content.isLoaded')){
             App.MapController.focusUser(this.get('content.username'));
         }
-    }.observes('content.isLoaded')
+    }.observes('content.isLoaded'),
+    openTimeline: function(username){
+        window.location.hash = '/blog/user/'+username+'/1';
+    },
+    openArticle: function(post){
+        window.location.hash = '/blog/post/'+post._id;
+    },
 });
 
 App.RedeEditarController = Ember.ObjectController.extend({

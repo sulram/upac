@@ -7,71 +7,17 @@ App.Router.map(function() {
         this.route('editar');
         this.route('add');
     });
-    this.resource("timeline", { path: '/timeline/:user_username' }, function(){
-        this.route("editar");
-    });
     this.resource("blog",function(){
         this.route("post", { path: '/post/:post_id' });
         this.route("recentes", { path: '/recentes/:page_num' });
         this.route("tag", { path: '/tag/:tag_slug/:page_num' });
+        this.route("user", { path: '/user/:user_username/:page_num' });
     });
     this.resource("upac");
     this.resource("user",function(){
         this.route("cadastrar");
     });
     this.route('logout');
-});
-
-// TIMELINE
-
-App.UpacRoute = Em.Route.extend({
-    setupController:function(controller,model){
-        window.scrollTo(0, 0);
-        this._super(this, arguments);
-    }
-});
-
-App.IndexRoute = App.UpacRoute.extend({
-    redirect: function() {
-        this.transitionTo('home');   
-    }
-});
-
-App.HomeRoute = App.UpacRoute.extend({
-    setupController: function (controller){
-        this._super(this, arguments);
-        this.controller.enter();
-    },
-    exit: function(){
-        this.controller.exit();
-    }
-});
-
-App.TimelineRoute = App.UpacRoute.extend({
-    model: function (param){
-        console.log('App.UserModel.find', param.user_username);
-        return App.UserModel.find(param.user_username);
-    },
-    serialize: function(model) {
-        return { user_username: model.username };
-    },
-    setupController: function (controller, model){
-        console.log('PERFIL', model);
-        controller.set('model', model);
-        this._super(this, arguments);
-    }
-});
-
-App.TimelineIndexRoute = App.UpacRoute.extend({
-    model: function (param){
-        return this.modelFor('timeline');
-    }
-});
-
-App.TimelineEditarRoute = App.UpacRoute.extend({
-    model: function (param){
-        return this.modelFor('timeline');
-    }
 });
 
 // REDE
@@ -149,7 +95,23 @@ App.BlogTagRoute = App.UpacRoute.extend({
     },
     setupController: function (controller, model){
         controller.set('model', model);
+        controller.set('articles', []);
         controller.set('tagName', null);
+        controller.getcontent();
+        this._super(this, arguments);
+    }
+});
+
+App.BlogUserRoute = App.UpacRoute.extend({
+    model: function(param){
+        return Ember.Object.create({user_username: param.user_username, page_num: param.page_num});
+    },
+    serialize: function(model) {
+        if(model) return { user_username: model.user_username, page_num: model.page_num };
+    },
+    setupController: function (controller, model){
+        controller.set('model', model);
+        controller.set('articles', []);
         controller.getcontent();
         this._super(this, arguments);
     }

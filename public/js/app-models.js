@@ -40,6 +40,7 @@ App.UserModel.reopen({
 
         $.getJSON('/user/' + username, function(data) {
             user.setProperties(data.user);
+            user.set('articles',data.articles);
             user.set('isLoaded', true);
             user.set('nick',user.get('name') || user.get('username'));
             user.set('avatar_medium', _this.buildAvatar(user,'medium'));
