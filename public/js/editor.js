@@ -89,17 +89,18 @@ $(document).ready(function(){
 		var _that = this;
 
 		this.target = $(picker_sel);
-		this.input = $(input_sel);
-		
-		this.target.datetimepicker({
-			language: 'pt-BR'
-		});
-		
-		this.picker = this.target.data('datetimepicker');
-		
-		this.input.click(function(){
-			$('span', _that.target).click();
-		});
+		if(this.target.length > 0) {
+			this.input = $(input_sel);
+			
+			this.target.datetimepicker({
+				language: 'pt-BR'
+			});
+			
+			this.picker = this.target.data('datetimepicker');
+			
+			this.input.click(function(){
+				$('span', _that.target).click();
+			});
 
 		this.convertToView = function(){
 			var date = new Date(this.input.val());
@@ -118,7 +119,6 @@ $(document).ready(function(){
 			//console.log(1);
 			this.convertToView();
 		}
-
 		return this;
 	};
 	var pubdate = new Picker('#datetimepicker', '#publicationDate');

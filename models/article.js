@@ -88,9 +88,13 @@ ArticleSchema.pre('save', function(next) {
 			this.slug = this.id;
 		}
 	}
-	mongoose.model('Article').find({slug: {}})
 	this.updatedAt = new Date();
-	next();
+	var thisart = this;
+	mongoose.model('Article').findOne({slug: this.slug}, function(err, article){
+		if(err) return next(err);
+		if(article) this.slug += '-'+crypto.randomBytes(5).toString('hex'); // se der conflito vai ser muita cagada
+		next();
+	})
 });
 
 PageSchema.pre('save', function(next) {
@@ -106,7 +110,7 @@ PageSchema.pre('save', function(next) {
 	}
 	this.updatedAt = new Date();
 	var thisart = this;
-	mongoose.model('Article').findOne({slug: this.slug}, function(err, article){
+	mongoose.model('Page').findOne({slug: this.slug}, function(err, article){
 		if(err) return next(err);
 		if(article) this.slug += '-'+crypto.randomBytes(5).toString('hex'); // se der conflito vai ser muita cagada
 		next();
