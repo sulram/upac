@@ -252,16 +252,20 @@ body.editor {
 
 /* --------------------- MAP --------------------- */
 
-.o50 {
-	opacity: .5;
+.scrollable {
+	overflow: auto;
+}
+
+.input_tags {
+	max-width: 221px;
 }
 
 #address {
-	width: 260px;
+	width: 236px;
 }
 
 #map {
-	width: 280px;
+	width: 260px;
 	height: 200px;
 }
 

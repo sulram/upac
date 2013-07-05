@@ -31,7 +31,7 @@ html
 				.row
 					.span8
 						textarea(name="content")#content= event.content
-					.span4
+					.span4.scrollable
 						label.input_label(for="excerpt")
 							| Resumo (
 							span#excerpt_count
@@ -39,6 +39,14 @@ html
 							|  caracteres)
 						.input_excerpt
 							textarea(name="excerpt", rows="2", placeholder="escreva aqui")#excerpt.smallinput= event.excerpt
+
+						label.input_label(for="tags")
+							| Palavras-chave
+						.input_tags
+							input(type="text", name="tags-input")#tags
+							#tags-hidden
+								each tag in event.tags
+									input(type="hidden", name="tags[]", value=tag._id, rel=tag.name)
 
 						label.input_label(for="startDate")
 							| Data de início
@@ -62,9 +70,9 @@ html
 						#map
 						.input_text
 							if event.address
-								textarea(name="address", rows="2")#address.smallinput= event.address
+								textarea(name="address", rows="3")#address.smallinput= event.address
 							else
-								textarea(name="address", rows="2")#address.smallinput
+								textarea(name="address", rows="3")#address.smallinput
 						
 						.hide				
 							label.input_label(for="geo[]") Localização
@@ -88,13 +96,7 @@ html
 									input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate.smallinput
 							
 						br
-						label.input_label(for="tags")
-							| Palavras-chave
-						.input_tags
-							input(type="text", name="tags-input")#tags
-							#tags-hidden
-								each tag in event.tags
-									input(type="hidden", name="tags[]", value=tag._id, rel=tag.name)
+						
 			
 			.footer
 				.container

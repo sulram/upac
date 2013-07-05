@@ -143,9 +143,8 @@ $(document).ready(function(){
 
 	// MAP
 
-	var map = L.map('map',{minZoom: 3});
-
-	if(map){
+	if($('#map').length){
+		var map = L.map('map',{minZoom: 3})
 		var map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png');
 		map.addLayer(map_tiles).setView(new L.LatLng(-22.9,-43.3), 4);
 		map.zoomControl.setPosition('bottomleft');
@@ -165,7 +164,7 @@ $(document).ready(function(){
 		}).addTo(map);
 
 		map.on('geosearch_showlocation', function(result) {
-			console.log('zoom to: ' + result.Location.Label, result);
+			console.log('zoom to: ' + result.Location.Label, result.Location.X);
 			$('#address').val(result.Location.Label);
 			$('#geoX').val(result.Location.X);
 			$('#geoY').val(result.Location.Y);
@@ -216,10 +215,16 @@ $(document).ready(function(){
 			type: 'GET',
 			url: '/article/'+article_id+'/remove',
 			success: function(data, status, jqXHR){
-				notify('A publicação foi excluída.<br/>Você será redirecionado para o blog em 2s.', null);
+				notify('A publicação foi excluída.', null);
+
+				setTimeout(function(){
+					notify('Você será redirecionado para o blog em 2s.', null);
+				},2000);
+				
 				setTimeout(function(){
 					window.location = '/#/blog';
-				},2000);
+				},4000);
+
 			},
 			error: function(jqXHR,status,error){
 				isRemoving = false;
@@ -304,7 +309,8 @@ $(document).ready(function(){
 
 	function resize(e){
 		var win = $(window);
-		$('.redactor_editor').height(win.height() - 240);
+		$('.redactor_editor').height(win.height() - 224);
+		$('.scrollable').height(win.height() - 200);
 	}
 
 	resize();
