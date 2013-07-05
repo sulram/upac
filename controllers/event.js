@@ -192,7 +192,7 @@ module.exports = function(cdn, paginate) { return {
 		});
 	},
 	near: function(req, res, next) {
-		Article.findOne({geo: {$nearSphere: req.param.center, $maxDistance: req.param.radius}}, 
+		Article.findOne({geo: {$nearSphere: req.param.center, $maxDistance: req.param.radius}, startDate: {$ne: null}, endDate: {$ne: null}}, 
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
@@ -216,6 +216,25 @@ module.exports = function(cdn, paginate) { return {
 				});
 			}
 		);
+	},
+	byMonth: function(req, res, next) {
+		var year = Number(req.param('year'))
+		var nextmonthyear = year;
+		var month = Number(req.param('month'))-1
+		var nextmonth = month + 1;
+		if(nextmonth > 11) {
+			nextmonth = 0;
+			year += 1;
+		}
+		var startDate = new Date(year, month, 1);
+		var endDate = new Date(nextmonthyear, nextmonth, 1);
+		Article.find({
+			startDate:{$lte: endDate},
+			endDate:{$gte: startDate}
+		}, function(err, events) {
+			if(err) return next(err);
+			res.jsonx({msg: "ok", events:events});
+		});
 	},
 	happening: function(req, res, next) {
 		var now = new Date();

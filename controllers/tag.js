@@ -166,13 +166,18 @@ module.exports = function (cdn, paginate) { return {
 	everything2d: function(req, res, next) {
 		//var query = {geo: {$near: req.param('center').split(','), $maxDistance:req.param('distance')}};
 		var query = {$nor: [{geo: null}, {geo: []}]};
-		User.find(query).populate('avatar tags').exec(function(err, users) {
+		User.find(query).select('-resetPasswordToken -verifyToken').populate('avatar tags').exec(function(err, users) {
 			if(err) return next(err);
 			query['publicationStatus'] = 'published';
 			Article.find(query).populate('owners featuredImage tags').exec(function(err, articles) {
 				if(err) return next(err);
 				Page.find(query).populate('owners featuredImage tags').exec(function(err, pages) {
-					return res.jsonx({msg: 'ok', articles:articles, pages:pages, users:users});
+					return res.jsonx({
+						msg: 'ok',
+						articles:articles,
+						pages:pages,
+						users:users
+					});
 				});
 			});
 		});
