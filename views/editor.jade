@@ -127,15 +127,21 @@ html
 							- var large_url = image.upload_complete ? image.getSize('large').cdn_url : image.original_cdn_url;
 							- var isCover = (featuredImageID == String(img.image._id)) ? 'loaded cover' : 'loaded'; 
 							figure(data-id=String(image._id), data-src=large_url, class=isCover)
-								span.icon.fui-heart
+								span.icon.fui-check-inverted
 								img(src=cdn_url)
-					a(href='#')#img_add.btn.btn-w-icon
-						span.fui-plus
-						|  adicionar imagem
-					&nbsp; &nbsp;
-					a(href='#')#img_cover.btn.btn-w-icon
-						span.fui-heart
-						|  definir como capa
+					.row-fluid
+						.span6
+							a(href='#')#img_add.btn.btn-w-icon.btn-primary
+								span.fui-plus
+								|  adicionar imagem ao texto
+							&nbsp; &nbsp;
+							a(href='#')#img_cover.btn.btn-w-icon.btn-warning
+								span.fui-check
+								|  definir como capa
+						.span6(style="text-align:right;")
+							a(href='#')#img_remove.btn.btn-w-icon.btn-danger
+								span.fui-cross
+								|  excluir imagem
 
 
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')

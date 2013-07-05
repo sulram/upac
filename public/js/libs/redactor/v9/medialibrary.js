@@ -13,6 +13,7 @@ RedactorPlugins.medialibrary = {
 
         var $btn_add = $('#medialibrary #img_add');
         var $btn_cover = $('#medialibrary #img_cover');
+        var $btn_remove = $('#medialibrary #img_remove');
         var $imgs = $('#medialibrary #images-gallery .gallery-image');
 
         // clique na miniaturas carregadas
@@ -41,6 +42,19 @@ RedactorPlugins.medialibrary = {
             selected.addClass('cover');
             //alert('cover is image ' + selected.attr('data-id'));
             $('#featuredImage').val(selected.attr('data-id').split('"').join(''));
+        });
+
+        // remover imagem
+
+        $btn_remove.bind('click',function(){
+            var feat = $('#featuredImage');
+            var figure = $('#images-gallery figure.selected');
+            var id = figure.attr('data-id');
+            figure.remove();
+            _this.selectLast();
+            // deletar input hiddens
+            if(feat.val() == id) feat.val('');
+            $('#images-hidden input[value="'+id+'"]').remove();
         });
 
         // click na aba
@@ -77,7 +91,7 @@ RedactorPlugins.medialibrary = {
 
                     // cria figure e imagem na galeria
 
-                    var $img = $('<figure><img/><span class="icon fui-heart"></span></figure>');
+                    var $img = $('<figure><img/><span class="icon fui-check-inverted"></span></figure>');
                     $img.data('image-id', image._id);
                     $("#images-gallery").append($img);
 
@@ -102,7 +116,7 @@ RedactorPlugins.medialibrary = {
 
                                 // seleciona ultima imagem
 
-                                $('#images-gallery figure.loaded:last').click();
+                                _this.selectLast();
 
                             } else {
                                 
@@ -137,6 +151,10 @@ RedactorPlugins.medialibrary = {
         }, this);
 
         this.buttonAddAfter('link', 'medialibrary', 'Imagens', callback);
+    },
+
+    selectLast: function(){
+        $('#images-gallery figure.loaded:last').click();
     },
 
     openModal: function(){
