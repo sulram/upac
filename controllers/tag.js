@@ -163,13 +163,19 @@ module.exports = function (cdn, paginate) { return {
 	},
 	everything2d: function(req, res, next) {
 		//var query = {geo: {$near: req.param('center').split(','), $maxDistance:req.param('distance')}};
-		var query = {geo: {$geoWithin: {$box: [req.param('ll').split(','), req.param('ur').split(',')]}}};
-		paginate.paginate(User, query, {populate: 'avatar tags'}, req, function(err, users) {
+		var query = {geo: {$ne: null}};
+		User.find(query).populate('avatar tags').exec(function(err, users) {
 			if(err) return next(err);
-			paginate.paginate(Article, query, {populate: 'owners featuredImage tags'}, req, function(err, articles) {
+			Article.find(query).populate('owners featuredImage tags').exec(function(err, articles) {
 				if(err) return next(err);
-				return res.jsonx({msg: 'ok', articles: articles, users:users});
-			})
+				Img.populate(articles, 'owners.avatar', function(err, _articles) {
+					Page.find(query).populate('owners featuredImage tags').exec(function(err, pages) {
+						Img.populate(pages, 'owners.avatar', function(err, _pages) {
+							return res.jsonx({msg: 'ok', articles:_articles, pages:_pages, users:users});
+						});
+					});
+				});
+			});
 		});
 	}
 }};
