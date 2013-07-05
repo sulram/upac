@@ -206,6 +206,7 @@ module.exports = function(cdn, paginate) { return {
 	index: function(req, res, next) {
 		Article.find(
 			{
+				publicationStatus: 'published',
 				$or: [
 					{startDate: {$ne: null}},
 					{endDate: {$ne: null}}
@@ -232,6 +233,7 @@ module.exports = function(cdn, paginate) { return {
 		var startDate = new Date(year, month, 1);
 		var endDate = new Date(nextmonthyear, nextmonth, 1);
 		Article.find({
+			publicationStatus: 'published',
 			startDate:{$lt: endDate},
 			endDate:{$gte: startDate}
 		}, function(err, events) {
