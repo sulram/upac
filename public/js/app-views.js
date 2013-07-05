@@ -1,11 +1,11 @@
 // MENU PRINCIPAL
 
 App.MenuView = Em.View.extend({
-    templateName: 'menu'
+    templateName: 'view_menu'
 });
 
 App.AddModalView = Em.View.extend({
-    templateName: 'modal-content'
+    templateName: 'view_modal'
 });
 
 // UPLOAD DE FOTO

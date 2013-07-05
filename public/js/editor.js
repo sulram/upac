@@ -102,7 +102,9 @@ $(document).ready(function(){
 		});
 
 		this.convertToView = function(){
-			this.picker.setLocalDate(new Date(this.input.val()));
+			var date = new Date(this.input.val());
+			console.log()
+			this.picker.setLocalDate(date);
 		};
 
 		this.convertToSubmit = function(){
@@ -119,9 +121,54 @@ $(document).ready(function(){
 
 		return this;
 	};
-	var pubdate = Picker('#datetimepicker', '#publicationDate');
-	var startdate = Picker('#startdtpicker', '#startDate');
-	var enddate = Picker('#enddtpicker', '#endDate');
+	var pubdate = new Picker('#datetimepicker', '#publicationDate');
+	var startdate, enddate;
+
+	if($('body.editor.agenda').length){
+		startdate = new Picker('#startdtpicker', '#startDate');
+		enddate = new Picker('#enddtpicker', '#endDate');
+	}
+
+	function convertToSubmit(){
+		if(pubdate) pubdate.convertToSubmit();
+		if(startdate) startdate.convertToSubmit();
+		if(enddate) enddate.convertToSubmit();
+	}
+
+	function convertToView(){
+		if(pubdate) pubdate.convertToView();
+		if(startdate) startdate.convertToView();
+		if(enddate) enddate.convertToView();
+	}
+
+	// MAP
+
+	var map = L.map('map',{minZoom: 3});
+
+	if(map){
+		var map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png');
+		map.addLayer(map_tiles).setView(new L.LatLng(0,0), 2);
+		map.zoomControl.setPosition('bottomleft');
+		function getURLParameter(name) {
+			return decodeURI(
+				(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,])[1]
+			);
+		}
+		var regionParameter = getURLParameter('region');
+		var region = (regionParameter === 'undefined') ? '' : regionParameter;
+
+		new L.Control.GeoSearch({
+			provider: new L.GeoSearch.Provider.Google({
+				region: region
+			}),
+			searchLabel: 'buscar endereço...'
+		}).addTo(map);
+
+		map.on('geosearch_showlocation', function(result) {
+			console.log('zoom to: ' + result.Location.Label);
+			$('#address').val(result.Location.Label);
+		});
+	}
 
 	// NOTIFY
 
@@ -190,9 +237,7 @@ $(document).ready(function(){
 	form.submit(function(e){
 		var data, action, loading = $('#loading');
 		e.preventDefault();
-		pubdate.convertToSubmit();
-		startdate.convertToSubmit();
-		enddate.convertToSubmit();
+		convertToSubmit();
 		data = form.serialize();
 		action = form.attr('action');
 		console.log('saving... ', action, data);
@@ -206,16 +251,12 @@ $(document).ready(function(){
 				$('#post_remove').removeClass('hide');
 				$('#post_view').attr('href',url).removeClass('hide');
 				notify('A publicação foi salva com sucesso!', data);
-				pubdate.convertToView();
-				startdate.convertToView();
-				enddate.convertToView();
+				convertToView();
 				loading.removeClass('show');
 			},
 			error: function(jqXHR,status,error){
 				notify('Erro ao salvar, tente novamente.', arguments);
-				pubdate.convertToView();
-				startdate.convertToView();
-				enddate.convertToView();
+				convertToView();
 				loading.removeClass('show');
 			}
 		});
