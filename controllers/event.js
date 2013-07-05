@@ -244,7 +244,7 @@ module.exports = function(cdn, paginate) { return {
 	happening: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{startDate: {$lte: now}, endDate: {$gt: now}},
+			{publicationStatus: 'published', startDate: {$lte: now}, endDate: {$gt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
@@ -257,7 +257,7 @@ module.exports = function(cdn, paginate) { return {
 	past: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{endDate: {$lt: now}},
+			{publicationStatus: 'published', endDate: {$lt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
@@ -270,7 +270,7 @@ module.exports = function(cdn, paginate) { return {
 	future: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{startDate: {$gt: now}},
+			{publicationStatus: 'published', startDate: {$gt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
