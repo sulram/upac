@@ -135,16 +135,17 @@ module.exports = function(cdn, paginate){ return {
 		}
 		console.info(data);
 		
-		if(!req.isAdmin()) {
-			query['owners'] = req.user.id;
-		}
 		Article.findOne(query, function(err, article) {
 			if(err) return res.jsonx(500, {error: err});
+
+			if (article && !_.find(article.owners, function(owner) {
+				return owner == req.user.id;
+			})) return res.jsonx(401, {msg: 'unauthorized'});
+
 			if(!article) {
-				data._id = mongoose.Types.ObjectId(req.body.id);
 				data.owners = req.param('owners')||[req.user.id];
 				article = new Article(data);
-				article._id = mongoose.Types.ObjectId(req.body.id);
+				article._id = mongoose.Types.ObjectId(req.param('id'));
 			} else {
 				article.set(data);
 			}

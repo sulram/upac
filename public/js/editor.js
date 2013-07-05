@@ -89,34 +89,38 @@ $(document).ready(function(){
 		var _that = this;
 
 		this.target = $(picker_sel);
-		this.input = $(input_sel);
-		
-		this.target.datetimepicker({
-			language: 'pt-BR'
-		});
-		
-		this.picker = this.target.data('datetimepicker');
-		
-		this.input.click(function(){
-			$('span', _that.target).click();
-		});
+		if(this.target.length > 0) {
+			this.input = $(input_sel);
+			
+			this.target.datetimepicker({
+				language: 'pt-BR'
+			});
+			
+			this.picker = this.target.data('datetimepicker');
+			
+			this.input.click(function(){
+				$('span', _that.target).click();
+			});
 
-		this.convertToView = function(){
-			this.picker.setLocalDate(new Date(this.input.val()));
-		};
+			this.convertToView = function(){
+				this.picker.setLocalDate(new Date(this.input.val()));
+			};
 
-		this.convertToSubmit = function(){
-			this.input.val(this.picker.getLocalDate());	
-		};
-		//console.log(this.input.val());
-		if(this.input.val() === ""){
-			//console.log(0);
-			this.picker.setLocalDate(new Date());
-		}else{
-			//console.log(1);
-			this.convertToView();
+			this.convertToSubmit = function(){
+				this.input.val(this.picker.getLocalDate());	
+			};
+			//console.log(this.input.val());
+			if(this.input.val() === ""){
+				//console.log(0);
+				this.picker.setLocalDate(new Date());
+			}else{
+				//console.log(1);
+				this.convertToView();
+			}
+		} else {
+			this.convertToView = function(){}
+			this.convertToSubmit = function(){}
 		}
-
 		return this;
 	};
 	var pubdate = Picker('#datetimepicker', '#publicationDate');
