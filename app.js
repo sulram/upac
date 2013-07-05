@@ -92,6 +92,9 @@ marked.setOptions({
 	sanitize: true,
 	pedantic: false
 });
+app.locals.dmydate = function(date) {
+	return date.toString("dd/MM/yyyy hh:mm:ss");
+}
 app.locals.md = function(text) {// helpers for the jade view engine
 	return marked(text||"");
 }

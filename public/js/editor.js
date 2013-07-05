@@ -103,11 +103,12 @@ $(document).ready(function(){
 			});
 
 			this.convertToView = function(){
-				this.picker.setLocalDate(new Date(this.input.val()));
+				console.log(moment(this.input.val()));
+				this.picker.setLocalDate(moment(this.input.val()).toDate());
 			};
 
 			this.convertToSubmit = function(){
-				this.input.val(this.picker.getLocalDate());	
+				this.input.val(moment(this.picker.getLocalDate()).format());	
 			};
 			//console.log(this.input.val());
 			if(this.input.val() === ""){

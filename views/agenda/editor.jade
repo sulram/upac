@@ -37,7 +37,7 @@ html
 							span.add-on
 								i(data-time-icon="icon-time", data-date-icon="icon-calendar")
 							if event.startDate
-								input(type="text", name="startDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{event.startDate}")#startDate.smallinput
+								input(type="text", name="startDate", data-format="dd/MM/yyyy hh:mm:ss", value=event.startDate.toISOString())#startDate.smallinput
 							else
 								input(type="text", name="startDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#startDate.smallinput
 						label.input_label(for="endDate")
@@ -46,7 +46,7 @@ html
 							span.add-on
 								i(data-time-icon="icon-time", data-date-icon="icon-calendar")
 							if event.endDate
-								input(type="text", name="endDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{event.endDate}")#endDate.smallinput
+								input(type="text", name="endDate", data-format="dd/MM/yyyy hh:mm:ss", value=event.endDate.toISOString())#endDate.smallinput
 							else
 								input(type="text", name="endDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#endDate.smallinput
 						label.input_label(for="address") Endereço
@@ -76,7 +76,7 @@ html
 							span.add-on
 								i(data-time-icon="icon-time", data-date-icon="icon-calendar")
 							if event.publicationDate
-								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="#{event.publicationDate}")#publicationDate.smallinput
+								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value=event.publicationDate.toISOString())#publicationDate.smallinput
 							else
 								input(type="text", name="publicationDate", data-format="dd/MM/yyyy hh:mm:ss", value="")#publicationDate.smallinput
 							
@@ -173,6 +173,7 @@ html
 		script(src='/flat-ui/js/jquery-1.8.3.min.js')
 		script(src='/flat-ui/js/bootstrap.min.js')
 		script(src='/js/libs/underscore-min.js')
+		script(src='/js/libs/moment.min.js')
 		script(src='/js/libs/codemirror/lib/codemirror.js')
 		script(src='/js/libs/codemirror/mode/markdown/markdown.js')
 		script(src='/js/libs/codemirror/mode/gfm/gfm.js')
