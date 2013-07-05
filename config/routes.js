@@ -140,6 +140,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.post('/event/:id', auth.requiresLogin, _event.editorsave);
 	
 	app.get('/events', _event.index);
+	app.get('/events/bymonth/:year/:month', _event.byMonth);
 	app.get('/events/near', _event.near);
 	app.get('/events/happening', _event.happening);
 	app.get('/events/past', _event.past);
