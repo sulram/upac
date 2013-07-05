@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Article = mongoose.model('Article'),
+	Img = mongoose.model('Img'),
 	_ = require('underscore');
 
 module.exports = function(cdn, paginate) { return {
@@ -205,8 +206,11 @@ module.exports = function(cdn, paginate) { return {
 	index: function(req, res, next) {
 		Article.find(
 			{
-				startDate: {$ne: null},
-				endDate: {$ne: null},
+				publicationStatus: 'published',
+				$or: [
+					{startDate: {$ne: null}},
+					{endDate: {$ne: null}}
+				]
 			},
 			function(err, events) {
 				if(err) return err;
@@ -229,7 +233,8 @@ module.exports = function(cdn, paginate) { return {
 		var startDate = new Date(year, month, 1);
 		var endDate = new Date(nextmonthyear, nextmonth, 1);
 		Article.find({
-			startDate:{$lte: endDate},
+			publicationStatus: 'published',
+			startDate:{$lt: endDate},
 			endDate:{$gte: startDate}
 		}, function(err, events) {
 			if(err) return next(err);
@@ -239,7 +244,7 @@ module.exports = function(cdn, paginate) { return {
 	happening: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{startDate: {$lte: now}, endDate: {$gt: now}},
+			{publicationStatus: 'published', startDate: {$lte: now}, endDate: {$gt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
@@ -252,7 +257,7 @@ module.exports = function(cdn, paginate) { return {
 	past: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{endDate: {$lt: now}},
+			{publicationStatus: 'published', endDate: {$lt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
@@ -265,7 +270,7 @@ module.exports = function(cdn, paginate) { return {
 	future: function(req, res, next) {
 		var now = new Date();
 		Article.find(
-			{startDate: {$gt: now}},
+			{publicationStatus: 'published', startDate: {$gt: now}},
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
