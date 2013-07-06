@@ -1080,6 +1080,10 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	max-width: 200px;
 }
 
+.leaflet-popup-content p strong {
+	font-size: 14px;
+}
+
 .leaflet-popup-content figure.post_avatar {
 	display: inline-block;
 	margin: 0;

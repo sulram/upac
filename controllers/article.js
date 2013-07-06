@@ -81,7 +81,7 @@ module.exports = function(cdn, paginate){ return {
 	neweditor: function(req, res, next) {
 		var article = new Article({
 			owners:[req.user.id],
-			publicationStatus:"draft"
+			publicationStatus:"published"
 		});
 		res.render('editor',{title:"Editor", article:article, is_new:true});
 	},

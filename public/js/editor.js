@@ -206,7 +206,7 @@ $(document).ready(function(){
 				notify('A publicação foi excluída.', null);
 
 				setTimeout(function(){
-					notify('Você será redirecionado para o blog em 2s.', null);
+					notify('Você será redirecionado em 2s.', null);
 				},2000);
 				
 				setTimeout(function(){
@@ -316,7 +316,7 @@ $(document).ready(function(){
 				id = data.page._id;
 				break;
 			case 'event':
-				id = data.event._id;
+				id = data.article._id;
 				break;
 		}
 		return id;

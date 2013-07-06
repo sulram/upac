@@ -19,7 +19,8 @@ var calIcon = new UIcon({iconUrl: 'img/pin_cal.png'});
 var upac_new_marker = null;
 
 function pagePopup(page) {
-    return '<p><strong>' + page.title + '</strong></p><p><a href="#/rede/local/' + page.slug + '">Clique para ver o perfil</a></p>';
+    var excerpt = page.excerpt || '';
+    return '<p><strong>' + page.title + '</strong><br/>'+excerpt+'</p><p><a href="#/rede/local/' + page.slug + '">Clique para ver o perfil</a></p>';
 }
 
 function userPopup(user) {
@@ -45,7 +46,7 @@ function createPagePin(page){
             type: "page",
             title: page.title,
             slug: page.slug,
-            content: page.content
+            excerpt: page.excerpt
         }
     };
 };
@@ -127,6 +128,7 @@ var UpacMarker = L.Marker.extend({
         this.closePopup();
     },
     _getParent: function(element, className) {
+        if(!element) return;
         var parent = element.parentNode;
         while (parent != null) {
             if (parent.className && L.DomUtil.hasClass(parent, className))
@@ -292,13 +294,13 @@ App.MapController = Em.Object.create({
                 } else {
                     layer.bindPopup(pagePopup(feature.properties), {showOnMouseOver: true, closeButton: false});
                 }
-                console.log('feat',feature);
+                //console.log('feat',feature);
             }
         });
 
         // adiciona geojson no mapa
         that.cluster = L.markerClusterGroup({
-            maxClusterRadius: 40,
+            maxClusterRadius: 50,
             iconCreateFunction: function (cluster) {
                 return L.divIcon({ html: cluster.getChildCount(), className: 'upac_cluster', iconSize: L.point(40, 40) });
             },

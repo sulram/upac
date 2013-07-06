@@ -434,7 +434,7 @@ App.RedeLocalController = Ember.ObjectController.extend({
         });
     },
     focusPlace: function(){
-        console.log('profile is loaded?',this.get('content.isLoaded'));
+        //console.log('profile is loaded?',this.get('content.isLoaded'));
         if(this.get('content.isLoaded')){
             App.MapController.focusPlace(this.get('place.slug'));
         }
