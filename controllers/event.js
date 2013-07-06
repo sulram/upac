@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Article = mongoose.model('Article'),
 	Img = mongoose.model('Img'),
+	Tag = mongoose.model('Tag'),
 	_ = require('underscore');
 
 module.exports = function(cdn, paginate) { return {
@@ -122,22 +123,8 @@ module.exports = function(cdn, paginate) { return {
 			return {image:image, size:'normal'}
 		})
 		// pegar tags e transformar em ObjectIDs
+		data.tags = Tag.toIDs(data.tags);
 		var query = {_id: req.param('id')}
-		if (data.tags) {
-			data.tags = _.map(data.tags, function(tag) {
-				var m = tag.match(/^[0-9a-fA-F]{24}$/);
-				if (m && m.length == 1) {
-					return tag;
-				} else {
-					var ntag = new Tag({name:tag});
-					ntag.save(function(err){
-						console.info("Salvando tag %j", ntag);
-					})
-					return ntag._id;
-				}
-			});
-		}
-		console.info(data);
 		Article.findOne(query, function(err, article) {
 			if(err) return res.jsonx(500, {error: err});
 			if (article && !_.find(article.owners, function(owner) {
