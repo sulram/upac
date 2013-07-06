@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
   , Page = mongoose.model('Page')
   , Img = mongoose.model('Img')
+  , Tag = mongoose.model('Tag')
   , _ = require('underscore')
 
 module.exports = function(cdn, paginate) {
@@ -127,16 +128,15 @@ module.exports = function(cdn, paginate) {
 	},
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
-			'title', 'content', 'excerpt',
+			'title', 'content', 'excerpt', 'tags',
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'geo'
 		);
 		data.updatedAt = new Date;
-		console.info(data.images);
 		data.images = _.map(data.images, function(image) {
 			return {image:image[0], size:image[1]}
 		})
-		console.info(data.images);
+		data.tags = Tag.toIDs(data.tags);
 		var query = {_id: req.param('id')}
 		Page.findOne(query, function(err, page) {
 			if(err) return res.jsonx(500, {error: err});
@@ -169,18 +169,16 @@ module.exports = function(cdn, paginate) {
 	},
 	create: function(req, res, next) {
 		var data = _.pick(req.body,
-			'title', 'content','excerpt',
+			'title', 'content','excerpt', 'tags',
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'geo'
 		);
-		
 		data.createdAt = data.updatedAt = new Date;
 		data.owners = [req.user._id];
-		console.info(data.images);
+		data.tags = Tag.toIDs(data.tags);
 		data.images = _.map(data.images, function(image) {
 			return {image:image[0], size:image[1]}
 		})
-		console.info(data.images);
 		var place = new Page(data);
 		place.save(function(err) {
 			if(err) return res.jsonx(500, {error: err});
@@ -207,6 +205,19 @@ module.exports = function(cdn, paginate) {
 			Img.populate(place, 'owners.avatar', function(err,place) {
 				if(err) return next(err);
 				res.jsonx({msg: 'ok', place:place});
+			})
+		})
+	},
+	remove: function(req, res, next) {
+		Page.findById(req.param('id'), function(err, place) {
+			if(err) return next(err);
+			if(!place) return res.jsonx(404, {msg:'error', error: 'place not found'});
+			if(!req.isAdmin()&&!_.find(place.owners, function(owner) {return owner == req.user.id;})) {
+				return res.jsonx(401, {msg: 'error', error: 'unauthorized'});
+			}
+			place.remove(function(err) {
+				if(err) return next(err);
+				res.jsonx({msg:'ok'});
 			})
 		})
 	}

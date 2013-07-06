@@ -134,6 +134,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.get('/place/byslug/:slug', place.bySlug);
 	app.post('/place/:id', auth.requiresLogin, place.editorsave);
 	app.get('/place/:id', place.show);
+	app.get('/place/:id/remove', auth.requiresLogin, place.remove);
 
 	app.post('/tag/new', auth.requiresLogin, tag.create);
 	app.get('/tag/:id', tag.show);
