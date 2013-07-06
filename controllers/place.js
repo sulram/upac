@@ -164,6 +164,9 @@ module.exports = function(cdn, paginate) {
 			res.jsonx({msg: 'ok', places:places});
 		});
 	},
+	create: function(req, res, next) {
+		res.jsonx({msg:'ok', place: new Page()});
+	},
 	show: function(req, res, next) {
 		Page.findById(req.param('id')).populate('featuredImage owners tags').exec(function(err, place) {
 			if(err) return next(err);
