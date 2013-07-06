@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	ObjectId = Schema.ObjectId;
+	ObjectId = Schema.ObjectId,
+	_ = require('underscore');
 
 var TagSchema = new Schema({
 	name: {
@@ -53,6 +54,23 @@ TagSchema.path('slug').validate(function(slug){
 TagSchema.methods = {
 	addRef: function() { this.update({$incr:{refcount: 1}}, function(err) { if (err) console.error("Erro ao subir refcount da tag %s", this.id)}); },
 	rmRef: function() { this.update({$decr:{refcount: 1}}, function(err) { if (err) console.error("Erro ao descer refcount da tag %s", this.id)}); }
+}
+TagSchema.statics.toIDs = function(list) {
+	if (list) {
+		list = _.map(list, function(tag) {
+			var m = tag.match(/^[0-9a-fA-F]{24}$/);
+			if (m && m.length == 1) {
+				return tag;
+			} else {
+				var ntag = new (mongoose.model('Tag'))({name:tag});
+				ntag.save(function(err){
+					console.info("Salvando tag %j", ntag);
+				})
+				return ntag._id;
+			}
+		});
+	}
+	return list;
 }
 
 mongoose.model('Tag', TagSchema);
