@@ -144,18 +144,32 @@ $(document).ready(function(){
 		var regionParameter = getURLParameter('region');
 		var region = (regionParameter === 'undefined') ? '' : regionParameter;
 
-		new L.Control.GeoSearch({
+		var geosearch = new L.Control.GeoSearch({
 			provider: new L.GeoSearch.Provider.Google({
 				region: region
 			}),
-			searchLabel: 'buscar endereço...'
+			searchLabel: 'buscar endereço...',
+			zoomLevel: 14
 		}).addTo(map);
+
+		if($('#geoX').val()!='' && $('#geoY').val()!=''){
+			var latlng = new L.LatLng($('#geoY').val(),$('#geoX').val());
+			console.log(latlng);
+			geosearch._showLocation({X: latlng.lng, Y: latlng.lat});
+			map.panTo(latlng);
+		}
 
 		map.on('geosearch_showlocation', function(result) {
 			console.log('zoom to: ' + result.Location.Label, result.Location.X);
-			$('#address').val(result.Location.Label);
 			$('#geoX').val(result.Location.X);
 			$('#geoY').val(result.Location.Y);
+			// evitar que o endereço se apague
+			if(result.Location.Label) $('#address').val(result.Location.Label);
+		});
+
+		map.on('click', function(e){
+			console.log(e.latlng)
+			geosearch._showLocation({X: e.latlng.lng, Y: e.latlng.lat});
 		});
 	}
 

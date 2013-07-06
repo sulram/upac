@@ -208,7 +208,7 @@ App.MapController = Em.Object.create({
     },
     updateUser: function(user){
         var pin = this.findUserPin(user.username);
-        pin.bindPopup(userPopup(user), {closeButton: false});
+        pin.setPopupContent(userPopup(user));
     },
     findUserPin: function(username){
         var user;
@@ -469,9 +469,9 @@ App.MapController = Em.Object.create({
     onMapClick: function(e){
 
         var user = App.MapController.findTheUser();
-        var pin = App.MapController.findUserPin(user.username);
+        var pin = App.MapController.findUserPin(user.username)
         
-        console.log( 'mark!', e.latlng, user, pin );
+        console.log( 'mark!', e.latlng, App.MapController.users, user, pin );
 
         if(!pin){
             user.firsttime = 1;

@@ -127,7 +127,7 @@ html
 								- draft = ('draft'==event.publicationStatus) ? 'selected' : null; 
 								- published = ('published'==event.publicationStatus) ? 'selected' : null;
 							select(name="publicationStatus")#status
-								option(name="published", value="published", selected=published) publicar no blog
+								option(name="published", value="published", selected=published) publicar na agenda
 								option(name="draft",value="draft", selected=draft) salvar como rascunho
 						.span3
 							input(type='submit')#submit.hide
