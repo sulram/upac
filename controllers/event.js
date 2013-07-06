@@ -150,12 +150,17 @@ module.exports = function(cdn, paginate) { return {
 		});
 	},
 	show: function(req, res, next) {
-		Article.findById(req.param('id'), function(err, article) {
+		Article.findById(req.param('id'))
+			.populate('owners featuredImage tags')
+			.exec(function(err, article) {
 			if (err) return next(err);
 			if (!article) return res.jsonx(404, {error: "Event not found"});
-			res.jsonx({
-				msg: "ok",
-				event: article
+			Img.populate(article, 'owners.avatar', function(err,_article) {
+				if(err) return next(err);
+				res.jsonx({
+					msg: "ok",
+					event: _article
+				});				
 			});
 		});
 	},
@@ -219,7 +224,9 @@ module.exports = function(cdn, paginate) { return {
 					{startDate: {$ne: null}},
 					{endDate: {$ne: null}}
 				]
-			},
+			})
+			.populate('owners featuredImage tags')
+			.exec(
 			function(err, events) {
 				if(err) return err;
 				res.jsonx({
