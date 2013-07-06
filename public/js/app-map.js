@@ -316,9 +316,8 @@ App.MapController = Em.Object.create({
         });
     },
     afterLoaded: function(geodata){
-        var that = this;
         this.fullMapClear();
-        that.geojson = L.geoJson(geodata,{
+        this.geojson = L.geoJson(geodata,{
             pointToLayer: function(feature, latlng){
                 if(feature.properties && feature.properties.type == "user"){
                     return new UpacMarker(latlng, {icon: userIcon});    
@@ -341,15 +340,15 @@ App.MapController = Em.Object.create({
         });
 
         // adiciona geojson no mapa
-        that.cluster = L.markerClusterGroup({
+        this.cluster = L.markerClusterGroup({
             maxClusterRadius: 50,
             iconCreateFunction: function (cluster) {
                 return L.divIcon({ html: cluster.getChildCount(), className: 'upac_cluster', iconSize: L.point(40, 40) });
             },
         });
-        if(!that.isMarkingNew){
-            that.cluster.addLayer(that.geojson);
-            App.map.addLayer(that.cluster);
+        if(!this.isMarkingNew){
+            this.cluster.addLayer(this.geojson);
+            App.map.addLayer(this.cluster);
         }
     },
 

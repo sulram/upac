@@ -395,10 +395,16 @@ App.RedeNovolocalController = Ember.ObjectController.extend({
         return App.map != null;
     }.property('App.MapController.mapIsLoaded'),
     enter: function(){
+        var _this = this;
+        console.log('enter')
         if(this.get('mapIsLoaded') && User.auth.loggedIn){
             App.MapController.startNewMarker();
+        } else{
+            Ember.run.later(function(){
+                _this.enter();
+            },500)
         }
-    }.observes('mapIsLoaded'),
+    },
     exit: function(){
         App.MapController.stopNewMarker();
     },
