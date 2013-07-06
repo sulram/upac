@@ -1,7 +1,10 @@
 var mongoose = require('mongoose')
   , Page = mongoose.model('Page')
+  , Img = mongoose.model('Img')
+  , _ = require('underscore')
 
-module.exports = function(cdn, paginate) { return {
+module.exports = function(cdn, paginate) {
+	return {
 	admin: {
 		index: function(req, res, next) {
 			paginate.paginate(Page,
@@ -104,6 +107,55 @@ module.exports = function(cdn, paginate) { return {
 			});
 		},
 	},
+	neweditor: function(req, res, next) {
+		var page = new Page({
+			publicationStatus:""
+		});
+		res.render('place/editor',{title:"Editor", place:page, is_new:true});
+	},
+	editor: function(req, res, next) {
+		var query = {_id: req.param('id')}
+		Page.findOne(query)
+			.populate('images.image')
+			.exec(function(err, page) {
+				if(err) return next(err);
+				console.log(page);
+				if(!page) return next(null, page);
+				res.render('place/editor',{title:"Editor", place:page, is_new:false});
+			}
+		);
+	},
+	editorsave: function(req, res, next) {
+		var data = _.pick(req.body,
+			'title', 'content', 'owners',
+			'publicationDate', 'publicationStatus',
+			'images', 'attachments', 'geo'
+		);
+		data.updatedAt = new Date;
+		console.info(data.images);
+		data.images = _.map(data.images, function(image) {
+			return {image:image[0], size:image[1]}
+		})
+		console.info(data.images);
+		// TODO: pegar tags e transformar em ObjectIDs
+		var query = {_id: req.param('id')}
+		Page.findOne(query, function(err, page) {
+			if(err) return res.jsonx(500, {error: err});
+			if(!page) {
+				data._id = mongoose.Types.ObjectId(req.body.id);
+				page = new Page(data);
+			} else {
+				page.set(data);
+			}
+			page.save(function(err) {
+				if(err) return res.jsonx(500, {error: err});
+				res.jsonx({
+					msg: 'ok',
+					page: page,
+				});
+			});
+		});
+	},
 	index: function(req, res, next) {
 		Page.find({geo: {$ne: null}})
 			.populate("featuredImage owners tags")
@@ -115,7 +167,11 @@ module.exports = function(cdn, paginate) { return {
 	show: function(req, res, next) {
 		Page.findById(req.param('id')).populate('featuredImage owners tags').exec(function(err, place) {
 			if(err) return next(err);
-			res.jsonx({msg: 'ok', place:place});
+			Img.populate(place, 'owners.avatar', function(err,place) {
+				if(err) return next(err);
+				res.jsonx({msg: 'ok', place:place});
+			})
 		})
 	}
-}}
+}
+}

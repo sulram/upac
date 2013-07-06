@@ -90,25 +90,24 @@ $(document).ready(function(){
 
 		this.target = $(picker_sel);
 		this.input = $(input_sel);
-		
+	
 		this.target.datetimepicker({
 			language: 'pt-BR'
 		});
-		
+	
 		this.picker = this.target.data('datetimepicker');
-		
+
 		this.input.click(function(){
 			$('span', _that.target).click();
 		});
 
 		this.convertToView = function(){
-			var date = new Date(this.input.val());
-			console.log()
-			this.picker.setLocalDate(date);
+			console.log(moment(this.input.val()));
+			this.picker.setLocalDate(moment(this.input.val()).toDate());
 		};
 
 		this.convertToSubmit = function(){
-			this.input.val(this.picker.getLocalDate());	
+			this.input.val(moment(this.picker.getLocalDate()).format());	
 		};
 		//console.log(this.input.val());
 		if(this.input.val() === ""){
@@ -118,7 +117,6 @@ $(document).ready(function(){
 			//console.log(1);
 			this.convertToView();
 		}
-
 		return this;
 	};
 	var pubdate = new Picker('#datetimepicker', '#publicationDate');
