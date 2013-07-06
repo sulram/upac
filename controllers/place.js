@@ -165,7 +165,26 @@ module.exports = function(cdn, paginate) {
 		});
 	},
 	create: function(req, res, next) {
-		res.jsonx({msg:'ok', place: new Page()});
+		var data = _.pick(req.body,
+			'title', 'content', 'owners',
+			'publicationDate', 'publicationStatus',
+			'images', 'attachments', 'geo'
+		);
+		
+		data.createdAt = data.updatedAt = new Date;
+		console.info(data.images);
+		data.images = _.map(data.images, function(image) {
+			return {image:image[0], size:image[1]}
+		})
+		console.info(data.images);
+		var page = new Page(data);
+		page.save(function(err) {
+			if(err) return res.jsonx(500, {error: err});
+			res.jsonx({
+				msg: 'ok',
+				event: page,
+			});
+		});
 	},
 	show: function(req, res, next) {
 		Page.findById(req.param('id')).populate('featuredImage owners tags').exec(function(err, place) {
