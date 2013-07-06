@@ -97,8 +97,6 @@ App.BlogRecentesController = Ember.ObjectController.extend({
     buildFromData: function(data){
         var articles = [];
         var k = 0;
-        //var palette = ['palette-turquoise','palette-green-sea','palette-emerland','palette-nephritis','palette-peter-river', 'palette-belize-hole', 'palette-amethyst', 'palette-wisteria', 'palette-wet-asphalt', 'palette-midnight-blue', 'palette-sun-flower', 'palette-orange', 'palette-carrot', 'palette-pumpkin', 'palette-alizarin', 'palette-pomegranate'];
-        var palette = ['palette-turquoise','palette-peter-river', 'palette-wisteria', 'palette-pomegranate', 'palette-carrot', 'palette-sun-flower'];
 
         $.each(data.articles, function(i, _article) {
 

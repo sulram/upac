@@ -89,22 +89,16 @@ App.CalendarView = Ember.View.extend({
                 week: 'semana',
                 day: 'dia'
             },
-            eventDrop: function(event, delta) {
-                alert(event.title + ' was moved ' + delta + ' days\n' +
-                    '(should probably update your database)');
-            },
             viewDisplay: function (element) {
                 var cal = $('#calendar')
                 var d = cal.fullCalendar('getDate');
                 console.log(element, d.getMonth(), d.getFullYear())
                 $.getJSON( '/events/bymonth/'+d.getFullYear ()+'/'+(d.getMonth()+1), function(data){
                     _.each(data.events, function(item,i){
-                        var event = {start: item.startDate, end: item.endDate, id: item._id, title: item.title};
+                        var event = {start: item.startDate, end: item.endDate, id: item._id, title: item.title, className: palette[i % palette.length]};
                         console.log('event', event);
                         cal.fullCalendar('renderEvent', event)
                     });
-                    
-                    //http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/
                 });
             },
             eventClick: function(calEvent, jsEvent, view) {
