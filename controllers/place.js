@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
   , Page = mongoose.model('Page')
   , Img = mongoose.model('Img')
+  , _ = require('underscore')
 
 module.exports = function(cdn, paginate) {
 	return {

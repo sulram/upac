@@ -130,7 +130,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 
 	app.get('/place/editor', auth.requiresLoginFront, place.neweditor);
 	app.get('/place/editor/:id', auth.requiresLoginFront, place.editor);
-	app.post('/place/id', auth.requiresLogin, place.editorsave);
+	app.post('/place/:id', auth.requiresLogin, place.editorsave);
 	app.get('/place/:id', place.show);
 
 	app.post('/tag/new', auth.requiresLogin, tag.create);
