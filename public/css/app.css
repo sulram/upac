@@ -562,7 +562,7 @@ iframe {
 }
 
 .tags,
-#wrapper.blog .thepost .tags,
+.thepost .tags,
 #rede_sidebar .tags {
 	line-height: 11px;
 }
@@ -803,7 +803,7 @@ iframe {
 	transition: all 0.3s cubic-bezier(0.680, 0, 0.265, 1);
 }
 
-#wrapper.blog .thepost {
+#wrapper .thepost {
 	min-width: 780px;
 	max-width: 940px;
 	margin: 100px auto;
@@ -811,12 +811,12 @@ iframe {
 	line-height: 1.75em;
 }
 
-#wrapper.blog .thepost p {
+#wrapper .thepost p {
 	margin-bottom: 2em;
 	line-height: 1.75em;
 }
 
-#wrapper.blog .thepost blockquote {
+#wrapper .thepost blockquote {
 	font-style: oblique;
 	font-family: Georgia, Times, serif;
 	font-size: 18px;
@@ -827,27 +827,27 @@ iframe {
 	line-height: 1.75em;
 }
 
-#wrapper.blog .thepost ul {
+#wrapper .thepost ul {
 	margin: 30px 0;
 	list-style-position: inside;
 }
 
-#wrapper.blog .thepost li {
+#wrapper .thepost li {
 	line-height: 1.75em;
 }
 
-#wrapper.blog .thepost .title {
+#wrapper .thepost .title {
 	font-size: 2.2em;
 	margin-bottom: 0.4em;
 }
 
-#wrapper.blog .thepost .date {
+#wrapper .thepost .date {
 	color: #666;
 	font-size: 0.8em;
 	margin-bottom: 1em;
 }
 
-#wrapper.blog .thepost .excerpt {
+#wrapper .thepost .excerpt {
 	font-size: 0.9em;
 	text-transform: uppercase;
 	margin-bottom: 2em;
@@ -922,7 +922,7 @@ iframe {
 	list-style-type: none;
 }
 
-#wrapper.blog .thepost .post_comments .comment p {
+#wrapper .thepost .post_comments .comment p {
 	line-height: 1.5em;
 	margin-bottom: 5px;
 }
@@ -1077,7 +1077,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 .leaflet-popup-content {
 	text-align: center;
-	max-width: 200px;
+	max-width: 240px;
 }
 
 .leaflet-popup-content p strong {

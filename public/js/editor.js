@@ -332,7 +332,7 @@ $(document).ready(function(){
 				url = '/#/rede/local/'+data.page.slug;
 				break;
 			case 'event':
-				url = '/#/agenda';
+				url = '/#/agenda/evento/'+data.article._id;
 				break;
 		}
 		return url;

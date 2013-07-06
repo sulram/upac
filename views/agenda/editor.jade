@@ -78,11 +78,11 @@ html
 							label.input_label(for="geo[]") Localização
 							.input_text
 								if event.geo
-									input(type="text", name="geo[]", value=event.geo[0])#geoX.smallinput
-									input(type="text", name="geo[]", value=event.geo[1])#geoY.smallinput
+									input(type="text", name="geo[]", value=event.geo[0])#geoY.smallinput
+									input(type="text", name="geo[]", value=event.geo[1])#geoX.smallinput
 								else
-									input(type="text", name="geo[]", value="")#geoX.smallinput
 									input(type="text", name="geo[]", value="")#geoY.smallinput
+									input(type="text", name="geo[]", value="")#geoX.smallinput
 
 						.hide
 							label.input_label(for="publicationDate")
@@ -119,7 +119,7 @@ html
 							a(href="/#/agenda/evento/#{event.id}",class="#{post_view}")#post_view
 								i.fui-eye
 								&nbsp;
-								| Visualizar no blog
+								| Visualizar na agenda
 
 						.span3.arquivo
 							label.input_label(for="status")

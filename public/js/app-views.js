@@ -94,14 +94,24 @@ App.CalendarView = Ember.View.extend({
                     '(should probably update your database)');
             },
             viewDisplay: function (element) {
-                var d = $('#calendar').fullCalendar('getDate');
+                var cal = $('#calendar')
+                var d = cal.fullCalendar('getDate');
                 console.log(element, d.getMonth(), d.getFullYear())
                 $.getJSON( '/events/bymonth/'+d.getFullYear ()+'/'+(d.getMonth()+1), function(data){
-                    console.log(data);
-                    //TODO
-                    //.fullCalendar( 'renderEvent', event [, stick ] )
+                    _.each(data.events, function(item,i){
+                        var event = {start: item.startDate, end: item.endDate, id: item._id, title: item.title};
+                        console.log('event', event);
+                        cal.fullCalendar('renderEvent', event)
+                    });
+                    
                     //http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/
                 });
+            },
+            eventClick: function(calEvent, jsEvent, view) {
+                window.location.hash = '/agenda/evento/' + calEvent._id;
+                //alert('Event: ' + calEvent._id);
+                //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                //alert('View: ' + view.name);
             }
         });
     }

@@ -14,13 +14,18 @@ var UIcon = L.Icon.extend({
 
 var actionIcon = new UIcon({});
 var userIcon = new UIcon({iconUrl: 'img/pin_user.png'});
-var calIcon = new UIcon({iconUrl: 'img/pin_cal.png'});
+var eventIcon = new UIcon({iconUrl: 'img/pin_cal.png'});
 
 var upac_new_marker = null;
 
+function eventPopup(event) {
+    var excerpt = event.excerpt || '';
+    return '<p><strong>' + event.title + '</strong></p><p style="color:#666;">'+moment(event.startDate).format('LLLL')+'<br/>'+moment(event.endDate).format('LLLL')+'</p><p>'+excerpt+'</p><p><a href="#/agenda/evento/' + event._id + '">Clique para ver o evento</a></p>';
+}
+
 function pagePopup(page) {
     var excerpt = page.excerpt || '';
-    return '<p><strong>' + page.title + '</strong><br/>'+excerpt+'</p><p><a href="#/rede/local/' + page.slug + '">Clique para ver o perfil</a></p>';
+    return '<p><strong>' + page.title + '</strong><br/>'+excerpt+'</p><p><a href="#/rede/local/' + page.slug + '">Clique para ver mais informações</a></p>';
 }
 
 function userPopup(user) {
@@ -30,6 +35,28 @@ function userPopup(user) {
     var about = user.about || '';
     return '<figure class="post_avatar"><img src="'+usermodel.avatar_icon+'"/></figure><p><strong>' + name + '</strong><br/>'+about+'</p><p><a href="#/rede/perfil/' + username + '">Clique para ver o perfil</a></p>';
 }
+
+function createEventPin(event){
+    return {
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: [
+                event.geo[1],
+                event.geo[0]
+                ]
+            },
+        properties: {
+            _id: event._id,
+            type: "event",
+            title: event.title,
+            slug: event.slug,
+            excerpt: event.excerpt,
+            startDate: event.startDate,
+            endDate: event.endDate,
+        }
+    };
+};
 
 function createPagePin(page){
     return {
@@ -85,6 +112,9 @@ var UpacMarker = L.Marker.extend({
                 }
                 if(props.type == "page"){
                     window.location.hash = "/rede/local/" + props.slug;
+                }
+                if(props.type == "event"){
+                    window.location.hash = "/agenda/evento/" + props._id;
                 }
                 console.log(e,props);
             });
@@ -236,6 +266,7 @@ App.MapController = Em.Object.create({
         var geodata = {type: "FeatureCollection", features: []};
         this.users = [];
         this.pages = [];
+        this.events = [];
         this.set('isFetching',true);
         $.ajax({
             type: 'GET',
@@ -254,6 +285,12 @@ App.MapController = Em.Object.create({
                     that.pages.push(page);
                     if(page.geo && page.geo.length){
                         geodata.features.push(createPagePin(page));
+                    }
+                });
+                $.each(data.articles, function(i,event){
+                    that.events.push(event);
+                    if(event.geo && event.geo.length){
+                        geodata.features.push(createEventPin(event));
                     }
                 });
                 that.set('isFetching',false);
@@ -286,13 +323,18 @@ App.MapController = Em.Object.create({
                 if(feature.properties && feature.properties.type == "user"){
                     return new UpacMarker(latlng, {icon: userIcon});    
                 }
+                if(feature.properties && feature.properties.type == "event"){
+                    return new UpacMarker(latlng, {icon: eventIcon});    
+                }
                 return new UpacMarker(latlng, {icon: actionIcon});
             },
             onEachFeature: function(feature, layer){
                 if (feature.properties && feature.properties.type == "user") {
                     layer.bindPopup(userPopup(feature.properties), {showOnMouseOver: true, closeButton: false});
-                } else {
+                } else if(feature.properties && feature.properties.type == "page") {
                     layer.bindPopup(pagePopup(feature.properties), {showOnMouseOver: true, closeButton: false});
+                } else {
+                    layer.bindPopup(eventPopup(feature.properties), {showOnMouseOver: true, closeButton: false});
                 }
                 //console.log('feat',feature);
             }

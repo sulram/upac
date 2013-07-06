@@ -1,6 +1,8 @@
 App.Router.map(function() {
     this.resource("home");
-    this.resource("agenda");
+    this.resource("agenda", function(){
+        this.route("evento", { path: '/evento/:evento_id' });
+    });
     this.resource("rede", function(){
         this.route('perfil', { path: '/perfil/:user_username' });
         this.route('avatar');
@@ -195,6 +197,23 @@ App.BlogPostRoute = App.UpacRoute.extend({
     },
     serialize: function(model) {
         if(model) return { post_id: model.post_id };
+    },
+    setupController: function (controller, model){
+        controller.set('model', model);
+        controller.set('isLoaded', false);
+        controller.getContent();
+        this._super(this, arguments);
+    }
+});
+
+// AGENDA
+
+App.AgendaEventoRoute = App.UpacRoute.extend({
+    model: function(param){
+        return Ember.Object.create({evento_id: param.evento_id});
+    },
+    serialize: function(model) {
+        if(model) return { evento_id: model.evento_id };
     },
     setupController: function (controller, model){
         controller.set('model', model);

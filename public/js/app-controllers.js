@@ -212,17 +212,16 @@ App.BlogPostController = Ember.ObjectController.extend({
             _this.set('isOwner', data.article.owners[0] ? data.article.owners[0]._id == data.auth.id : null);
             _this.set('profile', data.article.owners[0] ? App.UserModel.build(data.article.owners[0]) : null);
             _this.set('isLoaded', true);
-            _this.getComments();
+            _this.getComments(id);
             Ember.run.next(function(){
                 $('.post_content table').addClass('table table-condensed');
             });
         });
 
     },
-    getComments: function(){
+    getComments: function(id){
         
         var _this = this;
-        var id = this.get('model.post_id');
 
         $.getJSON('/article/'+id+'/comments', {
                 from: 0,
@@ -281,6 +280,34 @@ App.BlogPostController = Ember.ObjectController.extend({
     }
 });
 
+// AGENDA
+
+App.AgendaEventoController = App.BlogPostController.extend({
+    openTag: function(tag){
+        window.location = '/#/agenda/tag/'+tag.slug+'/1';
+    },
+    getContent: function(){
+
+        var _this = this;
+        var id = this.get('model.evento_id');
+        
+        this.set('comments', Ember.A([]));
+        this.set('model.edit_link','/agenda/editor/'+id);
+
+        $.getJSON('/event/'+id, function(data){
+            console.log('OWNERS: ',data.event.owners[0]._id, data.auth.id);
+            _this.set('article', data.event);
+            _this.set('isOwner', data.event.owners[0] ? data.event.owners[0]._id == data.auth.id : null);
+            _this.set('profile', data.event.owners[0] ? App.UserModel.build(data.event.owners[0]) : null);
+            _this.set('isLoaded', true);
+            _this.getComments(id);
+            Ember.run.next(function(){
+                $('.post_content table').addClass('table table-condensed');
+            });
+        });
+
+    },
+});
 
 // REDE
 
