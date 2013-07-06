@@ -292,10 +292,11 @@ module.exports = function (cdn, paginate, mailer) { return {
 		var query = User.findOne({username: req.params.username}).populate('avatar tags');
 		query.exec(function(err, user) {
 			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
-			if(!user) return res.jsonx(401, {msg: 'user not found'});
+			if(!user) return res.jsonx(404, {msg: 'user not found'});
 			Article.find({owners:user._id, parent:null, publicationStatus:'published'})
-				.populate('featuredImage')
+				.sort('-publicationDate')
 				.limit(3)
+				.populate('featuredImage')
 				.exec(function(err, articles) {
 					if(err) return res.jsonx(401, {msg: 'error', error:err});
 					res.jsonx({user:user, articles:articles})

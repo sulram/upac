@@ -2,7 +2,8 @@ var mongoose = require('mongoose')
   , Page = mongoose.model('Page')
   , Img = mongoose.model('Img')
 
-module.exports = function(cdn, paginate) { return {
+module.exports = function(cdn, paginate) {
+	return {
 	admin: {
 		index: function(req, res, next) {
 			paginate.paginate(Page,
@@ -109,7 +110,7 @@ module.exports = function(cdn, paginate) { return {
 		var page = new Page({
 			publicationStatus:""
 		});
-		res.render('editor',{title:"Editor", page:page, is_new:true});
+		res.render('place/editor',{title:"Editor", place:page, is_new:true});
 	},
 	editor: function(req, res, next) {
 		var query = {_id: req.param('id')}
@@ -119,13 +120,13 @@ module.exports = function(cdn, paginate) { return {
 				if(err) return next(err);
 				console.log(page);
 				if(!page) return next(null, page);
-				res.render('editor',{title:"Editor", page:page, is_new:false});
+				res.render('place/editor',{title:"Editor", place:page, is_new:false});
 			}
 		);
 	},
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
-			'title', 'content',
+			'title', 'content', 'owners',
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'geo'
 		);
@@ -165,7 +166,11 @@ module.exports = function(cdn, paginate) { return {
 	show: function(req, res, next) {
 		Page.findById(req.param('id')).populate('featuredImage owners tags').exec(function(err, place) {
 			if(err) return next(err);
-			res.jsonx({msg: 'ok', place:place});
+			Img.populate(place, 'owners.avatar', function(err,place) {
+				if(err) return next(err);
+				res.jsonx({msg: 'ok', place:place});
+			})
 		})
 	}
-}}
+}
+}

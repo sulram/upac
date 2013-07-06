@@ -60,6 +60,14 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.all('/admin/pages', auth.requiresAdminLogin, page.admin.index);
 	app.post('/admin/page', auth.requiresAdminLogin, page.admin.create);
 
+	app.get('/admin/place/new', auth.requiresAdminLogin, place.admin.editnew);
+	app.post('/admin/place/:id', auth.requiresAdminLogin, place.admin.update);
+	app.get('/admin/place/:id', auth.requiresAdminLogin, place.admin.show);
+	app.get('/admin/place/:id/edit', auth.requiresAdminLogin, place.admin.edit);
+	app.get('/admin/place/:id/remove', auth.requiresAdminLogin, place.admin.remove)
+	app.all('/admin/places', auth.requiresAdminLogin, place.admin.index);
+	app.post('/admin/place', auth.requiresAdminLogin, place.admin.create);
+
 	app.get('/admin/tag/new', auth.requiresAdminLogin, tag.admin.editnew);
 	app.post('/admin/tag/:id', auth.requiresAdminLogin, tag.admin.update);
 	app.get('/admin/tag/:id', auth.requiresAdminLogin, tag.admin.show);
@@ -120,7 +128,10 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.get('/page/:id/images', page.getImages);
 	app.get('/page/:id/attachments', page.getAttachments);
 
-	// route for testing uploads to the CDN server
+	app.get('/place/editor', auth.requiresLoginFront, place.neweditor);
+	app.get('/place/editor/:id', auth.requiresLoginFront, place.editor);
+	app.post('/place/id', auth.requiresLogin, place.editorsave);
+	app.get('/place/:id', place.show);
 
 	app.post('/tag/new', auth.requiresLogin, tag.create);
 	app.get('/tag/:id', tag.show);
