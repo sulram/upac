@@ -310,7 +310,7 @@ App.MapController = Em.Object.create({
             },
             error: function(jqXHR,status,error){
                 console.log(jqXHR);
-                _self.authenticate(JSON.parse(jqXHR.responseText));
+                User.authenticate(JSON.parse(jqXHR.responseText));
                 that.set('isFetching',false);
             }
         });
