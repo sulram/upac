@@ -27,7 +27,11 @@
 						<img {{bindAttr src=profile.avatar_icon}}/>
 					</a>
 
-					<p>Postado por <a {{action openProfile profile}}>{{profile.nick}}</a></p>
+					<p>
+						Postado por <a {{action openProfile profile}}>{{profile.nick}}</a>
+						<br/>
+						<a {{action openUserArchive profile}}>Arquivos desse autor</a>
+					</p>
 				</div>
 			</div>
 		</div>

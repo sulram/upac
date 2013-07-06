@@ -15,27 +15,28 @@
 		<p>{{about}}</p>
 		
 		{{#if tags.length}}
-		<p class="tags">
-			Palavras-chave: 
-			{{#each tags}}
-				<a {{action openTag this}}>{{this.name}}</a>
-			{{/each}}
-		</p>
+			<p class="tags">
+				Palavras-chave: 
+				{{#each tags}}
+					<a {{action openTag this}}>{{this.name}}</a>
+				{{/each}}
+			</p>
 		{{/if}}
-		
-		<hr/>
 		
 		{{#if isTheLoggedUser}}
-
-
 			<p>{{#linkTo 'rede.editar' classNames="btn btn-w-icon"}}<span class="fui-new"></span> Editar perfil{{/linkTo}}</p>
-
-		{{else}}
-
-			<p>{{#linkTo 'timeline' model classNames="btn-"}}Linha do tempo{{/linkTo}}</p>
-			
 		{{/if}}
-
+		
+		{{#if articles.length}}
+			<hr/>
+			<p><strong>Últimas publicações</strong></p>
+			<ul class="user_articles">
+			{{#each articles}}
+				<li><a {{action openArticle this}}>{{this.title}}</a></li>
+			{{/each}}
+			</ul>
+			<p><small><a {{action openTimeline username}}>Ver todas</a></small></p>
+		{{/if}}
 	{{else}}
 		<p class="def_loading">carregando perfil</p>
 	{{/if}}
