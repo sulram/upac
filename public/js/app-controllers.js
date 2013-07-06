@@ -334,6 +334,11 @@ App.RedeEditarController = Ember.ObjectController.extend({
     },
     submit: function(){
         var data = $('form').serialize();
+        var dataArray = $('form').serializeArray();
+        var name = _.findWhere(dataArray,{name: 'name'}).value;
+        if(name == ''){
+            return this.set('flashMsg','escreva seu nome completo');
+        }
         console.log(data);
         this.set('isPosting',true);
         this.set('flashMsg',null);

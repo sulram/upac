@@ -45,7 +45,14 @@ var UpacMarker = L.Marker.extend({
             // call the super method
             L.Marker.prototype.bindPopup.apply(this, [htmlContent, options]);
             // unbind the click event
-            this.off("click", this.openPopup, this);
+            //this.off("click", this.openPopup, this);
+            this.on("click", function(e){
+                var props = this.feature.properties;
+                if(props.type == "user"){
+                    window.location.hash = "/rede/perfil/" + props.username;
+                }
+                console.log(e,props);
+            });
             // bind to mouse over
             this.on("mouseover", function(e) {
                 // get the element that the mouse hovered onto

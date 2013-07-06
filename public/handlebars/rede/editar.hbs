@@ -17,7 +17,7 @@
 		<div class="control-group">
 			<label class="control-label" for="about">Sobre você</label>
 			<div class="controls">
-				{{view Ember.TextArea valueBinding="User.model.about" rows="5" id="about" name="about"}}  
+				{{view App.FocusTextArea valueBinding="User.model.about" rows="5" id="about" name="about"}}  
 			</div>
 		</div>
 			{{#each tags}}

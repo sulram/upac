@@ -972,7 +972,7 @@ function program1(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "onFocus", {hash:{},contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data})));
   data.buffer.push(">\n			</div>\n		</div>-->\n		<div class=\"control-group\">\n			<label class=\"control-label\" for=\"about\">Sobre você</label>\n			<div class=\"controls\">\n				");
   hashTypes = {'valueBinding': "STRING",'rows': "STRING",'id': "STRING",'name': "STRING"};
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.TextArea", {hash:{
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.FocusTextArea", {hash:{
     'valueBinding': ("User.model.about"),
     'rows': ("5"),
     'id': ("about"),

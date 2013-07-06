@@ -605,6 +605,9 @@ iframe {
 	text-decoration: none;
 	color: #666;
 	font-size: 12px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #rede_sidebar .user_articles li a:hover {
