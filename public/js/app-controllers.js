@@ -87,7 +87,7 @@ App.BlogRecentesController = Ember.ObjectController.extend({
     isLoaded: false,
     postsCount: 0,
     postsLimit: 8,
-    getcontent: function(){
+    getContent: function(){
         var _this = this;
         var page = this.get('model.page_num');
         $.getJSON( '/article', {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
@@ -154,7 +154,7 @@ App.BlogRecentesController = Ember.ObjectController.extend({
 App.BlogTagController = App.BlogRecentesController.extend({
     tagName: null,
     postsLimit: 8,
-    getcontent: function(){
+    getContent: function(){
         var _this = this;
         var tag = this.get('model.tag_slug');
         var page = this.get('model.page_num');
@@ -172,7 +172,7 @@ App.BlogTagController = App.BlogRecentesController.extend({
 App.BlogUserController = App.BlogRecentesController.extend({
     tagName: null,
     postsLimit: 8,
-    getcontent: function(){
+    getContent: function(){
         var _this = this;
         var username = this.get('model.user_username');
         var page = this.get('model.page_num');
@@ -198,7 +198,7 @@ App.BlogPostController = Ember.ObjectController.extend({
     openTag: function(tag){
         window.location = '/#/blog/tag/'+tag.slug+'/1';
     },
-    getcontent: function(){
+    getContent: function(){
 
         var _this = this;
         var id = this.get('model.post_id');
@@ -362,7 +362,7 @@ App.RedeEditarController = Ember.ObjectController.extend({
     }
 });
 
-App.RedeMarkernewController = Ember.ObjectController.extend({
+App.RedeNovolocalController = Ember.ObjectController.extend({
     tags: [],
     isPosting: false,
     flashMsg: null,
@@ -382,39 +382,86 @@ App.RedeMarkernewController = Ember.ObjectController.extend({
         var data = $('form').serialize();
         var dataArray = $('form').serializeArray();
         var title = _.findWhere(dataArray,{name: 'title'}).value;
-        var content = _.findWhere(dataArray,{name: 'content'}).value;
+        var excerpt = _.findWhere(dataArray,{name: 'excerpt'}).value;
         if(title == ''){
             return this.set('flashMsg','escreva o nome do ponto');
         }
-        if(content == ''){
+        if(excerpt == ''){
             return this.set('flashMsg','escreva a descrição');
         }
         this.set('flashMsg',null);
         this.set('isPosting',true);
-        console.log(data, dataArray, title, content);
-        /*
+        console.log(data, dataArray, title, excerpt);
+        
         $.ajax({
-            type: 'PUT',
-            url: '/user/' + User.auth.id,
+            type: 'POST',
+            url: '/place/new',
             data: data,
             success: function(data, status, jqXHR){
                 console.log('success', data);
                 _controller.set('isPosting',false);
                 User.authenticate(data.auth);
-                App.MapController.updateUser(data.user);
-                window.location.hash = '/rede/perfil/' + data.user.username;
+                App.MapController.getMarkers();
+                window.location.hash = '/rede/local/'+data.place.slug;
             },
             error: function(jqXHR,status,error){
                 console.log('error', arguments);
                 _controller.set('isPosting',false);
             }
-        });*/
+        });
     },
     onFocus: function(){
         this.set('flashMsg',null);
     },
 });
 
+App.RedeLocalController = Ember.ObjectController.extend({
+    isLoaded: false,
+    place: null,
+    isTheLoggedUser: function(){
+        if(this.get('place.owners').length){
+            return this.get('place.owners')[0].username == User.auth.username;
+        }
+        return false;
+    }.property('place.owners.length'),
+    getContent: function(){
+        var _this = this;
+        var slug = this.get('model.place_slug');
+        $.getJSON( '/place/bySlug/'+slug, function(data){
+            _this.set('isLoaded', true);
+            _this.set('place', Ember.Object.create(data.place));
+            _this.set('place.editorUrl', '/place/editor/'+data.place._id);
+        });
+    },
+    focusPlace: function(){
+        console.log('profile is loaded?',this.get('content.isLoaded'));
+        if(this.get('content.isLoaded')){
+            App.MapController.focusPlace(this.get('place.slug'));
+        }
+    }.observes('content.isLoaded'),
+});
+
+App.RedeEditarlocalController = Ember.ObjectController.extend({
+    isLoaded: false,
+    place: null,
+    isTheLoggedUser: function(){
+        return this.get('model.username') == User.auth.username;
+    }.property('model.username'),
+    getContent: function(){
+        var _this = this;
+        var slug = this.get('model.place_slug');
+        $.getJSON( '/place/bySlug/'+slug, function(data){
+            _this.set('isLoaded', true);
+            _this.place = Ember.Object.create(data.place);
+        });
+    },
+    focusPlace: function(){
+        console.log('profile is loaded?',this.get('content.isLoaded'));
+        if(this.get('content.isLoaded')){
+            App.MapController.focusPlace(this.get('place.slug'));
+        }
+    }.observes('content.isLoaded'),
+});
 
 // USER
 

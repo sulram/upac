@@ -252,7 +252,18 @@ $(document).ready(function(){
 			url: action,
 			data: data,
 			success: function(data, status, jqXHR){
-				var url = '/#/blog/post/'+data.article._id;
+				var url, rel = $('body').attr('rel');
+				switch(rel){
+					case 'post': 
+						url = '/#/blog/post/'+data.page._id;
+						break;
+					case 'place':
+						url = '/#/rede/local/'+data.page.slug;
+						break;
+					case 'event':
+						url = '/#/agenda';
+						break;
+				}
 				$('#post_remove').removeClass('hide');
 				$('#post_view').attr('href',url).removeClass('hide');
 				notify('A publicação foi salva com sucesso!', data);

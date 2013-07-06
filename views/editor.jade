@@ -12,7 +12,7 @@ html
 		link(rel='stylesheet', href='/css/app.css')
 		link(rel='stylesheet', href='/css/editor.css')
 
-	body(data-article-id="#{article.id}").editor
+	body(data-article-id="#{article.id}", rel="post").editor
 		form(action="/article/#{article.id}", method="POST")#editor_form
 			.editor_header
 				a#close(href="/#/blog")

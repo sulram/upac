@@ -1,0 +1,32 @@
+<div class="pad">
+	{{#if isLoaded}}
+
+		<!--<div class="rede_perfil_foto">
+			{{#if isTheLoggedUser}}
+				{{#linkTo 'rede.avatar' classNames="btn rede_perfil_foto_editar"}}Mudar foto <span class="fui-new"></span>{{/linkTo}}
+			{{/if}}
+			<img {{bindAttr src="avatar_medium"}}/>
+		</div>-->
+
+		<h2>
+			{{place.title}}
+		</h2>
+
+		<p>{{place.excerpt}}</p>
+		
+		{{#if place.tags.length}}
+			<p class="tags">
+				{{#each place.tags}}
+					<a {{action openTag this}}>{{this.name}}</a>
+				{{/each}}
+			</p>
+		{{/if}}
+		
+		{{#if isTheLoggedUser}}
+			<p><a {{bindAttr href="place.editorUrl"}} class="btn btn-w-icon"/><span class="fui-new"></span> Editar</a></p>
+		{{/if}}
+		
+	{{else}}
+		<p class="def_loading">carregando perfil</p>
+	{{/if}}
+</div>

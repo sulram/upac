@@ -127,7 +127,7 @@ module.exports = function(cdn, paginate) {
 	},
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
-			'title', 'content',
+			'title', 'content', 'excerpt',
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'geo'
 		);
@@ -169,7 +169,7 @@ module.exports = function(cdn, paginate) {
 	},
 	create: function(req, res, next) {
 		var data = _.pick(req.body,
-			'title', 'content',
+			'title', 'content','excerpt',
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'geo'
 		);
@@ -181,12 +181,12 @@ module.exports = function(cdn, paginate) {
 			return {image:image[0], size:image[1]}
 		})
 		console.info(data.images);
-		var page = new Page(data);
-		page.save(function(err) {
+		var place = new Page(data);
+		place.save(function(err) {
 			if(err) return res.jsonx(500, {error: err});
 			res.jsonx({
 				msg: 'ok',
-				event: page,
+				place: place,
 			});
 		});
 	},

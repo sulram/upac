@@ -910,7 +910,7 @@ iframe {
 }
 
 .post_info a {
-	text-decoration: none;
+	
 }
 
 
@@ -1067,7 +1067,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .upac_cluster {
 	width: 64px;
 	height: 64px;
-	background-color: rgba(15,81,84,.8)/*rgba(31,113,116,.8)#1f7174*/;
+	background-color: rgba(50,50,50,.8);
 	color: #fff;
 	text-align: center;
 	font-size: 16px;

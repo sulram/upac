@@ -12,10 +12,15 @@ var UIcon = L.Icon.extend({
     }
 });
 
+var actionIcon = new UIcon({});
 var userIcon = new UIcon({iconUrl: 'img/pin_user.png'});
 var calIcon = new UIcon({iconUrl: 'img/pin_cal.png'});
 
 var upac_new_marker = null;
+
+function pagePopup(page) {
+    return '<p><strong>' + page.title + '</strong></p><p><a href="#/rede/local/' + page.slug + '">Clique para ver o perfil</a></p>';
+}
 
 function userPopup(user) {
     var usermodel = App.UserModel.build(user);
@@ -24,6 +29,26 @@ function userPopup(user) {
     var about = user.about || '';
     return '<figure class="post_avatar"><img src="'+usermodel.avatar_icon+'"/></figure><p><strong>' + name + '</strong><br/>'+about+'</p><p><a href="#/rede/perfil/' + username + '">Clique para ver o perfil</a></p>';
 }
+
+function createPagePin(page){
+    return {
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: [
+                page.geo[1],
+                page.geo[0]
+                ]
+            },
+        properties: {
+            _id: page._id,
+            type: "page",
+            title: page.title,
+            slug: page.slug,
+            content: page.content
+        }
+    };
+};
 
 function createUserPin(user){
     return {
@@ -56,6 +81,9 @@ var UpacMarker = L.Marker.extend({
                 var props = this.feature.properties;
                 if(props.type == "user"){
                     window.location.hash = "/rede/perfil/" + props.username;
+                }
+                if(props.type == "page"){
+                    window.location.hash = "/rede/local/" + props.slug;
                 }
                 console.log(e,props);
             });
@@ -139,6 +167,8 @@ App.MapController = Em.Object.create({
     isFetching: true,
     geojson: {},
     users: [],
+    pages: [],
+    events: [],
     cluster: null,
     focus: null,
     findTheUser: function(){
@@ -152,11 +182,30 @@ App.MapController = Em.Object.create({
         var user;
         _.each(this.geojson._layers, function(el,i){
             if(el.feature.properties.username && el.feature.properties.username == username){
-                console.log('findUserPin ', i, el.feature, el.feature.properties.username)
                 user = el;
             }
         });
         return user;
+    },
+    findPlacePin: function(slug){
+        var place;
+        _.each(this.geojson._layers, function(el,i){
+            if(el.feature.properties.type == "page" && el.feature.properties.slug == slug){
+                place = el;
+            }
+        });
+        return place;
+    },
+    focusPlace: function(slug){
+        if(!this.get('isFetching')){
+            //console.log("focus " + username);
+            var pin = this.findPlacePin(slug);
+            if(pin){
+                console.log('place pin',pin);
+                App.map.panTo(pin._latlng);
+                pin.openPopup();
+            }
+        }
     },
     focusUser: function(username){
         if(this.get('isFetching')){
@@ -184,10 +233,11 @@ App.MapController = Em.Object.create({
         var that = this;
         var geodata = {type: "FeatureCollection", features: []};
         this.users = [];
+        this.pages = [];
         this.set('isFetching',true);
         $.ajax({
             type: 'GET',
-            url: '/users',
+            url: '/everything2d',
             data: { limit: 0 },
             success: function(data, status, jqXHR){
                 console.log('map: loaded users');
@@ -198,7 +248,12 @@ App.MapController = Em.Object.create({
                         geodata.features.push(createUserPin(user));
                     }
                 });
-
+                $.each(data.pages, function(i,page){
+                    that.pages.push(page);
+                    if(page.geo && page.geo.length){
+                        geodata.features.push(createPagePin(page));
+                    }
+                });
                 that.set('isFetching',false);
 
 
@@ -223,20 +278,21 @@ App.MapController = Em.Object.create({
     },
     afterLoaded: function(geodata){
         var that = this;
+        this.fullMapClear();
         that.geojson = L.geoJson(geodata,{
             pointToLayer: function(feature, latlng){
                 if(feature.properties && feature.properties.type == "user"){
                     return new UpacMarker(latlng, {icon: userIcon});    
                 }
-                return new UpacMarker(latlng);
+                return new UpacMarker(latlng, {icon: actionIcon});
             },
             onEachFeature: function(feature, layer){
                 if (feature.properties && feature.properties.type == "user") {
                     layer.bindPopup(userPopup(feature.properties), {showOnMouseOver: true, closeButton: false});
                 } else {
-                    layer.bindPopup("evento", {showOnMouseOver: true, closeButton: false});
+                    layer.bindPopup(pagePopup(feature.properties), {showOnMouseOver: true, closeButton: false});
                 }
-                //console.log('feat',feature);
+                console.log('feat',feature);
             }
         });
 

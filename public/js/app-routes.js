@@ -5,9 +5,9 @@ App.Router.map(function() {
         this.route('perfil', { path: '/perfil/:user_username' });
         this.route('avatar');
         this.route('editar');
-        this.route('add');
-        this.route('marker', { path: '/marker/:marker_slug' });
-        this.route('markernew');
+        this.route('local', { path: '/local/:place_slug' });
+        this.route('editarlocal', { path: '/local/:place_slug/editar' });
+        this.route('novolocal');
     });
     this.resource("blog",function(){
         this.route("post", { path: '/post/:post_id' });
@@ -87,11 +87,47 @@ App.RedeEditarRoute = App.UpacRoute.extend({
         if(User.model && User.model.username){
             App.MapController.focusUser(User.model.username);
         }
+    },
+    exit: function(){
+        App.MapController.set('isMarking',false);
+        App.MapController.finishMarking();
     }
 });
 
-App.RedeMarkernewRoute = App.UpacRoute.extend({
+App.RedeLocalRoute = App.UpacRoute.extend({
+    model: function(param){
+        return Ember.Object.create({place_slug: param.place_slug});
+    },
+    serialize: function(model) {
+        if(model) return { place_slug: model.place_slug };
+    },
+    setupController: function (controller, model){
+        controller.set('model', model);
+        controller.set('isLoaded', false);
+        controller.getContent();
+        this._super(this, arguments);
+    }
+});
+
+App.RedeNovolocalRoute = App.UpacRoute.extend({
     setupController: function (controller){
+        this._super(this, arguments);
+        this.controller.enter();
+    },
+    exit: function(){
+        this.controller.exit();
+    }
+});
+
+App.RedeEditarlocalRoute = App.UpacRoute.extend({
+    model: function(param){
+        return Ember.Object.create({place_slug: param.place_slug});
+    },
+    serialize: function(model) {
+        if(model) return { place_slug: model.place_slug };
+    },
+    setupController: function (controller,model){
+        controller.set('model', model);
         this._super(this, arguments);
         this.controller.enter();
     },
@@ -117,7 +153,7 @@ App.BlogRecentesRoute = App.UpacRoute.extend({
     },
     setupController: function (controller, model){
         controller.set('model', model);
-        controller.getcontent();
+        controller.getContent();
         this._super(this, arguments);
     }
 });
@@ -133,7 +169,7 @@ App.BlogTagRoute = App.UpacRoute.extend({
         controller.set('model', model);
         controller.set('articles', []);
         controller.set('tagName', null);
-        controller.getcontent();
+        controller.getContent();
         this._super(this, arguments);
     }
 });
@@ -148,7 +184,7 @@ App.BlogUserRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         controller.set('model', model);
         controller.set('articles', []);
-        controller.getcontent();
+        controller.getContent();
         this._super(this, arguments);
     }
 });
@@ -163,7 +199,7 @@ App.BlogPostRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         controller.set('model', model);
         controller.set('isLoaded', false);
-        controller.getcontent();
+        controller.getContent();
         this._super(this, arguments);
     }
 });

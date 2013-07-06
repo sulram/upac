@@ -13,10 +13,10 @@ html
 		link(rel='stylesheet', href='/css/app.css')
 		link(rel='stylesheet', href='/css/editor.css')
 
-	body(data-place-id="#{place.id}").editor.place
+	body(data-place-id="#{place.id}", rel="place").editor.place
 		form(action="/place/#{place.id}", method="POST")#editor_form
 			.editor_header
-				a#close(href="/#/blog")
+				a#close(href="/#/rede")
 					| fechar
 				.container
 					label.input_label(for="title")
@@ -59,11 +59,11 @@ html
 							label.input_label(for="geo[]") Localização
 							.input_text
 								if place.geo
-									input(type="text", name="geo[]", value=place.geo[0])#geoX.smallinput
-									input(type="text", name="geo[]", value=place.geo[1])#geoY.smallinput
+									input(type="text", name="geo[]", value=place.geo[0])#geoY.smallinput
+									input(type="text", name="geo[]", value=place.geo[1])#geoX.smallinput
 								else
-									input(type="text", name="geo[]", value="")#geoX.smallinput
 									input(type="text", name="geo[]", value="")#geoY.smallinput
+									input(type="text", name="geo[]", value="")#geoX.smallinput
 
 						.hide
 							label.input_label(for="publicationDate")
