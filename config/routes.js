@@ -131,6 +131,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.get('/place/editor', auth.requiresLoginFront, place.neweditor);
 	app.get('/place/editor/:id', auth.requiresLoginFront, place.editor);
 	app.post('/place/new', auth.requiresLogin, place.create)
+	app.get('/place/byslug/:slug', place.bySlug);
 	app.post('/place/:id', auth.requiresLogin, place.editorsave);
 	app.get('/place/:id', place.show);
 

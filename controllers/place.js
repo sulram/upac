@@ -193,6 +193,17 @@ module.exports = function(cdn, paginate) {
 	show: function(req, res, next) {
 		Page.findById(req.param('id')).populate('featuredImage owners tags').exec(function(err, place) {
 			if(err) return next(err);
+			if(!place) return res.jsonx(404,{msg:'error', error: 'place not found'});
+			Img.populate(place, 'owners.avatar', function(err,place) {
+				if(err) return next(err);
+				res.jsonx({msg: 'ok', place:place});
+			})
+		})
+	},
+	bySlug: function(req, res, next) {
+		Page.findOne({slug: req.param('slug')}).populate('featuredImage owners tags').exec(function(err, place) {
+			if(err) return next(err);
+			if(!place) return res.jsonx(404,{msg:'error', error: 'place not found'});
 			Img.populate(place, 'owners.avatar', function(err,place) {
 				if(err) return next(err);
 				res.jsonx({msg: 'ok', place:place});
