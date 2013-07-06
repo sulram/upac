@@ -165,8 +165,8 @@ module.exports = function (cdn, paginate) { return {
 	},
 	everything2d: function(req, res, next) {
 		//var query = {geo: {$near: req.param('center').split(','), $maxDistance:req.param('distance')}};
-		var query = {$nor: [{geo: null}, {geo: []}]};
-		User.find(query).select('-resetPasswordToken -verifyToken').populate('avatar tags').exec(function(err, users) {
+		User.find().select('-resetPasswordToken -verifyToken').populate('avatar tags').exec(function(err, users) {
+			var query = {$nor: [{geo: null}, {geo: []}]};
 			if(err) return next(err);
 			query['publicationStatus'] = 'published';
 			Article.find(query).populate('owners featuredImage tags').exec(function(err, articles) {
