@@ -145,8 +145,12 @@ module.exports = function(cdn, paginate){ return {
 			if(err) return res.jsonx(500, {error: err});
 			if(!page) {
 				data._id = mongoose.Types.ObjectId(req.body.id);
+				data.owners = [req.user.id];
 				page = new Page(data);
 			} else {
+				if(!req.isAdmin() && !_.find(page.owners, function(owner){ return owner == req.user.id})) {
+					return res.jsonx(401, {msg: 'error', err: 'unauthorized'})
+				}
 				page.set(data);
 			}
 			page.save(function(err) {

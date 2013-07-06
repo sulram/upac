@@ -127,7 +127,7 @@ module.exports = function(cdn, paginate) {
 	},
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
-			'title', 'content', 'owners',
+			'title', 'content',
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'geo'
 		);
@@ -137,14 +137,17 @@ module.exports = function(cdn, paginate) {
 			return {image:image[0], size:image[1]}
 		})
 		console.info(data.images);
-		// TODO: pegar tags e transformar em ObjectIDs
 		var query = {_id: req.param('id')}
 		Page.findOne(query, function(err, page) {
 			if(err) return res.jsonx(500, {error: err});
 			if(!page) {
 				data._id = mongoose.Types.ObjectId(req.body.id);
+				data.owners = [req.user.id];
 				page = new Page(data);
 			} else {
+				if(!req.isAdmin() && !_.find(page.owners, function(owner){ return owner == req.user.id})) {
+					return res.jsonx(401, {msg: 'error', err: 'unauthorized'})
+				}
 				page.set(data);
 			}
 			page.save(function(err) {
@@ -166,12 +169,13 @@ module.exports = function(cdn, paginate) {
 	},
 	create: function(req, res, next) {
 		var data = _.pick(req.body,
-			'title', 'content', 'owners',
+			'title', 'content',
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'geo'
 		);
 		
 		data.createdAt = data.updatedAt = new Date;
+		data.owners = [req.user._id];
 		console.info(data.images);
 		data.images = _.map(data.images, function(image) {
 			return {image:image[0], size:image[1]}
