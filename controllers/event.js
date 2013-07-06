@@ -149,11 +149,10 @@ module.exports = function(cdn, paginate) { return {
 			});
 		});
 	},
-
 	show: function(req, res, next) {
-		Article.findOne({_id:req.param.id, type: 'event'}, function(err, article) {
+		Article.findById(req.param('id'), function(err, article) {
 			if (err) return next(err);
-			if (!article) return res.json(404, {error: "Event not found"});
+			if (!article) return res.jsonx(404, {error: "Event not found"});
 			res.jsonx({
 				msg: "ok",
 				event: article
@@ -161,19 +160,38 @@ module.exports = function(cdn, paginate) { return {
 		});
 	},
 	preloadById: function(req, res, next) {
-		Article.findById(req.param.id, function(err, _event) {
+		Article.findById(req.param('id'), function(err, _event) {
 			if (err) return next(err);
-			if (!_event) return res.json(404, {error: "Event not found"});
+			if (!_event) return res.jsonx(404, {error: "Event not found"});
 			res._event = _event;
 			next();
 		});
 	},
 	create: function(req, res, next) {
-
-		var _event = new Article(_.extend(req.body));
-		_event.save(function(err) {
-			if(err) return next(err);
-			res.jsonx({msg: "ok"});
+		var data = _.pick(req.body,
+			'title', 'content', 'excerpt', 
+			'publicationDate', 'publicationStatus',
+			'images', 'attachments', 'featuredImage', 'tags',
+			'startDate', 'endDate', 'address', 'geo'
+		);
+		if(!data.featuredImage || (data.featuredImage.length == 0)) {
+			data.featuredImage = null;
+		}
+		data.updatedAt = new Date;
+		data.images = _.map(data.images, function(image) {
+			return {image:image, size:'normal'}
+		})
+		// pegar tags e transformar em ObjectIDs
+		data.tags = Tag.toIDs(data.tags);
+		var query = {_id: req.param('id')}
+		data.owners = [req.user.id];
+		var article = new Article(data);
+		article.save(function(err) {
+			if(err) return res.jsonx(500, {error: err});
+			res.jsonx({
+				msg: 'ok',
+				article: article,
+			});
 		});
 	},
 	remove: function(req, res, next) {
