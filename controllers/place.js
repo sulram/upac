@@ -117,7 +117,7 @@ module.exports = function(cdn, paginate) {
 	editor: function(req, res, next) {
 		var query = {_id: req.param('id')}
 		Page.findOne(query)
-			.populate('images.image')
+			.populate('images.image tags')
 			.exec(function(err, page) {
 				if(err) return next(err);
 				console.log(page);
@@ -128,7 +128,7 @@ module.exports = function(cdn, paginate) {
 	},
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
-			'title', 'content', 'excerpt', 'tags',
+			'title', 'content', 'excerpt', 'tags', 'address',
 			'publicationDate', 'publicationStatus',
 			'images', 'attachments', 'geo'
 		);
