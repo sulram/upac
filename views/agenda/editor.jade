@@ -13,7 +13,7 @@ html
 		link(rel='stylesheet', href='/css/app.css')
 		link(rel='stylesheet', href='/css/editor.css')
 
-	body(data-event-id="#{event.id}", rel="event").editor.agenda
+	body(data-id="#{event.id}", rel="event").editor.agenda
 		form(action="/event/#{event.id}", method="POST")#editor_form
 			.editor_header
 				a#close(href="/#/agenda")
@@ -116,7 +116,7 @@ html
 								a(href="#")#post_remove_no.btn.btn-danger
 									i.fui-cross
 							&nbsp;
-							a(href="/#/blog/post/#{event.id}",class="#{post_view}")#post_view
+							a(href="/#/agenda/evento/#{event.id}",class="#{post_view}")#post_view
 								i.fui-eye
 								&nbsp;
 								| Visualizar no blog

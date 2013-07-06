@@ -13,7 +13,7 @@ html
 		link(rel='stylesheet', href='/css/app.css')
 		link(rel='stylesheet', href='/css/editor.css')
 
-	body(data-place-id="#{place.id}", rel="place").editor.place
+	body(data-id="#{place.id}", rel="place").editor.place
 		form(action="/place/#{place.id}", method="POST")#editor_form
 			.editor_header
 				a#close(href="/#/rede")
@@ -97,7 +97,7 @@ html
 								a(href="#")#post_remove_no.btn.btn-danger
 									i.fui-cross
 							&nbsp;
-							a(href="/#/blog/post/#{place.id}",class="#{post_view}")#post_view
+							a(href="/#/rede/local/#{place.id}",class="#{post_view}")#post_view
 								i.fui-eye
 								&nbsp;
 								| Visualizar no blog

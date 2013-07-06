@@ -2,7 +2,8 @@ Dropzone.autoDiscover = false;
 
 $(document).ready(function(){
 	
-	var article_id = $('body').data('article-id');
+	var ID = $('body').data('id');
+	var remove_url = getURLRemove(ID);
 	var is_uploading = false;
 
 	// TAGS
@@ -14,17 +15,6 @@ $(document).ready(function(){
 		id: function(e) {
 			return e._id + ":" + e.name;
 		},
-		/*initSelection: function(element, callback) {
-			var data = [];
-			$(element.val().split(",")).each(function(i) {
-				var item = this.split(':');
-				data.push({
-					id: item[0],
-					title: item[1]
-				});
-			});
-			callback(data);
-		},*/
 		ajax: { 
 			url: "/tags/query",
 			dataType: 'json',
@@ -211,7 +201,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		$.ajax({
 			type: 'GET',
-			url: '/article/'+article_id+'/remove',
+			url: getURLRemove(ID),
 			success: function(data, status, jqXHR){
 				notify('A publicação foi excluída.', null);
 
@@ -220,7 +210,7 @@ $(document).ready(function(){
 				},2000);
 				
 				setTimeout(function(){
-					window.location = '/#/blog';
+					window.location = getURLRedirectRemove();
 				},4000);
 
 			},
@@ -252,18 +242,8 @@ $(document).ready(function(){
 			url: action,
 			data: data,
 			success: function(data, status, jqXHR){
-				var url, rel = $('body').attr('rel');
-				switch(rel){
-					case 'post': 
-						url = '/#/blog/post/'+data.page._id;
-						break;
-					case 'place':
-						url = '/#/rede/local/'+data.page.slug;
-						break;
-					case 'event':
-						url = '/#/agenda';
-						break;
-				}
+				var url = getURLRedirect(data);
+				ID = getID(data);
 				$('#post_remove').removeClass('hide');
 				$('#post_view').attr('href',url).removeClass('hide');
 				notify('A publicação foi salva com sucesso!', data);
@@ -323,4 +303,70 @@ $(document).ready(function(){
 	}
 
 	resize();
+
+	// ROUTES
+
+		function getID(data){
+		var id, rel = $('body').attr('rel');
+		switch(rel){
+			case 'post': 
+				id = data.article._id;
+				break;
+			case 'place':
+				id = data.page._id;
+				break;
+			case 'event':
+				id = data.event._id;
+				break;
+		}
+		return id;
+	}
+
+	function getURLRedirect(data){
+		var url, rel = $('body').attr('rel');
+		switch(rel){
+			case 'post': 
+				url = '/#/blog/post/'+data.article._id;
+				break;
+			case 'place':
+				url = '/#/rede/local/'+data.page.slug;
+				break;
+			case 'event':
+				url = '/#/agenda';
+				break;
+		}
+		return url;
+	}
+
+	function getURLRedirectRemove(){
+		var url, rel = $('body').attr('rel');
+		switch(rel){
+			case 'post': 
+				url = '/#/blog';
+				break;
+			case 'place':
+				url = '/#/rede';
+				break;
+			case 'event':
+				url = '/#/agenda';
+				break;
+		}
+		return url;
+	}
+
+	function getURLRemove(id){
+		var url, rel = $('body').attr('rel');
+		switch(rel){
+			case 'post': 
+				url = '/article/'+id+'/remove';
+				break;
+			case 'place':
+				url = '/place/'+id+'/remove';
+				break;
+			case 'event':
+				url = '/event/'+id+'/remove';
+				break;
+		}
+		return url;
+	}
 });
