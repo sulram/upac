@@ -262,7 +262,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 		var sortby = req.param('sort_by') || '';
 		var sortorder = req.param('order') || 1; 
 
-		var query = User.find({});
+		var query = User.find({}).select('-resetPasswordToken -verifyToken');
 		if (sortby !== '') {
 			query.sort(sortby,sortorder?1:-1);
 		};
@@ -289,7 +289,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 		});
 	},
 	show: function(req, res, next) {
-		var query = User.findOne({username: req.params.username}).populate('avatar tags');
+		var query = User.findOne({username: req.params.username}).select('-resetPasswordToken -verifyToken').populate('avatar tags');
 		query.exec(function(err, user) {
 			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
 			if(!user) return res.jsonx(404, {msg: 'user not found'});
