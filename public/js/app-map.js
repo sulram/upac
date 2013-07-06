@@ -18,7 +18,11 @@ var calIcon = new UIcon({iconUrl: 'img/pin_cal.png'});
 var upac_new_marker = null;
 
 function userPopup(user) {
-    return '<strong>' + user.name + '</strong><br/><a href="#/rede/perfil/'+user.username+'">Ver perfil</a>';
+    var usermodel = App.UserModel.build(user);
+    var username = user.username
+    var name = user.name || user.username;
+    var about = user.about || '';
+    return '<figure class="post_avatar"><img src="'+usermodel.avatar_icon+'"/></figure><p><strong>' + name + '</strong><br/>'+about+'</p><p><a href="#/rede/perfil/' + username + '">Clique para ver o perfil</a></p>';
 }
 
 function createUserPin(user){
@@ -34,7 +38,9 @@ function createUserPin(user){
         properties: {
             type: "user",
             name: user.name,
-            username: user.username
+            username: user.username,
+            about: user.about,
+            avatar: user.avatar
         }
     };
 };
@@ -226,9 +232,7 @@ App.MapController = Em.Object.create({
             },
             onEachFeature: function(feature, layer){
                 if (feature.properties && feature.properties.type == "user") {
-                    var username = feature.properties.username
-                    var name = feature.properties.name || username;
-                    layer.bindPopup(userPopup({username: username, name: name}), {showOnMouseOver: true, closeButton: false});
+                    layer.bindPopup(userPopup(feature.properties), {showOnMouseOver: true, closeButton: false});
                 } else {
                     layer.bindPopup("evento", {showOnMouseOver: true, closeButton: false});
                 }

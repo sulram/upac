@@ -8,6 +8,7 @@ App.UserModel = Ember.Object.create({
 });
 App.UserModel.reopen({
     buildAvatar: function(user,size){
+        console.log(user.username,user.get('avatar.upload_complete'))
         if(user.get('avatar.upload_complete')){
             return _.findWhere(user.get('avatar.sizes'),{size: size}).cdn_url
         } else if (user.get('avatar.original_cdn_url')) {

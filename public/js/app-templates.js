@@ -362,7 +362,7 @@ function program9(depth0,data) {
 function program11(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n					<p class=\"tags\">\n						Palavras-chave: \n						");
+  data.buffer.push("\n					<p class=\"tags\">\n						");
   hashTypes = {};
   stack1 = helpers.each.call(depth0, "article.tags", {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -1400,7 +1400,7 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n			<p class=\"tags\">\n				Palavras-chave: \n				");
+  data.buffer.push("\n			<p class=\"tags\">\n				");
   hashTypes = {};
   stack1 = helpers.each.call(depth0, "tags", {hash:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }

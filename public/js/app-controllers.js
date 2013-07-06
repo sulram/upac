@@ -158,7 +158,7 @@ App.BlogTagController = App.BlogRecentesController.extend({
         var _this = this;
         var tag = this.get('model.tag_slug');
         var page = this.get('model.page_num');
-        $.getJSON( '/user/bytag/'+tag , {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
+        $.getJSON( '/articles/bytag/'+tag , {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
             _this.buildFromData(data);
             _this.set('tagName',data.tag.name);
         });

@@ -561,13 +561,30 @@ iframe {
 	max-width: 320px;
 }
 
+.tags,
+#wrapper.blog .thepost .tags,
 #rede_sidebar .tags {
-	font-size: 0.9em;
+	line-height: 11px;
 }
 
-#rede_sidebar .tags a {
+#rede_sidebar .tags {
+	margin-top: 20px;
+}
+
+.tags a {
 	display: inline-block;
-	margin-right: 2px;
+	margin: 0 0 4px 2px;
+	white-space: nowrap;
+	text-decoration: none;
+	padding: 3px 4px;
+	background: #16a085;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+.tags a:hover {
+	background: #efefef;
+	color: #16a085;
 }
 
 .rede_perfil_foto {
@@ -599,7 +616,7 @@ iframe {
 }
 
 #rede_sidebar .user_articles li a {
-	padding: 10px;
+	padding: 4px 8px;
 	background: #efefef;
 	display: block;
 	text-decoration: none;
@@ -1056,4 +1073,14 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	font-size: 16px;
 	line-height: 40px;
 	border-radius: 32px;
+}
+
+.leaflet-popup-content {
+	text-align: center;
+	max-width: 200px;
+}
+
+.leaflet-popup-content figure.post_avatar {
+	display: inline-block;
+	margin: 0;
 }
