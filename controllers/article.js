@@ -108,7 +108,7 @@ module.exports = function(cdn, paginate){ return {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
 			'publicationDate', 'publicationStatus',
-			'images', 'attachments', 'owners', 'featuredImage', 'tags'
+			'images', 'attachments', 'featuredImage', 'tags'
 		);
 		if(!data.featuredImage || (data.featuredImage.length == 0)) {
 			data.featuredImage = null;
@@ -143,10 +143,13 @@ module.exports = function(cdn, paginate){ return {
 			})) return res.jsonx(401, {msg: 'unauthorized'});
 
 			if(!article) {
-				data.owners = req.param('owners')||[req.user.id];
+				data.owners = [req.user.id];
 				article = new Article(data);
 				article._id = mongoose.Types.ObjectId(req.param('id'));
 			} else {
+				if(!req.isAdmin() && !_.find(article.owners, function(owner){ return owner == req.user.id})) {
+					return res.jsonx(401, {msg: 'error', err: 'unauthorized'})
+				}
 				article.set(data);
 			}
 			article.save(function(err) {
