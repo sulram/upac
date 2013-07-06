@@ -113,6 +113,10 @@ App.TagsView = Ember.View.extend({
     input: null,
     templateName: 'view_tags',
     didInsertElement: function(){
+        this.startTags();
+    },
+    startTags: function(){
+        console.log("START TAGS!");
         var _controller = this.get('controller');
         var input = $('#select2').select2({
             tags: true,
@@ -169,11 +173,14 @@ App.TagsView = Ember.View.extend({
 
         var data = input.select2('data');
 
-        _.each(User.model.tags, function(tag,i){
-            data[i] = {_id: tag._id, name: tag.name};
-        });
+        if(_controller.get('getUserTags')){
+            _.each(User.model.tags, function(tag,i){
+                data[i] = {_id: tag._id, name: tag.name};
+            });
+            input.select2('data', data);
+        }
 
-        input.select2('data', data);
+        
 
     }
 });
@@ -184,6 +191,13 @@ App.AutoFocusTextField = Ember.TextField.extend({
     didInsertElement: function() {
         this.$().focus();
     },
+    click: function(){
+        console.log(this.get('target'));
+        this.get('controller').send('onFocus');
+    }
+});
+
+App.FocusTextArea = Ember.TextArea.extend({
     click: function(){
         console.log(this.get('target'));
         this.get('controller').send('onFocus');

@@ -6,6 +6,8 @@ App.Router.map(function() {
         this.route('avatar');
         this.route('editar');
         this.route('add');
+        this.route('marker', { path: '/marker/:marker_slug' });
+        this.route('markernew');
     });
     this.resource("blog",function(){
         this.route("post", { path: '/post/:post_id' });
@@ -47,6 +49,7 @@ App.HomeRoute = App.UpacRoute.extend({
 
 App.RedeRoute = App.UpacRoute.extend({
     setupController: function(controller, model) {
+        App.MapController.set('mapIsLoaded', false);
         App.MapController.isMarking = false;
         App.MapController.getMarkers();
     }
@@ -84,6 +87,16 @@ App.RedeEditarRoute = App.UpacRoute.extend({
         if(User.model && User.model.username){
             App.MapController.focusUser(User.model.username);
         }
+    }
+});
+
+App.RedeMarkernewRoute = App.UpacRoute.extend({
+    setupController: function (controller){
+        this._super(this, arguments);
+        this.controller.enter();
+    },
+    exit: function(){
+        this.controller.exit();
     }
 });
 

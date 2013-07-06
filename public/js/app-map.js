@@ -15,6 +15,8 @@ var UIcon = L.Icon.extend({
 var userIcon = new UIcon({iconUrl: 'img/pin_user.png'});
 var calIcon = new UIcon({iconUrl: 'img/pin_cal.png'});
 
+var upac_new_marker = null;
+
 function userPopup(user) {
     return '<strong>' + user.name + '</strong><br/><a href="#/rede/perfil/'+user.username+'">Ver perfil</a>';
 }
@@ -99,6 +101,7 @@ var UpacMarker = L.Marker.extend({
 
 App.RedeMapaView = Ember.View.extend({
     templateName: 'view_mapa',
+    hasMap: false,
     handleZoom: function() {
         //if (App.map.getZoom() < 2){
         //    App.map.setZoom(2);
@@ -106,14 +109,19 @@ App.RedeMapaView = Ember.View.extend({
         //console.log('zoom factor',App.map.getZoom());
     },
     didInsertElement: function(){
+        var _this = this;
         App.map = L.map('map_canvas',{minZoom: 3});
         App.map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: 'Powered by Leaflet & OpenStreetMap'});
         App.map.addLayer(App.map_tiles).setView(new L.LatLng(0,0), 2);
         App.map.zoomControl.setPosition('bottomleft');
+        Ember.run.next(function(){
+            App.MapController.set('mapIsLoaded', true);
+        });
     }
 });
 
 App.MapController = Em.Object.create({
+    mapIsLoaded: false,
     isMarking: false,
     isFetching: true,
     geojson: {},
@@ -145,7 +153,7 @@ App.MapController = Em.Object.create({
             //console.log("focus " + username);
             var pin = this.findUserPin(username);
             if(pin){
-                console.log(pin);
+                //console.log(pin);
                 App.map.panTo(pin._latlng);
                 pin.openPopup();
             }
@@ -228,25 +236,70 @@ App.MapController = Em.Object.create({
                 return L.divIcon({ html: cluster.getChildCount(), className: 'upac_cluster', iconSize: L.point(40, 40) });
             },
         });
-        that.cluster.addLayer(that.geojson);
-        App.map.addLayer(that.cluster);
+        if(!that.isMarkingNew){
+            that.cluster.addLayer(that.geojson);
+            App.map.addLayer(that.cluster);
+        }
     },
-    clusterClear: function(){
-        this.cluster.clearLayers();
-        App.map.removeLayer(this.cluster);
-        App.map.addLayer(this.geojson);
+
+    // NEW MARKER
+
+    isMarkingNew: false,
+    marker_new: null,
+    marker_new_pos: null,
+
+    startNewMarker: function(){
+        $('#map_canvas').addClass('marking');
+        this.isMarkingNew = true;
+        App.MapController.set('marker_new_pos', null);
+        App.map.on('click', this.newMarker);
+        this.fullMapClear();
     },
-    clusterAgain: function(){
-        App.map.removeLayer(this.geojson);
-        this.cluster.addLayer(this.geojson);
-        App.map.addLayer(this.cluster);
+    stopNewMarker: function(){
+        $('#map_canvas').removeClass('marking');
+        this.isMarkingNew = false;
+        App.map.off('click', this.newMarker);
+        if(upac_new_marker){
+            App.map.removeLayer(upac_new_marker);
+            upac_new_marker = null;
+        }
+        this.fullMapShow();
     },
+    newMarker: function(e){
+        console.log(e.latlng)
+        console.log('upac_new_marker',upac_new_marker)
+        if(!upac_new_marker) {
+            upac_new_marker = new L.Marker(e.latlng,{icon: new UIcon()});
+            App.map.addLayer(upac_new_marker);
+        } else {
+            upac_new_marker.setLatLng(e.latlng);
+        }
+        App.map.panTo(e.latlng);
+        App.MapController.set('marker_new_pos', e.latlng);
+    },
+    fullMapClear: function(){
+        if(this.cluster){
+            this.cluster.clearLayers();
+            App.map.removeLayer(this.cluster);
+        }
+    },
+    fullMapShow: function(){
+        if(this.cluster){
+            this.cluster.addLayer(this.geojson);
+            App.map.addLayer(this.cluster);
+        }
+    },
+
+    // CHANGE USER MARK
+
     startMarking: function(){
+        $('#map_canvas').addClass('marking');
         this.set('isMarking',true);
         App.map.on('click', this.onMapClick);
         this.clusterClear();
     },
     finishMarking: function(save){
+        $('#map_canvas').removeClass('marking');
         var that = this;
         var user = this.findTheUser();
         var pin = this.findUserPin(user.username);
@@ -287,7 +340,17 @@ App.MapController = Em.Object.create({
             }
             that.set('isMarking',false);
         }
-        this.clusterAgain();
+        this.clusterShow();
+    },
+    clusterClear: function(){
+        this.cluster.clearLayers();
+        App.map.removeLayer(this.cluster);
+        App.map.addLayer(this.geojson);
+    },
+    clusterShow: function(){
+        App.map.removeLayer(this.geojson);
+        this.cluster.addLayer(this.geojson);
+        App.map.addLayer(this.cluster);
     },
     createMarker: function(username, latLng, select){
         

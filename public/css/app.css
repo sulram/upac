@@ -515,6 +515,10 @@ iframe {
 	display: none;
 }
 
+#map_canvas.marking {
+	cursor: crosshair;
+}
+
 #wrapper.rede #map_canvas {
 	display: block;
 }
@@ -606,6 +610,11 @@ iframe {
 #rede_sidebar .user_articles li a:hover {
 	background: #666;
 	color: #fff;
+}
+
+#rede_sidebar input[type="text"],
+#rede_sidebar textarea {
+	width: 90%;
 }
 
 /* ---------------- BLOG ---------------- */

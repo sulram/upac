@@ -284,6 +284,10 @@ App.BlogPostController = Ember.ObjectController.extend({
 
 // REDE
 
+App.RedeController = Ember.ObjectController.extend({
+    mapIsLoaded: false
+});
+
 App.RedePerfilController = Ember.ObjectController.extend({
     isTheLoggedUser: function(){
         return this.get('model.username') == User.auth.username;
@@ -315,6 +319,7 @@ App.RedeEditarController = Ember.ObjectController.extend({
     isPosting: false,
     flashMsg: null,
     tags: [],
+    getUserTags: true,
     startMarking: function(){
         App.MapController.startMarking();
     },
@@ -350,6 +355,59 @@ App.RedeEditarController = Ember.ObjectController.extend({
             }
         });
     }
+});
+
+App.RedeMarkernewController = Ember.ObjectController.extend({
+    tags: [],
+    isPosting: false,
+    flashMsg: null,
+    mapIsLoaded: function(){
+        return App.map != null;
+    }.property('App.MapController.mapIsLoaded'),
+    enter: function(){
+        if(this.get('mapIsLoaded')){
+            App.MapController.startNewMarker();
+        }
+    }.observes('mapIsLoaded'),
+    exit: function(){
+        App.MapController.stopNewMarker();
+    },
+    submit: function(){
+        var _controller = this;
+        var data = $('form').serialize();
+        var dataArray = $('form').serializeArray();
+        var title = _.findWhere(dataArray,{name: 'title'}).value;
+        var content = _.findWhere(dataArray,{name: 'content'}).value;
+        if(title == ''){
+            return this.set('flashMsg','escreva o nome do ponto');
+        }
+        if(content == ''){
+            return this.set('flashMsg','escreva a descrição');
+        }
+        this.set('flashMsg',null);
+        this.set('isPosting',true);
+        console.log(data, dataArray, title, content);
+        /*
+        $.ajax({
+            type: 'PUT',
+            url: '/user/' + User.auth.id,
+            data: data,
+            success: function(data, status, jqXHR){
+                console.log('success', data);
+                _controller.set('isPosting',false);
+                User.authenticate(data.auth);
+                App.MapController.updateUser(data.user);
+                window.location.hash = '/rede/perfil/' + data.user.username;
+            },
+            error: function(jqXHR,status,error){
+                console.log('error', arguments);
+                _controller.set('isPosting',false);
+            }
+        });*/
+    },
+    onFocus: function(){
+        this.set('flashMsg',null);
+    },
 });
 
 

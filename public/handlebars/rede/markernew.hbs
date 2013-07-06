@@ -1,0 +1,62 @@
+<div class="pad">
+	{{#if User.model.isLoaded}}
+	<h2>Criar ponto</h2>
+	<form id="editar_perfil">
+		<div class="control-group">
+			<label class="control-label" for="title">Nome do ponto<br/><small>projeto, pesquisa, instituição ou empresa</small></label>
+			<div class="controls">
+				<input type="text" id="title" name="title" placeholder="" {{action "onFocus"}}>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="about">Sobre esse local<br/><small>e porque está na rede UPAC</small></label>
+			<div class="controls">
+				{{view App.FocusTextArea rows="5" id="markercontent" name="content"}}  
+			</div>
+		</div>
+			{{#each tags}}
+				<input type="hidden" name="tags[]"/>
+			{{/each}}
+
+			{{#if App.MapController.marker_new_pos}}
+				<input type="hidden" name="geo[]" {{bindAttr value="App.MapController.marker_new_pos.lat"}}/>
+				<input type="hidden" name="geo[]" {{bindAttr value="App.MapController.marker_new_pos.lng"}}/>
+			{{/if}}
+			{{#each tags}}
+				<input type="hidden" name="tags[]" {{bindAttr value=this}}/>
+			{{/each}}
+	</form>
+
+	{{view App.TagsView}}
+
+	<hr/>
+
+	{{#if App.MapController.marker_new_pos}}
+		
+		{{#if isPosting}}
+		<p class="def_loading">salvando ponto</p>
+		{{else}}
+		<div class="control-group">
+			<div class="controls">
+				<p>
+					<button type="submit" class="btn btn-primary" {{bindAttr disabled="isPosting"}} {{action submit}}>Salvar ponto</button>
+					{{#linkTo 'rede' classNames="btn"}}Cancelar{{/linkTo}}
+				</p>
+				{{#if flashMsg}}
+				<div class="alert alert-error">
+				  {{flashMsg}}
+				</div>
+				{{/if}}
+			</div>
+		</div>
+		{{/if}}
+	{{else}}
+		<div class="pad over">
+			<p>Navegue pelo mapa e clique no ponto em que você deseja marcar a localização.</p>
+		</div>
+	{{/if}}
+
+	{{else}}
+		{{partial "anonymous"}}
+	{{/if}}
+</div>
