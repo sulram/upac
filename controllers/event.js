@@ -151,7 +151,8 @@ module.exports = function(cdn, paginate) { return {
 	},
 	show: function(req, res, next) {
 		Article.findById(req.param('id'))
-			.populate('owners featuredImage tags')
+			.populate({path:'owners', select:'-resetPasswordToken -verifyToken'})
+			.populate('featuredImage tags')
 			.exec(function(err, article) {
 			if (err) return next(err);
 			if (!article) return res.jsonx(404, {error: "Event not found"});
@@ -225,7 +226,8 @@ module.exports = function(cdn, paginate) { return {
 					{endDate: {$ne: null}}
 				]
 			})
-			.populate('owners featuredImage tags')
+			.populate({path:'owners', select:'-resetPasswordToken -verifyToken'})
+			.populate('featuredImage tags')
 			.exec(
 			function(err, events) {
 				if(err) return err;

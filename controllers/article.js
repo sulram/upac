@@ -168,8 +168,12 @@ module.exports = function(cdn, paginate){ return {
 				parent:null,
 				startDate:null,
 				endDate:null
+			},{
+				populate:[
+					{path:'owners', select:'-resetPasswordToken -verifyToken'},
+					{path:'tags'}
+				]
 			},
-			{populate:'owners featuredImage'},
 			req,
 			function(err, articles, pagination) {
 				if(err) return next(err);
@@ -206,7 +210,8 @@ module.exports = function(cdn, paginate){ return {
 	},
 	show: function(req, res, next) {
 		Article.findById(req.params.id)
-			.populate('images.image owners featuredImage tags')
+			.populate({path:'owners', select:'-resetPasswordToken -verifyToken'})
+			.populate('images.image featuredImage tags')
 			.exec(function(err, article){
 			if(err) return next(err);
 			if(!article) return res.jsonx(404, {error: 'article not found'});
@@ -313,7 +318,11 @@ module.exports = function(cdn, paginate){ return {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.jsonx(404, {msg: "user not found"});
-			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent:null},{populate:'featuredImage owners'}, req, function(err, articles, pagination) {
+			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent:null},
+								{populate:[
+									{path:'featuredImage'},
+									{path: 'owners', select: '-resetPasswordToken -verifyToken'}
+								]}, req, function(err, articles, pagination) {
 				if(err) return next(err);
 				Img.populate(articles, 'owners.avatar', function(err, _articles){
 					res.jsonx({
@@ -393,7 +402,7 @@ module.exports = function(cdn, paginate){ return {
 	getComments: function(req, res, next) {
 		paginate.paginate(Article,{publicationStatus:'published', parent:req.param('id')},
 			{populate:[
-				{path:'owners'}, 
+				{path:'owners', select:'-resetPasswordToken -verifyToken'},
 				{path:'featuredImage'}
 			]}, req, function(err, articles, pagination) {
 				if(err) return next(err);
