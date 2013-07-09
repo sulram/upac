@@ -955,6 +955,18 @@ iframe {
 	margin: 0;
 }
 
+#address_map.loaded {
+	width: 100%;
+	height: 200px;
+}
+
+#wrapper.agenda .address {
+	color: #666;
+	font-size: 12px;
+	font-style: oblique;
+	margin-bottom: 30px;
+}
+
 /* ---------------- MODAL ADD ---------------- */
 
 .overlay {

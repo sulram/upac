@@ -298,6 +298,17 @@ App.AgendaEventoController = App.BlogPostController.extend({
             _this.set('isOwner', data.event.owners[0] ? data.event.owners[0]._id == data.auth.id : null);
             _this.set('profile', data.event.owners[0] ? App.UserModel.build(data.event.owners[0]) : null);
             _this.set('isLoaded', true);
+            if(data.event.geo.length){
+                Ember.run.next(function(){
+                    $('#address_map').addClass('loaded');
+                    var map = L.map('address_map',{minZoom: 3})
+                    var map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png');
+                    map.addLayer(map_tiles).setView(new L.LatLng(data.event.geo[0],data.event.geo[1]), 15);
+                    map.zoomControl.setPosition('bottomleft');  
+                    var latlng = new L.LatLng(data.event.geo[0],data.event.geo[1]);
+                    var marker = new L.marker(latlng,{icon: eventIcon}).addTo(map);
+                });
+            }
             _this.getComments(id);
             Ember.run.next(function(){
                 $('.post_content table').addClass('table table-condensed');
