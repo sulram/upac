@@ -16,7 +16,6 @@ block content
 				tr
 					th id
 					th Título
-					th Imagens
 					th Criada em
 					th Atualizada em
 					th Opções
@@ -27,9 +26,6 @@ block content
 						a(href='/admin/page/#{page.id}').order= page.slug
 					td
 						a(href='/admin/page/#{page.id}').order= page.title
-					td
-						| count images
-
 					td.moment-me= page.createdAt
 					td.moment-me= page.updatedAt
 

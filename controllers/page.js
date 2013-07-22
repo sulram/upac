@@ -2,6 +2,7 @@
   , User = mongoose.model('User')
   , Page = mongoose.model('Page')
   , Img = mongoose.model('Img')
+  , Tag = mongoose.model('Tag')
   , Attachment = mongoose.model('Attachment')
   , fs = require('fs')
   , _ = require('underscore')
@@ -33,7 +34,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		},
 		editnew: function(req, res, next) {
-			res.render('admin/page/new', {title: 'Nova Página', page: new Page()});
+			var page = new Page();
+			res.render('editor', {article:page, form_url:'/admin/page/', close_url:'/admin/pages'});
 		},
 		show: function(req, res, next) {
 			Page.findById(req.param('id'), function(err, page) {
@@ -51,19 +53,40 @@ module.exports = function(cdn, paginate){ return {
 				});
 		},
 		update: function(req, res, next) {
-			Page.update({_id:req.param('id')}, {$set: req.body},
-				function(err, page) {
-					if (err) {
-						if (err.code === 11000) { // duplicate key
-							req.flash('error', 'Slug já existe');
-							res.redirect('/admin/page/'+req.param('id'))
-						} else {
-							return next(err);
-						}
-					}
-					res.redirect('/admin/page/'+req.param('id'));
-				}
+			var data = _.pick(req.body,
+				'title', 'content', 'excerpt', 
+				'publicationDate', 'publicationStatus',
+				'images', 'attachments', 'featuredImage', 'tags'
 			);
+			if(!data.featuredImage || (data.featuredImage.length == 0)) {
+				data.featuredImage = null;
+			}
+			data.updatedAt = new Date;
+			data.images = _.map(data.images, function(image) {
+				return {image:image, size:'normal'}
+			})
+			// pegar tags e transformar em ObjectIDs
+			var query = {_id: req.param('id')}
+			data.tags = Tag.toIDs(data.tags);
+			
+			Page.findOne(query, function(err, page) {
+				if(err) return res.jsonx(500, {error: err});
+
+				if(!page) {
+					data.owners = [req.user.id];
+					page = new Page(data);
+					page._id = mongoose.Types.ObjectId(req.param('id'));
+				} else {
+					page.set(data);
+				}
+				page.save(function(err) {
+					if(err) return res.jsonx(500, {error: err});
+					res.jsonx({
+						msg: 'ok',
+						page: page,
+					});
+				});
+			});
 		},
 		remove: function(req, res, next) {
 			Page.findByIdAndRemove(req.param('id'), function(err) {

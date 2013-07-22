@@ -24,6 +24,21 @@ var ImgSchema = new Schema({
 	createdAt: Date
 });
 
+var slugify = function(str) {
+	str = str.toLowerCase();
+	str = str.replace(/[àáâãä]/ig, 'a');
+	str = str.replace(/[éêë]/ig, 'e');
+	str = str.replace(/[íï]/ig, 'i');
+	str = str.replace(/[óôõö]/ig, 'o');
+	str = str.replace(/[úü]/ig, 'u');
+	str = str.replace(/ç/ig, 'c');
+	str = str.replace(/ñ/ig, 'n');
+	str = str.replace(/[^-a-zA-Z0-9,&\s]+/ig, '');
+	str = str.replace(/-/ig, '_');
+	str = str.replace(/\s/ig, '-');
+	return str;
+}
+
 var make_thumbs =  function(file, _base_name, image_config, _variant, file_cb, all_cb) {
 	console.info('preparando thumbs. base name: %s', _base_name);
 	var base_name = _base_name;
@@ -86,9 +101,8 @@ ImgSchema.statics.upload = function(cdn, image_config, user_id, orig_name, file_
 	var createdAt = new Date();
 	var _base_name = base_name+ '-'+createdAt.getTime();
 	
-	var original_url = _base_name+'-original-'+file_pieces[file_pieces.length-1];
+	var original_url = _base_name+'-original-'+slugify(file_pieces[file_pieces.length-1]);
 
-	console.log(original_url);
 	uploader.upload({
 		container: cdn.container,
 		remote: original_url,

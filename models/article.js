@@ -31,7 +31,7 @@ var fields = {
 	},
 	excerpt: String,
 	content: String,
-	geo: {type: [Number], index: "2dsphere"},
+	geo: {type: [Number], index: "2dsphere", required:false},
 	address: String,
 	parent: {type:ObjectId, ref:'Article'}, // Article
 	tags: [{

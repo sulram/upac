@@ -39,7 +39,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		},
 		editnew: function(req, res, next) {
-			res.render('admin/article/new', {title: 'Novo artigo'});
+			var article = new Article();
+			res.render('editor', {article:article, form_url:'/admin/article/', close_url:'/admin/articles'});
 		},
 		show: function(req, res, next) {
 			Article.findOne({_id: req.param('id')}).populate('featuredImage').exec(function(err, article) {
@@ -48,28 +49,52 @@ module.exports = function(cdn, paginate){ return {
 			});
 		},
 		edit: function(req, res, next) {
-			Article.findById(req.param('id'), function(err, article) {
-				if (err) return next(err);
-				res.render('admin/article/edit', {article:article});
-			});
+			Article.findById(req.param('id'))
+				.populate('featuredImage tags')
+				.populate({path:'images.image',model:Img})
+				.exec(function(err, article) {
+					if (err) return next(err);
+					res.render('editor', {article:article, form_url:'/admin/article/', close_url:'/admin/article/'+article.id});
+				});
 		},
 		update: function(req, res, next) {
-			if(req.body.parent == '') {
-				delete req.body.parent;
-			}
-			Article.update({_id:req.param('id')}, {$set: req.body},
-				function(err, article) {
-					if (err) {
-						if (err.code === 11000) { // duplicate key
-							req.flash('error', 'Slug já existe');
-							res.redirect('/admin/article/'+req.param('id'))
-						} else {
-							return next(err);
-						}
+			var data = _.pick(req.body,
+						'title', 'content', 'excerpt', 
+						'publicationDate', 'publicationStatus',
+						'images', 'attachments', 'featuredImage', 'tags', 'owners'
+					);
+					if(!data.featuredImage || (data.featuredImage.length == 0)) {
+						data.featuredImage = null;
 					}
-					res.redirect('/admin/article/'+req.param('id'));
-				}
-			);
+					data.updatedAt = new Date;
+					data.images = _.map(data.images, function(image) {
+						return {image:image, size:'normal'}
+					})
+					// pegar tags e transformar em ObjectIDs
+					var query = {_id: req.param('id')}
+					data.tags = Tag.toIDs(data.tags);
+					
+					Article.findOne(query, function(err, article) {
+						if(err) return res.jsonx(500, {error: err});
+
+						if(!article) {
+							data.owners = [req.user.id];
+							article = new Article(data);
+							article._id = mongoose.Types.ObjectId(req.param('id'));
+						} else {
+							if(!req.isAdmin() && !_.find(article.owners, function(owner){ return owner == req.user.id})) {
+								return res.jsonx(401, {msg: 'error', err: 'unauthorized'})
+							}
+							article.set(data);
+						}
+						article.save(function(err) {
+							if(err) return res.jsonx(500, {error: err});
+							res.jsonx({
+								msg: 'ok',
+								article: article,
+							});
+						});
+					});
 		},
 		remove: function(req, res, next) {
 			Article.findByIdAndRemove(req.param('id'), function(err) {
@@ -119,21 +144,7 @@ module.exports = function(cdn, paginate){ return {
 		})
 		// pegar tags e transformar em ObjectIDs
 		var query = {_id: req.param('id')}
-		if (data.tags) {
-			data.tags = _.map(data.tags, function(tag) {
-				var m = tag.match(/^[0-9a-fA-F]{24}$/);
-				if (m && m.length == 1) {
-					return tag;
-				} else {
-					var ntag = new Tag({name:tag});
-					ntag.save(function(err){
-						console.info("Salvando tag %j", ntag);
-					})
-					return ntag._id;
-				}
-			});
-		}
-		console.info(data);
+		data.tags = Tag.toIDs(data.tags);
 		
 		Article.findOne(query, function(err, article) {
 			if(err) return res.jsonx(500, {error: err});

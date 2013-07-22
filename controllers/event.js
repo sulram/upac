@@ -42,7 +42,8 @@ module.exports = function(cdn, paginate) { return {
 			});
 		},
 		editnew: function(req, res, next) {
-			res.render('admin/event/new', {title: 'Novo artigo'});
+			var article = new Article();
+			res.render('agenda/editor', {event:article, form_url:'/admin/event/', close_url: '/admin/events'});
 		},
 		show: function(req, res, next) {
 			Article.findOne({_id: req.param('id')}).populate('featuredImage').exec(function(err, article) {
