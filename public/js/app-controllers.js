@@ -174,7 +174,8 @@ App.BlogUserController = App.BlogRecentesController.extend({
         var _this = this;
         var username = this.get('model.user_username');
         var page = this.get('model.page_num');
-        $.getJSON( '/user/'+username+'/articles', {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
+        var url = username == User.auth.username ? '/articles/byuser' : '/user/'+username+'/articles';
+        $.getJSON( url, {from: (page-1) * this.postsLimit, limit: this.postsLimit, sort_by: 'publicationDate', order: -1}, function(data){
             _this.buildFromData(data);
             _this.set('user',data.articles[0].owners[0]);
         });
@@ -337,6 +338,9 @@ App.RedePerfilController = Ember.ObjectController.extend({
     cancelMarking: function(){
         App.MapController.finishMarking();
     },
+    zoom: function(){
+        App.MapController.focusUser(this.get('content.username'),true);
+    },
     focusUser: function(){
         console.log('profile is loaded?',this.get('content.isLoaded'));
         if(this.get('content.isLoaded')){
@@ -347,6 +351,11 @@ App.RedePerfilController = Ember.ObjectController.extend({
         window.location.hash = '/blog/user/'+username+'/1';
     },
     openArticle: function(post){
+        /*if(post.endDate){
+            window.location.hash = '/agenda/evento/'+post._id;
+        } else {
+            window.location.hash = '/blog/post/'+post._id;
+        }*/
         window.location.hash = '/blog/post/'+post._id;
     },
 });
@@ -474,6 +483,9 @@ App.RedeLocalController = Ember.ObjectController.extend({
             _this.set('place', Ember.Object.create(data.place));
             _this.set('place.editorUrl', '/place/editor/'+data.place._id);
         });
+    },
+    zoom: function(){
+        App.MapController.focusPlace(this.get('place.slug'),true);
     },
     focusPlace: function(){
         //console.log('profile is loaded?',this.get('content.isLoaded'));

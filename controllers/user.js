@@ -293,9 +293,9 @@ module.exports = function (cdn, paginate, mailer) { return {
 		query.exec(function(err, user) {
 			if(err) return res.jsonx(401, {msg: 'error',error:err});//return next(err);
 			if(!user) return res.jsonx(404, {msg: 'user not found'});
-			Article.find({owners:user._id, parent:null, publicationStatus:'published'})
+			Article.find({owners:user._id, parent:null, endDate: null, publicationStatus:'published'})
 				.sort('-publicationDate')
-				.limit(3)
+				.limit(5)
 				.populate('featuredImage')
 				.exec(function(err, articles) {
 					if(err) return res.jsonx(401, {msg: 'error', error:err});

@@ -42,8 +42,9 @@ App.HomeSlidesView = Ember.View.extend({
     templateName: 'home_slides',
     t:-1,
     timer: null,
+    n: 0,
     tik: function(){
-        this.t = (this.t+1)%3;
+        this.t = (this.t+1) % this.n;
         this.$('.slideshow li').removeClass('lastshow');
         this.$('.slideshow li.show').addClass('lastshow');
         this.$('.slideshow li').removeClass('show');
@@ -56,12 +57,17 @@ App.HomeSlidesView = Ember.View.extend({
     },
     didInsertElement: function(){
         //this.$().hide().show('slow');
-        this.$('.slideshow li').each(function(i,el){
-            var img = $(el).find('img');
-            var src = img.attr('src');
-            $(el).css({backgroundImage:'url('+src+')'});
+        this.$('.slideshow li').shuffle().each(function(i,el){
+            if(i > 3){
+                $(el).remove();
+            } else {
+                var img = $(el).find('img');
+                var src = img.attr('src');
+                $(el).css({backgroundImage:'url('+src+')'});
+            }
             //img.remove();
         });
+        this.n = this.$('.slideshow li').length;
         this.tik();
         this.resize();
         this.$(window).bind('resize',this.resize);

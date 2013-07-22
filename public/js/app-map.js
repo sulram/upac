@@ -228,26 +228,34 @@ App.MapController = Em.Object.create({
         });
         return place;
     },
-    focusPlace: function(slug){
+    focusPlace: function(slug, zoom){
         if(!this.get('isFetching')){
             //console.log("focus " + username);
             var pin = this.findPlacePin(slug);
-            if(pin){
-                console.log('place pin',pin);
-                App.map.panTo(pin._latlng);
-                pin.openPopup();
-            }
+            this.focusPin(pin, zoom);
         }
     },
-    focusUser: function(username){
+    focusUser: function(username, zoom){
         if(this.get('isFetching')){
             //console.log('saved focus', username);
             this.set('saveFocus', username);
         }else{
             //console.log("focus " + username);
             var pin = this.findUserPin(username);
-            if(pin){
-                //console.log(pin);
+            this.focusPin(pin, zoom);
+        }
+    },
+    focusPin: function(pin, zoom){
+        if(pin){
+            //console.log(pin);
+            if(zoom){
+                App.map.setZoom(15);
+                    Ember.run.later(function(){
+                        App.map.panTo(pin._latlng);
+                        pin.openPopup();
+                    },200);
+                
+            } else {
                 App.map.panTo(pin._latlng);
                 pin.openPopup();
             }

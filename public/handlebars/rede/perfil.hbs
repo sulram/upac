@@ -21,14 +21,17 @@
 				{{/each}}
 			</p>
 		{{/if}}
-		
+
+		<p>
 		{{#if isTheLoggedUser}}
-			<p>{{#linkTo 'rede.editar' classNames="btn btn-w-icon"}}<span class="fui-new"></span> Editar perfil{{/linkTo}}</p>
+			{{#linkTo 'rede.editar' classNames="btn btn-w-icon"}}<span class="fui-new"></span> Editar{{/linkTo}}
 		{{/if}}
+			<a class="btn btn-w-icon" {{action zoom}}><span class="fui-location"></span> Localizar</a>
+		</p>
 		
 		{{#if articles.length}}
 			<hr/>
-			<p><strong>Últimas publicações</strong></p>
+			<p><strong>Publicações</strong></p>
 			<ul class="user_articles">
 			{{#each articles}}
 				<li><a {{action openArticle this}}>{{this.title}}</a></li>

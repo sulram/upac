@@ -182,10 +182,20 @@ function program15(depth0,data) {
 Ember.TEMPLATES["agenda"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, stack2, hashTypes, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("Agenda");
+  }
 
-  data.buffer.push("<div class=\"row-fluid\">\n	<div class=\"span6\">\n		<h1>Agenda</h1>\n	</div>\n	<div class=\"span6\" style=\"text-align: right;\">\n		<a href=\"/agenda/editor\" class=\"btn\">Criar evento</a>\n	</div>\n</div>\n<hr/>\n");
+  data.buffer.push("<div class=\"row-fluid\">\n	<div class=\"span6\">\n		<h1>");
+  hashTypes = {};
+  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "agenda", options) : helperMissing.call(depth0, "linkTo", "agenda", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("</h1>\n	</div>\n	<div class=\"span6\" style=\"text-align: right;\">\n		<a href=\"/agenda/editor\" class=\"btn\">Criar evento</a>\n	</div>\n</div>\n<p>&nbsp;</p>\n");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "outlet", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   return buffer;
@@ -1154,7 +1164,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   
 
 
-  data.buffer.push("<ul class=\"slideshow\">\n	<li><img src=\"./img/home01.jpg\"></li>\n	<li><img src=\"./img/home02.jpg\"></li>\n	<li><img src=\"./img/home03.jpg\"></li>\n</ul>");
+  data.buffer.push("<ul class=\"slideshow\">\n	<li><img src=\"./img/home01.jpg\"></li>\n	<li><img src=\"./img/home02.jpg\"></li>\n	<li><img src=\"./img/home03.jpg\"></li>\n	<li><img src=\"./img/home04.jpg\"></li>\n	<li><img src=\"./img/home05.jpg\"></li>\n	<li><img src=\"./img/home06.jpg\"></li>\n	<li><img src=\"./img/home07.jpg\"></li>\n	<li><img src=\"./img/home08.jpg\"></li>\n</ul>");
   
 });
 
@@ -1472,11 +1482,14 @@ function program1(depth0,data) {
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "place.tags.length", {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n		");
+  data.buffer.push("\n		\n		<p>\n			");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "isTheLoggedUser", {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n	");
+  data.buffer.push("\n			<a class=\"btn btn-w-icon\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "zoom", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("><span class=\"fui-location\"></span> Localizar</a>\n		</p>\n		\n	");
   return buffer;
   }
 function program2(depth0,data) {
@@ -1524,12 +1537,12 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   var buffer = '', hashTypes;
-  data.buffer.push("\n			<p><a ");
+  data.buffer.push("\n				<a ");
   hashTypes = {'href': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'href': ("place.editorUrl")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"btn btn-w-icon\"/><span class=\"fui-new\"></span> Editar</a></p>\n		");
+  data.buffer.push(" class=\"btn btn-w-icon\"/><span class=\"fui-new\"></span> Editar</a>\n			");
   return buffer;
   }
 
@@ -1733,11 +1746,14 @@ function program1(depth0,data) {
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "tags.length", {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n		");
+  data.buffer.push("\n\n		<p>\n		");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "isTheLoggedUser", {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n		");
+  data.buffer.push("\n			<a class=\"btn btn-w-icon\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "zoom", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("><span class=\"fui-location\"></span> Localizar</a>\n		</p>\n		\n		");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "articles.length", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -1789,26 +1805,26 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
-  data.buffer.push("\n			<p>");
+  data.buffer.push("\n			");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn btn-w-icon")
   },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.editar", options) : helperMissing.call(depth0, "linkTo", "rede.editar", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("</p>\n		");
+  data.buffer.push("\n		");
   return buffer;
   }
 function program9(depth0,data) {
   
   
-  data.buffer.push("<span class=\"fui-new\"></span> Editar perfil");
+  data.buffer.push("<span class=\"fui-new\"></span> Editar");
   }
 
 function program11(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n			<hr/>\n			<p><strong>Últimas publicações</strong></p>\n			<ul class=\"user_articles\">\n			");
+  data.buffer.push("\n			<hr/>\n			<p><strong>Publicações</strong></p>\n			<ul class=\"user_articles\">\n			");
   hashTypes = {};
   stack1 = helpers.each.call(depth0, "articles", {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -2044,7 +2060,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   
 
 
-  data.buffer.push("<h1 class=\"logo\">UPAC</h1>\n\n<p>Nossa proposta educacional está calcada em uma visão de educação que toma  a vivência como caminho e considera o saber-de- experiência-feito como ponto de partida, base da produção do conhecimento. Aqui referenciamos um dos nossos mestres, Paulo Freire, que nos ensina que o conhecimento provém da experiência. Nos ensina ainda, dialogando com nossa mestra maior, Nise da Silveira, que não se educa só pela racionalidade. Portanto apresentamos a amorosidade como princípio fundante de nosso caminho pedagógico e que gera o afeto catalisador, grande legado de Nise que, por sua vez, gera cuidado e alegria também conceitos que nos iluminam e orientam o nosso caminhar.</p>\n\n<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/XCVsm-_B_pU\" frameborder=\"0\" allowfullscreen></iframe>\n\n<div class=\"upac-row white\">\n	<div class=\"row-fluid\">\n		<div class=\"span5\">\n			<p><img src=\"./img/upac_figura_01.jpg\"/></p>\n		</div>\n		<div class=\"span7\">\n			<p>Aprendemos com Baruch de Spinoza que somos afetados pelas paixões e que as paixões que geram alegria  despertam nossa potência de viver. Portanto as paixões alegres constituem-se também referencias de nossa pratica pedagógica. Também dialogando com Nise e Spinoza referendamos a idéia de Deus  como algo inerente ao humano, síntese entre transcendência e imanência, sagrado e profano, corpo e espírito. Apresentamos a vida como centralidade, biocentrismo em vez de antropocentrismo. Portanto nossa universidade referencia as praticas tradicionais como o xamanismo, o candomblé e tantas outras, como caminhos de aprendizagens significativas, de fortalecimento da identidade e dos desvelamento do que Jung chamou de  inconsciente coletivo.</p>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row\">\n	<div class=\"row-fluid\">\n\n		<div class=\"span7\">\n			<p>Na UPAC propomos uma ciência intuitiva, que considera a importância do ato criador e onde criação não se separa da invenção. Onde a poesia e a cultura popular revelam a beleza do conhecer  que gera luz, faz nascer novas possibilidades de transformação do cotidiano em suas complexidades. Referenciamos ainda Paulo Freire  ao compreendermos o humano como inacabado em sua incompletude que valoriza o saber do outro e da outra respeitando as diferenças e reconhecendo as semelhanças propondo o exercício da alteridade produtor de polifonias e policromias.</p>\n			<p><strong>Parte de uma visão ética que considera a fraternidade e a solidariedade como ideias-força e compreendendo a circularidade sistêmica, propõe mandalas como sínteses reflexivas e movimentos  em teias que referendam a conjugação do verbo esperançar como estratégia de conquista da liberdade.</strong></p>\n		</div>\n\n		<div class=\"span5\">\n			<p><img src=\"./img/upac_figura_02.jpg\"/></p>\n		</div>\n	</div>\n</div>\n\n<div class=\"contato upac-row white\">\n	<h2>Contato</h2>\n	<p>\n		<span class=\"icon marker\"></span>\n		<strong>Universidade Popular de Arte e Ciência</strong>\n		<br/>Inst. Mun. de Assistência À Saúde Nise da Silveira\n		<br/>R. Ramiro Magalhães, 521 - Engenho de Dentro\n		<br/>Rio de Janeiro - RJ, 20730-460\n	</p>\n	<p>\n		<span class=\"icon email\"></span>\n		<strong><a href=\"mailto:contato@upac.br\">contato@upac.br</a></strong>\n	</p>\n</div>");
+  data.buffer.push("<h1 class=\"logo\">UPAC</h1>\n\n<p>A Universidade Popular de Arte e Ciência apresenta a todos os participantes do seu II Congresso seus princípios filosóficos, pedagógicos e as ideias-forças que regem seu antiprograma pedagógico.</p>\n\n<p>Desde já declaramos publicamente e a quem interessar possa que nossa proposta educacional está calcada em uma visão de educação que toma a vivência como caminho e considera o saber-de-experiência-feito como ponto de partida, base da produção do conhecimento. Aqui referenciamos um dos nossos mestres, Paulo Freire, que nos ensina que o conhecimento provém da experiência. Nos ensina ainda, dialogando com nossa mestra maior, Nise da Silveira, que não se educa só pela racionalidade. Portanto, apresentamos a amorosidade como princípio fundante de nosso caminho pedagógico e que gera o afeto catalisador, grande legado de Nise que, por sua vez, gera cuidado e alegria, também conceitos que nos iluminam e orientam o nosso caminhar. Aprendemos com Baruch de Spinoza que somos afetados pelas paixões e que as paixões que geram alegria despertam nossa potência de viver. Logo as paixões alegres constituem-se também referências de nossa prática pedagógica. Também dialogando com Nise e Spinoza referendamos a ideia de Deus como algo inerente ao humano, síntese entre transcendência e imanência, sagrado e profano, corpo e espírito. Apresentamos a vida como centralidade, biocentrismo em vez de antropocentrismo. Em vista disso nossa universidade referencia as práticas tradicionais como o xamanismo, o candomblé e tantas outras, como caminhos de aprendizagens significativas, de fortalecimento da identidade e do desvelamento que Jung chamou de inconsciente coletivo. Na UPAC propomos uma ciência intuitiva que considera a importância do ato criador e onde criação não se separa da invenção. Onde a poesia e a cultura popular revelam a beleza do conhecer que gera luz, faz nascer novas possibilidades de transformação do cotidiano em suas complexidades. Referenciamos ainda Paulo Freire ao compreendermos o humano como inacabado em sua incompletude que valoriza o saber do outro e da outra respeitando as diferenças e reconhecendo as semelhanças propondo o exercício da alteridade produtor de polifonias e policromias.</p>\n\n<!--<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/XCVsm-_B_pU\" frameborder=\"0\" allowfullscreen></iframe>-->\n<iframe src=\"http://player.vimeo.com/video/70401997?portrait=0\" width=\"720\" height=\"405\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n\n<p>Parte de uma visão ética que considera a fraternidade e a solidariedade como ideias-forças e compreendendo a circularidade sistêmica, propõe mandalas como sínteses reflexivas e movimentos em teias que referendam a conjugação do verbo esperançar como estratégia de conquista da liberdade.</p>\n\n<p>E para que esses princípios e ideias-forçae possam materializar-se, nós atores-sujeitos, protagonistas desta construção, aprendizes da arte do bem viver, propomos caminhos nos quais é possível conjugar o ser, saber e o querer, e onde a escuta sensível, o afeto geram movimentos em potência, atitudes propulsoras para que o mergulho nas vivências produza a abstração acerca do vivido. Nosso caminhar pelos caminhos da terra nos ajudará a construir uma organização que rompa com as hierarquias e as estruturas rígidas; nossa dança pelas chamas energizantes do fogo alimentará a nossa rebeldia e manterá vivo o nosso espírito de luta; nosso navegar pelos caminhos das águas manterá viva a nossa criança e com ela a espontaneidade, o mimo com os que se achegam, a energia brincante que se faz roda-cirandando, cantando e colorindo os espaços com alegria a se expressar nos sorrisos, nos beijos e abraços; nossos vôos pela energia do ar, espalharão poemas e canções e convivendo e partilhando, ensinando e aprendendo vamos construindo o sentido mais profundo da ajuda mútua, do respeito, do diálogo, do ser feliz, onde o processo educativo se faz manifestação, festa, celebração.</p>\n\n<p>Sabemos que muitos são os que se deixam afetar pelas paixões tristes, geradoras de dor, medo, limitações que produzem marcas, cicatrizes, o medo que amordaça, produz amarras. Essas situações-limite são por vezes fardos pesados que muitos insistem em carregar e geram adoecimentos. Mas não as vemos como barreiras intransponíveis: acreditamos que é possível romper com o preconceito, a culpa e a exclusão. Dizemos não à prisão e à drogadição como recurso atuando como camisa-de-força química.</p>\n\n<p>Conjugamos o verbo esperançar e como protagonistas desse caminhar vamos construindo o inédito viável rumo à nossa utopia. Nesse não lugar, essa escola sem paredes, nós, crianças, idosos, homens e mulheres de todas as cores e de todas as raças, com família e sem família, com eficiências e deficiências, artistas, músicos, abre alas, saltimbancos, educadores e educandos, mães de santo, xamãs, bruxos, magos, monstros, cuidadores e cuidadoras, loucos por arte e por vida vamos desenhando nosso percurso com o respeito a todos os seres, promovendo a inclusão dos diferentes, dos oprimidos em busca da independência em um processo de organização pautado na liberdade que tem a emancipação como conquista.</p>\n\n<p><strong>Rumo ao inédito-viável seguimos em frente sem medo da felicidade, da alegria ou da loucura ofertamos a nossa gratidão aos nossos mestres da cultura popular, Nise da Silveira, Baruch de Spinoza, Nelson Vaz, Amir Haddad, José Pacheco, Heloisa Helena e tantos outros, por iluminarem nossos caminhos com seus ensinamentos e a todos os que ousaram conosco experenciar a loucura, a arte e a ciência nessa ocupação.</strong></p>\n\n<div class=\"upac-row white\">\n	<div class=\"row-fluid\">\n		<div class=\"span5\">\n			<p><img src=\"./img/home05.jpg\"/></p>\n		</div>\n		<div class=\"span7\">\n			<p><strong>PRINCÍPIOS FILOSÓFICOS E PEDAGÓGICOS E IDEIAS-FORÇAS</strong></p>\n			<ul>\n				<li>Educação / Vivência / Experiência / Amorosidade / Paixão / Alegria / Afeto Catalisador / Cuidado</li>\n				<li>Deus / Vida / Biocentrismo / Xamanismo / Espiritualidade / Inconsciente Coletivo/Transcendência / Imanência</li>\n				<li>Criação / Invenção / Ciência Intuitiva / Circularidade / Mandala / Teia</li>\n				<li>Ética / Solidariedade / Fraternidade</li>\n				<li>Luz / Transformação / Nascimento / Renascimento / Esperança / Liberdade</li>\n				<li>Beleza / Poesia / Cultura Popular</li>\n				<li>Incompletude / Valorização do Outro e da Outra / Alteridade(respeito às diferenças e semelhanças) Polifonia / Policromia</li>\n			</ul>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row\">\n	<div class=\"row-fluid\">\n\n		<div class=\"span7\">\n			<p><strong>PAIXÕES TRISTES/SITUAÇÕES-LIMITE</strong></p>\n			<ul>\n				<li>Dor / Marca / Fardo / Doença / Drogadição</li>\n				<li>Medo / Mordaça / Limitações / Amarras / Preconceito / Exclusão</li>\n			</ul>\n			<p><strong>ATITUDES/ MOVIMENTOS GERADORES E PROPULSORES</strong></p>\n			<ul>\n				<li>Ser / Saber / Querer / Abstração / Escuta / Mergulho / Vivência</li>\n				<li>Afeto / Mimo / Ajuda / Partilhar / Ensinar / Aprender / Conviver / Caminhar / Navegar</li>\n				<li>Respeito / Rebeldia / Luta / Organização</li>\n				<li>Sorrir / Beijar / Abraçar / Falar / Dançar / Cantar / Colorir / Poetizar / Brincar / Cirandar / Ser Feliz</li>\n				<li>Espontaneidade / Festa / Manifestação / Celebração</li>\n			</ul>\n		</div>\n\n		<div class=\"span5\">\n			<p><img src=\"./img/home04.jpg\"/></p>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row white\">\n	<div class=\"row-fluid\">\n		<div class=\"span5\">\n			<p><img src=\"./img/home06.jpg\"/></p>\n		</div>\n		<div class=\"span7\">\n			<p><strong>UTOPIAS</strong></p>\n			<ul>\n				<li>Respeito / Inclusão / Organização / Independência / Liberdade / Emancipação</li>\n			</ul>\n			<p><strong>SUJEITOS /PROTAGONISTAS/MESTRES/APRENDIZES</strong></p>\n			<ul>\n				<li>Nós</li>\n				<li>Crianças / Idosos / Homens / Mulheres / Negros / Pessoas com Deficiência / Famílias</li>\n				<li>Artistas / Músicos / Abre Alas / Saltimbancos</li>\n				<li>Estudantes</li>\n				<li>Mães de Santo / Xamãs / Bruxos / Magos</li>\n				<li>Monstros</li>\n				<li>Soldados</li>\n				<li>Loucos</li>\n				<li>Cuidadores e Cuidadoras</li>\n			</ul>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row\">\n	<div class=\"row-fluid\">\n\n		<div class=\"span7\">\n			<p><strong>MESTRES DA CULTURA POPULAR</strong></p>\n			<ul>\n				<li>Nise da Silveira</li>\n				<li>Baruch de Spinoza</li>\n				<li>Nelson Vaz</li>\n				<li>Amir Haddad</li>\n				<li>José Pacheco</li>\n				<li>Heloisa Helena</li>\n				<li>Drummond</li>\n				<li>Júnio Santos</li>\n				<li>Vera Dantas</li>\n			</ul>\n		</div>\n\n		<div class=\"span5\">\n			<p><img src=\"./img/home01.jpg\"/></p>\n		</div>\n	</div>\n</div>\n\n<p>\n	<strong>Outros materiais</strong>\n	<br/><a href=\"http://www.redehumanizasus.net/13041-ii-congresso-da-upac-ocupa-nise\">http://www.redehumanizasus.net/13041-ii-congresso-da-upac-ocupa-nise</a>\n</p>\n\n<p>\n	<strong>Créditos do site</strong>\n	<br/><a href=\"https://github.com/ultraleve/upac/\">Gerador Cultural, Ultraleve, Norte Comum e UPAC</a>\n</p>\n\n<div class=\"contato upac-row white\">\n	<h2>Contato</h2>\n	<p>\n		<span class=\"icon marker\"></span>\n		<strong>Universidade Popular de Arte e Ciência</strong>\n		<br/>Instituto Municipal Nise da Silveira\n		<br/>R. Ramiro Magalhães, 521 - Engenho de Dentro\n		<br/>Rio de Janeiro - RJ, 20730-460\n		<br/>Tel. (21) 3111-7535\n	</p>\n	<p>\n		<span class=\"icon email\"></span>\n		<strong><a href=\"mailto:contato@upac.com.br\">contato@upac.com.br</a></strong>\n	</p>\n</div>");
   
 });
 

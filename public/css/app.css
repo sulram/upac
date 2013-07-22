@@ -645,7 +645,6 @@ iframe {
 
 
 #wrapper.blog #content {
-	margin: 0 80px;
 	max-width: none;
 }
 
@@ -654,19 +653,14 @@ iframe {
 	text-decoration: none;
 }
 
-#wrapper.blog h1 a {
-	color: #333;
-	text-decoration: none;
-	text-transform: uppercase;
-}
-
 #wrapper.blog h3 {
 	line-height: 1.2em;
 	margin-bottom: 30px;
 }
 
 #wrapper.blog .grid_posts {
-	margin-right: -50px;
+	margin-top: 30px;
+	margin-right: -100px;
 	overflow: hidden;
 }
 
@@ -806,7 +800,7 @@ iframe {
 #wrapper .thepost {
 	min-width: 780px;
 	max-width: 940px;
-	margin: 100px auto;
+	margin: 60px auto;
 	font-size: 16px;
 	line-height: 1.75em;
 }
@@ -947,7 +941,8 @@ iframe {
 
 /* ---------------- AGENDA ---------------- */
 
-#wrapper.agenda h1 {
+#wrapper.blog h1 a,
+#wrapper.agenda h1 a {
 	color: #333;
 	text-decoration: none;
 	text-transform: uppercase;
