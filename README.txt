@@ -20,6 +20,10 @@ A página de entrada e a página institucional são os únicos conteúdos que po
 
 A página de entrada oferece espaço para cartazes e pequenos avisos, a fim de facilitar o anúncio de algum evento ou promover alguma informação.
 
+//////////
+
+SOFTWARE LIVRE
+
 O projeto foi desenvolvido principalmente com software livre, e o código escrito originalmente para o projeto são também livres, disponíveis na maior comunidade de software livre, o Github. Todo o sistema desenvolvido especificamente para o site pode e deve ser reaproveitado e distribuído dentro dos termos da licença Creative Commons Atribuição-Uso Não-Comercial-Compartilhamento pela mesma licença 2.5 Brasil, e a utilização dos trechos de código utilizados de outros projetos livres deve seguir suas próprias licenças FLOSS (Free Libre Open Source Software). Em outras palavras, qualquer pessoa pode pegar os códigos desenvolvidos pelo site e desenvolver sua própria plataforma baseada na UPAC, desde que esse site seja também aberto e livre pelas mesmas licenças. O código já está disponível para download.
 
 Para a programação do servidor, utilizamos tecnologias livres recentes que estão se popularizando com muita velocidade e força, devido as suas qualidades: Node.js, que permite a criação de servidores muito rápidos, atendendo muitos usuários mesmo num servidor de pequeno porte. Utilizamos também o MongoDB como base de dados, igualmente veloz e muito usado em conjunto com Node.js.
@@ -38,3 +42,20 @@ Outras bibliotecas usadas também foram fundamentais para este projeto:
 - Underscore.js
 - Twitter Bootstrap
 - Flat UI
+
+//////////
+
+CRÉDITOS
+
+Conceito
+- George Araujo (Gerador Cultural)
+- Marlus Araujo (Ultraleve)
+
+Produção Ultraleve
+- Lucas Gomez (direção de Arte)
+- Marlus Araujo (design e desenvolvimento front-end)
+- Tiago Rezende (desenvolvimento back-end)
+
+Agradecimentos
+- Norte Comum
+- Universidade Popular de Arte e Ciência
