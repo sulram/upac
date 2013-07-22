@@ -1808,7 +1808,7 @@ function program9(depth0,data) {
 function program11(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n			<hr/>\n			<p><strong>Últimas publicações</strong></p>\n			<ul class=\"user_articles\">\n			");
+  data.buffer.push("\n			<hr/>\n			<p><strong>Publicações</strong></p>\n			<ul class=\"user_articles\">\n			");
   hashTypes = {};
   stack1 = helpers.each.call(depth0, "articles", {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }

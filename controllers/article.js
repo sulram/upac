@@ -318,7 +318,7 @@ module.exports = function(cdn, paginate){ return {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.jsonx(404, {msg: "user not found"});
-			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', parent:null},
+			paginate.paginate(Article,{owners:user.id, publicationStatus:'published', endDate: null, parent:null},
 								{populate:[
 									{path:'featuredImage'},
 									{path: 'owners', select: '-resetPasswordToken -verifyToken'}
@@ -448,7 +448,7 @@ module.exports = function(cdn, paginate){ return {
 		}
 	},
 	listByLoggedInUser: function(req, res, next) {
-		paginate.paginate(Article,{owner: req.user.id},{}, req, function(err, articles, pagination) {
+		/*paginate.paginate(Article,{owner: req.user.id},{}, req, function(err, articles, pagination) {
 				if(err) return next(err);
 				res.jsonx({
 					msg:'ok',
@@ -459,6 +459,27 @@ module.exports = function(cdn, paginate){ return {
 					count: pagination.count
 				});
 			}
-		);
+		);*/
+ 		User.findById(req.user.id, function(err, user) {
+			if(err) return next(err);
+			if(!user) return res.jsonx(404, {msg: "user not found"});
+			paginate.paginate(Article,{owners:user.id, endDate: null, parent:null},
+								{populate:[
+									{path:'featuredImage'},
+									{path: 'owners', select: '-resetPasswordToken -verifyToken'}
+								]}, req, function(err, articles, pagination) {
+				if(err) return next(err);
+				Img.populate(articles, 'owners.avatar', function(err, _articles){
+					res.jsonx({
+						msg:'ok',
+						articles: _articles,
+						from: pagination.from,
+						sort_by: pagination.sort_by,
+						order: pagination.order,
+						count: pagination.count
+					});
+				});
+			});
+		});
 	},
 }};
