@@ -182,10 +182,20 @@ function program15(depth0,data) {
 Ember.TEMPLATES["agenda"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Ember.Handlebars.helpers; data = data || {};
-  var buffer = '', hashTypes, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, stack2, hashTypes, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("Agenda");
+  }
 
-  data.buffer.push("<div class=\"row-fluid\">\n	<div class=\"span6\">\n		<h1>Agenda</h1>\n	</div>\n	<div class=\"span6\" style=\"text-align: right;\">\n		<a href=\"/agenda/editor\" class=\"btn\">Criar evento</a>\n	</div>\n</div>\n<hr/>\n");
+  data.buffer.push("<div class=\"row-fluid\">\n	<div class=\"span6\">\n		<h1>");
+  hashTypes = {};
+  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data};
+  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "agenda", options) : helperMissing.call(depth0, "linkTo", "agenda", options));
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("</h1>\n	</div>\n	<div class=\"span6\" style=\"text-align: right;\">\n		<a href=\"/agenda/editor\" class=\"btn\">Criar evento</a>\n	</div>\n</div>\n<p>&nbsp;</p>\n");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "outlet", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   return buffer;
