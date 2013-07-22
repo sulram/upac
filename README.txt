@@ -1,6 +1,8 @@
-O site UPAC foi desenvolvido com objetivo de apresentar a Universidade Popular de Arte e Ciência de uma maneira ousada e original, se baseando na própria história de ação e construção da Universidade: o trabalho, a pesquisa e as vivências em rede.
+O site UPAC foi desenvolvido com objetivo de apresentar a Universidade Popular de Arte e Ciência de uma maneira autêntica, baseando-se na história de ação e construção da Universidade em rede e seus valores: a vivência como caminho e o saber-de-experiência-feito como ponto de partida.
 
-Existe hoje uma preocupação em não só estar a rede, mas proporcionar ferramentas que a desenvolvam e a organizem. Mas além disso, há também o questionamento sobre as ferramentas já disponíveis e amplamente usadas, que ao mesmo tempo oferecem ótimas interfaces de comunicação e mudaram nossa maneira de ser e estar no mundo físico e virtual, mas também detém todo tipo de controle dos nossos dados, utilizando nossa informações para seus interesses corporativos e políticos.
+"Parte de uma visão ética que considera a fraternidade e a solidariedade como ideias-forças e compreendendo a circularidade sistêmica, propõe mandalas como sínteses reflexivas e movimentos em teias que referendam a conjugação do verbo esperançar como estratégia de conquista da liberdade."
+
+Existe hoje a preocupação de, não só estar na grande rede, mas desenvolver ferramentas que potencialize e organize grupos e comunidades. Mas além disso, há também o questionamento sobre as ferramentas já disponíveis e amplamente usadas, que ao mesmo tempo oferecem ótimas interfaces de comunicação e mudaram nossa maneira de ser e estar no mundo físico e virtual, mas também detém o controle dos nossos dados, utilizando nossa informações para seus interesses corporativos e políticos.
 
 Por conta disso, decidimos que a plataforma, muito além de um site institucional, deveria oferecer uma alternativa à essas ferramentas.
 
