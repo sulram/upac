@@ -45,6 +45,10 @@
 		<div class="row-fluid">
 			
 			<div class="span8 post_content">
+				<div id="address_map"></div>
+				{{#if article.address}}
+					<p class="address">{{article.address}}</p>
+				{{/if}}
 				{{#if article.content}}
 					{{{article.content}}}
 				{{/if}}
