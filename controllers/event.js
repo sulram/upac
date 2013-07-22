@@ -51,10 +51,13 @@ module.exports = function(cdn, paginate) { return {
 			});
 		},
 		edit: function(req, res, next) {
-			Article.findById(req.param('id'), function(err, article) {
-				if (err) return next(err);
-				res.render('admin/event/edit', {event:article});
-			});
+			Article.findById(req.param('id'))
+				.populate('featuredImage tags')
+				.populate({path:'images.image',model:Img})
+				.exec(function(err, article) {
+					if (err) return next(err);
+					res.render('agenda/editor', {event:article, form_url:'/admin/event/', close_url: '/admin/event/'+article.id});
+				});
 		},
 		update: function(req, res, next) {
 			if(req.body.parent == '') {

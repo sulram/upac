@@ -320,7 +320,7 @@ $(document).ready(function(){
 
 	// ROUTES
 
-		function getID(data){
+	function getID(data){
 		var id, rel = $('body').attr('rel');
 		switch(rel){
 			case 'post': 

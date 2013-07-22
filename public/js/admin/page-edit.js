@@ -1,3 +1,5 @@
+Dropzone.autoDiscover = false;
+
 $(document).ready(function(){
     $('#content').redactor({
         lang: 'pt_br',

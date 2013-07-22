@@ -1,4 +1,6 @@
 doctype 5
+- var _form_url = form_url || "/article/"
+- var _close_url = close_url || "/#/blog"
 html
 	head
 		title Editor
@@ -13,9 +15,9 @@ html
 		link(rel='stylesheet', href='/css/editor.css')
 
 	body(data-id="#{article.id}", rel="post").editor
-		form(action="/article/#{article.id}", method="POST")#editor_form
+		form(action=_form_url+article.id, method="POST")#editor_form
 			.editor_header
-				a#close(href="/#/blog")
+				a#close(href=_close_url)
 					| fechar
 				.container
 					label.input_label(for="title")

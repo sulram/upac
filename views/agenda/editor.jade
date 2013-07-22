@@ -1,4 +1,6 @@
 doctype 5
+- var _form_url = form_url || "/event/"
+- var _close_url = close_url || "/#/agenda"
 html
 	head
 		title Editor
@@ -14,9 +16,9 @@ html
 		link(rel='stylesheet', href='/css/editor.css')
 
 	body(data-id="#{event.id}", rel="event").editor.agenda
-		form(action="/event/#{event.id}", method="POST")#editor_form
+		form(action=_form_url+event.id, method="POST")#editor_form
 			.editor_header
-				a#close(href="/#/agenda")
+				a#close(href=_close_url)
 					| fechar
 				.container
 					label.input_label(for="title")

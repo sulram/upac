@@ -42,10 +42,13 @@ module.exports = function(cdn, paginate){ return {
 			});
 		},
 		edit: function(req, res, next) {
-			Page.findById(req.param('id'), function(err, page) {
-				if (err) return next(err);
-				res.render('admin/page/edit', {page:page});
-			});
+			Page.findById(req.param('id'))
+				.populate('featuredImage tags')
+				.populate({path:'images.image',model:Img})
+				.exec(function(err, page) {
+					if (err) return next(err);
+					res.render('editor', {article:page, form_url:'/admin/page/', close_url:'/admin/page/'+page.id});
+				});
 		},
 		update: function(req, res, next) {
 			Page.update({_id:req.param('id')}, {$set: req.body},

@@ -18,6 +18,14 @@ block content
 				+field(page.title, 'title', 'Título', 'text')
 				+field(page.slug, 'slug', 'Slug', 'text')
 				.control-group
+					label.control-label(for="tags")
+							| Palavras-chave
+						.input_tags.controls
+							input(type="text", name="tags-input")#tags
+							#tags-hidden
+								each tag in article.tags
+									input(type="hidden", name="tags[]", value=tag._id, rel=tag.name)
+				.control-group
 					label.control-label
 						| Imagens
 					.controls

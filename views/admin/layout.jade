@@ -84,11 +84,12 @@ html
 		link(rel='stylesheet', href='/flat-ui/css/flat-ui.css')
 		link(rel='stylesheet', href='/js/libs/redactor/v9/redactor.css')	
 		link(rel='stylesheet', href='/css/admin.css')
+		block styles
 		//if lt ie 9
 			script(src='/flat-ui/js/html5shiv.js')
 	body
 		
-		-var menu = {'home': '/', 'admin': '/admin', 'avisos': '/admin/notices', 'páginas': '/admin/pages', 'posts': '/admin/articles', 'events':'/admin/events', 'usuários': '/admin/users', 'tags': '/admin/tags', 'imagens': '/admin/images' };
+		-var menu = {'home': '/', 'admin': '/admin', 'avisos': '/admin/notices', 'páginas': '/admin/pages', 'posts': '/admin/articles', 'eventos':'/admin/events', 'usuários': '/admin/users', 'tags': '/admin/tags', 'imagens': '/admin/images' };
 
 		block link
 			-var selected = 'admin'
