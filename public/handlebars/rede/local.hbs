@@ -22,9 +22,12 @@
 			</p>
 		{{/if}}
 		
-		{{#if isTheLoggedUser}}
-			<p><a {{bindAttr href="place.editorUrl"}} class="btn btn-w-icon"/><span class="fui-new"></span> Editar</a></p>
-		{{/if}}
+		<p>
+			{{#if isTheLoggedUser}}
+				<a {{bindAttr href="place.editorUrl"}} class="btn btn-w-icon"/><span class="fui-new"></span> Editar</a>
+			{{/if}}
+			<a class="btn btn-w-icon" {{action zoom}}><span class="fui-location"></span> Localizar</a>
+		</p>
 		
 	{{else}}
 		<p class="def_loading">carregando perfil</p>

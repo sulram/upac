@@ -338,6 +338,9 @@ App.RedePerfilController = Ember.ObjectController.extend({
     cancelMarking: function(){
         App.MapController.finishMarking();
     },
+    zoom: function(){
+        App.MapController.focusUser(this.get('content.username'),true);
+    },
     focusUser: function(){
         console.log('profile is loaded?',this.get('content.isLoaded'));
         if(this.get('content.isLoaded')){
@@ -480,6 +483,9 @@ App.RedeLocalController = Ember.ObjectController.extend({
             _this.set('place', Ember.Object.create(data.place));
             _this.set('place.editorUrl', '/place/editor/'+data.place._id);
         });
+    },
+    zoom: function(){
+        App.MapController.focusPlace(this.get('place.slug'),true);
     },
     focusPlace: function(){
         //console.log('profile is loaded?',this.get('content.isLoaded'));

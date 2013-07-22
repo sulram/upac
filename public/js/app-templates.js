@@ -1482,11 +1482,14 @@ function program1(depth0,data) {
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "place.tags.length", {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n		");
+  data.buffer.push("\n		\n		<p>\n		");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "isTheLoggedUser", {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n	");
+  data.buffer.push("\n		<a class=\"btn btn-w-icon\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "zoom", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("><span class=\"fui-location\"></span> Localizar</a>\n		</p>\n		\n	");
   return buffer;
   }
 function program2(depth0,data) {
@@ -1534,12 +1537,12 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   var buffer = '', hashTypes;
-  data.buffer.push("\n			<p><a ");
+  data.buffer.push("\n			<a ");
   hashTypes = {'href': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'href': ("place.editorUrl")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
-  data.buffer.push(" class=\"btn btn-w-icon\"/><span class=\"fui-new\"></span> Editar</a></p>\n		");
+  data.buffer.push(" class=\"btn btn-w-icon\"/><span class=\"fui-new\"></span> Editar</a>\n		");
   return buffer;
   }
 
@@ -1743,11 +1746,14 @@ function program1(depth0,data) {
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "tags.length", {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n		");
+  data.buffer.push("\n\n		<p>\n		");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "isTheLoggedUser", {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n		");
+  data.buffer.push("\n			<a class=\"btn btn-w-icon\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "zoom", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("><span class=\"fui-location\"></span> Localizar</a>\n		</p>\n		\n		");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "articles.length", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -1799,20 +1805,20 @@ function program6(depth0,data) {
 function program8(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
-  data.buffer.push("\n			<p>");
+  data.buffer.push("\n			");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn btn-w-icon")
   },inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "rede.editar", options) : helperMissing.call(depth0, "linkTo", "rede.editar", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("</p>\n		");
+  data.buffer.push("\n		");
   return buffer;
   }
 function program9(depth0,data) {
   
   
-  data.buffer.push("<span class=\"fui-new\"></span> Editar perfil");
+  data.buffer.push("<span class=\"fui-new\"></span> Editar");
   }
 
 function program11(depth0,data) {
