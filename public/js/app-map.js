@@ -454,7 +454,7 @@ App.MapController = Em.Object.create({
                     App.map.removeLayer(pin);
                 }
             } else {
-                pin.setLatLng(new L.LatLng(user.geo[0],user.geo[1]));
+                if(pin) pin.setLatLng(new L.LatLng(user.geo[0],user.geo[1]));
             }
             that.set('isMarking',false);
         }
