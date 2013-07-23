@@ -1105,3 +1105,24 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	display: inline-block;
 	margin: 0;
 }
+
+
+/* ---------------- IE ---------------- */
+
+.ie6 body > .ember-view,
+.ie7 body > .ember-view,
+.ie8 body > .ember-view {
+	background: #ddd url(../img/upac_logo_cinza.png) no-repeat 50% 50%;
+}
+.ie6 body > .ember-view *,
+.ie7 body > .ember-view *,
+.ie8 body > .ember-view * {
+	display: none;
+}
+
+.ie9 .menu_it a .caption {
+	display: none;
+}
+.ie9 .menu_it a:hover .caption {
+	display: block;
+}
