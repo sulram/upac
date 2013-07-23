@@ -250,6 +250,16 @@ iframe {
 }
 
 
+/* ---------------- LOGOUT ---------------- */
+
+#wrapper.logout {
+	background: #000;
+}
+
+#wrapper.logout * {
+	display: none;
+}
+
 /* ---------------- HOME ---------------- */
 
 #wrapper.home {
