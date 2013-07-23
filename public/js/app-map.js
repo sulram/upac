@@ -208,7 +208,7 @@ App.MapController = Em.Object.create({
     },
     updateUser: function(user){
         var pin = this.findUserPin(user.username);
-        pin.setPopupContent(userPopup(user));
+        if(pin) pin.setPopupContent(userPopup(user));
     },
     findUserPin: function(username){
         var user;
