@@ -119,8 +119,15 @@ $(document).ready(function(){
 
 	function convertToSubmit(){
 		if(pubdate) pubdate.convertToSubmit();
-		if(startdate) startdate.convertToSubmit();
-		if(enddate) enddate.convertToSubmit();
+		if(startdate && enddate){
+			startdate.convertToSubmit();
+			enddate.convertToSubmit();
+			var sd_val = moment(startdate.input.val()).unix();
+			var en_val = moment(enddate.input.val()).unix();
+			if(sd_val >= en_val){
+				enddate.input.val( moment(startdate.input.val()).add('hours',1) );
+			}
+		}
 	}
 
 	function convertToView(){
