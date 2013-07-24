@@ -249,7 +249,7 @@ App.MapController = Em.Object.create({
         if(pin){
             //console.log(pin);
             if(zoom){
-                App.map.setZoom(15);
+                App.map.setZoom(18);
                     Ember.run.later(function(){
                         App.map.panTo(pin._latlng);
                         pin.openPopup();
