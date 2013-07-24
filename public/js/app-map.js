@@ -20,7 +20,7 @@ var upac_new_marker = null;
 
 function eventPopup(event) {
     var excerpt = event.excerpt || '';
-    return '<p><strong>' + event.title + '</strong></p><p style="color:#666;">'+moment(event.startDate).format('LLLL')+'<br/>'+moment(event.endDate).format('LLLL')+'</p><p>'+excerpt+'</p><p><a href="#/agenda/evento/' + event._id + '">Clique para ver o evento</a></p>';
+    return '<p><strong>' + event.title + '</strong></p><p style="color:#666;">de: '+moment(event.startDate).format('LLLL')+'<br/>até: '+moment(event.endDate).format('LLLL')+'</p><p>'+excerpt+'</p><p><a href="#/agenda/evento/' + event._id + '">Clique para ver o evento</a></p>';
 }
 
 function pagePopup(page) {
