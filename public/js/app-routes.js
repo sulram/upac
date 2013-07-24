@@ -171,6 +171,7 @@ App.BlogTagRoute = App.UpacRoute.extend({
         controller.set('model', model);
         controller.set('articles', []);
         controller.set('tagName', null);
+        controller.set('isLoaded', false);
         controller.getContent();
         this._super(this, arguments);
     }
