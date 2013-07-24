@@ -867,10 +867,6 @@ iframe {
 	font-size: 0.8em;
 }
 
-.thepost .tags a {
-	margin-left: 4px;
-}
-
 .post_content {
 	font-size: 16px;
 	line-height: 1.5em;
@@ -894,8 +890,10 @@ iframe {
 }
 
 .post_info > div {
-	position: absolute;
-	bottom: 0;
+	position: fixed;
+	top: 133px;
+	min-width: 220px;
+	max-width: 360px;
 }
 
 .post_avatar {

@@ -19,21 +19,8 @@
 				<p class="excerpt">{{article.excerpt}}</p>
 			</div>
 			
-			<div class="span1"></div>
-
-			<div class="span3 post_info">
-				<div>
-					<a class="post_avatar" {{action openProfile profile}}>
-						<img {{bindAttr src=profile.avatar_icon}}/>
-					</a>
-
-					<p>
-						Evento criado por <a {{action openProfile profile}}>{{profile.nick}}</a>
-						<!--<br/>
-						<a {{action openUserArchive profile}}>Arquivos desse autor</a>-->
-					</p>
-				</div>
-			</div>
+			<div class="span4"></div>
+			
 		</div>
 
 		<!--<div class="row-fluid">
@@ -51,13 +38,6 @@
 				{{/if}}
 				{{#if article.content}}
 					{{{article.content}}}
-				{{/if}}
-				{{#if article.tags.length}}
-					<p class="tags">
-						{{#each article.tags}}
-							<a {{action openTag this}}>{{name}}</a>
-						{{/each}}
-					</p>
 				{{/if}}
 				
 				<hr/>
@@ -128,10 +108,31 @@
 			
 			<div class="span1"></div>
 
-			<div class="span3">
-				{{#if isOwner}}
-					<p><a class="btn btn-w-icon" {{bindAttr href="edit_link"}}><span class="fui-new"></span> Editar</a></p>
-				{{/if}}	
+			<div class="span3 post_info">
+				<div>
+					<a class="post_avatar" {{action openProfile profile}}>
+						<img {{bindAttr src=profile.avatar_icon}}/>
+					</a>
+
+					<p>
+						Evento criado por <a {{action openProfile profile}}>{{profile.nick}}</a>
+						<!--<br/>
+						<a {{action openUserArchive profile}}>Arquivos desse autor</a>-->
+					</p>
+
+					{{#if article.tags.length}}
+					<p class="tags">
+						{{#each article.tags}}
+							<a {{action openTag this}}>{{name}}</a>
+						{{/each}}
+					</p>
+					{{/if}}
+			
+					{{#if isOwner}}
+						<p><a class="btn btn-w-icon" {{bindAttr href="edit_link"}}><span class="fui-new"></span> Editar</a></p>
+					{{/if}}
+
+				</div>
 			</div>
 
 		</div>
