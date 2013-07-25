@@ -131,9 +131,6 @@ module.exports = function(cdn, paginate) { return {
 		var query = {_id: req.param('id')}
 		Article.findOne(query, function(err, article) {
 			if(err) return res.jsonx(500, {error: err});
-			if (article && !_.find(article.owners, function(owner) {
-				return owner == req.user.id;
-			})) return res.jsonx(401, {msg: 'unauthorized'});
 			if(!article) {
 				data.owners = [req.user.id];
 				article = new Article(data);

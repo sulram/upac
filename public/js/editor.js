@@ -323,7 +323,8 @@ $(document).ready(function(){
 	function getID(data){
 		var id, rel = $('body').attr('rel');
 		switch(rel){
-			case 'post': 
+			case 'post':
+			case 'page':
 				id = data.article._id;
 				break;
 			case 'place':
@@ -341,6 +342,9 @@ $(document).ready(function(){
 		switch(rel){
 			case 'post': 
 				url = '/#/blog/post/'+data.article._id;
+				break;
+			case 'page': 
+				url = '/#/rede/'+data.article.slug;
 				break;
 			case 'place':
 				url = '/#/rede/local/'+data.page.slug;
