@@ -171,6 +171,7 @@ App.BlogTagRoute = App.UpacRoute.extend({
         controller.set('model', model);
         controller.set('articles', []);
         controller.set('tagName', null);
+        controller.set('isLoaded', false);
         controller.getContent();
         this._super(this, arguments);
     }
@@ -233,8 +234,8 @@ App.LogoutRoute = Ember.Route.extend({
             url: '/logout',
             success: function(data, status, jqXHR){
                 User.authenticate(data.auth);
-                //_route.transitionTo('home');
-                window.history.go(-1);
+                _route.transitionTo('home');
+                //window.history.go(-1);
             }
         });
     }

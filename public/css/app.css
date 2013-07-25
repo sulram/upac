@@ -250,6 +250,16 @@ iframe {
 }
 
 
+/* ---------------- LOGOUT ---------------- */
+
+#wrapper.logout {
+	background: #000;
+}
+
+#wrapper.logout * {
+	display: none;
+}
+
 /* ---------------- HOME ---------------- */
 
 #wrapper.home {
@@ -857,10 +867,6 @@ iframe {
 	font-size: 0.8em;
 }
 
-.thepost .tags a {
-	margin-left: 4px;
-}
-
 .post_content {
 	font-size: 16px;
 	line-height: 1.5em;
@@ -884,8 +890,10 @@ iframe {
 }
 
 .post_info > div {
-	position: absolute;
-	bottom: 0;
+	position: fixed;
+	top: 133px;
+	min-width: 220px;
+	max-width: 360px;
 }
 
 .post_avatar {
@@ -1094,4 +1102,25 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .leaflet-popup-content figure.post_avatar {
 	display: inline-block;
 	margin: 0;
+}
+
+
+/* ---------------- IE ---------------- */
+
+.ie6 body > .ember-view,
+.ie7 body > .ember-view,
+.ie8 body > .ember-view {
+	background: #ddd url(../img/upac_logo_cinza.png) no-repeat 50% 50%;
+}
+.ie6 body > .ember-view *,
+.ie7 body > .ember-view *,
+.ie8 body > .ember-view * {
+	display: none;
+}
+
+.ie9 .menu_it a .caption {
+	display: none;
+}
+.ie9 .menu_it a:hover .caption {
+	display: block;
 }

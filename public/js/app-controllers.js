@@ -34,7 +34,7 @@ App.HomeController = Ember.ObjectController.extend({
     bannerRun: null,
     enter: function(){
         var _this = this;
-        this.notices = 0;
+        this.notice = 0;
         this.banner = -1;
         $.getJSON('/notices', function(data){
             var notices = [], banners = [];

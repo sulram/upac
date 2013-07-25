@@ -20,7 +20,7 @@ var upac_new_marker = null;
 
 function eventPopup(event) {
     var excerpt = event.excerpt || '';
-    return '<p><strong>' + event.title + '</strong></p><p style="color:#666;">'+moment(event.startDate).format('LLLL')+'<br/>'+moment(event.endDate).format('LLLL')+'</p><p>'+excerpt+'</p><p><a href="#/agenda/evento/' + event._id + '">Clique para ver o evento</a></p>';
+    return '<p><strong>' + event.title + '</strong></p><p style="color:#666;">de: '+moment(event.startDate).format('LLLL')+'<br/>até: '+moment(event.endDate).format('LLLL')+'</p><p>'+excerpt+'</p><p><a href="#/agenda/evento/' + event._id + '">Clique para ver o evento</a></p>';
 }
 
 function pagePopup(page) {
@@ -208,7 +208,7 @@ App.MapController = Em.Object.create({
     },
     updateUser: function(user){
         var pin = this.findUserPin(user.username);
-        pin.setPopupContent(userPopup(user));
+        if(pin) pin.setPopupContent(userPopup(user));
     },
     findUserPin: function(username){
         var user;
@@ -249,7 +249,7 @@ App.MapController = Em.Object.create({
         if(pin){
             //console.log(pin);
             if(zoom){
-                App.map.setZoom(15);
+                App.map.setZoom(18);
                     Ember.run.later(function(){
                         App.map.panTo(pin._latlng);
                         pin.openPopup();
@@ -454,7 +454,7 @@ App.MapController = Em.Object.create({
                     App.map.removeLayer(pin);
                 }
             } else {
-                pin.setLatLng(new L.LatLng(user.geo[0],user.geo[1]));
+                if(pin) pin.setLatLng(new L.LatLng(user.geo[0],user.geo[1]));
             }
             that.set('isMarking',false);
         }

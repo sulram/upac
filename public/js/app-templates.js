@@ -225,7 +225,19 @@ function program1(depth0,data) {
   data.buffer.push("</p>\n				<p class=\"excerpt\">");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.excerpt", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</p>\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3 post_info\">\n				<div>\n					<a class=\"post_avatar\" ");
+  data.buffer.push("</p>\n			</div>\n			\n			<div class=\"span4\"></div>\n			\n		</div>\n\n		<!--<div class=\"row-fluid\">\n			<div class=\"span12 firstimage\">\n				<img src=\"/img/home02.jpg\"/>\n			</div>\n		</div>-->\n		\n		<div class=\"row-fluid\">\n			\n			<div class=\"span8 post_content\">\n				<div id=\"address_map\"></div>\n				");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "article.address", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n				");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "article.content", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n				\n				<hr/>\n				\n				");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "commentsLoaded", {hash:{},inverse:self.program(25, program25, data),fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3 post_info\">\n				<div>\n					<a class=\"post_avatar\" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(">\n						<img ");
@@ -242,27 +254,15 @@ function program1(depth0,data) {
   data.buffer.push("</a>\n						<!--<br/>\n						<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openUserArchive", "profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">Arquivos desse autor</a>-->\n					</p>\n				</div>\n			</div>\n		</div>\n\n		<!--<div class=\"row-fluid\">\n			<div class=\"span12 firstimage\">\n				<img src=\"/img/home02.jpg\"/>\n			</div>\n		</div>-->\n		\n		<div class=\"row-fluid\">\n			\n			<div class=\"span8 post_content\">\n				<div id=\"address_map\"></div>\n				");
+  data.buffer.push(">Arquivos desse autor</a>-->\n					</p>\n\n					");
   hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "article.address", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "article.tags.length", {hash:{},inverse:self.noop,fn:self.program(27, program27, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n				");
-  hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "article.content", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n				");
-  hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "article.tags.length", {hash:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n				\n				<hr/>\n				\n				");
-  hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "commentsLoaded", {hash:{},inverse:self.program(28, program28, data),fn:self.program(16, program16, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3\">\n				");
+  data.buffer.push("\n			\n					");
   hashTypes = {};
   stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(30, program30, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("	\n			</div>\n\n		</div>\n\n	");
+  data.buffer.push("\n\n				</div>\n			</div>\n\n		</div>\n\n	");
   return buffer;
   }
 function program2(depth0,data) {
@@ -329,41 +329,18 @@ function program11(depth0,data) {
 function program13(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n					<p class=\"tags\">\n						");
-  hashTypes = {};
-  stack1 = helpers.each.call(depth0, "article.tags", {hash:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n					</p>\n				");
-  return buffer;
-  }
-function program14(depth0,data) {
-  
-  var buffer = '', hashTypes;
-  data.buffer.push("\n							<a ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openTag", "", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</a>\n						");
-  return buffer;
-  }
-
-function program16(depth0,data) {
-  
-  var buffer = '', stack1, hashTypes;
   data.buffer.push("\n\n					<div class=\"post_comments\">\n						\n						");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "commentCount", {hash:{},inverse:self.noop,fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "commentCount", {hash:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n					</div>\n					\n					");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(25, program25, data),fn:self.program(20, program20, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(22, program22, data),fn:self.program(17, program17, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n				");
   return buffer;
   }
-function program17(depth0,data) {
+function program14(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
   data.buffer.push("\n\n							<h3>Comentários (");
@@ -371,12 +348,12 @@ function program17(depth0,data) {
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "commentCount", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(")</h3>\n\n							<ul>\n								");
   hashTypes = {};
-  stack1 = helpers.each.call(depth0, "comment", "in", "comments", {hash:{},inverse:self.noop,fn:self.program(18, program18, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers.each.call(depth0, "comment", "in", "comments", {hash:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n							</ul>\n						\n						");
   return buffer;
   }
-function program18(depth0,data) {
+function program15(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
   data.buffer.push("\n									<li class=\"comment\">\n										<div class=\"row\">\n											<div class=\"span2\" style=\"text-align: right;\">\n												<p>\n													<a class=\"post_avatar\" ");
@@ -407,23 +384,23 @@ function program18(depth0,data) {
   return buffer;
   }
 
-function program20(depth0,data) {
+function program17(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
   data.buffer.push("\n						\n						");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isPostingComment", {hash:{},inverse:self.program(23, program23, data),fn:self.program(21, program21, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isPostingComment", {hash:{},inverse:self.program(20, program20, data),fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n					");
   return buffer;
   }
-function program21(depth0,data) {
+function program18(depth0,data) {
   
   
   data.buffer.push("\n\n							<p class=\"def_loading\">Enviando comentário</p>\n\n						");
   }
 
-function program23(depth0,data) {
+function program20(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n							\n							<h4>Enviar Comentário</h4>\n\n							<textarea id=\"new_comment\" rows=\"5\"></textarea>\n							<a class=\"btn btn-w-icon palette-pomegranate\" ");
@@ -433,40 +410,63 @@ function program23(depth0,data) {
   return buffer;
   }
 
-function program25(depth0,data) {
+function program22(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
   data.buffer.push("\n\n						<p>Quer fazer um comentário?</p>\n						<p>");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn")
-  },inverse:self.noop,fn:self.program(26, program26, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(23, program23, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "user", options) : helperMissing.call(depth0, "linkTo", "user", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("</p>\n\n					");
   return buffer;
   }
-function program26(depth0,data) {
+function program23(depth0,data) {
   
   
   data.buffer.push("Crie uma conta");
   }
 
-function program28(depth0,data) {
+function program25(depth0,data) {
   
   
   data.buffer.push("\n					\n					<p class=\"def_loading\">Carregando comentários</p>\n\n				");
   }
 
+function program27(depth0,data) {
+  
+  var buffer = '', stack1, hashTypes;
+  data.buffer.push("\n					<p class=\"tags\">\n						");
+  hashTypes = {};
+  stack1 = helpers.each.call(depth0, "article.tags", {hash:{},inverse:self.noop,fn:self.program(28, program28, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n					</p>\n					");
+  return buffer;
+  }
+function program28(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n							<a ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openTag", "", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("</a>\n						");
+  return buffer;
+  }
+
 function program30(depth0,data) {
   
   var buffer = '', hashTypes;
-  data.buffer.push("\n					<p><a class=\"btn btn-w-icon\" ");
+  data.buffer.push("\n						<p><a class=\"btn btn-w-icon\" ");
   hashTypes = {'href': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'href': ("edit_link")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
-  data.buffer.push("><span class=\"fui-new\"></span> Editar</a></p>\n				");
+  data.buffer.push("><span class=\"fui-new\"></span> Editar</a></p>\n					");
   return buffer;
   }
 
@@ -576,7 +576,15 @@ function program1(depth0,data) {
   data.buffer.push(")</p>\n				<p class=\"excerpt\">");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.excerpt", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</p>\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3 post_info\">\n				<div>\n					<a class=\"post_avatar\" ");
+  data.buffer.push("</p>\n			</div>\n			\n			<div class=\"span4\"></div>\n		</div>\n\n		<!--<div class=\"row-fluid\">\n			<div class=\"span12 firstimage\">\n				<img src=\"/img/home02.jpg\"/>\n			</div>\n		</div>-->\n		\n		<div class=\"row-fluid\">\n			\n			<div class=\"span8 post_content\">\n				");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "article.content", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n				\n				<hr/>\n				\n				");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "commentsLoaded", {hash:{},inverse:self.program(23, program23, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3 post_info\">\n				<div>\n					<a class=\"post_avatar\" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openProfile", "profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(">\n						<img ");
@@ -593,23 +601,15 @@ function program1(depth0,data) {
   data.buffer.push("</a>\n						<br/>\n						<a ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openUserArchive", "profile", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">Arquivos desse autor</a>\n					</p>\n				</div>\n			</div>\n		</div>\n\n		<!--<div class=\"row-fluid\">\n			<div class=\"span12 firstimage\">\n				<img src=\"/img/home02.jpg\"/>\n			</div>\n		</div>-->\n		\n		<div class=\"row-fluid\">\n			\n			<div class=\"span8 post_content\">\n				");
+  data.buffer.push(">Arquivos desse autor</a>\n					</p>\n					");
   hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "article.content", {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "article.tags.length", {hash:{},inverse:self.noop,fn:self.program(25, program25, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n				");
-  hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "article.tags.length", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n				\n				<hr/>\n				\n				");
-  hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "commentsLoaded", {hash:{},inverse:self.program(26, program26, data),fn:self.program(14, program14, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n\n			</div>\n			\n			<div class=\"span1\"></div>\n\n			<div class=\"span3\">\n				");
+  data.buffer.push("\n					");
   hashTypes = {};
   stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(28, program28, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("	\n			</div>\n\n		</div>\n\n	");
+  data.buffer.push("	\n				<div>\n			</div>\n\n		</div>\n\n	");
   return buffer;
   }
 function program2(depth0,data) {
@@ -666,41 +666,18 @@ function program9(depth0,data) {
 function program11(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
-  data.buffer.push("\n					<p class=\"tags\">\n						");
-  hashTypes = {};
-  stack1 = helpers.each.call(depth0, "article.tags", {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n					</p>\n				");
-  return buffer;
-  }
-function program12(depth0,data) {
-  
-  var buffer = '', hashTypes;
-  data.buffer.push("\n							<a ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openTag", "", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push(">");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("</a>\n						");
-  return buffer;
-  }
-
-function program14(depth0,data) {
-  
-  var buffer = '', stack1, hashTypes;
   data.buffer.push("\n\n					<div class=\"post_comments\">\n						\n						");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "commentCount", {hash:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "commentCount", {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n					</div>\n					\n					");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(23, program23, data),fn:self.program(18, program18, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "User.auth.loggedIn", {hash:{},inverse:self.program(20, program20, data),fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n				");
   return buffer;
   }
-function program15(depth0,data) {
+function program12(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
   data.buffer.push("\n\n							<h3>Comentários (");
@@ -708,12 +685,12 @@ function program15(depth0,data) {
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "commentCount", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push(")</h3>\n\n							<ul>\n								");
   hashTypes = {};
-  stack1 = helpers.each.call(depth0, "comment", "in", "comments", {hash:{},inverse:self.noop,fn:self.program(16, program16, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers.each.call(depth0, "comment", "in", "comments", {hash:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n							</ul>\n						\n						");
   return buffer;
   }
-function program16(depth0,data) {
+function program13(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
   data.buffer.push("\n									<li class=\"comment\">\n										<div class=\"row\">\n											<div class=\"span2\" style=\"text-align: right;\">\n												<p>\n													<a class=\"post_avatar\" ");
@@ -744,23 +721,23 @@ function program16(depth0,data) {
   return buffer;
   }
 
-function program18(depth0,data) {
+function program15(depth0,data) {
   
   var buffer = '', stack1, hashTypes;
   data.buffer.push("\n						\n						");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isPostingComment", {hash:{},inverse:self.program(21, program21, data),fn:self.program(19, program19, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isPostingComment", {hash:{},inverse:self.program(18, program18, data),fn:self.program(16, program16, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n					");
   return buffer;
   }
-function program19(depth0,data) {
+function program16(depth0,data) {
   
   
   data.buffer.push("\n\n							<p class=\"def_loading\">Enviando comentário</p>\n\n						");
   }
 
-function program21(depth0,data) {
+function program18(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n							\n							<h4>Enviar Comentário</h4>\n\n							<textarea id=\"new_comment\" rows=\"5\"></textarea>\n							<a class=\"btn btn-w-icon palette-pomegranate\" ");
@@ -770,40 +747,63 @@ function program21(depth0,data) {
   return buffer;
   }
 
-function program23(depth0,data) {
+function program20(depth0,data) {
   
   var buffer = '', stack1, stack2, hashTypes, options;
   data.buffer.push("\n\n						<p>Quer fazer um comentário?</p>\n						<p>");
   hashTypes = {'classNames': "STRING"};
   options = {hash:{
     'classNames': ("btn")
-  },inverse:self.noop,fn:self.program(24, program24, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
+  },inverse:self.noop,fn:self.program(21, program21, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "user", options) : helperMissing.call(depth0, "linkTo", "user", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("</p>\n\n					");
   return buffer;
   }
-function program24(depth0,data) {
+function program21(depth0,data) {
   
   
   data.buffer.push("Crie uma conta");
   }
 
-function program26(depth0,data) {
+function program23(depth0,data) {
   
   
   data.buffer.push("\n					\n					<p class=\"def_loading\">Carregando comentários</p>\n\n				");
   }
 
+function program25(depth0,data) {
+  
+  var buffer = '', stack1, hashTypes;
+  data.buffer.push("\n						<p class=\"tags\">\n							");
+  hashTypes = {};
+  stack1 = helpers.each.call(depth0, "article.tags", {hash:{},inverse:self.noop,fn:self.program(26, program26, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n						</p>\n					");
+  return buffer;
+  }
+function program26(depth0,data) {
+  
+  var buffer = '', hashTypes;
+  data.buffer.push("\n								<a ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "openTag", "", {hash:{},contexts:[depth0,depth0],types:["ID","ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push(">");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "name", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("</a>\n							");
+  return buffer;
+  }
+
 function program28(depth0,data) {
   
   var buffer = '', hashTypes;
-  data.buffer.push("\n					<p><a class=\"btn btn-w-icon\" ");
+  data.buffer.push("\n						<p><a class=\"btn btn-w-icon\" ");
   hashTypes = {'href': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'href': ("edit_link")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
-  data.buffer.push("><span class=\"fui-new\"></span> Editar</a></p>\n				");
+  data.buffer.push("><span class=\"fui-new\"></span> Editar</a></p>\n					");
   return buffer;
   }
 
@@ -2060,7 +2060,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   
 
 
-  data.buffer.push("<h1 class=\"logo\">UPAC</h1>\n\n<p>A Universidade Popular de Arte e Ciência apresenta a todos os participantes do seu II Congresso seus princípios filosóficos, pedagógicos e as ideias-forças que regem seu antiprograma pedagógico.</p>\n\n<p>Desde já declaramos publicamente e a quem interessar possa que nossa proposta educacional está calcada em uma visão de educação que toma a vivência como caminho e considera o saber-de-experiência-feito como ponto de partida, base da produção do conhecimento. Aqui referenciamos um dos nossos mestres, Paulo Freire, que nos ensina que o conhecimento provém da experiência. Nos ensina ainda, dialogando com nossa mestra maior, Nise da Silveira, que não se educa só pela racionalidade. Portanto, apresentamos a amorosidade como princípio fundante de nosso caminho pedagógico e que gera o afeto catalisador, grande legado de Nise que, por sua vez, gera cuidado e alegria, também conceitos que nos iluminam e orientam o nosso caminhar. Aprendemos com Baruch de Spinoza que somos afetados pelas paixões e que as paixões que geram alegria despertam nossa potência de viver. Logo as paixões alegres constituem-se também referências de nossa prática pedagógica. Também dialogando com Nise e Spinoza referendamos a ideia de Deus como algo inerente ao humano, síntese entre transcendência e imanência, sagrado e profano, corpo e espírito. Apresentamos a vida como centralidade, biocentrismo em vez de antropocentrismo. Em vista disso nossa universidade referencia as práticas tradicionais como o xamanismo, o candomblé e tantas outras, como caminhos de aprendizagens significativas, de fortalecimento da identidade e do desvelamento que Jung chamou de inconsciente coletivo. Na UPAC propomos uma ciência intuitiva que considera a importância do ato criador e onde criação não se separa da invenção. Onde a poesia e a cultura popular revelam a beleza do conhecer que gera luz, faz nascer novas possibilidades de transformação do cotidiano em suas complexidades. Referenciamos ainda Paulo Freire ao compreendermos o humano como inacabado em sua incompletude que valoriza o saber do outro e da outra respeitando as diferenças e reconhecendo as semelhanças propondo o exercício da alteridade produtor de polifonias e policromias.</p>\n\n<!--<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/XCVsm-_B_pU\" frameborder=\"0\" allowfullscreen></iframe>-->\n<iframe src=\"http://player.vimeo.com/video/70401997?portrait=0\" width=\"720\" height=\"405\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n\n<p>Parte de uma visão ética que considera a fraternidade e a solidariedade como ideias-forças e compreendendo a circularidade sistêmica, propõe mandalas como sínteses reflexivas e movimentos em teias que referendam a conjugação do verbo esperançar como estratégia de conquista da liberdade.</p>\n\n<p>E para que esses princípios e ideias-forçae possam materializar-se, nós atores-sujeitos, protagonistas desta construção, aprendizes da arte do bem viver, propomos caminhos nos quais é possível conjugar o ser, saber e o querer, e onde a escuta sensível, o afeto geram movimentos em potência, atitudes propulsoras para que o mergulho nas vivências produza a abstração acerca do vivido. Nosso caminhar pelos caminhos da terra nos ajudará a construir uma organização que rompa com as hierarquias e as estruturas rígidas; nossa dança pelas chamas energizantes do fogo alimentará a nossa rebeldia e manterá vivo o nosso espírito de luta; nosso navegar pelos caminhos das águas manterá viva a nossa criança e com ela a espontaneidade, o mimo com os que se achegam, a energia brincante que se faz roda-cirandando, cantando e colorindo os espaços com alegria a se expressar nos sorrisos, nos beijos e abraços; nossos vôos pela energia do ar, espalharão poemas e canções e convivendo e partilhando, ensinando e aprendendo vamos construindo o sentido mais profundo da ajuda mútua, do respeito, do diálogo, do ser feliz, onde o processo educativo se faz manifestação, festa, celebração.</p>\n\n<p>Sabemos que muitos são os que se deixam afetar pelas paixões tristes, geradoras de dor, medo, limitações que produzem marcas, cicatrizes, o medo que amordaça, produz amarras. Essas situações-limite são por vezes fardos pesados que muitos insistem em carregar e geram adoecimentos. Mas não as vemos como barreiras intransponíveis: acreditamos que é possível romper com o preconceito, a culpa e a exclusão. Dizemos não à prisão e à drogadição como recurso atuando como camisa-de-força química.</p>\n\n<p>Conjugamos o verbo esperançar e como protagonistas desse caminhar vamos construindo o inédito viável rumo à nossa utopia. Nesse não lugar, essa escola sem paredes, nós, crianças, idosos, homens e mulheres de todas as cores e de todas as raças, com família e sem família, com eficiências e deficiências, artistas, músicos, abre alas, saltimbancos, educadores e educandos, mães de santo, xamãs, bruxos, magos, monstros, cuidadores e cuidadoras, loucos por arte e por vida vamos desenhando nosso percurso com o respeito a todos os seres, promovendo a inclusão dos diferentes, dos oprimidos em busca da independência em um processo de organização pautado na liberdade que tem a emancipação como conquista.</p>\n\n<p><strong>Rumo ao inédito-viável seguimos em frente sem medo da felicidade, da alegria ou da loucura ofertamos a nossa gratidão aos nossos mestres da cultura popular, Nise da Silveira, Baruch de Spinoza, Nelson Vaz, Amir Haddad, José Pacheco, Heloisa Helena e tantos outros, por iluminarem nossos caminhos com seus ensinamentos e a todos os que ousaram conosco experenciar a loucura, a arte e a ciência nessa ocupação.</strong></p>\n\n<div class=\"upac-row white\">\n	<div class=\"row-fluid\">\n		<div class=\"span5\">\n			<p><img src=\"./img/home05.jpg\"/></p>\n		</div>\n		<div class=\"span7\">\n			<p><strong>PRINCÍPIOS FILOSÓFICOS E PEDAGÓGICOS E IDEIAS-FORÇAS</strong></p>\n			<ul>\n				<li>Educação / Vivência / Experiência / Amorosidade / Paixão / Alegria / Afeto Catalisador / Cuidado</li>\n				<li>Deus / Vida / Biocentrismo / Xamanismo / Espiritualidade / Inconsciente Coletivo/Transcendência / Imanência</li>\n				<li>Criação / Invenção / Ciência Intuitiva / Circularidade / Mandala / Teia</li>\n				<li>Ética / Solidariedade / Fraternidade</li>\n				<li>Luz / Transformação / Nascimento / Renascimento / Esperança / Liberdade</li>\n				<li>Beleza / Poesia / Cultura Popular</li>\n				<li>Incompletude / Valorização do Outro e da Outra / Alteridade(respeito às diferenças e semelhanças) Polifonia / Policromia</li>\n			</ul>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row\">\n	<div class=\"row-fluid\">\n\n		<div class=\"span7\">\n			<p><strong>PAIXÕES TRISTES/SITUAÇÕES-LIMITE</strong></p>\n			<ul>\n				<li>Dor / Marca / Fardo / Doença / Drogadição</li>\n				<li>Medo / Mordaça / Limitações / Amarras / Preconceito / Exclusão</li>\n			</ul>\n			<p><strong>ATITUDES/ MOVIMENTOS GERADORES E PROPULSORES</strong></p>\n			<ul>\n				<li>Ser / Saber / Querer / Abstração / Escuta / Mergulho / Vivência</li>\n				<li>Afeto / Mimo / Ajuda / Partilhar / Ensinar / Aprender / Conviver / Caminhar / Navegar</li>\n				<li>Respeito / Rebeldia / Luta / Organização</li>\n				<li>Sorrir / Beijar / Abraçar / Falar / Dançar / Cantar / Colorir / Poetizar / Brincar / Cirandar / Ser Feliz</li>\n				<li>Espontaneidade / Festa / Manifestação / Celebração</li>\n			</ul>\n		</div>\n\n		<div class=\"span5\">\n			<p><img src=\"./img/home04.jpg\"/></p>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row white\">\n	<div class=\"row-fluid\">\n		<div class=\"span5\">\n			<p><img src=\"./img/home06.jpg\"/></p>\n		</div>\n		<div class=\"span7\">\n			<p><strong>UTOPIAS</strong></p>\n			<ul>\n				<li>Respeito / Inclusão / Organização / Independência / Liberdade / Emancipação</li>\n			</ul>\n			<p><strong>SUJEITOS /PROTAGONISTAS/MESTRES/APRENDIZES</strong></p>\n			<ul>\n				<li>Nós</li>\n				<li>Crianças / Idosos / Homens / Mulheres / Negros / Pessoas com Deficiência / Famílias</li>\n				<li>Artistas / Músicos / Abre Alas / Saltimbancos</li>\n				<li>Estudantes</li>\n				<li>Mães de Santo / Xamãs / Bruxos / Magos</li>\n				<li>Monstros</li>\n				<li>Soldados</li>\n				<li>Loucos</li>\n				<li>Cuidadores e Cuidadoras</li>\n			</ul>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row\">\n	<div class=\"row-fluid\">\n\n		<div class=\"span7\">\n			<p><strong>MESTRES DA CULTURA POPULAR</strong></p>\n			<ul>\n				<li>Nise da Silveira</li>\n				<li>Baruch de Spinoza</li>\n				<li>Nelson Vaz</li>\n				<li>Amir Haddad</li>\n				<li>José Pacheco</li>\n				<li>Heloisa Helena</li>\n				<li>Drummond</li>\n				<li>Júnio Santos</li>\n				<li>Vera Dantas</li>\n			</ul>\n		</div>\n\n		<div class=\"span5\">\n			<p><img src=\"./img/home01.jpg\"/></p>\n		</div>\n	</div>\n</div>\n\n<p>\n	<strong>Outros materiais</strong>\n	<br/><a href=\"http://www.redehumanizasus.net/13041-ii-congresso-da-upac-ocupa-nise\">http://www.redehumanizasus.net/13041-ii-congresso-da-upac-ocupa-nise</a>\n</p>\n\n<p>\n	<strong>Créditos do site</strong>\n	<br/><a href=\"https://github.com/ultraleve/upac/\">Gerador Cultural, Ultraleve, Norte Comum e UPAC</a>\n</p>\n\n<div class=\"contato upac-row white\">\n	<h2>Contato</h2>\n	<p>\n		<span class=\"icon marker\"></span>\n		<strong>Universidade Popular de Arte e Ciência</strong>\n		<br/>Instituto Municipal Nise da Silveira\n		<br/>R. Ramiro Magalhães, 521 - Engenho de Dentro\n		<br/>Rio de Janeiro - RJ, 20730-460\n		<br/>Tel. (21) 3111-7535\n	</p>\n	<p>\n		<span class=\"icon email\"></span>\n		<strong><a href=\"mailto:contato@upac.com.br\">contato@upac.com.br</a></strong>\n	</p>\n</div>");
+  data.buffer.push("<h1 class=\"logo\">UPAC</h1>\n\n<p>A Universidade Popular de Arte e Ciência apresenta a todos os participantes do seu II Congresso seus princípios filosóficos, pedagógicos e as ideias-forças que regem seu antiprograma pedagógico.</p>\n\n<p>Desde já declaramos publicamente e a quem interessar possa que nossa proposta educacional está calcada em uma visão de educação que toma a vivência como caminho e considera o saber-de-experiência-feito como ponto de partida, base da produção do conhecimento. Aqui referenciamos um dos nossos mestres, Paulo Freire, que nos ensina que o conhecimento provém da experiência. Nos ensina ainda, dialogando com nossa mestra maior, Nise da Silveira, que não se educa só pela racionalidade. Portanto, apresentamos a amorosidade como princípio fundante de nosso caminho pedagógico e que gera o afeto catalisador, grande legado de Nise que, por sua vez, gera cuidado e alegria, também conceitos que nos iluminam e orientam o nosso caminhar. Aprendemos com Baruch de Spinoza que somos afetados pelas paixões e que as paixões que geram alegria despertam nossa potência de viver. Logo as paixões alegres constituem-se também referências de nossa prática pedagógica. Também dialogando com Nise e Spinoza referendamos a ideia de Deus como algo inerente ao humano, síntese entre transcendência e imanência, sagrado e profano, corpo e espírito. Apresentamos a vida como centralidade, biocentrismo em vez de antropocentrismo. Em vista disso nossa universidade referencia as práticas tradicionais como o xamanismo, o candomblé e tantas outras, como caminhos de aprendizagens significativas, de fortalecimento da identidade e do desvelamento que Jung chamou de inconsciente coletivo. Na UPAC propomos uma ciência intuitiva que considera a importância do ato criador e onde criação não se separa da invenção. Onde a poesia e a cultura popular revelam a beleza do conhecer que gera luz, faz nascer novas possibilidades de transformação do cotidiano em suas complexidades. Referenciamos ainda Paulo Freire ao compreendermos o humano como inacabado em sua incompletude que valoriza o saber do outro e da outra respeitando as diferenças e reconhecendo as semelhanças propondo o exercício da alteridade produtor de polifonias e policromias.</p>\n\n<!--<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/XCVsm-_B_pU\" frameborder=\"0\" allowfullscreen></iframe>-->\n<iframe src=\"http://player.vimeo.com/video/70401997?portrait=0\" width=\"720\" height=\"405\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n\n<p>Parte de uma visão ética que considera a fraternidade e a solidariedade como ideias-forças e compreendendo a circularidade sistêmica, propõe mandalas como sínteses reflexivas e movimentos em teias que referendam a conjugação do verbo esperançar como estratégia de conquista da liberdade.</p>\n\n<p>E para que esses princípios e ideias-forçae possam materializar-se, nós atores-sujeitos, protagonistas desta construção, aprendizes da arte do bem viver, propomos caminhos nos quais é possível conjugar o ser, saber e o querer, e onde a escuta sensível, o afeto geram movimentos em potência, atitudes propulsoras para que o mergulho nas vivências produza a abstração acerca do vivido. Nosso caminhar pelos caminhos da terra nos ajudará a construir uma organização que rompa com as hierarquias e as estruturas rígidas; nossa dança pelas chamas energizantes do fogo alimentará a nossa rebeldia e manterá vivo o nosso espírito de luta; nosso navegar pelos caminhos das águas manterá viva a nossa criança e com ela a espontaneidade, o mimo com os que se achegam, a energia brincante que se faz roda-cirandando, cantando e colorindo os espaços com alegria a se expressar nos sorrisos, nos beijos e abraços; nossos vôos pela energia do ar, espalharão poemas e canções e convivendo e partilhando, ensinando e aprendendo vamos construindo o sentido mais profundo da ajuda mútua, do respeito, do diálogo, do ser feliz, onde o processo educativo se faz manifestação, festa, celebração.</p>\n\n<p>Sabemos que muitos são os que se deixam afetar pelas paixões tristes, geradoras de dor, medo, limitações que produzem marcas, cicatrizes, o medo que amordaça, produz amarras. Essas situações-limite são por vezes fardos pesados que muitos insistem em carregar e geram adoecimentos. Mas não as vemos como barreiras intransponíveis: acreditamos que é possível romper com o preconceito, a culpa e a exclusão. Dizemos não à prisão e à drogadição como recurso atuando como camisa-de-força química.</p>\n\n<p>Conjugamos o verbo esperançar e como protagonistas desse caminhar vamos construindo o inédito viável rumo à nossa utopia. Nesse não lugar, essa escola sem paredes, nós, crianças, idosos, homens e mulheres de todas as cores e de todas as raças, com família e sem família, com eficiências e deficiências, artistas, músicos, abre alas, saltimbancos, educadores e educandos, mães de santo, xamãs, bruxos, magos, monstros, cuidadores e cuidadoras, loucos por arte e por vida vamos desenhando nosso percurso com o respeito a todos os seres, promovendo a inclusão dos diferentes, dos oprimidos em busca da independência em um processo de organização pautado na liberdade que tem a emancipação como conquista.</p>\n\n<p><strong>Rumo ao inédito-viável seguimos em frente sem medo da felicidade, da alegria ou da loucura ofertamos a nossa gratidão aos nossos mestres da cultura popular, Nise da Silveira, Baruch de Spinoza, Nelson Vaz, Amir Haddad, José Pacheco, Heloisa Helena e tantos outros, por iluminarem nossos caminhos com seus ensinamentos e a todos os que ousaram conosco experenciar a loucura, a arte e a ciência nessa ocupação.</strong></p>\n\n<div class=\"upac-row white\">\n	<div class=\"row-fluid\">\n		<div class=\"span5\">\n			<p><img src=\"./img/home05.jpg\"/></p>\n		</div>\n		<div class=\"span7\">\n			<p><strong>PRINCÍPIOS FILOSÓFICOS E PEDAGÓGICOS E IDEIAS-FORÇAS</strong></p>\n			<ul>\n				<li>Educação / Vivência / Experiência / Amorosidade / Paixão / Alegria / Afeto Catalisador / Cuidado</li>\n				<li>Deus / Vida / Biocentrismo / Xamanismo / Espiritualidade / Inconsciente Coletivo/Transcendência / Imanência</li>\n				<li>Criação / Invenção / Ciência Intuitiva / Circularidade / Mandala / Teia</li>\n				<li>Ética / Solidariedade / Fraternidade</li>\n				<li>Luz / Transformação / Nascimento / Renascimento / Esperança / Liberdade</li>\n				<li>Beleza / Poesia / Cultura Popular</li>\n				<li>Incompletude / Valorização do Outro e da Outra / Alteridade(respeito às diferenças e semelhanças) Polifonia / Policromia</li>\n			</ul>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row\">\n	<div class=\"row-fluid\">\n\n		<div class=\"span7\">\n			<p><strong>PAIXÕES TRISTES/SITUAÇÕES-LIMITE</strong></p>\n			<ul>\n				<li>Dor / Marca / Fardo / Doença / Drogadição</li>\n				<li>Medo / Mordaça / Limitações / Amarras / Preconceito / Exclusão</li>\n			</ul>\n			<p><strong>ATITUDES/ MOVIMENTOS GERADORES E PROPULSORES</strong></p>\n			<ul>\n				<li>Ser / Saber / Querer / Abstração / Escuta / Mergulho / Vivência</li>\n				<li>Afeto / Mimo / Ajuda / Partilhar / Ensinar / Aprender / Conviver / Caminhar / Navegar</li>\n				<li>Respeito / Rebeldia / Luta / Organização</li>\n				<li>Sorrir / Beijar / Abraçar / Falar / Dançar / Cantar / Colorir / Poetizar / Brincar / Cirandar / Ser Feliz</li>\n				<li>Espontaneidade / Festa / Manifestação / Celebração</li>\n			</ul>\n		</div>\n\n		<div class=\"span5\">\n			<p><img src=\"./img/home04.jpg\"/></p>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row white\">\n	<div class=\"row-fluid\">\n		<div class=\"span5\">\n			<p><img src=\"./img/home06.jpg\"/></p>\n		</div>\n		<div class=\"span7\">\n			<p><strong>UTOPIAS</strong></p>\n			<ul>\n				<li>Respeito / Inclusão / Organização / Independência / Liberdade / Emancipação</li>\n			</ul>\n			<p><strong>SUJEITOS /PROTAGONISTAS/MESTRES/APRENDIZES</strong></p>\n			<ul>\n				<li>Nós</li>\n				<li>Crianças / Idosos / Homens / Mulheres / Negros / Pessoas com Deficiência / Famílias</li>\n				<li>Artistas / Músicos / Abre Alas / Saltimbancos</li>\n				<li>Estudantes</li>\n				<li>Mães de Santo / Xamãs / Bruxos / Magos</li>\n				<li>Monstros</li>\n				<li>Soldados</li>\n				<li>Loucos</li>\n				<li>Cuidadores e Cuidadoras</li>\n			</ul>\n		</div>\n	</div>\n</div>\n\n<div class=\"upac-row\">\n	<div class=\"row-fluid\">\n\n		<div class=\"span7\">\n			<p><strong>MESTRES DA CULTURA POPULAR</strong></p>\n			<ul>\n				<li>Nise da Silveira</li>\n				<li>Baruch de Spinoza</li>\n				<li>Nelson Vaz</li>\n				<li>Amir Haddad</li>\n				<li>José Pacheco</li>\n				<li>Heloisa Helena</li>\n				<li>Drummond</li>\n				<li>Júnio Santos</li>\n				<li>Vera Dantas</li>\n				<li>Ray Lima</li>\n			</ul>\n		</div>\n\n		<div class=\"span5\">\n			<p><img src=\"./img/home01.jpg\"/></p>\n		</div>\n	</div>\n</div>\n\n<p>\n	<strong>Outros materiais</strong>\n	<br/><a href=\"http://www.redehumanizasus.net/13041-ii-congresso-da-upac-ocupa-nise\">http://www.redehumanizasus.net/13041-ii-congresso-da-upac-ocupa-nise</a>\n</p>\n\n<p>\n	<strong>Créditos do site</strong>\n	<br/><a href=\"https://github.com/ultraleve/upac/\">Gerador Cultural, Ultraleve, Norte Comum e UPAC</a>\n</p>\n\n<div class=\"contato upac-row white\">\n	<h2>Contato</h2>\n	<p>\n		<span class=\"icon marker\"></span>\n		<strong>Universidade Popular de Arte e Ciência</strong>\n		<br/>Instituto Municipal Nise da Silveira\n		<br/>R. Ramiro Magalhães, 521 - Engenho de Dentro\n		<br/>Rio de Janeiro - RJ, 20730-460\n		<br/>Tel. (21) 3111-7535\n	</p>\n	<p>\n		<span class=\"icon email\"></span>\n		<strong><a href=\"mailto:contato@upac.com.br\">contato@upac.com.br</a></strong>\n	</p>\n</div>");
   
 });
 

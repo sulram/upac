@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<!--[if lt IE 7]> <html lang="pt-br" class="no-js ie6"> <![endif]--> 
+<!--[if IE 7]>    <html lang="pt-br" class="no-js ie7"> <![endif]--> 
+<!--[if IE 8]>    <html lang="pt-br" class="no-js ie8"> <![endif]--> 
+<!--[if IE 9]>    <html lang="pt-br" class="no-js ie9"> <![endif]--> 
+<!--[if gt IE 9]><!--> <html lang="pt-br" class="no-js"> <!--<![endif]--> 
 <!--
                                                
                                                
@@ -45,7 +49,8 @@
   <link rel="stylesheet" href="js/libs/leaflet/leaflet.markercluster.css" />
   <link rel="stylesheet" href="js/libs/fullcalendar/fullcalendar.css" />
   <!--[if lte IE 8]><link rel="stylesheet" href="js/libs/leaflet/leaflet.ie.css" /><![endif]-->
-  <link href="css/app.css" rel="stylesheet" />
+  <link href="css/app.css" rel="stylesheet"/>
+
   <script src="js/libs/handlebars.js"></script>
   <script src="js/libs/underscore.js"></script>
   <script src="js/libs/moment.min.js"></script>
@@ -72,9 +77,18 @@
   <script src="js/app-controllers.js"></script>
   <script src="js/app-views.js"></script>
   <script src="js/app-map.js"></script>
-  <!--[if (gte IE 6)&(lte IE 8)]>
-  <script src="js/libs/selectivizr.js"></script>
-  <![endif]-->
+  <script type="text/javascript">
+    // UPDATE YOUR BROWSER
+    var $buoop = {vs:{i:8,f:15,o:10.6,s:4,n:9}} 
+    $buoop.ol = window.onload; 
+    window.onload=function(){ 
+      try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
+      var e = document.createElement("script"); 
+      e.setAttribute("type", "text/javascript"); 
+      e.setAttribute("src", "http://browser-update.org/update.js"); 
+      document.body.appendChild(e); 
+    } 
+</script> 
 </head>
 <body>
 </body>

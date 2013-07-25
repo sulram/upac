@@ -1,11 +1,3 @@
-//// CONSOLE FIX
-
-if (typeof console == "undefined" || typeof console.log == "undefined") {
-    var console = {
-        log: function() {}
-    };
-}
-
 //// INIT
 
 Dropzone.autoDiscover = false;
@@ -20,7 +12,7 @@ var palette = ['palette-turquoise','palette-peter-river', 'palette-wisteria', 'p
 
 //// EMBER APP
 
-window.App = Ember.Application.create({
+var App = Ember.Application.create({
     // mostrar transicoes
     LOG_TRANSITIONS: true,
     // salvar path
