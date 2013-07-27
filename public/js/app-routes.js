@@ -155,6 +155,7 @@ App.BlogRecentesRoute = App.UpacRoute.extend({
     },
     setupController: function (controller, model){
         controller.set('model', model);
+        controller.set('articles', []);
         controller.getContent();
         this._super(this, arguments);
     }

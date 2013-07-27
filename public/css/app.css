@@ -571,6 +571,13 @@ iframe {
 	max-width: 320px;
 }
 
+#rede_sidebar .excerpt {
+	/*text-transform: uppercase;*/
+	font-style: oblique;
+	font-size: 110%;
+	color: #999;
+}
+
 .tags,
 .thepost .tags,
 #rede_sidebar .tags {
