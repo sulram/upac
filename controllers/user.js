@@ -45,7 +45,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 			});
 		},
 		update: function (req, res, next) {
-			User.update({id: req.param('id')}, 
+			User.update({_id: req.param('id')}, 
 				{$set: req.body},
 				function(err) {
 					if(err) return next(err);
