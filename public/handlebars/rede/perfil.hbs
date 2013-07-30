@@ -26,7 +26,11 @@
 		{{#if isTheLoggedUser}}
 			{{#linkTo 'rede.editar' classNames="btn btn-w-icon"}}<span class="fui-new"></span> Editar{{/linkTo}}
 		{{/if}}
+		{{#if geo.length}}
 			<a class="btn btn-w-icon" {{action zoom}}><span class="fui-location"></span> Localizar</a>
+		{{else}}
+			<br/><br/>Clique em <strong>editar</strong> e depois em <strong>marque sua localização</strong> para entrar no mapa.
+		{{/if}}
 		</p>
 		
 		{{#if articles.length}}

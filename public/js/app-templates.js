@@ -538,7 +538,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   
-  data.buffer.push("Blog");
+  data.buffer.push("Assemblog");
   }
 
   data.buffer.push("<h1>");
@@ -1475,21 +1475,27 @@ function program1(depth0,data) {
   data.buffer.push("/>\n		</div>-->\n\n		<h2>\n			");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "place.title", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("\n		</h2>\n\n		<p>");
+  data.buffer.push("\n		</h2>\n\n		<p class=\"excerpt\">");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "place.excerpt", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
   data.buffer.push("</p>\n		\n		");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "place.tags.length", {hash:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n		\n		<p>\n			");
+  data.buffer.push("\n\n		");
+  hashTypes = {'unescaped': "STRING"};
+  stack1 = helpers._triageMustache.call(depth0, "place.content", {hash:{
+    'unescaped': ("true")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n		<p>&nbsp;</p>\n		\n		<p>\n			");
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "isTheLoggedUser", {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n			<a class=\"btn btn-w-icon\" ");
   hashTypes = {};
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "zoom", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("><span class=\"fui-location\"></span> Localizar</a>\n		</p>\n		\n	");
+  data.buffer.push("><span class=\"fui-location\"></span> Localizar</a>\n		</p>\n\n		\n	");
   return buffer;
   }
 function program2(depth0,data) {
@@ -1750,12 +1756,13 @@ function program1(depth0,data) {
   hashTypes = {};
   stack1 = helpers['if'].call(depth0, "isTheLoggedUser", {hash:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n			<a class=\"btn btn-w-icon\" ");
+  data.buffer.push("\n		");
   hashTypes = {};
-  data.buffer.push(escapeExpression(helpers.action.call(depth0, "zoom", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
-  data.buffer.push("><span class=\"fui-location\"></span> Localizar</a>\n		</p>\n		\n		");
+  stack1 = helpers['if'].call(depth0, "geo.length", {hash:{},inverse:self.program(13, program13, data),fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n		</p>\n		\n		");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "articles.length", {hash:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "articles.length", {hash:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n	");
   return buffer;
@@ -1823,10 +1830,26 @@ function program9(depth0,data) {
 
 function program11(depth0,data) {
   
+  var buffer = '', hashTypes;
+  data.buffer.push("\n			<a class=\"btn btn-w-icon\" ");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "zoom", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("><span class=\"fui-location\"></span> Localizar</a>\n		");
+  return buffer;
+  }
+
+function program13(depth0,data) {
+  
+  
+  data.buffer.push("\n			<br/><br/>Clique em <strong>editar</strong> e depois em <strong>marque sua localização</strong> para entrar no mapa.\n		");
+  }
+
+function program15(depth0,data) {
+  
   var buffer = '', stack1, hashTypes;
   data.buffer.push("\n			<hr/>\n			<p><strong>Publicações</strong></p>\n			<ul class=\"user_articles\">\n			");
   hashTypes = {};
-  stack1 = helpers.each.call(depth0, "articles", {hash:{},inverse:self.noop,fn:self.program(12, program12, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers.each.call(depth0, "articles", {hash:{},inverse:self.noop,fn:self.program(16, program16, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n			</ul>\n			<p><small><a ");
   hashTypes = {};
@@ -1834,7 +1857,7 @@ function program11(depth0,data) {
   data.buffer.push(">Ver todas</a></small></p>\n		");
   return buffer;
   }
-function program12(depth0,data) {
+function program16(depth0,data) {
   
   var buffer = '', hashTypes;
   data.buffer.push("\n				<li><a ");
@@ -1847,7 +1870,7 @@ function program12(depth0,data) {
   return buffer;
   }
 
-function program14(depth0,data) {
+function program18(depth0,data) {
   
   
   data.buffer.push("\n		<p class=\"def_loading\">carregando perfil</p>\n	");
@@ -1855,7 +1878,7 @@ function program14(depth0,data) {
 
   data.buffer.push("<div class=\"pad\">\n	");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(14, program14, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(18, program18, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>");
   return buffer;
@@ -2334,7 +2357,7 @@ function program5(depth0,data) {
 function program7(depth0,data) {
   
   
-  data.buffer.push("\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Blog</span></span>\n			");
+  data.buffer.push("\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Assemblog</span></span>\n			");
   }
 
 function program9(depth0,data) {

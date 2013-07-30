@@ -12,7 +12,7 @@
 			{{place.title}}
 		</h2>
 
-		<p>{{place.excerpt}}</p>
+		<p class="excerpt">{{place.excerpt}}</p>
 		
 		{{#if place.tags.length}}
 			<p class="tags">
@@ -21,6 +21,10 @@
 				{{/each}}
 			</p>
 		{{/if}}
+
+		{{{place.content}}}
+
+		<p>&nbsp;</p>
 		
 		<p>
 			{{#if isTheLoggedUser}}
@@ -28,6 +32,7 @@
 			{{/if}}
 			<a class="btn btn-w-icon" {{action zoom}}><span class="fui-location"></span> Localizar</a>
 		</p>
+
 		
 	{{else}}
 		<p class="def_loading">carregando perfil</p>

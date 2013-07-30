@@ -563,12 +563,24 @@ iframe {
 	margin-bottom: 1em;
 }
 
+#rede_sidebar h2 {
+	line-height: 1.2em;
+	margin-bottom: 0.5em;
+}
+
 #rede_sidebar a {
 	/*color: #444;*/
 }
 
 #rede_sidebar .pad {
 	max-width: 320px;
+}
+
+#rede_sidebar .excerpt {
+	/*text-transform: uppercase;*/
+	font-style: oblique;
+	font-size: 110%;
+	color: #777;
 }
 
 .tags,
