@@ -44,12 +44,30 @@ module.exports = function (cdn, paginate, mailer) { return {
 				res.render('admin/user/edit',{user: user, title:"Editar usuário: "+user.username});
 			});
 		},
-		update: function (req, res, next) {
-			User.update({_id: req.param('id')}, 
-				{$set: req.body},
-				function(err) {
+		sendPasswordReset: function(req, res, next) {
+			User.findById(req.param('id'), function(err, user) {
+				if(err) return next(err);
+				user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+				user.resetPasswordRequest = new Date();
+				user.save(function(err) {
 					if(err) return next(err);
-					res.redirect('/admin/user/'+req.param('id'))
+					mailer.send(user.email, 'password', {user:user, subject:"[UPAC] Pedido de link para recadastramento de senha"});
+					res.render('admin/user/show_reset', {user: user});
+				});
+			})
+		},
+		update: function (req, res, next) {
+			if(req.body.password && req.body.password.length<=0) {
+				delete req.body.password;
+			}
+			User.findById(req.param('id'), 
+				function(err, user) {
+					if(err) return next(err);
+					user.set(req.body);
+					user.save(function(err) {
+						if(err) return next(err);
+						res.redirect('/admin/user/'+req.param('id'))
+					})
 				}
 			);
 		},

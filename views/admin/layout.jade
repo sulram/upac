@@ -43,8 +43,8 @@ mixin checkbox(data, member, label)
 	.control-group
 		.controls
 			label(for=member).checkbox
-				if data == true
-					input(name=member, type="checkbox", value="true", data-toggle="checkbox")
+				if data
+					input(name=member, type="checkbox", checked="checked", data-toggle="checkbox")
 				else
 					input(name=member, type="checkbox", data-toggle="checkbox")
 				| #{label}

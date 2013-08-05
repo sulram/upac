@@ -13,6 +13,10 @@ block content
 			.span6
 				+field(user.name, 'name', 'Nome', 'text')
 				+field(user.email, 'email', 'Email', 'text')
+				.control-group
+					label.control-label Senha:
+					.controls
+						input(type='password', name="password", placeholder="não modificada")
 				+field(user.dateOfBirth, 'dateOfBirth', 'Data de nascimento', 'date')
 				+field(user.geo[0], 'geo[]', 'Latitude', 'text')
 				+field(user.geo[1], 'geo[]', 'Longitude', 'text')
