@@ -36,7 +36,7 @@ module.exports = function (cdn, paginate) { return {
 			});
 		},
 		update: function(req, res, next) {
-			Tag.update({id:req.param('id')}, {$set: req.body}, function(err) {
+			Tag.update({_id:req.param('id')}, {$set: req.body}, function(err) {
 				if(err) return next(err);
 				res.redirect('/admin/tag/'+req.param('id'));
 			});

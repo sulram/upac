@@ -55,7 +55,7 @@ module.exports = function(cdn, paginate) {
 							res.redirect('/admin/image/'+req.param('id'));
 						})
 				} else {
-					Img.update({id:req.param('id')}, {$set:req.body}, function(err, img) {
+					Img.update({_id:req.param('id')}, {$set:req.body}, function(err, img) {
 						if(err) return next(err);
 						res.redirect('/admin/image/'+req.param('id'));
 					});

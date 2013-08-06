@@ -22,7 +22,7 @@ NoticeSchema.methods = {
 	getFromUserID: function(user_id, params, cb) {
 		var skip = params.skip || 0;
 		var limit = params.limit || 50;
-		this.find({id: user_id}).sort('date',-1).skip(skip).limit(limit).exec(cb);
+		this.find({owner: user_id}).sort('date',-1).skip(skip).limit(limit).exec(cb);
 	}
 }
 NoticeSchema.pre('save', function(next) {
