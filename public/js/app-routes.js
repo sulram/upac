@@ -156,6 +156,7 @@ App.BlogRecentesRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         controller.set('model', model);
         controller.set('articles', []);
+        controller.set('isLoaded', false);
         controller.getContent();
         this._super(this, arguments);
     }
@@ -188,6 +189,7 @@ App.BlogUserRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         controller.set('model', model);
         controller.set('articles', []);
+        controller.set('isLoaded', false);
         controller.getContent();
         this._super(this, arguments);
     }
