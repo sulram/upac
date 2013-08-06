@@ -182,16 +182,9 @@ var UpacMarker = L.Marker.extend({
 
 App.RedeMapaView = Ember.View.extend({
     templateName: 'view_mapa',
-    hasMap: false,
-    handleZoom: function() {
-        //if (App.map.getZoom() < 2){
-        //    App.map.setZoom(2);
-        //}
-        //console.log('zoom factor',App.map.getZoom());
-    },
     didInsertElement: function(){
         var _this = this;
-        App.map = L.map('map_canvas',{minZoom: 3});
+        if(!App.map) App.map = L.map('map_canvas',{minZoom: 3});
         App.map_tiles = new L.TileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: 'Powered by Leaflet & OpenStreetMap'});
         App.map.addLayer(App.map_tiles).setView(new L.LatLng(0,0), 2);
         App.map.zoomControl.setPosition('bottomleft');
