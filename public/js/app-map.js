@@ -18,13 +18,21 @@ var eventIcon = new UIcon({iconUrl: 'img/pin_cal.png'});
 
 var upac_new_marker = null;
 
+function create_excerpt(excerpt){
+    var excerpt_arr = excerpt.split(' ');
+    if(excerpt_arr.length>50){
+        excerpt = excerpt_arr.slice(0,50).join(' ')+'...';
+    }
+    return excerpt;
+}
+
 function eventPopup(event) {
-    var excerpt = event.excerpt || '';
+    var excerpt = create_excerpt(event.excerpt || '');
     return '<p><strong>' + event.title + '</strong></p><p style="color:#666;">de: '+moment(event.startDate).format('LLLL')+'<br/>até: '+moment(event.endDate).format('LLLL')+'</p><p>'+excerpt+'</p><p><a href="#/agenda/evento/' + event._id + '">Clique para ver o evento</a></p>';
 }
 
 function pagePopup(page) {
-    var excerpt = page.excerpt || '';
+    var excerpt = create_excerpt(page.excerpt || '');
     return '<p><strong>' + page.title + '</strong><br/>'+excerpt+'</p><p><a href="#/rede/local/' + page.slug + '">Clique para ver mais informações</a></p>';
 }
 
@@ -32,7 +40,7 @@ function userPopup(user) {
     var usermodel = App.UserModel.build(user);
     var username = user.username
     var name = user.name || user.username;
-    var about = user.about || '';
+    var about = create_excerpt(user.about || '');
     return '<figure class="post_avatar"><img src="'+usermodel.avatar_icon+'"/></figure><p><strong>' + name + '</strong><br/>'+about+'</p><p><a href="#/rede/perfil/' + username + '">Clique para ver o perfil</a></p>';
 }
 
