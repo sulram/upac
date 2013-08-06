@@ -60,7 +60,7 @@ App.RedeRoute = App.UpacRoute.extend({
 
 App.RedeIndexRoute = App.UpacRoute.extend({
     redirect: function() {
-        //if(App.map) App.map.setView(new L.LatLng(0,0), 2);
+        if(App.map) App.map.setView(new L.LatLng(0,0), 2);
         this.transitionTo('rede.mapa');   
     }
 });
