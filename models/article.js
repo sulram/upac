@@ -77,6 +77,7 @@ var slugify = function(str) {
 	str = str.replace(/\s/ig, '-');
 	return str;
 }
+
 ArticleSchema.pre('save', function(next) {
 	if(this.isNew) {
 		this.createdAt = new Date();
@@ -116,7 +117,6 @@ PageSchema.pre('save', function(next) {
 		next();
 	})
 })
-
 ArticleSchema.statics.findByTagId = function(id, options, cb) {
 	this.find({tags: id}, null, options, cb);
 }
