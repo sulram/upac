@@ -6,24 +6,33 @@
 {{/if}}
 </h3>
 
-{{partial "blogposts"}}
+{{#if isLoaded}}
 
-{{#if needPagination}}
-	<div class="pagination">
-		<ul>
-			<li class="previous">
-				{{linkTo blog.user prevPage class="fui-arrow-left"}}
-			</li>
-			{{#each page in pages}}
-				{{#if page.is_current}}
-					<li class="active">{{#linkTo blog.user page}}{{page.page_num}}{{/linkTo}}</li>
-				{{else}}
-					<li>{{#linkTo blog.user page}}{{page.page_num}}{{/linkTo}}</li>
-				{{/if}}
-			{{/each}}
-			<li class="next">
-				{{linkTo blog.user nextPage class="fui-arrow-right"}}
-			</li>
-		</ul>
-	</div>
+	{{partial "blogposts"}}
+
+	{{#if needPagination}}
+		<div class="pagination">
+			<ul>
+				<li class="previous">
+					{{linkTo blog.user prevPage class="fui-arrow-left"}}
+				</li>
+				{{#each page in pages}}
+					{{#if page.is_current}}
+						<li class="active">{{#linkTo blog.user page}}{{page.page_num}}{{/linkTo}}</li>
+					{{else}}
+						<li>{{#linkTo blog.user page}}{{page.page_num}}{{/linkTo}}</li>
+					{{/if}}
+				{{/each}}
+				<li class="next">
+					{{linkTo blog.user nextPage class="fui-arrow-right"}}
+				</li>
+			</ul>
+		</div>
+	{{/if}}
+
+{{else}}
+
+	<p class="def_loading">carregando publicações</p>
+
 {{/if}}
+
