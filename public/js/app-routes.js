@@ -4,6 +4,7 @@ App.Router.map(function() {
         this.route("evento", { path: '/evento/:evento_id' });
     });
     this.resource("rede", function(){
+        this.route('mapa');
         this.route('perfil', { path: '/perfil/:user_username' });
         this.route('avatar');
         this.route('editar');
@@ -58,7 +59,14 @@ App.RedeRoute = App.UpacRoute.extend({
 });
 
 App.RedeIndexRoute = App.UpacRoute.extend({
-    setupController: function (controller, model){
+    redirect: function() {
+        if(App.map) App.map.setView(new L.LatLng(0,0), 2);
+        this.transitionTo('rede.mapa');   
+    }
+});
+
+App.RedeMapaRoute = App.UpacRoute.extend({
+    setupController:function(controller,model){
         this._super(this, arguments);
     }
 });
@@ -156,6 +164,7 @@ App.BlogRecentesRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         controller.set('model', model);
         controller.set('articles', []);
+        controller.set('isLoaded', false);
         controller.getContent();
         this._super(this, arguments);
     }
@@ -188,6 +197,7 @@ App.BlogUserRoute = App.UpacRoute.extend({
     setupController: function (controller, model){
         controller.set('model', model);
         controller.set('articles', []);
+        controller.set('isLoaded', false);
         controller.getContent();
         this._super(this, arguments);
     }
