@@ -167,6 +167,8 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 
 	app.get('/image/:id', img.show);
 
+	app.get('/s/:hash', admin.shortened);
+
 	app.get('/', function(req, res) { res.render('index'); });
 
 }

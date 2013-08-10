@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
-  , User = mongoose.model('User');
+  , User = mongoose.model('User')
+  , ShortUrl = mongoose.model('ShortUrl');
 
 module.exports = {
 	signin: function(req, res, next) {
@@ -13,5 +14,11 @@ module.exports = {
 		req.session.cookie.expires = new Date(Date.now()+48*60*60*1000);
 		req.logout();
 		res.redirect('/');
+	},
+	shortened: function(req, res, next) {
+		ShortUrl.findOne({hash:req.param('hash')}, function(err, url) {
+			if(err) return next(err);
+			res.redirect(url.destination);
+		});
 	}
 }
