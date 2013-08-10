@@ -89,10 +89,23 @@ module.exports = function(cdn, paginate){ return {
 						}
 						article.save(function(err) {
 							if(err) return res.jsonx(500, {error: err});
-							res.jsonx({
-								msg: 'ok',
-								article: article,
-							});
+							ShortUrl.findOne({object:article._id}, function(err, shorturl) {
+								if(err) return next(err);
+								if(shorturl) return	res.jsonx({
+										msg: 'ok',
+										article: article,
+										short_url: shorturl
+									});
+								ShortUrl.makeShortUrl(article._id, article.createdAt, '/#/blog/post/'+article._id.toString(), function(err, shorturl) {
+									if(err) return next(err);
+									res.jsonx({
+										msg: 'ok',
+										article: article,
+										short_url: shorturl
+									});
+								})
+							})
+							
 						});
 					});
 		},

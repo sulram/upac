@@ -36,6 +36,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.all('/admin/notices', auth.requiresAdminLogin, notice.admin.index);
 	app.post('/admin/notice', auth.requiresAdminLogin, notice.admin.create);
 	
+	app.get('/admin/article/generateshorturls', auth.requiresAdminLogin, admin.generate_shorturls);
 	app.get('/admin/article/new', auth.requiresAdminLogin, article.admin.editnew);
 	app.post('/admin/article/:id', auth.requiresAdminLogin, article.admin.update);
 	app.get('/admin/article/:id', auth.requiresAdminLogin, article.admin.show);
@@ -43,6 +44,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.get('/admin/article/:id/remove', auth.requiresAdminLogin, article.admin.remove)
 	app.all('/admin/articles', auth.requiresAdminLogin, article.admin.index);
 	app.post('/admin/article', auth.requiresAdminLogin, article.admin.create);
+
 
 	app.get('/admin/event/new', auth.requiresAdminLogin, _event.admin.editnew);
 	app.post('/admin/event/:id', auth.requiresAdminLogin, _event.admin.update);

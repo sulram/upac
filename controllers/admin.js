@@ -1,5 +1,7 @@
 var mongoose = require('mongoose')
+  , _ = require('underscore')
   , User = mongoose.model('User')
+  , Article = mongoose.model('Article')
   , ShortUrl = mongoose.model('ShortUrl');
 
 module.exports = {
@@ -20,5 +22,19 @@ module.exports = {
 			if(err) return next(err);
 			res.redirect(url.destination);
 		});
+	},
+	generate_shorturls: function(req, res, next) {
+		Article.find({},function(err, articles) {
+			if(err) return next(err);
+			_.each(articles, function(article) {
+				ShortUrl.findOne({object:article._id}, function(err, shorturl) {
+					if(err) return next(err);
+					if(!shorturl) {
+						ShortUrl.makeShortUrl(article._id, article.createdAt, '/#/blog/post/'+article._id.toString(), function(err){});
+					}
+				})
+			})
+			res.jsonx({msg:'generating'});
+		})
 	}
 }
