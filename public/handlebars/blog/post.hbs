@@ -121,6 +121,10 @@
 							{{/each}}
 						</p>
 					{{/if}}
+					{{#if article.hash}}
+						<p><strong>Compartilhe</strong><br/>
+						<code style="color:#666;">http://upac.com.br/s/{{article.hash}}</code></p>
+					{{/if}}
 					{{#if isOwner}}
 						<p><a class="btn btn-w-icon" {{bindAttr href="edit_link"}}><span class="fui-new"></span> Editar</a></p>
 					{{/if}}	

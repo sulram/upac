@@ -593,7 +593,11 @@ function program1(depth0,data) {
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("\n					");
   hashTypes = {};
-  stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(28, program28, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack2 = helpers['if'].call(depth0, "article.hash", {hash:{},inverse:self.noop,fn:self.program(28, program28, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
+  data.buffer.push("\n					");
+  hashTypes = {};
+  stack2 = helpers['if'].call(depth0, "isOwner", {hash:{},inverse:self.noop,fn:self.program(30, program30, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("	\n				<div>\n			</div>\n\n		</div>\n\n	");
   return buffer;
@@ -784,6 +788,16 @@ function program26(depth0,data) {
 function program28(depth0,data) {
   
   var buffer = '', hashTypes;
+  data.buffer.push("\n						<p><strong>Compartilhe</strong><br/>\n						<code style=\"color:#666;\">http://upac.com.br/s/");
+  hashTypes = {};
+  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "article.hash", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  data.buffer.push("</code></p>\n					");
+  return buffer;
+  }
+
+function program30(depth0,data) {
+  
+  var buffer = '', hashTypes;
   data.buffer.push("\n						<p><a class=\"btn btn-w-icon\" ");
   hashTypes = {'href': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
@@ -793,7 +807,7 @@ function program28(depth0,data) {
   return buffer;
   }
 
-function program30(depth0,data) {
+function program32(depth0,data) {
   
   
   data.buffer.push("\n\n		<p class=\"def_loading\">carregando publicação</p>\n\n	");
@@ -801,7 +815,7 @@ function program30(depth0,data) {
 
   data.buffer.push("<div class=\"thepost\">\n\n	");
   hashTypes = {};
-  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(30, program30, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  stack1 = helpers['if'].call(depth0, "isLoaded", {hash:{},inverse:self.program(32, program32, data),fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n</div>");
   return buffer;

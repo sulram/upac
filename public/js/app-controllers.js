@@ -208,7 +208,7 @@ App.BlogPostController = Ember.ObjectController.extend({
         $.getJSON('/article/'+id, function(data){
             console.log('OWNERS: ',data.article.owners[0]._id, data.auth.id);
             _this.set('article', data.article);
-            _this.set('isOwner', data.article.owners[0] ? data.article.owners[0]._id == data.auth.id : null);
+            _this.set('isOwner', data.article.owners[0] ? data.article.owners[0]._id == data.auth.id || data.auth.admin : null);
             _this.set('profile', data.article.owners[0] ? App.UserModel.build(data.article.owners[0]) : null);
             _this.set('isLoaded', true);
             _this.getComments(id);
@@ -296,7 +296,7 @@ App.AgendaEventoController = App.BlogPostController.extend({
         $.getJSON('/event/'+id, function(data){
             console.log('OWNERS: ',data.event.owners[0]._id, data.auth.id);
             _this.set('article', data.event);
-            _this.set('isOwner', data.event.owners[0] ? data.event.owners[0]._id == data.auth.id : null);
+            _this.set('isOwner', data.event.owners[0] ? data.event.owners[0]._id == data.auth.id || data.auth.admin : null);
             _this.set('profile', data.event.owners[0] ? App.UserModel.build(data.event.owners[0]) : null);
             _this.set('isLoaded', true);
             if(data.event.geo.length){

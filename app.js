@@ -134,7 +134,8 @@ app.use(function(req, res, next){ // admin and json extension middleware
 		var auth = {
 			id: req.isAuthenticated() ? req.user.id : null,
 			loggedIn: req.isAuthenticated(),
-			username: req.isAuthenticated() ? req.user.username : null
+			username: req.isAuthenticated() ? req.user.username : null,
+			admin: req.isAdmin()
 		};
 		res.json(code, _.extend({auth: auth}, flash, obj));
 	};
