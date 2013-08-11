@@ -36,7 +36,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.all('/admin/notices', auth.requiresAdminLogin, notice.admin.index);
 	app.post('/admin/notice', auth.requiresAdminLogin, notice.admin.create);
 	
-	app.get('/admin/article/generateshorturls', auth.requiresAdminLogin, admin.generate_shorturls);
+	//app.get('/admin/article/generateshorturls', auth.requiresAdminLogin, admin.generate_shorturls);
 	app.get('/admin/article/new', auth.requiresAdminLogin, article.admin.editnew);
 	app.post('/admin/article/:id', auth.requiresAdminLogin, article.admin.update);
 	app.get('/admin/article/:id', auth.requiresAdminLogin, article.admin.show);
@@ -169,7 +169,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 
 	app.get('/image/:id', img.show);
 
-	app.get('/s/:hash', admin.shortened);
+	app.get('/s/:hash', article.shortened);
 
 	app.get('/', function(req, res) { res.render('index'); });
 

@@ -1,0 +1,68 @@
+doctype
+//if lt IE 7
+  <html lang="pt-br" class="no-js lt-ie9 lt-ie8 lt-ie7">
+//if IE 7
+  <html lang="pt-br" class="no-js lt-ie9 lt-ie8">
+//if IE 8
+  <html lang="pt-br" class="no-js lt-ie9">
+//[if gt IE 8]><!
+html.no-js(lang="pt-br")
+  //<![endif]
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title UPAC - Universidade Popular de Arte e Ciência - 
+      |= article.title
+    meta(name='description', content=article.excerpt||'Universidade Popular de Arte e Ciência')
+    meta(name='author', content='UPAC')
+    //-meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic,900,900italic')
+    link(rel='stylesheet', href='flat-ui/bootstrap/css/bootstrap.css')
+    link(rel='stylesheet', href='flat-ui/css/flat-ui.css')
+    link(rel='stylesheet', href='dropzone/css/dropzone.css')
+    link(rel='stylesheet', href='js/libs/select2/select2.css')
+    link(rel='stylesheet', href='js/libs/leaflet/leaflet.css')
+    link(rel='stylesheet', href='js/libs/leaflet/leaflet.markercluster.css')
+    link(rel='stylesheet', href='js/libs/fullcalendar/fullcalendar.css')
+    link(rel='stylesheet', href='css/app.css')
+
+    script(src='js/libs/handlebars.js')
+    script(src='js/libs/underscore.js')
+    script(src='js/libs/moment.min.js')
+    script(src='js/libs/moment-lang/pt-br.js')
+    //-script(src='js/libs/showdown/src/showdown.js')
+    //-script(src='js/libs/showdown/src/extensions/table.js')
+    //-script(src='js/libs/showdown/src/extensions/ufm.js')
+    script(src='js/libs/leaflet/leaflet-src.js')
+    script(src='js/libs/leaflet/leaflet.markercluster.js')
+    script(src='js/libs/jquery.js')
+    script(src='js/libs/jquery.easing.min.js')
+    script(src='js/libs/jquery.ui.widget.js')
+    script(src='js/libs/jquery.iframe-transport.js')
+    script(src='js/libs/jquery.fileupload.js')
+    script(src='js/libs/fullcalendar/fullcalendar.min.js')
+    script(src='dropzone/dropzone.min.js')
+    script(src='js/libs/select2/select2.js')
+    script(src='js/libs/select2/select2_locale_pt-BR.js')
+    script(src='js/libs/ember.js')
+    script(src='js/app-templates.js')
+    script(src='js/app-init.js')
+    script(src='js/app-models.js')
+    script(src='js/app-routes.js')
+    script(src='js/app-controllers.js')
+    script(src='js/app-views.js')
+    script(src='js/app-map.js')
+    script
+        // UPDATE YOUR BROWSER
+        var $buoop = {vs:{i:8,f:15,o:10.6,s:4,n:9}} 
+        $buoop.ol = window.onload; 
+        window.onload=function(){ 
+          try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
+          var e = document.createElement("script"); 
+          e.setAttribute("type", "text/javascript"); 
+          e.setAttribute("src", "http://browser-update.org/update.js"); 
+          document.body.appendChild(e); 
+        }
+  body
+    h1= article.title
+    p= article.content

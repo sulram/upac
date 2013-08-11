@@ -89,22 +89,10 @@ module.exports = function(cdn, paginate){ return {
 						}
 						article.save(function(err) {
 							if(err) return res.jsonx(500, {error: err});
-							ShortUrl.findOne({object:article._id}, function(err, shorturl) {
-								if(err) return next(err);
-								if(shorturl) return	res.jsonx({
-										msg: 'ok',
-										article: article,
-										short_url: shorturl
-									});
-								ShortUrl.makeShortUrl(article._id, article.createdAt, '/#/blog/post/'+article._id.toString(), function(err, shorturl) {
-									if(err) return next(err);
-									res.jsonx({
-										msg: 'ok',
-										article: article,
-										short_url: shorturl
-									});
-								})
-							})
+							res.jsonx({
+								msg: 'ok',
+								article: article,
+							});
 							
 						});
 					});
@@ -501,4 +489,11 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+	shortened: function(req, res, next) {
+		Article.findOne({hash: req.param('hash')}, function(err, article) {
+			if(err) return next(err);
+			if(!article) return next(null, undefined);
+			res.render('short', {article: article});
+		})
+	}
 }};

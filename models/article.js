@@ -51,6 +51,13 @@ var fields = {
 	},
 	publicationDate: Date,
 
+	hash: {
+		type: String,
+		index: {
+			unique: true
+		}
+	},
+	
 	// campos dos eventos
 	startDate: Date,
 	endDate: Date,
@@ -78,6 +85,19 @@ var slugify = function(str) {
 	return str;
 }
 
+var makehash = function(num) {
+	var indextable = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	var len = indextable.length;
+	num = Math.floor(Number(num));
+	var result = ""
+	while(num > 0) {
+		var cur = num % len;
+		result = indextable.charAt(cur) + result;
+		num = (num - cur) / len;
+	}
+	return result;
+}
+
 ArticleSchema.pre('save', function(next) {
 	if(this.isNew) {
 		this.createdAt = new Date();
@@ -88,6 +108,10 @@ ArticleSchema.pre('save', function(next) {
 		} else {
 			this.slug = this.id;
 		}
+	}
+	if(!this.hash) {
+		this.hash = makehash(Number(this.createdAt)-Number(new Date('2013 06 01 12:00:00'))); // make a hash based on the creation date, minus the application's initial date
+	
 	}
 	this.updatedAt = new Date();
 	var thisart = this;

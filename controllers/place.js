@@ -220,6 +220,6 @@ module.exports = function(cdn, paginate) {
 				res.jsonx({msg:'ok'});
 			})
 		})
-	}
+	},
 }
 }
