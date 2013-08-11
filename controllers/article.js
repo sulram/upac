@@ -503,16 +503,27 @@ module.exports = function(cdn, paginate){ return {
 		});
 	},
 	shortened: function(req, res, next) {
-		Article.findOne({hash: req.param('hash')}, function(err, article) {
+		Article.findOne({
+			hash: req.param('hash')
+		},function(err, article) {
 			if(err) return next(err);
 			if(!article) return next(null, undefined);
-			res.render('short', {article: article});
+			User.populate(article, {path: 'owners', select: 'username name'}, function(err, _article) {
+				res.render('arquivo-post', {article: _article});
+			});
 		})
 	},
 	shortListed: function(req, res, next) {
-		Article.find({hash: {$exists: true}}, function(err, articles) {
+		Article.find({
+			hash: {$exists: true},
+			publicationStatus:'published',
+			parent:null,
+			endDate:null
+		}, function(err, articles) {
 			if(err) return next(err);
-			res.render('shortlist', {articles: articles});
-		})
+			User.populate(articles, {path: 'owners', select: 'username name'}, function(err, _articles) {
+				res.render('arquivo', {articles: _articles});
+			});
+		})  
 	}
 }};

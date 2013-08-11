@@ -1,0 +1,30 @@
+doctype
+//if lt IE 7
+  <html lang="pt-br" class="no-js lt-ie9 lt-ie8 lt-ie7">
+//if IE 7
+  <html lang="pt-br" class="no-js lt-ie9 lt-ie8">
+//if IE 8
+  <html lang="pt-br" class="no-js lt-ie9">
+//[if gt IE 8]><!
+html.no-js(lang="pt-br" )
+  //<![endif]
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title UPAC - Arquivo Assemblog
+    meta(name='description', content='Universidade Popular de Arte e Ciência')
+    meta(name='author', content='UPAC')
+    //-meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic,900,900italic')
+    link(rel='stylesheet', href='flat-ui/bootstrap/css/bootstrap.css')
+    link(rel='stylesheet', href='flat-ui/css/flat-ui.css')
+    link(rel='stylesheet', href='css/app.css')
+    script
+      window.location='/#/blog';
+  body
+    .container
+        h1 UNIVERSIDADE POPULAR DE ARTE E CIÊNCIA
+        ul
+        for article in articles
+            li
+                a(href="/s/"+article.hash)=article.title + ' - ' + (article.owners[0].name||article.owners[0].username)
