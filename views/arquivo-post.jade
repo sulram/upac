@@ -29,5 +29,8 @@ html.no-js(lang="pt-br" )
         - var curr_year = d.getFullYear();
         h1= article.title
         h4= "Publicado por "+(article.owners[0].name||article.owners[0].username)+" em "+curr_date+"/"+curr_month+"/"+curr_year 
+        if article.owners[0].avatar.sizes.length && article.owners[0].avatar.sizes[2] && article.owners[0].avatar.sizes[2].cdn_url
+            p
+                img(src=article.owners[0].avatar.sizes[2].cdn_url)
         p= article.excerpt
         p!= article.content

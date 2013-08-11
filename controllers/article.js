@@ -508,8 +508,10 @@ module.exports = function(cdn, paginate){ return {
 		},function(err, article) {
 			if(err) return next(err);
 			if(!article) return next(null, undefined);
-			User.populate(article, {path: 'owners', select: 'username name'}, function(err, _article) {
-				res.render('arquivo-post', {article: _article});
+			User.populate(article, {path: 'owners', select: 'username name avatar'}, function(err, _article) {
+				Img.populate(_article, {path: 'owners.avatar'}, function(err, __article){
+					res.render('arquivo-post', {article: __article});
+				});
 			});
 		})
 	},
