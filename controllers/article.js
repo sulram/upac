@@ -102,6 +102,19 @@ module.exports = function(cdn, paginate){ return {
 				if (err) return next(err);
 				res.redirect('/admin/articles');
 			})
+		},
+		generateShortUrls: function(req, res, next) {
+			Article.find({hash: {$exists: false}}, function(err, articles) {
+				if(err) return next(err);
+				_.each(articles, function(article) {
+					article.updatedAt = new Date();
+					article.save(function(err) {
+						if(err) console.error(err);
+						else console.info("gen short url for article id "+article._id.toString());
+					});
+				})
+				res.redirect('/admin/articles');
+			})
 		}
 	},
 	neweditor: function(req, res, next) {
@@ -494,6 +507,12 @@ module.exports = function(cdn, paginate){ return {
 			if(err) return next(err);
 			if(!article) return next(null, undefined);
 			res.render('short', {article: article});
+		})
+	},
+	shortListed: function(req, res, next) {
+		Article.find({hash: {$exists: true}}, function(err, articles) {
+			if(err) return next(err);
+			res.render('shortlist', {articles: articles});
 		})
 	}
 }};

@@ -1,9 +1,6 @@
 var mongoose = require('mongoose')
-  , _ = require('underscore')
-  , User = mongoose.model('User')
-  , Article = mongoose.model('Article')
-  , ShortUrl = mongoose.model('ShortUrl');
-
+  , User = mongoose.model('User');
+  
 module.exports = {
 	signin: function(req, res, next) {
 		res.render('admin/login');
