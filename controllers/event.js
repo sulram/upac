@@ -202,7 +202,7 @@ module.exports = function(cdn, paginate) { return {
 		});
 	},
 	remove: function(req, res, next) {
-		res._event.remove(function(err){
+		req._event.remove(function(err){
 			if (err) return next(err);
 			res.jsonx({msg: "ok"});
 		});
