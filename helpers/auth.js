@@ -57,7 +57,7 @@ module.exports = function(_) { return {
 	},
 	event: {
 		hasAuthorization: function(req, res, next) {
-			if(_.contains(req.event.owners, req.user.id) || req.isAdmin()) {
+			if(_.contains(req._event.owners, req.user.id) || req.isAdmin()) {
 				next();
 			} else {
 				return res.jsonxf(401,[{error: 'not authorized'}], {error: 'not authorized'});				
