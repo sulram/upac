@@ -170,7 +170,7 @@ module.exports = function(cdn, paginate) { return {
 		Article.findById(req.param('id'), function(err, _event) {
 			if (err) return next(err);
 			if (!_event) return res.jsonx(404, {error: "Event not found"});
-			res._event = _event;
+			req._event = _event;
 			next();
 		});
 	},
