@@ -47,6 +47,10 @@
 			<a {{bindAttr href="view.href"}}>Quero me registrar</a>
 		{{/linkTo}}
 
+		{{#linkTo "user.novasenha" tagName="li" href=false}}
+			<a {{bindAttr href="view.href"}}>Esqueci minha senha</a>
+		{{/linkTo}}
+
 	</ul>
 	
 	{{outlet}}

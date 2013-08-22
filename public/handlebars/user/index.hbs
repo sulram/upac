@@ -16,7 +16,7 @@
 			<p>
 				<button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Entrar</button>
 				<hr/>
-				<small><a href="/resetpassword">esqueci minha senha</a></small>
+				<small>{{#linkTo user.novasenha}}esqueci minha senha{{/linkTo}}</small>
 			</p>
 			{{#if flashMsg}}
 			<div class="alert alert-error">

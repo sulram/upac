@@ -1,0 +1,21 @@
+<form id="login" class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label" for="email">Seu e-mail</label>
+		<div class="controls">
+			{{view App.AutoFocusTextField id="email" name="email" placeholder="" }}
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<p>
+				<button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Resetar minha senha</button>
+			</p>
+			{{#if flashMsg}}
+			<div {{bindAttr class="flashStatus"}}>
+			  {{flashMsg}}
+			</div>
+			{{/if}}
+		</div>
+	</div>
+</form>
+

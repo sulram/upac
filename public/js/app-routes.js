@@ -21,6 +21,7 @@ App.Router.map(function() {
     this.resource("upac");
     this.resource("user",function(){
         this.route("cadastrar");
+        this.route("novasenha");
     });
     this.route('logout');
 });

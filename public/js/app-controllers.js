@@ -605,3 +605,37 @@ App.UserCadastrarController = Ember.Controller.extend({
         });
     }
 });
+
+App.UserNovasenhaController = Ember.Controller.extend({
+    isPosting: false,
+    flashMsg: null,
+    flashStatus: 'alert',
+    onFocus: function(){
+        this.set('flashMsg',null);
+    },
+    submit: function(){
+        var email = $('form #email').val();
+        this.set('isPosting',true);
+        this.set('flashMsg',null);
+        var _controller = this;
+        $.ajax({
+            type: 'GET',
+            url: '/requestpasswordreset/'+email,
+            data: {},
+            success: function(data, status, jqXHR){
+                console.log(data);
+                _controller.set('isPosting',false);
+                _controller.set('flashMsg','OK! Enviamos um e-mail para '+email+' com instruções para resetar sua senha.');
+                _controller.set('flashStatus','alert alert-success');
+                User.authenticate(data.auth);
+                
+            },
+            error: function(jqXHR,status,error){
+                console.log(arguments);
+                _controller.set('isPosting',false);
+                _controller.set('flashMsg','E-mail não encontrado no sistema');
+                _controller.set('flashStatus','alert alert-error');
+            }
+        });
+    }
+});
