@@ -1,0 +1,60 @@
+{{#if User.auth.loggedIn}}
+
+<div class="row">
+	
+	<div class="span4">
+		<h1 class="side_title">Cadastro UPAC</h1>
+		<h3>usuário: {{User.auth.username}}</h3>
+	</div>
+
+	<div class="span1">
+		&nbsp;
+	</div>
+
+	<div class="span7">
+
+		{{#if isLoaded}}
+		<p>&nbsp;</p>
+
+		<form id="register" class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="password">Informe nova senha</label>
+				<div class="controls">
+					<input type="password" id="password" name="password" placeholder="" {{action "onFocus"}}>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="valpassword">Repita a senha</label>
+				<div class="controls">
+					<input type="password" id="valpassword" name="valpassword" placeholder="" {{action "onFocus"}}>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="email">E-mail</label>
+				<div class="controls">
+					<input type="text" id="email" name="email" placeholder="" {{action "onFocus"}}>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<p><button type="submit" class="btn" {{bindAttr disabled="isPosting"}} {{action submit}}>Alterar cadastro</button></p>
+					{{#if flashMsg}}
+					<div {{bindAttr class="flashStatus"}}>
+					  {{flashMsg}}
+					</div>
+					{{/if}}
+				</div>
+			</div>
+		</form>
+		{{else}}
+			<p class="def_loading">carregando conta</p>
+		{{/if}}
+	</div>
+
+</div>	
+	
+{{else}}
+
+{{partial "anonymous"}}
+
+{{/if}}

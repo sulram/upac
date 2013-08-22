@@ -639,3 +639,75 @@ App.UserNovasenhaController = Ember.Controller.extend({
         });
     }
 });
+
+// ACCOUNT
+
+App.AccountController = Ember.Controller.extend({
+    isLoaded: false,
+    isPosting: false,
+    flashMsg: null,
+    flashStatus: 'alert',
+    onFocus: function(){
+        this.set('flashMsg',null);
+    },
+    getContent: function(){
+        if(User.auth.id){
+            this.loadProfile();
+        }else{
+            console.log('delayed');
+            this.getContentRun = Ember.run.later(this, 'getContent', 300);
+        }
+    },
+    exit: function(){
+        Ember.run.cancel(this.getContentRun);
+    },
+    loadProfile: function(){
+        var _this = this;
+        $.getJSON( '/user/'+User.auth.username, function(data){
+            _this.set('isLoaded', true);
+             Ember.run.next(function(){
+                $('#email').val(data.user.email);
+             })
+        });
+    },
+    submit: function(){
+
+        var _controller = this;
+        var data = $('form').serialize();
+        var dataArray = $('form').serializeArray();
+
+        var pass1 = _.findWhere(dataArray,{name: 'password'}).value;
+        var pass2 = _.findWhere(dataArray,{name: 'valpassword'}).value;
+
+        if(pass1 != pass2){
+            _controller.set('flashMsg', "senhas não conferem, preencha novamente");
+            _controller.set('flashStatus','alert alert-error');
+            return false;
+        }
+
+        this.set('isPosting',true);
+        this.set('flashMsg',null);
+
+        console.log(dataArray);
+        
+        $.ajax({
+            type: 'POST',
+            url: '/user/'+User.auth.id+'/updateemailpassword',
+            data: data,
+            success: function(data, status, jqXHR){
+                _controller.set('isPosting',false);
+                _controller.set('flashMsg','dados alterados com sucesso');
+                _controller.set('flashStatus','alert alert-success');
+                User.authenticate(data.auth);
+            },
+            error: function(jqXHR,status,error){
+                var responseText = jQuery.parseJSON(jqXHR.responseText);
+
+                console.log(arguments);
+                _controller.set('isPosting',false);
+                _controller.set('flashStatus','alert alert-error');
+                _controller.set('flashMsg','erro');
+            }
+        });
+    }
+});

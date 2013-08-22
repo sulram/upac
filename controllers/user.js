@@ -192,6 +192,9 @@ module.exports = function (cdn, paginate, mailer) { return {
 		var body = _.pick(req.body, 
 			'email', 'password'
 		);
+		if(body.password && (body.password.length == 0)) {
+			delete body.password;
+		}
 		user.set(body);
 		user.save(function(err) {
 			if (err) {

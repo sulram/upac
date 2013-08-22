@@ -19,11 +19,12 @@ App.Router.map(function() {
         this.route("user", { path: '/user/:user_username/:page_num' });
     });
     this.resource("upac");
+    this.resource("account");
     this.resource("user",function(){
         this.route("cadastrar");
         this.route("novasenha");
     });
-    this.route('logout');
+    this.route("logout");
 });
 
 App.UpacRoute = Em.Route.extend({
@@ -233,6 +234,19 @@ App.AgendaEventoRoute = App.UpacRoute.extend({
         controller.set('isLoaded', false);
         controller.getContent();
         this._super(this, arguments);
+    }
+});
+
+// ACCOUNT
+
+App.AccountRoute = Ember.Route.extend({
+    setupController: function (controller, model){
+        controller.set('isLoaded', false);
+        controller.getContent();
+        this._super(this, arguments);
+    },
+    exit: function(){
+        this.controller.exit();
     }
 });
 
