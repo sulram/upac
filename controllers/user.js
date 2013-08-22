@@ -192,8 +192,8 @@ module.exports = function (cdn, paginate, mailer) { return {
 		var body = _.pick(req.body, 
 			'email', 'password'
 		);
-		if(body.password && (body.password.length == 0)) {
-			delete body.password;
+		if(body.password.length == 0) {
+			delete body['password'];
 		}
 		user.set(body);
 		user.save(function(err) {
@@ -258,7 +258,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 			if(err) return next(err);
 			if(!user) return res.jsonx(401, {msg: 'email not found'});
 			user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
-			user.resetPasswordRequest = new Date();
+			user.resetPasswordRequestTime = new Date();
 			user.save(function(err) {
 				mailer.send(user.email, 'password', {user:user, subject:"[UPAC] Pedido de link para recadastramento de senha"});
 				res.jsonx({msg:'ok'});
@@ -268,7 +268,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 	resetPassword: function(req, res, next) {
 		var date_match = new Date();
 		date_match.setDate(-1); // 1 dia de limite
-		User.findOne({resetPasswordToken: req.param('token'), resetPasswordRequest: {$gte: date_match}}, function(err, user) {
+		User.findOne({resetPasswordToken: req.param('token'), resetPasswordRequestTime: {$gte: date_match}}, function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.redirect('/#/user');
 			req.login(user, function(err) {
