@@ -162,7 +162,6 @@ module.exports = function (cdn, paginate, mailer) { return {
 		var body = _.pick(req.body, 
 			'name', 'geo', 'about', 'tags'
 		);
-		console.log(body, body.geo);
 		if (body.tags) {
 			body.tags = _.map(body.tags, function(tag) {
 				var m = tag.match(/^[0-9a-fA-F]{24}$/);
@@ -178,6 +177,21 @@ module.exports = function (cdn, paginate, mailer) { return {
 			});
 		}
 		if(body.geo && (body.geo.length == 0)) delete body.geo;
+		user.set(body);
+		user.save(function(err) {
+			if (err) {
+				return res.jsonxf(500, 
+					[{error:'database error'}],
+					{msg:'database error', error: err});
+			}
+			res.jsonx({msg:'ok', user:user});
+		})
+	},
+	updateEmailPassword: function(req, res) {
+		var user = req.profile;
+		var body = _.pick(req.body, 
+			'email', 'password'
+		);
 		user.set(body);
 		user.save(function(err) {
 			if (err) {
@@ -253,10 +267,10 @@ module.exports = function (cdn, paginate, mailer) { return {
 		date_match.setDate(-1); // 1 dia de limite
 		User.findOne({resetPasswordToken: req.param('token'), resetPasswordRequest: {$gte: date_match}}, function(err, user) {
 			if(err) return next(err);
-			if(!user) return res.redirect('/#user');
+			if(!user) return res.redirect('/#/user');
 			req.login(user, function(err) {
 				if(err) return next(err);
-				res.render('user/resetpassword', {user:user});
+				res.redirect('/#/account');
 			})
 		});
 	},
@@ -270,7 +284,7 @@ module.exports = function (cdn, paginate, mailer) { return {
 			user.password = req.param('password');
 			user.save(function(err) {
 				if(err) return next(err);
-				res.redirect('/#user');
+				res.redirect('/#/user');
 			})
 		})
 	},

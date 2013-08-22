@@ -98,6 +98,7 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.all('/users', user.index);
 	app.all('/users/startingwith/:term', user.searchStartingWith);
 	app.post('/user', user.create);
+	app.post('/user/:id/updateemailpassword', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.updateEmailPassword);
 	app.post('/user/session', passport.authenticate('local'), user.login);
 
 	app.put('/user/:id', auth.requiresLogin, user.preloadById, auth.user.hasAuthorization, user.update);
