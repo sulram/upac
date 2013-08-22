@@ -242,6 +242,7 @@ App.AgendaEventoRoute = App.UpacRoute.extend({
 App.AccountRoute = Ember.Route.extend({
     setupController: function (controller, model){
         controller.set('isLoaded', false);
+        controller.set('flashMsg', null);
         controller.getContent();
         this._super(this, arguments);
     },
@@ -260,7 +261,7 @@ App.LogoutRoute = Ember.Route.extend({
             url: '/logout',
             success: function(data, status, jqXHR){
                 User.authenticate(data.auth);
-                _route.transitionTo('home');
+                _route.transitionTo('user');
                 //window.history.go(-1);
             }
         });

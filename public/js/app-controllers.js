@@ -59,6 +59,7 @@ App.HomeController = Ember.ObjectController.extend({
             $('.destaque').mouseout(function(){
                 _this.bannerRun = Ember.run.later(_this, 'nextBanner', 1000);
             });
+            User.authenticate(data.auth);
         });
     },
     nextNotice: function(){
@@ -695,10 +696,10 @@ App.AccountController = Ember.Controller.extend({
             url: '/user/'+User.auth.id+'/updateemailpassword',
             data: data,
             success: function(data, status, jqXHR){
-                _controller.set('isPosting',false);
-                _controller.set('flashMsg','dados alterados com sucesso');
-                _controller.set('flashStatus','alert alert-success');
                 User.authenticate(data.auth);
+                _controller.set('isPosting',false);
+                _controller.set('flashMsg','dados alterados com sucesso! se você mudou o seu e-mail, você precisa fazer login novamente <a href="/#/logout">clicando aqui</a>');
+                _controller.set('flashStatus','alert alert-success');
             },
             error: function(jqXHR,status,error){
                 var responseText = jQuery.parseJSON(jqXHR.responseText);
@@ -706,7 +707,13 @@ App.AccountController = Ember.Controller.extend({
                 console.log(arguments);
                 _controller.set('isPosting',false);
                 _controller.set('flashStatus','alert alert-error');
-                _controller.set('flashMsg','erro');
+                if(responseText.error.errors.email && responseText.error.errors.email.type == 'inuse'){
+                    _controller.set('flashMsg','este e-mail já está cadastrado no site por outro usuário');
+                } else if(responseText.error.errors.email && responseText.error.errors.email.type == 'invalid') {
+                    _controller.set('flashMsg','verifique o e-mail informado');
+                }else{
+                    _controller.set('flashMsg','erro no servidor');
+                }
             }
         });
     }

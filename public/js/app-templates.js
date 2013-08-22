@@ -212,15 +212,18 @@ function program2(depth0,data) {
   }
 function program3(depth0,data) {
   
-  var buffer = '', hashTypes;
+  var buffer = '', stack1, hashTypes;
   data.buffer.push("\n					<div ");
   hashTypes = {'class': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'class': ("flashStatus")
   },contexts:[],types:[],hashTypes:hashTypes,data:data})));
   data.buffer.push(">\n					  ");
-  hashTypes = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "flashMsg", {hash:{},contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data})));
+  hashTypes = {'unescaped': "STRING"};
+  stack1 = helpers._triageMustache.call(depth0, "flashMsg", {hash:{
+    'unescaped': ("true")
+  },contexts:[depth0],types:["ID"],hashTypes:hashTypes,data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n					</div>\n					");
   return buffer;
   }
