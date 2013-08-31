@@ -25,11 +25,13 @@ var app = express();
 // connect to mongodb instance, then initialize models
 mongoose.connect(config.db);
 
+// scan the /models dir for all model files, and load each of them
 var models_path = __dirname + '/models';
 fs.readdirSync(models_path).forEach(function(file) {
 	require(models_path+'/'+file);
 });
 
+// user serialization and deserialization - we currently use the email as a key for the user session.
 var User = mongoose.model('User');
 passport.serializeUser(function(user, done) {
 	done(null, user.email);
@@ -42,6 +44,7 @@ passport.deserializeUser(function(email, done) {
 	});
 });
 
+// Passport's local strategy for login is based on both username and email
 passport.use(new LocalStrategy(
 	function(username, password, done) {
 		User.findOne({$or:[{username: username.toLowerCase()}, {email:username.toLowerCase()}]}, function(err, user) {
@@ -63,7 +66,7 @@ passport.use(new LocalStrategy(
 	}
 ));
 
-// all environments
+// settings for all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -77,14 +80,16 @@ app.use(express.cookieParser());
 app.use(express.cookieSession({
 	secret:config.secret,
 	cookie: {
-		//secure: true,  // só quando habilitar HTTPS
-		maxAge: 48*60*60*1000, // 48 horas
+		//secure: true,  // HTTPS only
+		maxAge: 48*60*60*1000, // 48 hours
 		httpOnly: true
 	}
 }))
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(connect_form({keepExtensions: true}));
+
+// these settings are for the marked markdown extension
 marked.setOptions({
 	gfm: true,
 	tables: true,
@@ -92,6 +97,8 @@ marked.setOptions({
 	sanitize: true,
 	pedantic: false
 });
+
+// some extension methods for the views
 app.locals.dmydate = function(date) {
 	return date.toString("dd/MM/yyyy hh:mm:ss");
 }
@@ -107,7 +114,9 @@ app.locals.pagination_helper = function(pagination) {
 	}
 	return pages;
 }
-app.use(function(req, res, next){ // admin and json extension middleware
+
+// admin and json extension middleware for the controllers
+app.use(function(req, res, next){
 	var flash = null;
 	req.image_config = config.image_config;
 	req.isAdmin = function() {
@@ -121,6 +130,7 @@ app.use(function(req, res, next){ // admin and json extension middleware
 		obj[type] = msg;
 		flash.flash.push(obj);
 	};
+	// sends a json object with content, a http code and user session data
 	res.jsonx = function(obj) {
 		var code = 200;
 		if(2 == arguments.length) {
@@ -139,6 +149,7 @@ app.use(function(req, res, next){ // admin and json extension middleware
 		};
 		res.json(code, _.extend({auth: auth}, flash, obj));
 	};
+	// sends the above along with session flash messages (not currently used)
 	res.jsonxf = function(code, flashlist, data) {
 		flash = {flash:flashlist};
 		res.jsonx(code, data);
@@ -149,25 +160,23 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// development only
+// development only settings
 if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
+
+// 404 (file not found) error treatment
 app.use(function(req, res, next) {
 	res.status(404).render('404', {page: req.url})
 });
+
+// Content distribution network helper configuration
 var cdn = require('./helpers/cdn.js')(config);
 
-/*var cdn = {
-	server_url: config.cdn_server_url,
-	container: config.cdn_container,
-	create: function() {
-		return require('pkgcloud').storage.createClient(config.cdn);
-	}
-}*/
-
+// routes configuration
 require('./config/routes')(app, passport, auth, cdn, paginate, mailer);
 
+// http server startup
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });

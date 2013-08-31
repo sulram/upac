@@ -1,3 +1,8 @@
+/***********************
+ * UPAC
+ * Administration login/logout controller
+ ***********************/
+
 var mongoose = require('mongoose')
   , User = mongoose.model('User');
   

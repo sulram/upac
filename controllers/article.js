@@ -1,4 +1,9 @@
- var mongoose = require('mongoose')
+/***********************
+ * UPAC
+ * Article controller (frontend and admin)
+ ***********************/
+
+var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Article = mongoose.model('Article')
   , Img = mongoose.model('Img')
@@ -9,6 +14,7 @@
 
 module.exports = function(cdn, paginate){ return {
 	admin: {
+		// list articles with pagination data
 		index: function(req, res, next) {
 			paginate.paginate(Article,
 				{
@@ -26,6 +32,7 @@ module.exports = function(cdn, paginate){ return {
 				}
 			);
 		},
+		// saves a new article
 		create: function(req, res, next) {
 			if(req.body.parent == '') {
 				delete req.body.parent;
@@ -38,16 +45,19 @@ module.exports = function(cdn, paginate){ return {
 				//res.render('admin/article/shownew',{article:article, title:"Artigo novo: "+article.title});
 			});
 		},
+		// shows edit interface for a new article
 		editnew: function(req, res, next) {
 			var article = new Article();
 			res.render('editor', {article:article, form_url:'/admin/article/', close_url:'/admin/articles'});
 		},
+		// shows an article
 		show: function(req, res, next) {
 			Article.findOne({_id: req.param('id')}).populate('featuredImage').exec(function(err, article) {
 				if (err) return next(err);
 				res.render('admin/article/show', {article:article});
 			});
 		},
+		// shows edit interface for a previously stored article
 		edit: function(req, res, next) {
 			Article.findById(req.param('id'))
 				.populate('featuredImage tags')
@@ -57,6 +67,7 @@ module.exports = function(cdn, paginate){ return {
 					res.render('editor', {article:article, form_url:'/admin/article/', close_url:'/admin/article/'+article.id});
 				});
 		},
+		// saves alterations in an article - if it doesn't exist, it is created
 		update: function(req, res, next) {
 			var data = _.pick(req.body,
 						'title', 'content', 'excerpt', 
@@ -70,14 +81,16 @@ module.exports = function(cdn, paginate){ return {
 					data.images = _.map(data.images, function(image) {
 						return {image:image, size:'normal'}
 					})
-					// pegar tags e transformar em ObjectIDs
+					// get tags as text and transform them into ObjectIDs
 					var query = {_id: req.param('id')}
 					data.tags = Tag.toIDs(data.tags);
 					
+					// try finding an article with that ID
 					Article.findOne(query, function(err, article) {
 						if(err) return res.jsonx(500, {error: err});
 
 						if(!article) {
+							// create a new article with the given ID
 							data.owners = [req.user.id];
 							article = new Article(data);
 							article._id = mongoose.Types.ObjectId(req.param('id'));
@@ -97,12 +110,14 @@ module.exports = function(cdn, paginate){ return {
 						});
 					});
 		},
+		// deletes an article
 		remove: function(req, res, next) {
 			Article.findByIdAndRemove(req.param('id'), function(err) {
 				if (err) return next(err);
 				res.redirect('/admin/articles');
 			})
 		},
+		// generates short urls for articles without them
 		generateShortUrls: function(req, res, next) {
 			Article.find({hash: {$exists: false}}, function(err, articles) {
 				if(err) return next(err);
@@ -117,6 +132,8 @@ module.exports = function(cdn, paginate){ return {
 			})
 		}
 	},
+
+	// shows edit interface for a new article
 	neweditor: function(req, res, next) {
 		var article = new Article({
 			owners:[req.user.id],
@@ -124,6 +141,8 @@ module.exports = function(cdn, paginate){ return {
 		});
 		res.render('editor',{title:"Editor", article:article, is_new:true});
 	},
+
+	// shows edit interface for a previously stored interface
 	editor: function(req, res, next) {
 		var query = {_id: req.param('id')}
 		if (!req.isAdmin()) {
@@ -143,6 +162,8 @@ module.exports = function(cdn, paginate){ return {
 			}
 		);
 	},
+
+	// saves an article
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
@@ -181,6 +202,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+
+	// lists articles with pagination data
 	index: function(req, res) {
 		paginate.paginate(Article,
 			{
@@ -217,6 +240,8 @@ module.exports = function(cdn, paginate){ return {
 			}
 		);
 	},
+
+	// creates an article (unused)
 	create: function(req, res, next) {
 		var article = new Article(req.body);
 		article.owners.push(req.user.id);
@@ -228,6 +253,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+
+	// sends data for showing an article
 	show: function(req, res, next) {
 		Article.findById(req.params.id)
 			.populate({path:'owners', select:'-resetPasswordToken -verifyToken'})
@@ -243,6 +270,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+
+	// preloads article data for checking permissions
 	preloadById: function(req, res, next) {
 		var article = Article.findById(req.param('id'), function(err, article) {
 			if(err) return next(err);
@@ -251,6 +280,8 @@ module.exports = function(cdn, paginate){ return {
 			next();
 		});
 	},
+
+	// saves article data
 	update: function(req, res) {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
@@ -271,6 +302,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+
+	// deletes an article
 	remove: function(req, res, next) {
 		var query = {_id: req.param('id')};
 		if(!req.isAdmin()) {
@@ -286,6 +319,8 @@ module.exports = function(cdn, paginate){ return {
 			})
 		});
 	},
+
+	// searches for an article by it's slug
 	bySlug: function(req, res, next) {
 		Article.findOne({slug:req.param('slug')}, function(err, article) {
 			if(err) return next(err);
@@ -296,12 +331,14 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+
+	// searches articles by a tag's slug, returning a paginated articles list
     byTag: function(req, res) {
         Tag.findOne({slug:req.param('slug')}, function(err, tag) {
             if(err) {
                 return res.jsonxf(500,
                     [{error: 'database error'}],
-                    {msg: 'database error', error: err});               
+                    {msg: 'database error', error: err});
             }
             if(!tag) {
                 return res.jsonxf(404,
@@ -334,6 +371,8 @@ module.exports = function(cdn, paginate){ return {
             });
         });
     },
+
+    // generates a paginated list of posts for a user through it's username
 	postsByUser: function(req, res, next) {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
@@ -357,6 +396,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+
+	// searches for a user's comments and returns a paginated list
 	commentsByUser: function(req, res, next) {
 		User.findOne({username:req.param('username')},function(err, user) {
 			if(err) return next(err);
@@ -378,6 +419,8 @@ module.exports = function(cdn, paginate){ return {
 
 		});
 	},
+
+	// treats and sends uploaded images to the CDN
 	uploadImage: function(req, res, next) {
 		var article_id = req.param('id');
 		Img.upload(cdn, req.image_config,
@@ -395,6 +438,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		
 	},
+
+	// sends uploaded attachments to the CDN
 	uploadAttachment: function(req, res, next) {
 		Article.findById(req.param('id'), function(err, article){
 			if(err) return next(err);
@@ -419,6 +464,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+
+	// gets an article's comments
 	getComments: function(req, res, next) {
 		paginate.paginate(Article,{publicationStatus:'published', parent:req.param('id')},
 			{populate:[
@@ -439,6 +486,8 @@ module.exports = function(cdn, paginate){ return {
 			}
 		);
 	},
+
+	// get an article's images
 	getImages: function(req, res, next) {
 		Article.findById(req.param('id')), function(err, article) {
 			if (err) return next(err);
@@ -453,6 +502,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		}
 	},
+
+	// get an article's attachments
 	getAttachments: function(req, res, next) {
 		Article.findById(req.param('id')), function(err, article) {
 			if (err) return next(err);
@@ -467,20 +518,10 @@ module.exports = function(cdn, paginate){ return {
 			});
 		}
 	},
+
+	// lists articles for the current logged-in user
 	listByLoggedInUser: function(req, res, next) {
-		/*paginate.paginate(Article,{owner: req.user.id},{}, req, function(err, articles, pagination) {
-				if(err) return next(err);
-				res.jsonx({
-					msg:'ok',
-					articles: articles,
-					from: pagination.from,
-					sort_by: pagination.sort_by,
-					order: pagination.order,
-					count: pagination.count
-				});
-			}
-		);*/
- 		User.findById(req.user.id, function(err, user) {
+		User.findById(req.user.id, function(err, user) {
 			if(err) return next(err);
 			if(!user) return res.jsonx(404, {msg: "user not found"});
 			paginate.paginate(Article,{owners:user.id, endDate: null, parent:null},
@@ -502,6 +543,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		});
 	},
+
+	// finds an article through it's short url hash
 	shortened: function(req, res, next) {
 		Article.findOne({
 			hash: req.param('hash')
@@ -515,6 +558,8 @@ module.exports = function(cdn, paginate){ return {
 			});
 		})
 	},
+
+	// renders a list of short urls for the articles
 	shortListed: function(req, res, next) {
 		Article.find({
 			hash: {$exists: true},
