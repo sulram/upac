@@ -1,3 +1,7 @@
+/***********************
+ * UPAC
+ * Places controller (frontend and admin)
+ ***********************/
 var mongoose = require('mongoose')
   , Page = mongoose.model('Page')
   , Img = mongoose.model('Img')

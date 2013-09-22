@@ -1,6 +1,6 @@
 /***********************
  * UPAC
- * Article controller (frontend and admin)
+ * Articles controller (frontend and admin)
  ***********************/
 
 var mongoose = require('mongoose')

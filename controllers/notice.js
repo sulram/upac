@@ -1,4 +1,9 @@
-var mongoose = require('mongoose')
+/***********************
+ * UPAC
+ * Notices controller (frontend and admin)
+ ***********************/
+
+ var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Notice = mongoose.model('Notice')
   , Img = mongoose.model('Img')
@@ -7,6 +12,7 @@ var mongoose = require('mongoose')
 module.exports = function(cdn, paginate) {
 	return {
 		admin: {
+			// lists notices
 			index: function(req, res, next) {
 				paginate.paginate(Notice,{},{
 					sort_by: 'order',
@@ -18,6 +24,7 @@ module.exports = function(cdn, paginate) {
 					res.render('admin/notice/index', {notices:notices, total:pagination.count, title:"Avisos", pagination:pagination});
 				});
 			},
+			// creates a notice, along with the uploaded image
 			create: function(req, res, next) {
 				var data = _.pick(req.body, 'owner', 'order', 'text', 'url')
 				var notice = new Notice(data);
@@ -46,21 +53,25 @@ module.exports = function(cdn, paginate) {
 					});
 				}
 			},
+			// shows the editing interface for a new notice
 			editnew: function(req, res, next) {
 				res.render('admin/notice/new', {title: "Novo aviso", user: req.user.id || '' });
 			},
+			// shows info for a given notice
 			show: function(req, res, next) {
 				Notice.findOne({_id:req.param('id')}).populate('owner image').exec(function(err, notice) {
 					if(err) return next(err);
 					res.render('admin/notice/show', {notice:notice, title:"Aviso: "+notice.id});
 				})
 			},
+			// shows the editing interface for a previously submitted notice 
 			edit: function(req, res, next) {
 				Notice.findOne({_id:req.param('id')}).populate('owner image').exec(function(err, notice) {
 					if(err) return next(err);
 					res.render('admin/notice/edit', {notice:notice, title:"Editar aviso: "+notice.id});
 				})
 			},
+			// updates a previously stored notice
 			update: function(req, res, next) {
 				var data = _.pick(req.body, 'owner', 'order', 'text', 'url')
 				Notice.findById(req.param('id'), function(err, notice) {
@@ -91,6 +102,7 @@ module.exports = function(cdn, paginate) {
 					}
 				});
 			},
+			// removes a notice from the server
 			remove: function(req, res, next) {
 				Notice.findByIdAndRemove(req.param('id'), function(err) {
 					if(err) return next(err);
@@ -98,6 +110,7 @@ module.exports = function(cdn, paginate) {
 				})
 			}
 		},
+		// shows a single notice
 		show: function(req, res, next) {
 			Notice.findById(req.param.id, function(err, notice) {
 				if(err) return next(err);
@@ -108,6 +121,7 @@ module.exports = function(cdn, paginate) {
 				})
 			});
 		},
+		// stores a notice in the server (not used?)
 		create: function(req, res, next) {
 			var notice = new Notice(req.body);
 			notice.owner = req.user.id;
@@ -118,6 +132,7 @@ module.exports = function(cdn, paginate) {
 				});
 			});
 		},
+		// removes a previously stored notice (not used)
 		remove: function(req, res, next) {
 			res.notice.remove(function(err){
 				if (err) return next(err);
@@ -126,6 +141,7 @@ module.exports = function(cdn, paginate) {
 				});
 			});
 		},
+		// lists all server notices in order
 		index: function(req, res, next) {
 			var from = req.param.from || 0;
 			var limit = req.param.limit || 10;
@@ -138,6 +154,7 @@ module.exports = function(cdn, paginate) {
 				})
 			})
 		},
+		// lists all notices sent by a user
 		byUsername: function(req, res, next) {
 			var from = req.param.from || 0;
 			var limit = req.param.limit || 10;

@@ -1,3 +1,7 @@
+/***********************
+ * UPAC
+ * Users controller (frontend and admin)
+ ***********************/
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Article = mongoose.model('Article')

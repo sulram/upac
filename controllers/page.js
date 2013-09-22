@@ -1,4 +1,8 @@
- var mongoose = require('mongoose')
+/***********************
+ * UPAC
+ * Pages controller (frontend and admin)
+ ***********************/
+var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , Page = mongoose.model('Page')
   , Img = mongoose.model('Img')

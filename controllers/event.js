@@ -1,3 +1,8 @@
+/***********************
+ * UPAC
+ * Events controller (frontend and admin)
+ ***********************/
+
 var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Article = mongoose.model('Article'),
@@ -7,6 +12,7 @@ var mongoose = require('mongoose'),
 
 module.exports = function(cdn, paginate) { return {
 	admin: {
+		// lists events with pagination
 		index: function(req, res, next) {
 			paginate.paginate(Article,
 				{
@@ -27,6 +33,7 @@ module.exports = function(cdn, paginate) { return {
 				}
 			);
 		},
+		// creates a new event (unused)
 		create: function(req, res, next) {
 			if(req.body.parent == '') {
 				delete req.body.parent;
@@ -41,16 +48,19 @@ module.exports = function(cdn, paginate) { return {
 				//res.render('admin/article/shownew',{article:article, title:"Artigo novo: "+article.title});
 			});
 		},
+		// shows edit interface for a new event
 		editnew: function(req, res, next) {
 			var article = new Article();
 			res.render('agenda/editor', {event:article, form_url:'/admin/event/', close_url: '/admin/events'});
 		},
+		// shows an event
 		show: function(req, res, next) {
 			Article.findOne({_id: req.param('id')}).populate('featuredImage').exec(function(err, article) {
 				if (err) return next(err);
 				res.render('admin/event/show', {event:article});
 			});
 		},
+		// shows edit interface for a previously saved event
 		edit: function(req, res, next) {
 			Article.findById(req.param('id'))
 				.populate('featuredImage tags')
@@ -60,6 +70,7 @@ module.exports = function(cdn, paginate) { return {
 					res.render('agenda/editor', {event:article, form_url:'/admin/event/', close_url: '/admin/event/'+article.id});
 				});
 		},
+		// saves event data from the event interface
 		update: function(req, res, next) {
 			if(req.body.parent == '') {
 				delete req.body.parent;
@@ -78,6 +89,7 @@ module.exports = function(cdn, paginate) { return {
 				}
 			);
 		},
+		// deletes an event
 		remove: function(req, res, next) {
 			Article.findByIdAndRemove(req.param('id'), function(err) {
 				if (err) return next(err);
@@ -85,6 +97,8 @@ module.exports = function(cdn, paginate) { return {
 			})
 		}
 	},
+
+	// shows edit interface for a new event
 	neweditor: function(req, res, next) {
 		var article = new Article({
 			owners:[req.user.id],
@@ -93,6 +107,7 @@ module.exports = function(cdn, paginate) { return {
 		});
 		res.render('agenda/editor',{title:"Editor", event:article, is_new:true});
 	},
+	// shows edit interface for a previously saved event
 	editor: function(req, res, next) {
 		var query = {_id: req.param('id')}
 		if (!req.isAdmin()) {
@@ -112,6 +127,7 @@ module.exports = function(cdn, paginate) { return {
 			}
 		);
 	},
+	// saves data from edited events - if event does not exist, creates a new one
 	editorsave: function(req, res, next) {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
@@ -150,6 +166,7 @@ module.exports = function(cdn, paginate) { return {
 			});
 		});
 	},
+	// sends data for an event
 	show: function(req, res, next) {
 		Article.findById(req.param('id'))
 			.populate({path:'owners', select:'-resetPasswordToken -verifyToken'})
@@ -166,6 +183,7 @@ module.exports = function(cdn, paginate) { return {
 			});
 		});
 	},
+	// preloads an event, for checking permissions
 	preloadById: function(req, res, next) {
 		Article.findById(req.param('id'), function(err, _event) {
 			if (err) return next(err);
@@ -174,6 +192,7 @@ module.exports = function(cdn, paginate) { return {
 			next();
 		});
 	},
+	// creates an event, filtering interesting data
 	create: function(req, res, next) {
 		var data = _.pick(req.body,
 			'title', 'content', 'excerpt', 
@@ -188,7 +207,7 @@ module.exports = function(cdn, paginate) { return {
 		data.images = _.map(data.images, function(image) {
 			return {image:image, size:'normal'}
 		})
-		// pegar tags e transformar em ObjectIDs
+		// turn received tags into ObjectIDs
 		data.tags = Tag.toIDs(data.tags);
 		var query = {_id: req.param('id')}
 		data.owners = [req.user.id];
@@ -201,14 +220,20 @@ module.exports = function(cdn, paginate) { return {
 			});
 		});
 	},
+	// removes a previously preloaded event (if permission checking was successful)
 	remove: function(req, res, next) {
 		req._event.remove(function(err){
 			if (err) return next(err);
 			res.jsonx({msg: "ok"});
 		});
 	},
+	// finds published events within the sphere of 'radius' centered at the 'center' url parameter
 	near: function(req, res, next) {
-		Article.findOne({geo: {$nearSphere: req.param.center, $maxDistance: req.param.radius}, startDate: {$ne: null}, endDate: {$ne: null}}, 
+		Article.findOne({
+			geo: {$nearSphere: req.param.center, $maxDistance: req.param.radius},
+			publicationStatus: 'published',
+			$or: [startDate: {$ne: null}, endDate: {$ne: null}]
+		}, 
 			function(err, events) {
 				if (err) return err;
 				res.jsonx({
@@ -218,6 +243,7 @@ module.exports = function(cdn, paginate) { return {
 			}
 		);
 	},
+	// lists published events, preloading owners, tags and featured images
 	index: function(req, res, next) {
 		Article.find(
 			{
@@ -239,6 +265,7 @@ module.exports = function(cdn, paginate) { return {
 			}
 		);
 	},
+	// lists published events over a given month
 	byMonth: function(req, res, next) {
 		var year = Number(req.param('year'))
 		var nextmonthyear = year;
@@ -259,6 +286,7 @@ module.exports = function(cdn, paginate) { return {
 			res.jsonx({msg: "ok", events:events});
 		});
 	},
+	// lists published events happening at the moment
 	happening: function(req, res, next) {
 		var now = new Date();
 		Article.find(
@@ -272,6 +300,7 @@ module.exports = function(cdn, paginate) { return {
 			}
 		);
 	},
+	// lists past published events
 	past: function(req, res, next) {
 		var now = new Date();
 		Article.find(
@@ -285,6 +314,7 @@ module.exports = function(cdn, paginate) { return {
 			}
 		);
 	},
+	// lists future published events
 	future: function(req, res, next) {
 		var now = new Date();
 		Article.find(
