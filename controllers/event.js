@@ -232,7 +232,7 @@ module.exports = function(cdn, paginate) { return {
 		Article.findOne({
 			geo: {$nearSphere: req.param.center, $maxDistance: req.param.radius},
 			publicationStatus: 'published',
-			$or: [startDate: {$ne: null}, endDate: {$ne: null}]
+			$or: [{startDate: {$ne: null}}, {endDate: {$ne: null}}]
 		}, 
 			function(err, events) {
 				if (err) return err;
@@ -271,7 +271,7 @@ module.exports = function(cdn, paginate) { return {
 		var nextmonthyear = year;
 		var month = Number(req.param('month'))-1
 		var nextmonth = month + 1;
-		if(nextmonth > 11) {
+		if(nextmonth > 12) {
 			nextmonth = 0;
 			year += 1;
 		}
