@@ -42,6 +42,7 @@ Outras bibliotecas usadas também foram fundamentais para este projeto:
 - Underscore.js
 - Twitter Bootstrap
 - Flat UI
+- OpenWebAnalytics (OWA): alternativa ao Google Analytics
 
 //////////
 

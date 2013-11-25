@@ -10,6 +10,8 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	var notice = require('../controllers/notice')(cdn, paginate);
 	var img = require('../controllers/image')(cdn, paginate);
 	var admin = require('../controllers/admin');
+	var env = process.env.NODE_ENV || 'development';
+	var config = require('../config/config')[env];
 
 
 	app.get('/admin', auth.requiresAdminLogin, function(req, res, next) {
@@ -173,6 +175,6 @@ module.exports = function(app, passport, auth, cdn, paginate, mailer) {
 	app.get('/s/:hash', article.shortened);
 	app.get('/arquivo', article.shortListed)
 
-	app.get('/', function(req, res) { res.render('index'); });
+	app.get('/', function(req, res) { res.render('index', {analytics: config.analytics}); });
 
 }

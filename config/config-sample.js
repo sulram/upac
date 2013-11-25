@@ -51,6 +51,10 @@ module.exports = {
 				subject: "Mensagem do site UPAC"
 			},
 			template_path: 'views/mail/'
+		},
+		analytics: {
+			base_url: 'http://analytics.example.com/',
+			site_id: '12345678909876543210'
 		}
 	},
 	test: {
