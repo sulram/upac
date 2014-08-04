@@ -4,3 +4,4 @@ sftp-config.json
 config/config.js
 npm-debug.log
 *.mindnode
+/.project

@@ -1136,3 +1136,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .ie9 .menu_it a:hover .caption {
 	display: block;
 }
+
+/* ---------------- OWA ---------------- */
+
+#owa-tracker-post-container {
+	display: none;
+}
