@@ -12,13 +12,12 @@ App.ApplicationController = Ember.Controller.extend({
         App.set('currentPath', route_class);
         this.hideContentModal();
         Ember.run.next(function() {
-            if (!Ember.isNone(OWATracker)) {
-            var page = window.location.hash.length > 0 ?
-                   window.location.hash.substring(1) :
-                   window.location.pathname;
-
-            OWATracker.trackPageView(page);
-            }
+            var page = window.location.hash.length > 0
+                ? window.location.hash.substring(1)
+                : window.location.pathname;
+            ga('send', 'pageview', {
+                'page': page
+            });
         });
     }.observes('currentPath'),
     contentModalVisible: false,
