@@ -2724,7 +2724,7 @@ function program22(depth0,data) {
   options = {hash:{},inverse:self.noop,fn:self.program(9, program9, data),contexts:[depth0],types:["STRING"],hashTypes:hashTypes,data:data};
   stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "agenda", options) : helperMissing.call(depth0, "linkTo", "agenda", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  data.buffer.push("\n		</li>\n	</ul>\n</nav>\n\n<div id=\"sec_menu\" ");
+  data.buffer.push("\n		</li>\n		<li class=\"menu_it nuvela\">\n			<a href=\"/nuvela\">\n				<span class=\"ico\"></span>\n				<span class=\"caption\"><span>Nuvela</span></span>\n			</a>\n		</li>\n	</ul>\n</nav>\n\n<div id=\"sec_menu\" ");
   hashTypes = {'class': "STRING"};
   data.buffer.push(escapeExpression(helpers.bindAttr.call(depth0, {hash:{
     'class': ("route_class")

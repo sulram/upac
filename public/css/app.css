@@ -164,11 +164,13 @@ iframe {
 .menu_it.rede a:hover, .menu_it.rede a.active { background-color: #6fb7ac; }
 .menu_it.blog a:hover, .menu_it.blog a.active { background-color: #bf3205; }
 .menu_it.agenda a:hover, .menu_it.agenda a.active { background-color: #ec932b; }
+.menu_it.nuvela a:hover, .menu_it.nuvela a.active { background-color: #c00; }
 
 .menu_it.upac a .ico { background-position: -64px 0; }
 .menu_it.rede a .ico { background-position: -128px 0; }
 .menu_it.blog a .ico { background-position: -256px 0; }
 .menu_it.agenda a .ico { background-position: -192px 0; }
+.menu_it.nuvela a .ico { background-image: url(../img/nuvela-icon.svg); }
 
 
 /* ---------------- SEC MENU ITEMS ---------------- */
