@@ -95,7 +95,7 @@ App.BlogRecentesController = Ember.ObjectController.extend({
     articles: [],
     isLoaded: false,
     postsCount: 0,
-    postsLimit: 16,
+    postsLimit: 32,
     getContent: function(){
         var _this = this;
         var page = this.get('model.page_num');
